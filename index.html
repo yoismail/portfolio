@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yomi Ismail | Data Engineer</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Poppins:wght@500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-dark: #0f0f0f;
+            --bg-card: rgba(255, 255, 255, 0.06);
+            --border-soft: rgba(255, 255, 255, 0.08);
+            --border-strong: rgba(255, 255, 255, 0.14);
+            --text-main: #ffffff;
+            --text-soft: #cfcfcf;
+            --text-muted: #a8a8a8;
+            --accent: #2ecc71;
+            --accent-soft: #7dffb1;
+            --shadow-soft: 0 1.25rem 2.5rem rgba(0, 0, 0, 0.45);
+            --shadow-glow: 0 0.75rem 1.6rem rgba(46, 204, 113, 0.14);
+            --radius-lg: 1rem;
+            --radius-pill: 999px;
+            --max-width: 1100px;
+        }
+
+        html,
+        body {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: clip;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-main);
+            background: var(--bg-dark);
+            line-height: 1.6;
+        }
+
+        img,
+        video,
+        iframe,
+        svg {
+            max-width: 100%;
+            display: block;
+        }
+
+        a {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 0.2rem;
+            width: 0%;
+            background: linear-gradient(90deg, var(--accent), var(--accent-soft));
+            z-index: 1200;
+            transition: width 0.08s linear;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: url('images/Yomi_DE.png') center/cover no-repeat;
+            filter: blur(6px) brightness(2.6) grayscale(0.3);
+            z-index: -2;
+            transform: scale(1.03);
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background:
+                linear-gradient(90deg, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)),
+                linear-gradient(180deg, rgba(0, 0, 0, 0.22), rgba(0, 0, 0, 0.62));
+            z-index: -1;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            backdrop-filter: blur(12px);
+            background: rgba(0, 0, 0, 0.5);
+            box-shadow: 0 0.125rem 0.625rem rgba(0, 0, 0, 0.3);
+            transition: background 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        header.scrolled {
+            background: rgba(0, 0, 0, 0.78);
+            box-shadow: 0 0.375rem 1.125rem rgba(0, 0, 0, 0.42);
+        }
+
+        .header-inner {
+            width: min(var(--max-width), 100%);
+            margin: 0 auto;
+            padding: 0.9rem 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .logo {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 1.35rem;
+            color: #fff;
+            text-decoration: none;
+            flex-shrink: 0;
+            letter-spacing: 0.02em;
+        }
+
+        .nav-wrap {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            min-width: 0;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            min-width: 0;
+        }
+
+        nav a {
+            color: #d2d2d2;
+            text-decoration: none;
+            font-size: 0.92rem;
+            transition: color 0.25s ease, background 0.25s ease;
+            padding: 0.4rem 0.72rem;
+            border-radius: var(--radius-pill);
+            white-space: nowrap;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            color: var(--accent);
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        nav a.active-link {
+            color: #fff;
+            background: rgba(46, 204, 113, 0.15);
+            box-shadow: inset 0 0 0 1px rgba(46, 204, 113, 0.22);
+        }
+
+        .hamburger {
+            display: none;
+            width: 1.75rem;
+            height: 1.2rem;
+            flex-direction: column;
+            justify-content: space-between;
+            cursor: pointer;
+            background: transparent;
+            border: none;
+            padding: 0;
+            flex-shrink: 0;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 100%;
+            height: 0.18rem;
+            background: #fff;
+            border-radius: 999px;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: translateY(0.5rem) rotate(45deg);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: translateY(-0.5rem) rotate(-45deg);
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 7rem 1rem 2rem;
+        }
+
+        .hero-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            padding: 0.42rem 0.78rem;
+            border-radius: var(--radius-pill);
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #d8fbe7;
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            margin-bottom: 1rem;
+            backdrop-filter: blur(8px);
+        }
+
+        .status-dot {
+            width: 0.52rem;
+            height: 0.52rem;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 0.8rem rgba(46, 204, 113, 0.7);
+            flex-shrink: 0;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.4rem, 5vw, 4rem);
+            font-family: 'Poppins', sans-serif;
+            font-weight: 800;
+            position: relative;
+            line-height: 1.08;
+            max-width: 100%;
+            letter-spacing: -0.03em;
+        }
+
+        .hero h1::before {
+            content: "";
+            position: absolute;
+            width: 140%;
+            height: 140%;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(circle, rgba(0, 255, 150, 0.28), transparent);
+            filter: blur(3.75rem);
+            animation: pulse 4s infinite alternate;
+            z-index: -1;
+        }
+
+        @keyframes pulse {
+            from {
+                opacity: 0.6;
+                transform: translate(-50%, -50%) scale(1);
+            }
+
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1.08);
+            }
+        }
+
+        .hero p {
+            color: var(--text-soft);
+            margin: 1rem 0 0.9rem;
+            font-size: clamp(1rem, 2vw, 1.12rem);
+            max-width: 44rem;
+        }
+
+        .hero-subtext {
+            color: var(--text-muted);
+            max-width: 42rem;
+            font-size: 0.96rem;
+            margin-bottom: 1.4rem;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.7rem;
+            width: 100%;
+            margin-bottom: 1rem;
+        }
+
+        .hero-meta {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.65rem;
+            margin-top: 0.4rem;
+        }
+
+        .hero-meta span {
+            font-size: 0.8rem;
+            color: #d7d7d7;
+            padding: 0.42rem 0.7rem;
+            border-radius: var(--radius-pill);
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .btn {
+            padding: 0.68rem 1.08rem;
+            border-radius: var(--radius-pill);
+            background: linear-gradient(135deg, #123320, #27ae60);
+            font-size: 0.88rem;
+            color: #fff;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.45rem;
+            transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+            border: none;
+            max-width: 100%;
+            font-weight: 600;
+            box-shadow: var(--shadow-glow);
+        }
+
+        .btn:hover {
+            transform: translateY(-0.125rem);
+            box-shadow: 0 0.5rem 1.25rem rgba(0, 255, 150, 0.3);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: none;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.12);
+            box-shadow: none;
+        }
+
+        section {
+            padding: 5rem 1rem;
+            max-width: var(--max-width);
+            margin: 0 auto;
+            scroll-margin-top: 6rem;
+            width: 100%;
+        }
+
+        .section-heading {
+            text-align: center;
+            max-width: 42rem;
+            margin: 0 auto 1.8rem;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 0.7rem;
+            font-family: 'Poppins', sans-serif;
+            font-size: clamp(1.6rem, 3vw, 2rem);
+            letter-spacing: -0.02em;
+        }
+
+        .section-heading p {
+            color: var(--text-muted);
+            font-size: 0.96rem;
+        }
+
+        hr {
+            border: none;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.14);
+            margin-bottom: 1.2rem;
+        }
+
+        .card {
+            background: var(--bg-card);
+            backdrop-filter: blur(14px);
+            border: 1px solid var(--border-soft);
+            padding: 1.5rem;
+            border-radius: var(--radius-lg);
+            transition: 0.35s ease;
+            opacity: 0;
+            transform: translateY(2.5rem);
+            display: flex;
+            flex-direction: column;
+            gap: 0.7rem;
+            min-width: 0;
+        }
+
+        .card.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .card:hover {
+            transform: translateY(-0.375rem);
+            box-shadow: var(--shadow-soft);
+            border-color: var(--border-strong);
+        }
+
+        .card h3 {
+            font-size: 1.08rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .card ul {
+            padding-left: 1rem;
+            color: var(--text-muted);
+            font-size: 0.94rem;
+        }
+
+        .card ul li+li {
+            margin-top: 0.3rem;
+        }
+
+        .stack-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
+            gap: 1rem;
+            width: 100%;
+        }
+
+        .stack-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(14px);
+            border: 1px solid var(--border-soft);
+            padding: 1.25rem;
+            border-radius: var(--radius-lg);
+            text-align: center;
+            min-width: 0;
+            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+        }
+
+        .stack-card:hover {
+            transform: translateY(-0.25rem);
+            border-color: var(--border-strong);
+            box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.28);
+        }
+
+        .stack-card h4 {
+            font-size: 1rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .stack-subtitle {
+            color: var(--text-muted);
+            font-size: 0.84rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .stack-tags {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.45rem;
+            margin-top: 0.25rem;
+        }
+
+        .stack-tags span {
+            display: inline-block;
+            padding: 0.38rem 0.72rem;
+            border-radius: var(--radius-pill);
+            font-size: 0.74rem;
+            font-weight: 600;
+            border: 1px solid transparent;
+            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+        }
+
+        .stack-tags span:hover {
+            transform: translateY(-0.12rem);
+            box-shadow: 0 0.45rem 1rem rgba(0, 0, 0, 0.28);
+        }
+
+        .tag-python {
+            background: rgba(53, 114, 165, 0.18);
+            border-color: rgba(53, 114, 165, 0.42);
+        }
+
+        .tag-sql {
+            background: rgba(0, 200, 255, 0.16);
+            border-color: rgba(0, 200, 255, 0.35);
+        }
+
+        .tag-postgres {
+            background: rgba(49, 99, 140, 0.22);
+            border-color: rgba(49, 99, 140, 0.46);
+        }
+
+        .tag-airflow {
+            background: rgba(255, 102, 0, 0.16);
+            border-color: rgba(255, 102, 0, 0.36);
+        }
+
+        .tag-pandas {
+            background: rgba(150, 0, 255, 0.16);
+            border-color: rgba(150, 0, 255, 0.34);
+        }
+
+        .tag-etl {
+            background: rgba(0, 255, 150, 0.13);
+            border-color: rgba(0, 255, 150, 0.3);
+        }
+
+        .tag-modeling {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.16);
+        }
+
+        .tag-warehouse {
+            background: rgba(255, 215, 0, 0.14);
+            border-color: rgba(255, 215, 0, 0.28);
+        }
+
+        .featured .card {
+            border: 1px solid rgba(46, 204, 113, 0.3);
+            background: rgba(0, 255, 150, 0.08);
+        }
+
+        .highlight-chip {
+            display: inline-flex;
+            align-items: center;
+            align-self: flex-start;
+            padding: 0.32rem 0.62rem;
+            border-radius: var(--radius-pill);
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: #d8fbe7;
+            background: rgba(46, 204, 113, 0.13);
+            border: 1px solid rgba(46, 204, 113, 0.25);
+        }
+
+        .carousel {
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease;
+            width: 100%;
+            will-change: transform;
+        }
+
+        .carousel-item {
+            min-width: 100%;
+            flex: 0 0 100%;
+            min-height: 1px;
+            padding: 0;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .controls button {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: #fff;
+            padding: 0.52rem 0.9rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: background 0.25s ease, transform 0.25s ease;
+        }
+
+        .controls button:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateY(-0.08rem);
+        }
+
+        .dots {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 0.65rem;
+            flex-wrap: wrap;
+        }
+
+        .dots span {
+            width: 0.55rem;
+            height: 0.55rem;
+            background: #555;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.2s ease, background 0.2s ease;
+        }
+
+        .dots span:hover {
+            transform: scale(1.08);
+        }
+
+        .dots .active {
+            background: var(--accent);
+        }
+
+        .contact-intro {
+            text-align: center;
+            max-width: 38rem;
+            margin: 0 auto 1.2rem;
+            color: var(--text-muted);
+        }
+
+        .contact-card {
+            display: flex;
+            flex-direction: column;
+            gap: 0.9rem;
+        }
+
+        .contact-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.05);
+            text-decoration: none;
+            color: #fff;
+            transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            font-weight: 600;
+        }
+
+        .contact-link:hover {
+            transform: translateY(-0.15rem);
+            box-shadow: 0 0.8rem 1.8rem rgba(0, 0, 0, 0.28);
+        }
+
+        .contact-icon {
+            width: 1.1rem;
+            height: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .contact-link.email:hover {
+            background: rgba(0, 255, 150, 0.14);
+            border-color: rgba(0, 255, 150, 0.22);
+            box-shadow: 0 0.8rem 1.8rem rgba(0, 255, 150, 0.12);
+        }
+
+        .contact-link.linkedin:hover {
+            background: rgba(10, 102, 194, 0.18);
+            border-color: rgba(10, 102, 194, 0.32);
+            box-shadow: 0 0.8rem 1.8rem rgba(10, 102, 194, 0.14);
+        }
+
+        .contact-link.github:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.16);
+            box-shadow: 0 0.8rem 1.8rem rgba(255, 255, 255, 0.07);
+        }
+
+        footer {
+            text-align: center;
+            padding: 1.2rem 1rem 1.8rem;
+            color: #888;
+            font-size: 0.92rem;
+        }
+
+        @media (max-width: 768px) {
+            .header-inner {
+                flex-wrap: wrap;
+                align-items: center;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-wrap {
+                width: 100%;
+                display: block;
+            }
+
+            nav {
+                width: 100%;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0.35rem;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.35s ease, padding 0.35s ease, margin-top 0.35s ease;
+                background: rgba(0, 0, 0, 0.82);
+                border-radius: 0.75rem;
+                padding: 0 0.75rem;
+                margin-top: 0;
+            }
+
+            nav.active {
+                max-height: 24rem;
+                padding: 0.9rem 0.75rem;
+                margin-top: 0.8rem;
+            }
+
+            nav a {
+                width: 100%;
+                text-align: center;
+                padding: 0.68rem 0.75rem;
+                white-space: normal;
+            }
+
+            .hero {
+                padding-top: 7rem;
+            }
+
+            .hero-actions {
+                width: 100%;
+                max-width: 24rem;
+            }
+
+            .hero-actions .btn {
+                flex: 1 1 10rem;
+            }
+
+            .contact-link {
+                padding: 0.92rem;
+                font-size: 0.95rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-inner {
+                padding: 0.85rem;
+            }
+
+            .logo {
+                font-size: 1.2rem;
+            }
+
+            .hero {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            .hero-actions {
+                max-width: 100%;
+            }
+
+            .hero-actions .btn {
+                width: 100%;
+            }
+
+            section {
+                padding: 4rem 1rem;
+            }
+
+            .card,
+            .stack-card {
+                padding: 1.15rem;
+            }
+
+            .contact-link {
+                gap: 0.6rem;
+                font-size: 0.92rem;
+            }
+
+            .contact-icon {
+                width: 1rem;
+                height: 1rem;
+            }
+
+            .hero-meta {
+                gap: 0.5rem;
+            }
+
+            .hero-meta span {
+                font-size: 0.76rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="scroll-progress" id="scroll-progress"></div>
+
+    <header id="header">
+        <div class="header-inner">
+            <a href="#home" class="logo">Yomi.Dev</a>
+
+            <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <div class="nav-wrap">
+                <nav id="nav-links">
+                    <a href="#home" class="nav-link">Home</a>
+                    <a href="#skills" class="nav-link">Skills</a>
+                    <a href="#projects" class="nav-link">Projects</a>
+                    <a href="#featured" class="nav-link">Featured</a>
+                    <a href="#case" class="nav-link">Case Study</a>
+                    <a href="#contact" class="nav-link">Contact</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="hero-eyebrow">
+            <span class="status-dot"></span>
+            Open to Data Engineering Opportunities
+        </div>
+
+        <h1 id="typing"></h1>
+
+        <p>Data Engineer focused on building scalable ETL pipelines, analytics-ready data models, and reliable data
+            systems.</p>
+
+        <div class="hero-subtext">
+            I design practical data workflows with Python, PostgreSQL, and orchestration tools to improve data quality,
+            support analytics, and create maintainable data foundations for reporting and decision-making.
+        </div>
+
+        <div class="hero-actions">
+            <a href="#projects" class="btn btn-secondary">View Projects</a>
+            <a href="#contact" class="btn btn-secondary">Contact Me</a>
+            <a href="cv.pdf" class="btn btn-secondary" download>Download CV</a>
+        </div>
+
+        <div class="hero-meta">
+            <span>Python</span>
+            <span>SQL</span>
+            <span>PostgreSQL</span>
+            <span>ETL Pipelines</span>
+            <span>Data Modeling</span>
+        </div>
+    </section>
+
+    <section id="skills">
+        <div class="section-heading">
+            <h2>Tech Stack</h2>
+            <p>Core technologies I use to build pipelines, transform datasets, design relational schemas, and prepare
+                data for analysis.</p>
+        </div>
+        <hr>
+
+        <div class="stack-grid">
+            <div class="stack-card">
+                <h4>Languages</h4>
+                <div class="stack-subtitle">Transformation, scripting, and querying</div>
+                <div class="stack-tags">
+                    <span class="tag-python">Python</span>
+                    <span class="tag-sql">SQL</span>
+                </div>
+            </div>
+
+            <div class="stack-card">
+                <h4>Data Engineering</h4>
+                <div class="stack-subtitle">Pipeline and schema design</div>
+                <div class="stack-tags">
+                    <span class="tag-etl">ETL</span>
+                    <span class="tag-modeling">Data Modeling</span>
+                    <span class="tag-warehouse">Data Warehousing</span>
+                </div>
+            </div>
+
+            <div class="stack-card">
+                <h4>Tools</h4>
+                <div class="stack-subtitle">Storage and workflow orchestration</div>
+                <div class="stack-tags">
+                    <span class="tag-postgres">PostgreSQL</span>
+                    <span class="tag-airflow">Airflow</span>
+                </div>
+            </div>
+
+            <div class="stack-card">
+                <h4>Analytics</h4>
+                <div class="stack-subtitle">Data preparation and analysis support</div>
+                <div class="stack-tags">
+                    <span class="tag-pandas">Pandas</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="featured" class="featured">
+        <div class="section-heading">
+            <h2>Featured Project</h2>
+            <p>A portfolio project that demonstrates data cleaning, transformation design, normalized schema
+                development, and analytics-ready storage.</p>
+        </div>
+        <hr>
+
+        <div class="card">
+            <span class="highlight-chip">Featured Work</span>
+            <h3>PayFlow Database Optimization II</h3>
+            <p>Designed a production-style ETL workflow for a fintech / e-commerce case study, focused on transforming
+                raw transactional data into structured PostgreSQL tables for operational use and reporting readiness.
+            </p>
+            <ul>
+                <li>Extracted and transformed raw datasets with Python and Pandas to standardize formats, clean invalid
+                    values, and prepare records for loading</li>
+                <li>Designed normalized PostgreSQL tables to reduce redundancy and improve entity relationships across
+                    customers, orders, products, and payments</li>
+                <li>Organized the pipeline into clearer extraction, transformation, and loading stages for
+                    maintainability and future orchestration</li>
+                <li>Built the project with both transaction processing needs and analytics use cases in mind</li>
+            </ul>
+            <a href="https://github.com/yoismail/payflow_case_study" target="_blank" rel="noopener noreferrer"
+                class="btn">View Case Study</a>
+        </div>
+    </section>
+
+    <section id="projects">
+        <div class="section-heading">
+            <h2>Projects</h2>
+            <p>Selected work showing ETL development, schema thinking, workflow automation concepts, and practical data
+                engineering problem solving.</p>
+        </div>
+        <hr>
+
+        <div class="carousel">
+            <div class="carousel-track" id="track">
+                <div class="carousel-item">
+                    <div class="card">
+                        <h3>ETL Pipeline Engineering</h3>
+                        <p>Developed an end-to-end ETL workflow to ingest raw source files, apply transformation rules,
+                            and load structured outputs into PostgreSQL for cleaner downstream analysis.</p>
+                        <ul>
+                            <li>Separated extraction, transformation, and loading logic into modular pipeline stages
+                            </li>
+                            <li>Used Pandas to clean source data, standardize column formats, handle missing values, and
+                                prepare consistent datasets</li>
+                            <li>Loaded curated tables into PostgreSQL to support reusable SQL querying and reporting
+                                workflows</li>
+                            <li>Reduced the need for repeated manual cleanup before analysis</li>
+                        </ul>
+                        <a href="https://github.com/yoismail" target="_blank" rel="noopener noreferrer" class="btn">View
+                            GitHub Repo</a>
+                    </div>
+                </div>
+
+                <div class="carousel-item">
+                    <div class="card">
+                        <h3>Workflow Automation and Scheduling</h3>
+                        <p>Explored orchestration patterns for repeatable data jobs, focusing on execution flow,
+                            pipeline reliability, and reducing dependence on manual run steps.</p>
+                        <ul>
+                            <li>Structured pipeline tasks to support future automation and job scheduling</li>
+                            <li>Improved repeatability by organizing transformations into reusable processing steps</li>
+                            <li>Prepared the workflow for orchestration with tools such as Airflow</li>
+                            <li>Created a more operationally reliable pipeline foundation for recurring data loads</li>
+                        </ul>
+                        <a href="https://github.com/yoismail" target="_blank" rel="noopener noreferrer" class="btn">View
+                            GitHub Repo</a>
+                    </div>
+                </div>
+
+                <div class="carousel-item">
+                    <div class="card">
+                        <h3>Relational Schema Design for Analytics</h3>
+                        <p>Designed database structures that balance normalized storage with usability for analytics,
+                            helping improve integrity, maintainability, and query clarity.</p>
+                        <ul>
+                            <li>Modeled relational tables around core business entities such as customers, products,
+                                orders, and payment information</li>
+                            <li>Reduced duplication through normalization and clearer table relationships</li>
+                            <li>Improved downstream usability by organizing data into analytics-friendly structures</li>
+                            <li>Strengthened the foundation for reporting and future performance tuning</li>
+                        </ul>
+                        <a href="https://github.com/yoismail" target="_blank" rel="noopener noreferrer" class="btn">View
+                            GitHub Repo</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button id="prev" aria-label="Previous project">←</button>
+            <button id="next" aria-label="Next project">→</button>
+        </div>
+
+        <div class="dots" id="dots"></div>
+    </section>
+
+    <section id="case">
+        <div class="section-heading">
+            <h2>Case Study: PayFlow ETL</h2>
+            <p>A concise view of the business challenge, engineering approach, and technical structure behind the
+                project.</p>
+        </div>
+        <hr>
+
+        <div class="stack-grid">
+            <div class="card">
+                <h3>Problem</h3>
+                <p>PayFlow needed a stronger data foundation as it expanded into Brazil’s e-commerce market. Raw
+                    transaction data was inconsistent, fragmented, and not immediately suitable for reliable reporting
+                    or scalable analytics.</p>
+            </div>
+
+            <div class="card">
+                <h3>Solution</h3>
+                <p>Built a Python and PostgreSQL ETL workflow to clean source data, standardize records, design
+                    normalized tables, and load structured outputs into a schema better suited for both transaction
+                    support and analytics consumption.</p>
+            </div>
+
+            <div class="card">
+                <h3>Engineering Focus</h3>
+                <p>The project emphasized modular ETL design, redundancy reduction, schema normalization, maintainable
+                    code structure, and alignment between raw ingestion, curated storage, and reporting-ready outputs.
+                </p>
+                <a href="https://github.com/yoismail/payflow_case_study" target="_blank" rel="noopener noreferrer"
+                    class="btn">View Repo</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="section-heading">
+            <h2>Contact</h2>
+            <p>Interested in data engineering, ETL, database design, or analytics-focused opportunities. Reach out
+                through any of the channels below.</p>
+        </div>
+        <hr>
+
+        <p class="contact-intro">
+            I’m open to graduate roles, junior data engineering opportunities, portfolio reviews, and conversations
+            around building reliable data workflows.
+        </p>
+
+        <div class="card contact-card">
+            <a href="mailto:ismailyomi@gmail.com" class="contact-link email" aria-label="Send email to Yomi Ismail">
+                <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M4 4h16v16H4z"></path>
+                    <path d="m22 6-10 7L2 6"></path>
+                </svg>
+                <span>Email</span>
+            </a>
+
+            <a href="https://www.linkedin.com/in/yomi-ismail" target="_blank" rel="noopener noreferrer"
+                class="contact-link linkedin" aria-label="Visit Yomi Ismail on LinkedIn">
+                <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path
+                        d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A1.97 1.97 0 1 0 5.3 6.94 1.97 1.97 0 0 0 5.25 3ZM20.44 12.63c0-3.02-1.61-4.43-3.76-4.43-1.73 0-2.5.95-2.93 1.62V8.5h-3.37c.04.88 0 11.5 0 11.5h3.37v-6.42c0-.34.02-.68.13-.92.27-.68.89-1.38 1.93-1.38 1.36 0 1.9 1.04 1.9 2.56V20H21c0-1.5-.02-5.86-.02-7.37Z" />
+                </svg>
+                <span>LinkedIn</span>
+            </a>
+
+            <a href="https://github.com/yoismail" target="_blank" rel="noopener noreferrer" class="contact-link github"
+                aria-label="Visit Yomi Ismail on GitHub">
+                <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path
+                        d="M12 .5C5.65.5.5 5.65.5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2.01c-3.2.69-3.88-1.36-3.88-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.05-.72.08-.71.08-.71 1.16.08 1.77 1.19 1.77 1.19 1.03 1.76 2.7 1.25 3.35.96.1-.75.4-1.25.72-1.54-2.56-.29-5.24-1.28-5.24-5.71 0-1.26.45-2.29 1.18-3.1-.12-.29-.51-1.47.11-3.06 0 0 .97-.31 3.19 1.18a11.1 11.1 0 0 1 5.8 0c2.22-1.49 3.18-1.18 3.18-1.18.63 1.59.24 2.77.12 3.06.73.81 1.17 1.84 1.17 3.1 0 4.44-2.69 5.41-5.26 5.69.41.35.78 1.04.78 2.1v3.11c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z" />
+                </svg>
+                <span>GitHub</span>
+            </a>
+        </div>
+    </section>
+
+    <footer>© 2026 Yomi Ismail</footer>
+
+    <script>
+        const text = "Hi, I'm Yomi Ismail";
+        let i = 0;
+        const typing = document.getElementById("typing");
+
+        (function type() {
+            if (i < text.length) {
+                typing.innerHTML += text[i++];
+                setTimeout(type, 60);
+            }
+        })();
+
+        const cards = document.querySelectorAll('.card');
+        const revealCards = () => {
+            const trigger = window.innerHeight * 0.85;
+            cards.forEach((c, i) => {
+                if (c.getBoundingClientRect().top < trigger) {
+                    setTimeout(() => c.classList.add('show'), i * 80);
+                }
+            });
+        };
+
+        window.addEventListener('scroll', revealCards);
+        window.addEventListener('load', revealCards);
+
+        let index = 0;
+        const track = document.getElementById("track");
+        const items = document.querySelectorAll(".carousel-item");
+        const dots = document.getElementById("dots");
+        const carousel = document.querySelector(".carousel");
+        let autoSlide;
+
+        items.forEach((_, i) => {
+            const dot = document.createElement("span");
+            dot.onclick = () => {
+                index = i;
+                updateCarousel();
+            };
+            dots.appendChild(dot);
+        });
+
+        function updateCarousel() {
+            track.style.transform = `translateX(-${index * 100}%)`;
+            document.querySelectorAll(".dots span").forEach((d, i) => {
+                d.classList.toggle("active", i === index);
+            });
+        }
+
+        function nextSlide() {
+            index = (index + 1) % items.length;
+            updateCarousel();
+        }
+
+        function startAutoSlide() {
+            clearInterval(autoSlide);
+            //autoSlide = setInterval(nextSlide, 5000);
+        }
+
+        function stopAutoSlide() {
+            clearInterval(autoSlide);
+        }
+
+        updateCarousel();
+        startAutoSlide();
+
+        document.getElementById("next").onclick = () => {
+            index = (index + 1) % items.length;
+            updateCarousel();
+        };
+
+        document.getElementById("prev").onclick = () => {
+            index = (index - 1 + items.length) % items.length;
+            updateCarousel();
+        };
+
+        carousel.addEventListener("mouseenter", stopAutoSlide);
+        carousel.addEventListener("mouseleave", startAutoSlide);
+        carousel.addEventListener("touchstart", stopAutoSlide, { passive: true });
+        carousel.addEventListener("touchend", startAutoSlide);
+        carousel.addEventListener("touchcancel", startAutoSlide);
+
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('nav-links');
+        const header = document.getElementById('header');
+        const progressBar = document.getElementById('scroll-progress');
+        const navLinkEls = document.querySelectorAll('.nav-link');
+        const sections = document.querySelectorAll('section[id]');
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            hamburger.classList.toggle('active');
+            const expanded = hamburger.classList.contains('active');
+            hamburger.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(link => {
+            link.addEventListener('click', function (e) {
+                const target = document.querySelector(this.getAttribute('href'));
+                if (!target) return;
+                e.preventDefault();
+                target.scrollIntoView({ behavior: 'smooth' });
+
+                navLinks.classList.remove('active');
+                hamburger.classList.remove('active');
+                hamburger.setAttribute('aria-expanded', 'false');
+            });
+        });
+
+        function updateHeaderState() {
+            if (window.scrollY > 30) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        }
+
+        function updateProgressBar() {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+            progressBar.style.width = `${progress}%`;
+        }
+
+        function updateActiveNav() {
+            let currentId = 'home';
+            const offset = 140;
+
+            sections.forEach(section => {
+                const top = section.offsetTop - offset;
+                const bottom = top + section.offsetHeight;
+
+                if (window.scrollY >= top && window.scrollY < bottom) {
+                    currentId = section.id;
+                }
+            });
+
+            navLinkEls.forEach(link => {
+                link.classList.toggle('active-link', link.getAttribute('href') === `#${currentId}`);
+            });
+        }
+
+        window.addEventListener('scroll', () => {
+            updateHeaderState();
+            updateProgressBar();
+            updateActiveNav();
+        });
+
+        window.addEventListener('load', () => {
+            updateHeaderState();
+            updateProgressBar();
+            updateActiveNav();
+        });
+    </script>
+</body>
+
+</html>
