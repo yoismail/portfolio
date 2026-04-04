@@ -8,7 +8,7 @@
 
 ## 🌐 Live Portfolio
 
-👉 https://yoismail.github.io/Yomi-Ismail-Portfolio/
+👉 https://yoismail/Yomi-Ismail-Portfolio/
 
 ---
 
