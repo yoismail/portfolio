@@ -91,8 +91,8 @@ A production-style ETL pipeline built to simulate a fintech transaction system:
 
 * 💼 GitHub: https://github.com/yoismail
 * 🌐 Portfolio: https://yoismail.github.io/Yomi-Ismail-Portfolio/
-* 📧 Email: your-email-here
-* 🔗 LinkedIn: your-linkedin-url
+* 📧 Email: [ismailyomi@gmail.com](mailto:ismailyomi@gmail.com)
+* 🔗 LinkedIn: https://www.linkedin.com/in/yomi-ismail
 
 ---
 
