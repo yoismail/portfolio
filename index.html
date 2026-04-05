@@ -298,17 +298,22 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 0.65rem;
+            gap: 0.5rem;
             margin-top: 0.4rem;
         }
 
         .hero-meta span {
-            font-size: 0.8rem;
-            color: #d7d7d7;
-            padding: 0.42rem 0.7rem;
+            font-size: 0.75rem;
+            padding: 0.35rem 0.65rem;
             border-radius: var(--radius-pill);
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            font-weight: 600;
+            backdrop-filter: blur(6px);
+            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+        }
+
+        .hero-meta span:hover {
+            transform: translateY(-0.12rem);
+            box-shadow: 0 0.45rem 1rem rgba(0, 0, 0, 0.28);
         }
 
         .btn {
@@ -870,14 +875,12 @@
             <a href="cv.pdf" class="btn btn-secondary" download>Download CV</a>
         </div>
 
-        <div class="hero-meta">
-            <div class="stack-tags">
-                <span class="tag-python">Python</span>
-                <span class="tag-sql">SQL</span>
-                <span class="tag-postgres">PostgreSQL</span>
-                <span class="tag-etl">ETL Pipelines</span>
-                <span class="tag-warehouse">Analytics Warehousing</span>
-            </div>
+        <div class="hero-meta stack-tags">
+            <span class="tag-python">Python</span>
+            <span class="tag-sql">SQL</span>
+            <span class="tag-postgres">PostgreSQL</span>
+            <span class="tag-etl">ETL Pipelines</span>
+            <span class="tag-warehouse">Analytics Warehousing</span>
         </div>
     </section>
 
