@@ -280,7 +280,7 @@
 
         .hero-subtext {
             color: var(--text-muted);
-            max-width: 42rem;
+            max-width: 44rem;
             font-size: 0.96rem;
             margin-bottom: 1.4rem;
         }
@@ -355,7 +355,7 @@
 
         .section-heading {
             text-align: center;
-            max-width: 42rem;
+            max-width: 46rem;
             margin: 0 auto 1.8rem;
         }
 
@@ -522,6 +522,41 @@
         .tag-warehouse {
             background: rgba(255, 215, 0, 0.14);
             border-color: rgba(255, 215, 0, 0.28);
+        }
+
+        .tag-sqlalchemy {
+            background: rgba(210, 77, 87, 0.16);
+            border-color: rgba(210, 77, 87, 0.34);
+        }
+
+        .tag-dotenv {
+            background: rgba(120, 180, 90, 0.16);
+            border-color: rgba(120, 180, 90, 0.32);
+        }
+
+        .tag-openpyxl {
+            background: rgba(46, 204, 113, 0.14);
+            border-color: rgba(46, 204, 113, 0.3);
+        }
+
+        .tag-git {
+            background: rgba(240, 80, 50, 0.16);
+            border-color: rgba(240, 80, 50, 0.34);
+        }
+
+        .tag-github {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .tag-parquet {
+            background: rgba(255, 193, 7, 0.16);
+            border-color: rgba(255, 193, 7, 0.3);
+        }
+
+        .tag-psycopg2 {
+            background: rgba(79, 129, 189, 0.18);
+            border-color: rgba(79, 129, 189, 0.36);
         }
 
         .featured .card {
@@ -821,12 +856,12 @@
 
         <h1 id="typing"></h1>
 
-        <p>Data Engineer focused on building scalable ETL pipelines, analytics-ready data models, and reliable data
+        <p>Data Engineer focused on building production-ready ETL pipelines, analytics warehouses, and reliable data
             systems.</p>
 
         <div class="hero-subtext">
-            I design practical data workflows with Python, PostgreSQL, and orchestration tools to improve data quality,
-            support analytics, and create maintainable data foundations for reporting and decision-making.
+            I build maintainable raw-to-processed-to-analytics workflows with Python, SQL, PostgreSQL, and modern data
+            tooling to improve data quality, support reporting, and create reusable foundations for decision-making.
         </div>
 
         <div class="hero-actions">
@@ -840,22 +875,22 @@
             <span>SQL</span>
             <span>PostgreSQL</span>
             <span>ETL Pipelines</span>
-            <span>Data Modeling</span>
+            <span>Analytics Warehousing</span>
         </div>
     </section>
 
     <section id="skills">
         <div class="section-heading">
             <h2>Tech Stack</h2>
-            <p>Core technologies I use to build pipelines, transform datasets, design relational schemas, and prepare
-                data for analysis.</p>
+            <p>Core technologies I use to build ETL pipelines, validate schemas, transform source data, load analytics
+                models, and manage reproducible data engineering workflows.</p>
         </div>
         <hr>
 
         <div class="stack-grid">
             <div class="stack-card">
                 <h4>Languages</h4>
-                <div class="stack-subtitle">Transformation, scripting, and querying</div>
+                <div class="stack-subtitle">Data transformation, scripting, and querying</div>
                 <div class="stack-tags">
                     <span class="tag-python">Python</span>
                     <span class="tag-sql">SQL</span>
@@ -864,28 +899,35 @@
 
             <div class="stack-card">
                 <h4>Data Engineering</h4>
-                <div class="stack-subtitle">Pipeline and schema design</div>
+                <div class="stack-subtitle">Pipeline architecture and warehouse design</div>
                 <div class="stack-tags">
                     <span class="tag-etl">ETL</span>
                     <span class="tag-modeling">Data Modeling</span>
-                    <span class="tag-warehouse">Data Warehousing</span>
+                    <span class="tag-warehouse">Analytics Warehouse</span>
+                    <span class="tag-parquet">CSV / Parquet</span>
                 </div>
             </div>
 
             <div class="stack-card">
-                <h4>Tools</h4>
-                <div class="stack-subtitle">Storage and workflow orchestration</div>
+                <h4>Database & Load Layer</h4>
+                <div class="stack-subtitle">Storage, connectors, and loading</div>
                 <div class="stack-tags">
                     <span class="tag-postgres">PostgreSQL</span>
-                    <span class="tag-airflow">Airflow</span>
+                    <span class="tag-sqlalchemy">SQLAlchemy</span>
+                    <span class="tag-psycopg2">psycopg2</span>
+                    <span class="tag-dotenv">python-dotenv</span>
                 </div>
             </div>
 
             <div class="stack-card">
-                <h4>Analytics</h4>
-                <div class="stack-subtitle">Data preparation and analysis support</div>
+                <h4>Transformation & Workflow</h4>
+                <div class="stack-subtitle">Cleaning, validation, and pipeline execution</div>
                 <div class="stack-tags">
                     <span class="tag-pandas">Pandas</span>
+                    <span class="tag-openpyxl">openpyxl</span>
+                    <span class="tag-airflow">Airflow</span>
+                    <span class="tag-git">Git</span>
+                    <span class="tag-github">GitHub</span>
                 </div>
             </div>
         </div>
@@ -894,25 +936,26 @@
     <section id="featured" class="featured">
         <div class="section-heading">
             <h2>Featured Project</h2>
-            <p>A portfolio project that demonstrates data cleaning, transformation design, normalized schema
-                development, and analytics-ready storage.</p>
+            <p>A production-style case study showing raw-to-processed transformations, analytics loading, schema
+                validation, and reproducible PostgreSQL pipeline execution.</p>
         </div>
         <hr>
 
         <div class="card">
             <span class="highlight-chip">Featured Work</span>
             <h3>PayFlow Database Optimization II</h3>
-            <p>Designed a production-style ETL workflow for a fintech / e-commerce case study, focused on transforming
-                raw transactional data into structured PostgreSQL tables for operational use and reporting readiness.
-            </p>
+            <p>Built an end-to-end data engineering case study around the Brazilian Olist e-commerce dataset, evolving
+                it into a production-grade ETL and analytics pipeline with clean transformation stages, warehouse
+                loading, reset logic, and full pipeline orchestration.</p>
             <ul>
-                <li>Extracted and transformed raw datasets with Python and Pandas to standardize formats, clean invalid
-                    values, and prepare records for loading</li>
-                <li>Designed normalized PostgreSQL tables to reduce redundancy and improve entity relationships across
-                    customers, orders, products, and payments</li>
-                <li>Organized the pipeline into clearer extraction, transformation, and loading stages for
-                    maintainability and future orchestration</li>
-                <li>Built the project with both transaction processing needs and analytics use cases in mind</li>
+                <li>Implemented a raw → processed pipeline to normalize columns, clean source entities, rename fields,
+                    convert timestamps, and persist curated outputs</li>
+                <li>Built a processed → analytics warehouse loader that validates schema structure, creates dimensions
+                    and fact tables, and loads them into PostgreSQL</li>
+                <li>Added wipe/reset utilities and a full pipeline orchestrator to support safe re-runs, cleaner
+                    development cycles, and reproducible execution</li>
+                <li>Designed the project to reflect maintainable data engineering practices with modular code,
+                    structured logging, and analytics-ready modeling</li>
             </ul>
             <a href="https://github.com/yoismail/payflow_case_study" target="_blank" rel="noopener noreferrer"
                 class="btn">View Case Study</a>
@@ -922,8 +965,8 @@
     <section id="projects">
         <div class="section-heading">
             <h2>Projects</h2>
-            <p>Selected work showing ETL development, schema thinking, workflow automation concepts, and practical data
-                engineering problem solving.</p>
+            <p>Selected work showing ETL development, warehouse loading, orchestration readiness, and practical
+                analytics-focused data engineering.</p>
         </div>
         <hr>
 
@@ -932,52 +975,60 @@
                 <div class="carousel-item">
                     <div class="card">
                         <h3>ETL Pipeline Engineering</h3>
-                        <p>Developed an end-to-end ETL workflow to ingest raw source files, apply transformation rules,
-                            and load structured outputs into PostgreSQL for cleaner downstream analysis.</p>
+                        <p>Developed a modular end-to-end ETL pipeline that transforms raw commerce data into validated
+                            processed datasets and loads analytics-ready models into PostgreSQL.</p>
                         <ul>
-                            <li>Separated extraction, transformation, and loading logic into modular pipeline stages
-                            </li>
-                            <li>Used Pandas to clean source data, standardize column formats, handle missing values, and
-                                prepare consistent datasets</li>
-                            <li>Loaded curated tables into PostgreSQL to support reusable SQL querying and reporting
-                                workflows</li>
-                            <li>Reduced the need for repeated manual cleanup before analysis</li>
+                            <li>Structured the workflow into dedicated transform, warehouse load, wipe/reset, and
+                                full-run orchestration stages</li>
+                            <li>Normalized column names, renamed fields to align with analytics DDL, cleaned entity
+                                tables, and converted timestamps for consistent processing</li>
+                            <li>Built schema-validated dimensions and fact tables for cleaner analytics consumption and
+                                more reliable downstream querying</li>
+                            <li>Improved repeatability by supporting safe reruns, reproducible execution, and cleaner
+                                separation between raw, processed, and analytics layers</li>
                         </ul>
-                        <a href="https://github.com/yoismail" target="_blank" rel="noopener noreferrer" class="btn">View
-                            GitHub Repo</a>
+                        <a href="https://github.com/yoismail/payflow_case_study" target="_blank"
+                            rel="noopener noreferrer" class="btn">View GitHub Repo</a>
                     </div>
                 </div>
 
                 <div class="carousel-item">
                     <div class="card">
                         <h3>Workflow Automation and Scheduling</h3>
-                        <p>Explored orchestration patterns for repeatable data jobs, focusing on execution flow,
-                            pipeline reliability, and reducing dependence on manual run steps.</p>
+                        <p>Designed the pipeline with orchestration in mind, focusing on maintainability, execution
+                            order, and operational reliability rather than one-off manual scripts.</p>
                         <ul>
-                            <li>Structured pipeline tasks to support future automation and job scheduling</li>
-                            <li>Improved repeatability by organizing transformations into reusable processing steps</li>
-                            <li>Prepared the workflow for orchestration with tools such as Airflow</li>
-                            <li>Created a more operationally reliable pipeline foundation for recurring data loads</li>
+                            <li>Added a full pipeline runner to execute reset, transform, and analytics loading in a
+                                clear sequence</li>
+                            <li>Introduced wipe/reset logic to safely clear raw, processed, or analytics layers before
+                                reruns</li>
+                            <li>Used structured logging to make pipeline runs easier to monitor, debug, and maintain
+                            </li>
+                            <li>Prepared the workflow for future orchestration extensions such as Airflow and stronger
+                                data quality checks</li>
                         </ul>
-                        <a href="https://github.com/yoismail" target="_blank" rel="noopener noreferrer" class="btn">View
-                            GitHub Repo</a>
+                        <a href="https://github.com/yoismail/payflow_case_study" target="_blank"
+                            rel="noopener noreferrer" class="btn">View GitHub Repo</a>
                     </div>
                 </div>
 
                 <div class="carousel-item">
                     <div class="card">
                         <h3>Relational Schema Design for Analytics</h3>
-                        <p>Designed database structures that balance normalized storage with usability for analytics,
-                            helping improve integrity, maintainability, and query clarity.</p>
+                        <p>Designed an analytics-oriented schema that moves beyond raw source files into structured
+                            dimensions and fact tables for reporting, analysis, and future optimization.</p>
                         <ul>
-                            <li>Modeled relational tables around core business entities such as customers, products,
-                                orders, and payment information</li>
-                            <li>Reduced duplication through normalization and clearer table relationships</li>
-                            <li>Improved downstream usability by organizing data into analytics-friendly structures</li>
-                            <li>Strengthened the foundation for reporting and future performance tuning</li>
+                            <li>Modeled dimensions such as customer, merchant, product, and date to support organized
+                                analytical querying</li>
+                            <li>Built fact tables for orders, payments, and items to better represent business events
+                                and transaction activity</li>
+                            <li>Reduced ambiguity by aligning field naming, processed outputs, and warehouse DDL
+                                definitions</li>
+                            <li>Strengthened the data foundation for reusable reporting, analytics engineering, and
+                                future performance tuning</li>
                         </ul>
-                        <a href="https://github.com/yoismail" target="_blank" rel="noopener noreferrer" class="btn">View
-                            GitHub Repo</a>
+                        <a href="https://github.com/yoismail/payflow_case_study" target="_blank"
+                            rel="noopener noreferrer" class="btn">View GitHub Repo</a>
                     </div>
                 </div>
             </div>
@@ -994,7 +1045,7 @@
     <section id="case">
         <div class="section-heading">
             <h2>Case Study: PayFlow ETL</h2>
-            <p>A concise view of the business challenge, engineering approach, and technical structure behind the
+            <p>A concise view of the business challenge, engineering approach, and pipeline architecture behind the
                 project.</p>
         </div>
         <hr>
@@ -1002,23 +1053,23 @@
         <div class="stack-grid">
             <div class="card">
                 <h3>Problem</h3>
-                <p>PayFlow needed a stronger data foundation as it expanded into Brazil’s e-commerce market. Raw
-                    transaction data was inconsistent, fragmented, and not immediately suitable for reliable reporting
-                    or scalable analytics.</p>
+                <p>PayFlow needed a stronger data foundation for e-commerce expansion. Raw source tables were fragmented
+                    across customers, sellers, orders, items, and payments, making direct analytics and operational
+                    reporting inconsistent, difficult to maintain, and harder to scale.</p>
             </div>
 
             <div class="card">
                 <h3>Solution</h3>
-                <p>Built a Python and PostgreSQL ETL workflow to clean source data, standardize records, design
-                    normalized tables, and load structured outputs into a schema better suited for both transaction
-                    support and analytics consumption.</p>
+                <p>Built a production-grade ETL workflow that cleans raw source tables, transforms them into processed
+                    datasets, and loads validated dimensions and fact tables into a PostgreSQL analytics schema for
+                    downstream reporting and analysis.</p>
             </div>
 
             <div class="card">
                 <h3>Engineering Focus</h3>
-                <p>The project emphasized modular ETL design, redundancy reduction, schema normalization, maintainable
-                    code structure, and alignment between raw ingestion, curated storage, and reporting-ready outputs.
-                </p>
+                <p>The project emphasizes raw → processed → analytics architecture, schema validation, modular loaders,
+                    reproducible reset logic, structured logging, and maintainable pipeline orchestration aligned with
+                    real data engineering workflows.</p>
                 <a href="https://github.com/yoismail/payflow_case_study" target="_blank" rel="noopener noreferrer"
                     class="btn">View Repo</a>
             </div>
@@ -1125,7 +1176,7 @@
 
         function startAutoSlide() {
             clearInterval(autoSlide);
-            //autoSlide = setInterval(nextSlide, 5000);
+            // autoSlide = setInterval(nextSlide, 5000);
         }
 
         function stopAutoSlide() {
