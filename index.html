@@ -78,7 +78,7 @@
             position: fixed;
             inset: 0;
             background: url('images/Yomi_DE.png') center/cover no-repeat;
-            filter: blur(6px) brightness(2.6) grayscale(0.3);
+            filter: blur(6px) brightness(3.5) grayscale(0.3);
             z-index: -2;
             transform: scale(1.03);
         }
@@ -214,7 +214,7 @@
             display: inline-flex;
             align-items: center;
             gap: 0.45rem;
-            padding: 0.42rem 0.78rem;
+            padding: 0.12rem 0.78rem;
             border-radius: var(--radius-pill);
             background: rgba(255, 255, 255, 0.06);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -280,7 +280,7 @@
 
         .hero-subtext {
             color: var(--text-muted);
-            max-width: 44rem;
+            max-width: 40rem;
             font-size: 0.96rem;
             margin-bottom: 1.4rem;
         }
@@ -355,7 +355,7 @@
 
         .section-heading {
             text-align: center;
-            max-width: 46rem;
+            max-width: 35rem;
             margin: 0 auto 1.8rem;
         }
 
@@ -871,11 +871,13 @@
         </div>
 
         <div class="hero-meta">
-            <span>Python</span>
-            <span>SQL</span>
-            <span>PostgreSQL</span>
-            <span>ETL Pipelines</span>
-            <span>Analytics Warehousing</span>
+            <div class="stack-tags">
+                <span class="tag-python">Python</span>
+                <span class="tag-sql">SQL</span>
+                <span class="tag-postgres">PostgreSQL</span>
+                <span class="tag-etl">ETL Pipelines</span>
+                <span class="tag-warehouse">Analytics Warehousing</span>
+            </div>
         </div>
     </section>
 
