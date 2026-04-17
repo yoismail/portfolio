@@ -1761,7 +1761,6 @@
                     Open to data engineering opportunities | Based in UK (GMT)
                 </div>
 
-
                 <h1 id="typing"></h1>
 
                 <p class="hero-lead">
@@ -2027,46 +2026,50 @@
                         <div class="project-main">
                             <div class="project-kicker">
                                 <span class="highlight-chip">Project 02</span>
-                                <span class="project-status">Execution Layer</span>
+                                <span class="project-status">Case Study Build</span>
                             </div>
 
-                            <h3 class="project-title">Workflow Automation and Scheduling</h3>
+                            <h3 class="project-title">YINC E-Commerce ETL Pipeline</h3>
 
                             <p class="project-lead">
-                                Designed the pipeline for maintainability, execution order, and operational reliability
-                                instead of one-off manual runs.
+                                Built a complete ETL pipeline for an e-commerce dataset that extracts raw CSV data,
+                                cleans and transforms it with Pandas, models it into relational tables, and loads it
+                                into a dedicated PostgreSQL schema for reproducible analytics-ready storage.
                             </p>
 
                             <div class="project-proof-grid">
                                 <div class="project-proof">
-                                    <strong>Execution Order</strong>
-                                    <span>Reset, transform, and load arranged clearly.</span>
+                                    <strong>5 Final Tables</strong>
+                                    <span>Customer, product, shipping, order, and payment method outputs.</span>
                                 </div>
                                 <div class="project-proof">
-                                    <strong>Reset Logic</strong>
-                                    <span>Safer reruns across pipeline layers.</span>
+                                    <strong>PostgreSQL Ready</strong>
+                                    <span>Automated schema and table creation under the yinc schema.</span>
                                 </div>
                                 <div class="project-proof">
-                                    <strong>Operational Clarity</strong>
-                                    <span>Structured logging improves supportability.</span>
+                                    <strong>Reproducible ETL</strong>
+                                    <span>Structured extraction, cleaning, transformation, and load workflow.</span>
                                 </div>
                             </div>
 
                             <div class="project-architecture">
-                                <h4>Run Sequence</h4>
+                                <h4>Workflow Shape</h4>
                                 <div class="project-flow">
-                                    <span>Reset</span>
+                                    <span>Raw CSV</span>
                                     <i></i>
-                                    <span>Process</span>
+                                    <span>Pandas Transform</span>
                                     <i></i>
-                                    <span>Load</span>
+                                    <span>PostgreSQL</span>
                                 </div>
                             </div>
 
                             <ul class="project-list">
-                                <li>Full pipeline runner for reset, transform, and analytics loading.</li>
-                                <li>Safer reruns through raw, processed, and analytics wipe controls.</li>
-                                <li>Prepared for future orchestration extensions such as Airflow.</li>
+                                <li>Standardized raw columns, cleaned critical fields, and transformed order data into
+                                    normalized relational outputs.</li>
+                                <li>Split the source dataset into reusable tables for customer, product, shipping,
+                                    order, and payment method entities.</li>
+                                <li>Used environment-variable-based database connection handling for cleaner and safer
+                                    PostgreSQL integration.</li>
                             </ul>
 
                             <div class="project-actions">
@@ -2076,25 +2079,27 @@
 
                         <div class="project-side">
                             <div class="project-side-card">
-                                <span class="project-side-label">Design Goal</span>
-                                <h4>Engineered for rerun safety and maintainability</h4>
-                                <p>Reduced friction during iterative development by making the pipeline easier to reset,
-                                    rerun, and debug.</p>
+                                <span class="project-side-label">Project Structure</span>
+                                <h4>Built as a modular ETL case study</h4>
+                                <p>Organized around raw data input, cleaned table outputs, notebook-based processing,
+                                    and a clear directory structure for reproducible execution.</p>
                             </div>
 
                             <div class="project-side-card">
                                 <span class="project-side-label">Key Stack</span>
                                 <div class="project-stack">
                                     <span>Python</span>
-                                    <span>Logging</span>
-                                    <span>Workflow</span>
-                                    <span>Airflow-Ready</span>
+                                    <span>Pandas</span>
+                                    <span>PostgreSQL</span>
+                                    <span>psycopg2</span>
+                                    <span>python-dotenv</span>
                                 </div>
                             </div>
 
                             <div class="project-side-card">
                                 <span class="project-side-label">Value</span>
-                                <p>Improved operational discipline so the pipeline behaves like a reusable system.</p>
+                                <p>Demonstrates end-to-end ETL thinking from raw CSV ingestion through relational data
+                                    modeling and controlled warehouse loading.</p>
                             </div>
                         </div>
                     </div>
@@ -2105,46 +2110,50 @@
                         <div class="project-main">
                             <div class="project-kicker">
                                 <span class="highlight-chip">Project 03</span>
-                                <span class="project-status">Analytics Model</span>
+                                <span class="project-status">Data Platform</span>
                             </div>
 
-                            <h3 class="project-title">Relational Schema Design for Analytics</h3>
+                            <h3 class="project-title">ChocoDelight Data Platform</h3>
 
                             <p class="project-lead">
-                                Designed an analytics-oriented schema that moves beyond raw files into structured
-                                dimensions and fact tables for reporting and future optimization.
+                                Built an end-to-end data platform that transforms flat chocolate sales source files into
+                                a structured PostgreSQL environment with raw, operational, and analytics layers,
+                                supporting reproducible ETL execution and dimensional reporting.
                             </p>
 
                             <div class="project-proof-grid">
                                 <div class="project-proof">
-                                    <strong>Dimensions</strong>
-                                    <span>Organized entities for cleaner querying.</span>
+                                    <strong>3-Layer Platform</strong>
+                                    <span>Raw, operational, and analytics schemas designed for cleaner data flow.</span>
                                 </div>
                                 <div class="project-proof">
-                                    <strong>Fact Tables</strong>
-                                    <span>Business events structured clearly.</span>
+                                    <strong>Dimensional Model</strong>
+                                    <span>Four dimensions and one fact table engineered for reporting reuse.</span>
                                 </div>
                                 <div class="project-proof">
-                                    <strong>Reporting Reuse</strong>
-                                    <span>Prepared for analytics and tuning.</span>
+                                    <strong>Orchestrated Runs</strong>
+                                    <span>Reset, extract, clean, transform, and load steps managed end to end.</span>
                                 </div>
                             </div>
 
                             <div class="project-architecture">
-                                <h4>Warehouse Shape</h4>
+                                <h4>Platform Shape</h4>
                                 <div class="project-flow">
-                                    <span>Dimensions</span>
+                                    <span>Raw Layer</span>
                                     <i></i>
-                                    <span>Facts</span>
+                                    <span>Operational Layer</span>
                                     <i></i>
-                                    <span>Reporting</span>
+                                    <span>Analytics Layer</span>
                                 </div>
                             </div>
 
                             <ul class="project-list">
-                                <li>Modeled customer, merchant, product, and date dimensions.</li>
-                                <li>Built fact tables for orders, payments, and items.</li>
-                                <li>Aligned processed outputs and warehouse DDL definitions for consistency.</li>
+                                <li>Downloaded Kaggle source files, standardized datasets, and built clean CSV outputs
+                                    before dimensional transformation.</li>
+                                <li>Engineered dimension tables for calendar, customers, products, and stores, plus a
+                                    fact table for sales analytics.</li>
+                                <li>Loaded data into PostgreSQL schemas with modular loaders, reset utilities, and a
+                                    full pipeline runner for reproducible execution.</li>
                             </ul>
 
                             <div class="project-actions">
@@ -2154,26 +2163,28 @@
 
                         <div class="project-side">
                             <div class="project-side-card">
-                                <span class="project-side-label">Modeling Goal</span>
-                                <h4>Built for clearer business event representation</h4>
-                                <p>Moved from raw ambiguity toward a structure that better supports analytics
-                                    engineering and reporting reuse.</p>
+                                <span class="project-side-label">Architecture</span>
+                                <h4>Built as a layered data engineering platform</h4>
+                                <p>Separated ingestion, cleaning, feature engineering, transformation, and warehouse
+                                    loading across dedicated ETL modules and PostgreSQL schemas.</p>
                             </div>
 
                             <div class="project-side-card">
                                 <span class="project-side-label">Key Stack</span>
                                 <div class="project-stack">
-                                    <span>SQL</span>
+                                    <span>Python</span>
+                                    <span>Pandas</span>
                                     <span>PostgreSQL</span>
-                                    <span>Dimensional Model</span>
-                                    <span>Analytics</span>
+                                    <span>SQLAlchemy</span>
+                                    <span>psycopg2</span>
+                                    <span>Kaggle API</span>
                                 </div>
                             </div>
 
                             <div class="project-side-card">
                                 <span class="project-side-label">Value</span>
-                                <p>Created a stronger warehouse foundation for scalable reporting and clearer
-                                    definitions.</p>
+                                <p>Demonstrates layered architecture, dimensional modeling, schema-aware ETL design,
+                                    and a stronger path from raw files to analytics-ready reporting foundations.</p>
                             </div>
                         </div>
                     </div>
@@ -2280,8 +2291,6 @@
             </div>
         </div>
     </section>
-
-
 
     <section id="contact">
         <div class="section-heading">
