@@ -478,11 +478,46 @@
             margin: .25rem 0 0
         }
 
-        .footer {
-            padding: 1.8rem 0 3rem;
-            color: var(--muted);
-            font-size: .92rem
+        footer {
+            padding: 1.2rem 1rem 2rem;
+            color: #888;
+            font-size: 0.92rem;
         }
+
+        .footer-inner {
+            width: min(var(--max-width), 100%);
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 1rem;
+            align-items: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            padding-top: 1rem;
+        }
+
+        .footer-note {
+            color: #9a9a9a;
+            max-width: 30rem;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.85rem;
+        }
+
+        .footer-links a {
+            color: #cfcfcf;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.25s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-soft);
+        }
+
 
         .hero-note,
         .callout {
@@ -776,9 +811,18 @@
         </section>
     </main>
 
-    <footer class="footer">
-        <div class="container">© 2026 <strong>Yomi Ismail</strong>
-            - Featured case study page for PayFlow Database Optimization II.
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-note">
+                © 2026 <strong>Yomi Ismail </strong> - data engineering portfolio
+            </div>
+            <div class="footer-links">
+                <a href="index.html">Back to Portfolio</a>
+                <a href="#story">Story</a>
+                <a href="#delivery">Delivery</a>
+                <a href="#architecture">Architecture</a>
+                <a href="#related">Related Projects</a>
+            </div>
         </div>
     </footer>
 
