@@ -6,51 +6,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Yomi Ismail | Data Engineer</title>
     <meta name="description"
-        content="Yomi Ismail is a Data Engineer focused on Python ETL pipelines, PostgreSQL warehouse design, analytics-ready schemas, and production-minded portfolio projects." />
+        content="Yomi Ismail is a Data Engineer building Python ETL pipelines, PostgreSQL warehouses, and analytics-ready data systems with a strong delivery mindset." />
     <meta name="keywords"
         content="Yomi Ismail, Data Engineer, Python, SQL, PostgreSQL, ETL, Data Warehouse, Analytics Engineering, Airflow, AWS, Spark" />
     <meta name="author" content="Yomi Ismail" />
     <meta property="og:title" content="Yomi Ismail | Data Engineer" />
     <meta property="og:description"
-        content="Python ETL pipelines, PostgreSQL warehouse design, analytics-ready data models, and production-minded portfolio projects." />
+        content="Python ETL pipelines, PostgreSQL warehouse design, analytics-ready schemas, and production-minded data projects." />
     <meta property="og:type" content="website" />
     <meta property="og:image" content="images/portfolio-preview.png" />
     <meta property="og:url" content="https://yoismail.github.io/portfolio/" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Yomi Ismail | Data Engineer" />
     <meta name="twitter:description"
-        content="Python ETL pipelines, PostgreSQL warehouse design, analytics-ready data models, and production-minded portfolio projects." />
+        content="Python ETL pipelines, PostgreSQL warehouse design, analytics-ready schemas, and production-minded data projects." />
     <link rel="canonical" href="https://yoismail.github.io/portfolio/" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&family=Syne:wght@700;800&display=swap"
         rel="stylesheet" />
-
     <style>
         :root {
-            --bg: #131010;
-            --brown: #543A14;
-            --gold: #F0BB78;
-            --gold-lt: #ffd49a;
-            --cream: #FFF0DC;
-            --muted: #b79a73;
-            --muted-2: #dcc5a3;
-            --surface: rgba(30, 22, 13, 0.56);
-            --surface-2: rgba(18, 14, 8, 0.76);
-            --surface-soft: rgba(84, 58, 20, 0.18);
-            --border: rgba(240, 187, 120, 0.20);
-            --border-strong: rgba(240, 187, 120, 0.38);
-            --topline: rgba(255, 224, 150, 0.30);
-            --shadow: 0 24px 64px rgba(0, 0, 0, 0.68), 0 8px 24px rgba(0, 0, 0, 0.36);
-            --shadow-sm: 0 8px 22px rgba(0, 0, 0, 0.34);
-            --glow: 0 0 30px rgba(240, 187, 120, 0.16);
-            --radius: 22px;
-            --radius-sm: 16px;
+            --bg: #050505;
+            --bg-2: #0d0d0d;
+            --bg-3: #141414;
+            --surface: rgba(28, 28, 28, 0.78);
+            --surface-2: rgba(17, 17, 17, 0.92);
+            --surface-soft: rgba(255, 255, 255, 0.04);
+            --border: rgba(255, 255, 255, 0.08);
+            --border-strong: rgba(143, 161, 74, 0.42);
+            --topline: rgba(255, 255, 255, 0.12);
+            --text: #f5f5f5;
+            --muted: #b8b8b8;
+            --muted-2: #d3d3d3;
+            --primary: #6b7a34;
+            --primary-2: #8fa14a;
+            --primary-3: #a7b86b;
+            --shadow: 0 28px 80px rgba(0, 0, 0, 0.52), 0 10px 26px rgba(0, 0, 0, 0.28);
+            --glow: 0 0 0 1px rgba(255, 255, 255, .02), 0 0 32px rgba(143, 161, 74, .10), 0 0 52px rgba(107, 122, 52, .10);
+            --radius: 24px;
+            --radius-sm: 18px;
             --max: 1180px;
-            --hh: 78px;
-            --blur: 24px;
-            --tag-blur: 10px;
+            --hh: 80px;
+            --blur: 28px;
+            --tag-blur: 14px;
         }
 
         *,
@@ -66,13 +66,13 @@
         }
 
         body {
-            font-family: 'DM Sans', system-ui, sans-serif;
-            color: var(--cream);
-            background: var(--bg);
+            font-family: 'Inter', system-ui, sans-serif;
+            color: var(--text);
+            background: radial-gradient(circle at top, #1a1a1a 0%, #0b0b0b 38%, #050505 72%, #030303 100%);
             line-height: 1.65;
             overflow-x: hidden;
-            position: relative;
             min-height: 100vh;
+            position: relative;
         }
 
         body.menu-open {
@@ -86,21 +86,20 @@
         }
 
         a {
-            color: var(--gold);
+            color: var(--primary-2);
             text-decoration: none;
         }
 
         a:hover {
-            color: var(--cream);
+            color: var(--text);
         }
 
-        button,
-        input {
+        button {
             font: inherit;
         }
 
         *:focus-visible {
-            outline: 2px solid var(--gold);
+            outline: 2px solid var(--primary-2);
             outline-offset: 3px;
         }
 
@@ -109,13 +108,13 @@
             position: fixed;
             inset: 0;
             z-index: 0;
-            background-image:
-                linear-gradient(rgba(240, 187, 120, .018) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(240, 187, 120, .018) 1px, transparent 1px),
-                radial-gradient(circle at 12% 16%, rgba(84, 58, 20, .16), transparent 38%),
-                radial-gradient(circle at 82% 80%, rgba(84, 58, 20, .12), transparent 34%);
-            background-size: 34px 34px, 34px 34px, auto, auto;
-            background-position: 0 0, 0 0, center, center;
+            background:
+                radial-gradient(circle at 14% 14%, rgba(107, 122, 52, .16), transparent 24%),
+                radial-gradient(circle at 86% 12%, rgba(143, 161, 74, .12), transparent 22%),
+                radial-gradient(circle at 82% 78%, rgba(255, 255, 255, .04), transparent 18%),
+                linear-gradient(rgba(255, 255, 255, .015) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, .015) 1px, transparent 1px);
+            background-size: auto, auto, auto, 32px 32px, 32px 32px;
             pointer-events: none;
         }
 
@@ -125,8 +124,10 @@
             inset: 0;
             z-index: 1;
             background:
-                linear-gradient(180deg, rgba(19, 16, 16, .88) 0%, rgba(19, 16, 16, .94) 40%, rgba(19, 16, 16, .98) 100%),
-                radial-gradient(ellipse 70% 55% at 50% 0%, rgba(240, 187, 120, .06), transparent 62%);
+                linear-gradient(180deg, rgba(5, 5, 5, .50) 0%, rgba(5, 5, 5, .74) 42%, rgba(5, 5, 5, .92) 100%),
+                radial-gradient(ellipse 58% 44% at 50% 0%, rgba(107, 122, 52, .10), transparent 62%);
+            backdrop-filter: blur(2px);
+            -webkit-backdrop-filter: blur(2px);
             pointer-events: none;
         }
 
@@ -159,8 +160,8 @@
             left: -9999px;
             top: 1rem;
             z-index: 100;
-            background: var(--gold);
-            color: var(--bg);
+            background: var(--primary-2);
+            color: #050505;
             padding: .8rem 1rem;
             border-radius: 999px;
             font-weight: 700;
@@ -178,17 +179,17 @@
         }
 
         h1 {
-            font-size: clamp(2.5rem, 5.8vw, 5rem);
-            line-height: .95;
+            font-size: clamp(2.8rem, 6vw, 5.6rem);
+            line-height: .93;
         }
 
         h2 {
-            font-size: clamp(1.7rem, 3vw, 3rem);
+            font-size: clamp(1.8rem, 3vw, 3.15rem);
             line-height: 1.02;
         }
 
         h3 {
-            font-size: 1.1rem;
+            font-size: 1.14rem;
             line-height: 1.2;
         }
 
@@ -197,17 +198,13 @@
         }
 
         .lead {
-            font-size: clamp(1rem, 1.5vw, 1.14rem);
+            font-size: clamp(1rem, 1.5vw, 1.15rem);
             color: var(--muted-2);
-            max-width: 66ch;
+            max-width: 68ch;
         }
 
         .muted {
             color: var(--muted);
-        }
-
-        .mono {
-            font-family: 'JetBrains Mono', monospace;
         }
 
         .eyebrow,
@@ -215,50 +212,47 @@
             display: inline-flex;
             align-items: center;
             gap: .5rem;
-            padding: .42rem .84rem;
+            padding: .44rem .86rem;
             border-radius: 999px;
-            border: 1px solid rgba(240, 187, 120, .24);
-            background: rgba(84, 58, 20, .30);
-            color: var(--gold);
+            border: 1px solid rgba(255, 255, 255, .08);
+            background: rgba(255, 255, 255, .05);
+            color: var(--primary-2);
             font-family: 'JetBrains Mono', monospace;
             font-size: .72rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: .09em;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, .06);
         }
 
         .kicker {
             padding: 0;
             border: 0;
             background: none;
+            box-shadow: none;
         }
 
         .glass {
-            background:
-                linear-gradient(172deg,
-                    rgba(255, 220, 148, .06) 0%,
-                    rgba(255, 220, 148, .018) 2.2%,
-                    var(--surface) 2.2%,
-                    var(--surface-2) 100%);
+            background: linear-gradient(180deg, rgba(255, 255, 255, .07) 0%, rgba(255, 255, 255, .025) 2%, var(--surface) 18%, var(--surface-2) 100%);
             border: 1px solid var(--border);
             border-top-color: var(--topline);
             border-radius: var(--radius);
-            box-shadow: var(--shadow), inset 0 1px 0 rgba(255, 255, 255, .06), inset 0 -1px 0 rgba(0, 0, 0, .28);
-            backdrop-filter: blur(var(--blur)) saturate(160%);
-            -webkit-backdrop-filter: blur(var(--blur)) saturate(160%);
+            box-shadow: var(--shadow), inset 0 1px 0 rgba(255, 255, 255, .07), inset 0 -1px 0 rgba(255, 255, 255, .02);
+            backdrop-filter: blur(var(--blur)) saturate(130%);
+            -webkit-backdrop-filter: blur(var(--blur)) saturate(130%);
             transition: transform .28s cubic-bezier(.22, .68, 0, 1.2), border-color .22s ease, box-shadow .22s ease;
         }
 
         .glass:hover {
             transform: translateY(-6px);
             border-color: var(--border-strong);
-            box-shadow: var(--shadow), var(--glow), inset 0 1px 0 rgba(255, 255, 255, .08);
+            box-shadow: var(--shadow), var(--glow), inset 0 1px 0 rgba(255, 255, 255, .10);
         }
 
         .card {
-            padding: 1.4rem;
+            padding: 1.45rem;
             display: flex;
             flex-direction: column;
             gap: 1rem;
@@ -266,22 +260,22 @@
         }
 
         .surface-soft {
-            background: rgba(84, 58, 20, .13);
-            border: 1px solid rgba(240, 187, 120, .12);
+            background: linear-gradient(180deg, rgba(255, 255, 255, .05), rgba(255, 255, 255, .025));
+            border: 1px solid rgba(255, 255, 255, .08);
             border-radius: var(--radius-sm);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
         }
 
         .site-header {
             position: sticky;
             top: 0;
-            height: var(--hh);
             z-index: 70;
-            background: rgba(19, 16, 16, .86);
-            border-bottom: 1px solid rgba(240, 187, 120, .11);
-            backdrop-filter: blur(24px) saturate(150%);
-            -webkit-backdrop-filter: blur(24px) saturate(150%);
+            height: var(--hh);
+            background: rgba(8, 8, 8, .70);
+            border-bottom: 1px solid rgba(255, 255, 255, .06);
+            backdrop-filter: blur(22px) saturate(130%);
+            -webkit-backdrop-filter: blur(22px) saturate(130%);
         }
 
         .header-inner {
@@ -300,25 +294,25 @@
         }
 
         .brand-mark {
-            width: 2.55rem;
-            height: 2.55rem;
-            border-radius: 13px;
+            width: 2.65rem;
+            height: 2.65rem;
+            border-radius: 14px;
             display: grid;
             place-items: center;
-            background: linear-gradient(135deg, rgba(84, 58, 20, .76), rgba(240, 187, 120, .28));
-            border: 1px solid rgba(240, 187, 120, .32);
-            color: var(--gold);
+            background: linear-gradient(135deg, rgba(107, 122, 52, .42), rgba(143, 161, 74, .18));
+            border: 1px solid rgba(255, 255, 255, .12);
+            color: var(--text);
             font-family: 'JetBrains Mono', monospace;
-            font-size: .9rem;
+            font-size: .92rem;
             font-weight: 700;
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, .08);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, .08), 0 0 20px rgba(107, 122, 52, .08);
             flex-shrink: 0;
         }
 
         .brand-copy strong {
             display: block;
-            font-size: .96rem;
-            color: var(--cream);
+            font-size: .98rem;
+            color: var(--text);
         }
 
         .brand-copy span {
@@ -333,8 +327,8 @@
             width: 2.75rem;
             height: 2.75rem;
             border-radius: 11px;
-            border: 1px solid rgba(240, 187, 120, .22);
-            background: rgba(84, 58, 20, .22);
+            border: 1px solid rgba(255, 255, 255, .10);
+            background: rgba(255, 255, 255, .05);
             align-items: center;
             justify-content: center;
             cursor: pointer;
@@ -352,7 +346,7 @@
         .ham span {
             height: 2px;
             border-radius: 999px;
-            background: var(--gold);
+            background: var(--primary-2);
             transition: .24s ease;
             transform-origin: center;
         }
@@ -380,7 +374,7 @@
         .site-nav a {
             padding: .64rem .9rem;
             border-radius: 999px;
-            color: #cdaa77;
+            color: var(--muted);
             font-size: .9rem;
             font-weight: 500;
             transition: background .2s, color .2s, transform .2s;
@@ -388,8 +382,8 @@
 
         .site-nav a:hover,
         .site-nav a.is-active {
-            background: rgba(84, 58, 20, .42);
-            color: var(--cream);
+            background: rgba(255, 255, 255, .07);
+            color: var(--text);
             transform: translateY(-1px);
         }
 
@@ -397,7 +391,8 @@
         .btn,
         .contact-link,
         .card-links a,
-        .filter-btn {
+        .filter-btn,
+        .trust-link {
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -409,38 +404,38 @@
 
         .header-cta,
         .btn-primary {
-            background: linear-gradient(135deg, var(--gold) 0%, #e4a43a 58%, #c87830 100%);
-            color: var(--bg);
-            box-shadow: 0 12px 30px rgba(240, 187, 120, .24), inset 0 1px 0 rgba(255, 240, 190, .26);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-2) 100%);
+            color: #050505;
+            box-shadow: 0 12px 30px rgba(107, 122, 52, .18), 0 8px 20px rgba(143, 161, 74, .14);
         }
 
         .header-cta {
-            padding: .74rem 1.08rem;
+            padding: .76rem 1.12rem;
             font-size: .88rem;
             white-space: nowrap;
         }
 
         .header-cta:hover,
         .btn-primary:hover {
-            color: var(--bg);
+            color: #050505;
             transform: translateY(-2px);
-            box-shadow: 0 18px 38px rgba(240, 187, 120, .34);
+            box-shadow: 0 18px 38px rgba(107, 122, 52, .22), 0 12px 28px rgba(143, 161, 74, .18);
         }
 
         .hero {
-            padding: clamp(3rem, 5vw, 4.8rem) 0 3.8rem;
+            padding: clamp(3rem, 5vw, 5rem) 0 4rem;
         }
 
         .hero-grid {
             display: grid;
-            grid-template-columns: minmax(0, 1.18fr) minmax(300px, .82fr);
+            grid-template-columns: minmax(0, 1.2fr) minmax(320px, .8fr);
             gap: 1.15rem;
             align-items: stretch;
         }
 
         .hero-copy,
         .hero-panel {
-            padding: 1.55rem;
+            padding: 1.6rem;
         }
 
         .hero-copy {
@@ -451,7 +446,7 @@
 
         .hero-subtitle {
             font-family: 'JetBrains Mono', monospace;
-            color: var(--gold);
+            color: var(--primary-2);
             font-size: .82rem;
             text-transform: uppercase;
             letter-spacing: .1em;
@@ -459,28 +454,29 @@
 
         .hero-proof {
             display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
+            grid-template-columns: repeat(4, minmax(0, 1fr));
             gap: .75rem;
-            margin-top: .15rem;
+            margin-top: .2rem;
         }
 
         .proof-stat {
             padding: .95rem;
             border-radius: 16px;
-            background: rgba(84, 58, 20, .18);
-            border: 1px solid rgba(240, 187, 120, .13);
+            background: rgba(255, 255, 255, .05);
+            border: 1px solid rgba(255, 255, 255, .08);
             box-shadow: inset 0 1px 0 rgba(255, 255, 255, .03);
         }
 
         .proof-stat strong {
             display: block;
             font-family: 'JetBrains Mono', monospace;
-            color: var(--gold);
-            font-size: 1.18rem;
+            color: var(--primary-2);
+            font-size: 1.14rem;
+            margin-bottom: .18rem;
         }
 
         .proof-stat span {
-            font-size: .83rem;
+            font-size: .8rem;
             color: var(--muted);
         }
 
@@ -488,23 +484,23 @@
             display: flex;
             flex-wrap: wrap;
             gap: .75rem;
-            padding-top: .2rem;
+            padding-top: .25rem;
         }
 
         .btn {
             padding: .84rem 1.1rem;
-            border: 1px solid rgba(240, 187, 120, .20);
+            border: 1px solid rgba(255, 255, 255, .10);
             font-size: .92rem;
         }
 
         .btn-secondary {
-            background: rgba(84, 58, 20, .20);
-            color: var(--cream);
+            background: rgba(255, 255, 255, .05);
+            color: var(--text);
         }
 
         .btn-secondary:hover {
-            background: rgba(84, 58, 20, .42);
-            color: var(--cream);
+            background: rgba(255, 255, 255, .09);
+            color: var(--text);
             transform: translateY(-2px);
         }
 
@@ -523,8 +519,8 @@
         .panel-item {
             padding: .96rem;
             border-radius: 16px;
-            background: rgba(84, 58, 20, .14);
-            border: 1px solid rgba(240, 187, 120, .10);
+            background: rgba(255, 255, 255, .04);
+            border: 1px solid rgba(255, 255, 255, .08);
         }
 
         .panel-item strong {
@@ -532,14 +528,21 @@
             margin-bottom: .25rem;
         }
 
-        .quick-stack {
+        .quick-stack,
+        .tag-row,
+        .card-links,
+        .contact-links,
+        .filter-row,
+        .proof-strip,
+        .trust-links {
             display: flex;
             flex-wrap: wrap;
-            gap: .5rem;
+            gap: .55rem;
         }
 
         .feature-grid,
-        .contact-grid {
+        .contact-grid,
+        .trust-grid {
             display: grid;
             grid-template-columns: minmax(0, 1.1fr) minmax(300px, .9fr);
             gap: 1rem;
@@ -567,18 +570,8 @@
         .callout {
             padding: 1rem 1.06rem;
             border-radius: 16px;
-            background: rgba(84, 58, 20, .13);
-            border: 1px solid rgba(240, 187, 120, .11);
-        }
-
-        .tag-row,
-        .card-links,
-        .contact-links,
-        .filter-row,
-        .proof-strip {
-            display: flex;
-            flex-wrap: wrap;
-            gap: .55rem;
+            background: rgba(255, 255, 255, .04);
+            border: 1px solid rgba(255, 255, 255, .08);
         }
 
         .tag {
@@ -590,45 +583,45 @@
             font-size: .7rem;
             font-weight: 700;
             border: 1px solid transparent;
-            backdrop-filter: blur(var(--tag-blur)) saturate(150%);
-            -webkit-backdrop-filter: blur(var(--tag-blur)) saturate(150%);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, .28), inset 0 1px 0 rgba(255, 255, 255, .05);
+            backdrop-filter: blur(var(--tag-blur)) saturate(140%);
+            -webkit-backdrop-filter: blur(var(--tag-blur)) saturate(140%);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, .06);
             transition: transform .2s cubic-bezier(.22, .68, 0, 1.25), box-shadow .2s, background .2s, border-color .2s;
         }
 
         .tag:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 22px rgba(0, 0, 0, .36), var(--glow);
+            box-shadow: 0 8px 22px rgba(0, 0, 0, .22), 0 0 20px rgba(107, 122, 52, .10);
         }
 
         .tag.c1 {
-            background: rgba(240, 187, 120, .14);
-            border-color: rgba(240, 187, 120, .28);
-            color: var(--gold);
+            background: rgba(107, 122, 52, .18);
+            border-color: rgba(107, 122, 52, .32);
+            color: #e1e8c4;
         }
 
         .tag.c2 {
-            background: rgba(84, 58, 20, .42);
-            border-color: rgba(240, 187, 120, .24);
-            color: #edce94;
+            background: rgba(143, 161, 74, .14);
+            border-color: rgba(143, 161, 74, .28);
+            color: #eef5d2;
         }
 
         .tag.c3 {
-            background: rgba(240, 187, 120, .09);
-            border-color: rgba(240, 187, 120, .18);
-            color: #d7ad6f;
+            background: rgba(255, 255, 255, .08);
+            border-color: rgba(255, 255, 255, .12);
+            color: var(--text);
         }
 
         .tag.c4 {
-            background: rgba(84, 58, 20, .28);
-            border-color: rgba(240, 187, 120, .16);
-            color: #cc9b5b;
+            background: rgba(78, 88, 40, .20);
+            border-color: rgba(107, 122, 52, .24);
+            color: #d8e1b1;
         }
 
         .tag.c5 {
-            background: rgba(255, 240, 220, .08);
-            border-color: rgba(255, 240, 220, .16);
-            color: var(--cream);
+            background: rgba(255, 255, 255, .05);
+            border-color: rgba(255, 255, 255, .10);
+            color: var(--text);
         }
 
         .proof-list,
@@ -641,29 +634,27 @@
 
         .proof-list li,
         .detail-list li {
-            color: #d9c09a;
+            color: #dfdfdf;
         }
 
         .card-links a,
-        .contact-link {
-            padding: .66rem .92rem;
-            background: rgba(84, 58, 20, .20);
-            color: var(--cream);
-            border: 1px solid rgba(240, 187, 120, .18);
+        .contact-link,
+        .trust-link {
+            padding: .68rem .94rem;
+            background: rgba(255, 255, 255, .05);
+            color: var(--text);
+            border: 1px solid rgba(255, 255, 255, .10);
             font-size: .88rem;
             box-shadow: inset 0 1px 0 rgba(255, 255, 255, .03);
         }
 
         .card-links a:hover,
-        .contact-link:hover {
-            background: rgba(84, 58, 20, .46);
-            border-color: rgba(240, 187, 120, .42);
-            color: var(--cream);
+        .contact-link:hover,
+        .trust-link:hover {
+            background: rgba(255, 255, 255, .09);
+            border-color: rgba(143, 161, 74, .28);
+            color: var(--text);
             transform: translateY(-2px);
-        }
-
-        .proof-strip {
-            margin-top: .15rem;
         }
 
         .proof-chip {
@@ -671,13 +662,13 @@
             min-width: 110px;
             padding: .82rem .9rem;
             border-radius: 16px;
-            background: rgba(84, 58, 20, .16);
-            border: 1px solid rgba(240, 187, 120, .12);
+            background: rgba(255, 255, 255, .04);
+            border: 1px solid rgba(255, 255, 255, .08);
         }
 
         .proof-chip strong {
             display: block;
-            color: var(--gold);
+            color: var(--primary-2);
             font-family: 'JetBrains Mono', monospace;
             font-size: .92rem;
             margin-bottom: .12rem;
@@ -696,17 +687,16 @@
         }
 
         .arch-stage {
-            position: relative;
             padding: .85rem .75rem;
             border-radius: 16px;
-            background: rgba(84, 58, 20, .16);
-            border: 1px solid rgba(240, 187, 120, .12);
+            background: rgba(255, 255, 255, .04);
+            border: 1px solid rgba(255, 255, 255, .08);
             text-align: center;
         }
 
         .arch-stage strong {
             display: block;
-            color: var(--gold);
+            color: var(--primary-2);
             font-family: 'JetBrains Mono', monospace;
             font-size: .82rem;
             margin-bottom: .12rem;
@@ -732,9 +722,9 @@
             font-family: 'JetBrains Mono', monospace;
             letter-spacing: .08em;
             text-transform: uppercase;
-            color: var(--gold);
-            border: 1px solid rgba(240, 187, 120, .18);
-            background: rgba(84, 58, 20, .22);
+            color: var(--primary-2);
+            border: 1px solid rgba(255, 255, 255, .10);
+            background: rgba(255, 255, 255, .05);
         }
 
         .filter-row {
@@ -743,18 +733,18 @@
 
         .filter-btn {
             padding: .64rem .9rem;
-            border: 1px solid rgba(240, 187, 120, .16);
-            background: rgba(84, 58, 20, .18);
-            color: var(--cream);
+            border: 1px solid rgba(255, 255, 255, .10);
+            background: rgba(255, 255, 255, .05);
+            color: var(--text);
             cursor: pointer;
             font-size: .86rem;
         }
 
         .filter-btn:hover,
         .filter-btn.is-active {
-            background: rgba(84, 58, 20, .44);
-            border-color: rgba(240, 187, 120, .38);
-            color: var(--cream);
+            background: rgba(255, 255, 255, .10);
+            border-color: rgba(143, 161, 74, .28);
+            color: var(--text);
             transform: translateY(-1px);
         }
 
@@ -763,9 +753,35 @@
             margin-top: .72rem;
         }
 
+        .bullet-free {
+            display: grid;
+            gap: .75rem;
+        }
+
+        .metric-line {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: .76rem .9rem;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, .04);
+            border: 1px solid rgba(255, 255, 255, .08);
+        }
+
+        .metric-line strong {
+            color: var(--text);
+            font-size: .92rem;
+        }
+
+        .metric-line span {
+            color: var(--primary-2);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: .8rem;
+        }
+
         footer {
             padding: 2.2rem 0;
-            border-top: 1px solid rgba(240, 187, 120, .10);
+            border-top: 1px solid rgba(255, 255, 255, .07);
             text-align: center;
         }
 
@@ -788,7 +804,8 @@
             .hero-grid,
             .feature-grid,
             .contact-grid,
-            .skills-grid {
+            .skills-grid,
+            .trust-grid {
                 grid-template-columns: 1fr;
             }
 
@@ -817,7 +834,7 @@
             .hero-copy,
             .hero-panel,
             .card {
-                padding: 1.1rem;
+                padding: 1.12rem;
             }
 
             .hero-grid,
@@ -829,7 +846,7 @@
             }
 
             .hero-proof {
-                grid-template-columns: 1fr;
+                grid-template-columns: 1fr 1fr;
             }
 
             .site-nav {
@@ -842,11 +859,11 @@
                 gap: .35rem;
                 padding: .9rem;
                 border-radius: 20px;
-                background: rgba(18, 14, 10, .97);
-                border: 1px solid rgba(240, 187, 120, .20);
-                box-shadow: 0 28px 72px rgba(0, 0, 0, .8);
-                backdrop-filter: blur(28px) saturate(150%);
-                -webkit-backdrop-filter: blur(28px) saturate(150%);
+                background: rgba(12, 12, 12, .94);
+                border: 1px solid rgba(255, 255, 255, .08);
+                box-shadow: 0 28px 72px rgba(0, 0, 0, .55);
+                backdrop-filter: blur(28px) saturate(125%);
+                -webkit-backdrop-filter: blur(28px) saturate(125%);
                 opacity: 0;
                 visibility: hidden;
                 transform: translateY(-12px) scale(.98);
@@ -889,9 +906,13 @@
             }
         }
 
-        @media (max-width: 480px) {
+        @media (max-width: 520px) {
             h1 {
-                font-size: 2.2rem;
+                font-size: 2.35rem;
+            }
+
+            .hero-proof {
+                grid-template-columns: 1fr;
             }
         }
 
@@ -947,15 +968,15 @@
         <section class="hero" id="top">
             <div class="container hero-grid">
                 <div class="glass hero-copy">
-                    <span class="eyebrow">Data Engineer • Python • PostgreSQL</span>
-                    <div class="hero-subtitle">ETL pipelines • warehouse design • analytics-ready data models</div>
-                    <h1>I build reliable data systems that turn messy business data into trusted outputs.</h1>
-                    <p class="lead">I bring an operations mindset into data engineering, so I do not only think about
-                        writing scripts. I think about reruns, handoffs, debugging paths, schema clarity, and whether a
-                        team can trust the result after the pipeline finishes.</p>
-                    <p class="muted">My strongest work sits at the intersection of delivery and structure: modular ETL
-                        workflows, relational warehouse design, analytics-ready schemas, and portfolio projects built to
-                        be readable, repeatable, and extendable.</p>
+                    <span class="eyebrow">Data Engineer • Python • SQL • PostgreSQL</span>
+                    <div class="hero-subtitle">ETL pipelines • warehouse design • analytics-ready data systems</div>
+                    <h1>I build data pipelines and warehouse models that teams can trust.</h1>
+                    <p class="lead">I am a Data Engineer with a Product Operations background, focused on Python ETL
+                        workflows, PostgreSQL warehouse design, and analytics-ready data structures built for reruns,
+                        clarity, and maintainability.</p>
+                    <p class="muted">My portfolio is designed to show more than tools. It shows how I think about stage
+                        separation, schema design, debugging paths, business context, and delivery quality when a
+                        project needs to be extended or handed over.</p>
 
                     <div class="hero-actions">
                         <a class="btn btn-primary" href="#projects">View Projects</a>
@@ -964,36 +985,38 @@
 
                     <div class="hero-proof" aria-label="Portfolio proof points">
                         <div class="proof-stat"><strong>3</strong><span>Flagship data projects</span></div>
-                        <div class="proof-stat"><strong>5+</strong><span>Relational tables in YINC</span></div>
+                        <div class="proof-stat"><strong>5+</strong><span>Final warehouse tables in YINC</span></div>
                         <div class="proof-stat"><strong>3-layer</strong><span>Raw → processed → analytics
                                 thinking</span></div>
+                        <div class="proof-stat"><strong>UK-ready</strong><span>ATS-aligned Data Engineer
+                                positioning</span></div>
                     </div>
                 </div>
 
-                <aside class="glass hero-panel" aria-label="Delivery approach">
+                <aside class="glass hero-panel" aria-label="Recruiter snapshot">
                     <div>
-                        <div class="kicker">How I work</div>
+                        <div class="kicker">What I bring</div>
                         <div class="panel-list" style="margin-top:1rem">
                             <div class="panel-item">
-                                <strong>Build for reruns, not only first runs</strong>
-                                <p class="muted">I structure projects so resets, reloads, and pipeline updates are
-                                    manageable when the logic changes.</p>
+                                <strong>Python ETL delivery</strong>
+                                <p class="muted">I build modular extraction, transformation, and loading workflows with
+                                    cleaner stage ownership.</p>
                             </div>
                             <div class="panel-item">
-                                <strong>Separate pipeline responsibilities clearly</strong>
-                                <p class="muted">I keep extraction, transformation, table creation, and loading distinct
-                                    so debugging stays tractable.</p>
+                                <strong>Warehouse design mindset</strong>
+                                <p class="muted">I focus on relational structures, naming clarity, analytics readiness,
+                                    and maintainable query paths.</p>
                             </div>
                             <div class="panel-item">
-                                <strong>Model for reporting and debugging</strong>
-                                <p class="muted">I design warehouse structures that are easier to query, validate, and
-                                    explain to other people later.</p>
+                                <strong>Operations-informed execution</strong>
+                                <p class="muted">My background helps me think about handoffs, failure points, and what
+                                    teams actually need from the output.</p>
                             </div>
                         </div>
                     </div>
 
                     <div class="surface-soft" style="padding:1rem">
-                        <div class="kicker">Current stack</div>
+                        <div class="kicker">Core stack</div>
                         <div class="quick-stack" style="margin-top:.75rem">
                             <span class="tag c1">Python</span>
                             <span class="tag c2">Pandas</span>
@@ -1011,26 +1034,17 @@
                 <article class="glass card">
                     <span class="eyebrow">Featured Case Study</span>
                     <h2>PayFlow Database Optimization II</h2>
-                    <p>I used PayFlow to practice production-minded data engineering patterns: clearer stage boundaries,
-                        warehouse-focused transformations, rerun-safe loading, and project structure designed to survive
-                        iteration instead of collapsing into one script.</p>
-                    <p class="muted">The goal was not only to clean data. It was to separate responsibilities properly
-                        so extraction, transformation, warehouse loading, and orchestration could each be reasoned about
-                        independently.</p>
+                    <p>This is my strongest portfolio project for showing how I think like a Data Engineer. I used
+                        PayFlow to practice modular ETL design, warehouse-focused data shaping, rerun-safe loading, and
+                        clearer separation between transformation logic and analytics outputs.</p>
+                    <p class="muted">The goal was to move beyond one-script data cleaning and build something closer to
+                        a production-minded workflow: explicit stages, clearer responsibilities, and a structure that
+                        remains readable when logic changes.</p>
 
                     <div class="architecture" aria-label="PayFlow architecture overview">
-                        <div class="arch-stage">
-                            <strong>Raw</strong>
-                            <span>Ingest + stage source data</span>
-                        </div>
-                        <div class="arch-stage">
-                            <strong>Processed</strong>
-                            <span>Clean, type, normalize</span>
-                        </div>
-                        <div class="arch-stage">
-                            <strong>Analytics</strong>
-                            <span>Warehouse-ready outputs</span>
-                        </div>
+                        <div class="arch-stage"><strong>Raw</strong><span>Source staging</span></div>
+                        <div class="arch-stage"><strong>Processed</strong><span>Typed transforms</span></div>
+                        <div class="arch-stage"><strong>Analytics</strong><span>Warehouse outputs</span></div>
                     </div>
 
                     <div class="proof-strip">
@@ -1045,7 +1059,7 @@
                             <div class="kicker">What I delivered</div>
                             <ul class="proof-list" style="margin-top:.75rem">
                                 <li>Modular ETL workflow with clearer stage boundaries.</li>
-                                <li>Raw → processed → analytics structure reflected in the project layout.</li>
+                                <li>Raw → processed → analytics structure reflected in project layout.</li>
                                 <li>Safer rerun path during development and redesign.</li>
                             </ul>
                         </div>
@@ -1068,19 +1082,17 @@
 
                 <aside class="glass card">
                     <span class="eyebrow">Recruiter Snapshot</span>
-                    <h3>Where I add value quickly</h3>
-                    <ul class="detail-list">
-                        <li>I can turn raw, inconsistent datasets into cleaner relational structures that are easier to
-                            query and extend.</li>
-                        <li>I think about environment variables, project layout, reruns, and warehouse structure early,
-                            not as afterthoughts.</li>
-                        <li>I present portfolio work in a way that is readable to both technical reviewers and hiring
-                            teams.</li>
-                    </ul>
+                    <h3>Why I am interview-ready</h3>
+                    <div class="bullet-free">
+                        <div class="metric-line"><strong>Role focus</strong><span>Data Engineer</span></div>
+                        <div class="metric-line"><strong>Strength</strong><span>ETL + Warehousing</span></div>
+                        <div class="metric-line"><strong>Delivery style</strong><span>Structured + readable</span></div>
+                        <div class="metric-line"><strong>Next stack</strong><span>AWS • Airflow • Spark</span></div>
+                    </div>
                     <div class="surface-soft" style="padding:1rem">
-                        <div class="kicker">Target roles</div>
-                        <p class="muted" style="margin-top:.6rem">Data Engineer, Analytics Engineer, and technically
-                            strong platform or operations roles where pipeline quality and data structure matter.</p>
+                        <div class="kicker">Best-fit roles</div>
+                        <p class="muted" style="margin-top:.6rem">Junior Data Engineer, Analytics Engineer, Data
+                            Platform Analyst, or technically strong operations roles with a data backbone.</p>
                     </div>
                     <div class="card-links">
                         <a href="#contact">Contact Me</a>
@@ -1091,15 +1103,56 @@
             </div>
         </section>
 
+        <section class="section" id="trust">
+            <div class="container trust-grid">
+                <div class="glass card">
+                    <span class="eyebrow">What makes my work credible</span>
+                    <h2>I focus on delivery signals, not just tool lists.</h2>
+                    <p class="lead">The site is designed to communicate hiring value quickly: modular pipelines,
+                        warehouse logic, rerun safety, clearer data models, and projects that can be explained beyond
+                        the code itself.</p>
+                    <div class="grid-2">
+                        <div class="callout">
+                            <div class="kicker">Engineering signals</div>
+                            <ul class="proof-list" style="margin-top:.75rem">
+                                <li>Environment-based configuration instead of hardcoded credentials.</li>
+                                <li>Explicit stage boundaries across extract, transform, and load steps.</li>
+                                <li>Analytics-ready schema thinking, not only one-off cleaning.</li>
+                            </ul>
+                        </div>
+                        <div class="callout">
+                            <div class="kicker">Business signals</div>
+                            <ul class="proof-list" style="margin-top:.75rem">
+                                <li>Operations background that strengthens delivery judgment.</li>
+                                <li>Clearer thinking about handoffs, trust, and output usability.</li>
+                                <li>Portfolio storytelling that explains why design choices matter.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass card">
+                    <span class="eyebrow">Quick links</span>
+                    <h3>Review the strongest proof fast</h3>
+                    <div class="trust-links">
+                        <a class="trust-link" href="case-study.html">PayFlow case study</a>
+                        <a class="trust-link" href="https://github.com/yoismail" target="_blank" rel="noopener">GitHub
+                            profile</a>
+                        <a class="trust-link" href="cv/Copy%20of%20Yomi%20Ismail%20CV%20-%20DE.docx.pdf" target="_blank"
+                            rel="noopener">Download CV</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section id="projects" class="section">
             <div class="container">
                 <div class="section-head">
                     <div>
                         <span class="eyebrow">Projects</span>
                         <h2 style="margin-top:.9rem">Projects built around different engineering problems.</h2>
-                        <p class="lead section-note">Each project below represents a different delivery pattern:
-                            relational modeling, layered pipeline design, and rerun-safe warehouse engineering. The goal
-                            is not to repeat one project three times, but to show range with structure.</p>
+                        <p class="lead section-note">Each project below highlights a different strength: relational
+                            modeling, layered platform thinking, and rerun-safe warehouse delivery. Together they show a
+                            stronger Data Engineer profile than repeating one project pattern.</p>
                     </div>
                 </div>
 
@@ -1118,14 +1171,14 @@
         <section id="skills" class="section">
             <div class="container">
                 <span class="eyebrow">Skills</span>
-                <h2 style="margin-top:.9rem">Tools I used to build these projects.</h2>
+                <h2 style="margin-top:.9rem">Tools I actually used while building these projects.</h2>
                 <div class="skills-grid" style="margin-top:1.3rem">
                     <div class="glass card">
                         <h3>Data Engineering</h3>
                         <div class="tag-row"><span class="tag c1">Python</span><span class="tag c2">Pandas</span><span
                                 class="tag c3">SQL</span><span class="tag c4">PostgreSQL</span><span
                                 class="tag c5">ETL</span></div>
-                        <p class="muted">Extraction, transformation, validation, relational loading, and analytics table
+                        <p class="muted">Extraction, cleaning, validation, relational loading, and analytics table
                             preparation.</p>
                     </div>
                     <div class="glass card">
@@ -1133,8 +1186,7 @@
                         <div class="tag-row"><span class="tag c3">Schema Design</span><span class="tag c1">Dimensional
                                 Modeling</span><span class="tag c2">Normalization</span><span class="tag c4">Fact
                                 Tables</span></div>
-                        <p class="muted">I focus on structures that are easier to query, validate, and hand over
-                            cleanly.</p>
+                        <p class="muted">I focus on structures that are easier to query, validate, and hand over.</p>
                     </div>
                     <div class="glass card">
                         <h3>Engineering Habits</h3>
@@ -1148,7 +1200,8 @@
                         <h3>Next-Step Stack</h3>
                         <div class="tag-row"><span class="tag c4">Airflow</span><span class="tag c1">AWS</span><span
                                 class="tag c2">Spark</span><span class="tag c3">Analytics Engineering</span></div>
-                        <p class="muted">These are the platforms and workflows I am actively building toward next.</p>
+                        <p class="muted">These are the platforms and workflows I am actively building toward for more
+                            production-grade work.</p>
                     </div>
                 </div>
             </div>
@@ -1158,11 +1211,12 @@
             <div class="container contact-grid">
                 <div class="glass card">
                     <span class="eyebrow">Contact</span>
-                    <h2>Open to data work that needs structure, clarity, and reliable delivery.</h2>
+                    <h2>Open to Data Engineer opportunities in the UK.</h2>
                     <p>I am interested in roles where I can contribute to ETL pipelines, warehouse design,
-                        analytics-ready data preparation, or platform-aligned operations work with a strong data
-                        backbone.</p>
-                    <p class="muted">Best starting points are the projects, case study, GitHub, and CV linked below.</p>
+                        analytics-ready data preparation, or technically strong platform and operations work with a
+                        clear data backbone.</p>
+                    <p class="muted">Best starting points are the case study, project repositories, GitHub profile, and
+                        CV linked below.</p>
                     <div class="contact-links">
                         <a class="contact-link" href="mailto:ismailyomi@gmail.com" aria-label="Email Yomi Ismail">
                             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -1201,14 +1255,13 @@
                 </div>
 
                 <div class="glass card">
-                    <span class="eyebrow">What the site should communicate</span>
-                    <h3>A serious early-career engineer with a delivery mindset.</h3>
+                    <span class="eyebrow">Positioning</span>
+                    <h3>A stronger early-career Data Engineer profile.</h3>
                     <ul class="detail-list">
-                        <li>I can explain why a pipeline is structured a certain way, not only list the tools used.</li>
-                        <li>I can show distinct project patterns instead of repeating the same project in different
-                            wording.</li>
-                        <li>I can present technical work clearly enough for both engineering reviewers and recruiters.
-                        </li>
+                        <li>I can explain why a pipeline is structured a certain way, not only what tools I used.</li>
+                        <li>I can separate one project from another and talk about the specific engineering problem each
+                            one solves.</li>
+                        <li>I can present technical work clearly for both engineering reviewers and recruiters.</li>
                     </ul>
                 </div>
             </div>
@@ -1217,7 +1270,8 @@
 
     <footer>
         <div class="container">
-            <p class="footer-copy">© 2026 <a href="mailto:ismailyomi@gmail.com">Yomi Ismail</a></p>
+            <p class="footer-copy">© 2026 <a href="mailto:ismailyomi@gmail.com">Yomi Ismail</a> · Built with intention.
+            </p>
         </div>
     </footer>
 
@@ -1228,12 +1282,12 @@
                 repo: "https://github.com/yoismail/yinc_ecommerce_case_study",
                 live: "https://github.com/yoismail/yinc_ecommerce_case_study",
                 label: "Normalization and relational loading",
-                category: "warehouse",
-                description: "A relational ETL project focused on turning raw e-commerce CSV data into a cleaner PostgreSQL structure with explicit entity boundaries and environment-based configuration.",
-                details: "This project sharpened the fundamentals: normalized tables, clearer customer-product-order separation, and a cleaner final schema that is easier to query and explain.",
+                category: "warehouse etl",
+                description: "A relational ETL project that converts raw e-commerce CSV data into a cleaner PostgreSQL model with clearer entity boundaries and analytics-ready structure.",
+                details: "This project sharpened the fundamentals: normalized tables, customer-product-order separation, cleaner schema design, and environment-based database access.",
                 impact: [
                     "Separated raw e-commerce records into cleaner relational entities.",
-                    "Improved maintainability through environment-based database access.",
+                    "Improved maintainability through environment-based configuration.",
                     "Created a more query-friendly warehouse structure for analysis."
                 ],
                 metrics: ["5+ final relational tables", "CSV-to-PostgreSQL ETL flow", "Environment-variable DB connection", "Cleaner entity separation"],
@@ -1250,8 +1304,8 @@
                 live: "https://github.com/yoismail/choco_delight_data_platform",
                 label: "Layered platform thinking",
                 category: "analytics",
-                description: "A layered data platform project structured around ingestion, shaping, and analytics outputs rather than one flat transformation script.",
-                details: "The key value here was end-to-end flow ownership: ingesting source data, applying feature engineering, and shaping warehouse-friendly outputs that are easier to reason about later.",
+                description: "A layered data platform project built around ingestion, shaping, and analytics outputs rather than one flat transformation script.",
+                details: "The valuable part here was end-to-end flow ownership: ingesting source data, applying feature engineering, and shaping warehouse-friendly outputs that are easier to reason about later.",
                 impact: [
                     "Improved stage clarity by separating ingestion, shaping, and analytics concerns.",
                     "Made transformation ownership more explicit within the workflow.",
@@ -1293,9 +1347,7 @@
         const tagClass = i => `c${(i % 5) + 1}`;
 
         function renderProjects(filter = 'all') {
-            const filtered = filter === 'all'
-                ? projects
-                : projects.filter(project => project.category.split(' ').includes(filter));
+            const filtered = filter === 'all' ? projects : projects.filter(project => project.category.split(' ').includes(filter));
 
             grid.innerHTML = filtered.map(project => {
                 const primaryHref = project.title.includes('PayFlow') ? 'case-study.html' : project.live;
