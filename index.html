@@ -28,29 +28,53 @@
         rel="stylesheet" />
     <style>
         :root {
-            --bg: #050505;
-            --bg-2: #0d0d0d;
-            --bg-3: #141414;
-            --surface: rgba(28, 28, 28, 0.78);
-            --surface-2: rgba(17, 17, 17, 0.92);
-            --surface-soft: rgba(255, 255, 255, 0.04);
-            --border: rgba(255, 255, 255, 0.08);
-            --border-strong: rgba(143, 161, 74, 0.42);
-            --topline: rgba(255, 255, 255, 0.12);
-            --text: #f5f5f5;
-            --muted: #b8b8b8;
-            --muted-2: #d3d3d3;
-            --primary: #6b7a34;
-            --primary-2: #8fa14a;
-            --primary-3: #a7b86b;
-            --shadow: 0 28px 80px rgba(0, 0, 0, 0.52), 0 10px 26px rgba(0, 0, 0, 0.28);
-            --glow: 0 0 0 1px rgba(255, 255, 255, .02), 0 0 32px rgba(143, 161, 74, .10), 0 0 52px rgba(107, 122, 52, .10);
+            /* Core Backgrounds */
+            --bg: #030303;
+            --bg-2: #090909;
+            --bg-3: #121212;
+
+            /* Premium Espresso Glass Surfaces */
+            --surface: rgba(28, 20, 16, 0.78);
+            --surface-2: rgba(16, 11, 9, 0.92);
+            --surface-soft: rgba(255, 248, 240, 0.035);
+
+            /* Borders */
+            --border: rgba(255, 245, 235, 0.08);
+            --border-strong: rgba(205, 138, 70, 0.42);
+            --topline: rgba(255, 255, 255, 0.10);
+
+            /* Typography */
+            --text: #FFF8F2;
+            --muted: #C9B8A8;
+            --muted-2: #E8D8C8;
+
+            /* Apple x Coffee Accent System */
+            --primary: #5C3B2A;
+            /* espresso */
+            --primary-2: #B87333;
+            /* bronze */
+            --primary-3: #E2B07A;
+            /* latte glow */
+
+            /* Shadows */
+            --shadow:
+                0 28px 80px rgba(0, 0, 0, .58),
+                0 10px 26px rgba(0, 0, 0, .30);
+
+            /* Glow */
+            --glow:
+                0 0 0 1px rgba(255, 255, 255, .02),
+                0 0 28px rgba(184, 115, 51, .14),
+                0 0 54px rgba(92, 59, 42, .12);
+
+            /* Radius / Layout */
             --radius: 24px;
             --radius-sm: 18px;
             --max: 1180px;
             --hh: 80px;
             --blur: 28px;
             --tag-blur: 14px;
+
         }
 
         *,
@@ -68,7 +92,10 @@
         body {
             font-family: 'Inter', system-ui, sans-serif;
             color: var(--text);
-            background: radial-gradient(circle at top, #1a1a1a 0%, #0b0b0b 38%, #050505 72%, #030303 100%);
+            background:
+                radial-gradient(circle at top, rgba(184, 115, 51, .16) 0%, transparent 24%),
+                radial-gradient(circle at 80% 15%, rgba(92, 59, 42, .12) 0%, transparent 22%),
+                linear-gradient(180deg, #000000 0%, #040404 30%, #0b0908 65%, #15110e 100%);
             line-height: 1.65;
             overflow-x: hidden;
             min-height: 100vh;
@@ -299,7 +326,10 @@
             border-radius: 14px;
             display: grid;
             place-items: center;
-            background: linear-gradient(135deg, rgba(107, 122, 52, .42), rgba(143, 161, 74, .18));
+            background:
+                radial-gradient(circle at top, rgba(184, 115, 51, .16) 0%, transparent 24%),
+                radial-gradient(circle at 80% 15%, rgba(92, 59, 42, .12) 0%, transparent 22%),
+                linear-gradient(180deg, #000000 0%, #040404 30%, #0b0908 65%, #15110e 100%);
             border: 1px solid rgba(255, 255, 255, .12);
             color: var(--text);
             font-family: 'JetBrains Mono', monospace;
@@ -404,9 +434,12 @@
 
         .header-cta,
         .btn-primary {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-2) 100%);
-            color: #050505;
-            box-shadow: 0 12px 30px rgba(107, 122, 52, .18), 0 8px 20px rgba(143, 161, 74, .14);
+            background:
+                radial-gradient(circle at top, rgba(184, 115, 51, .16) 0%, transparent 24%),
+                radial-gradient(circle at 80% 15%, rgba(92, 59, 42, .12) 0%, transparent 22%),
+                linear-gradient(180deg, #000000 0%, #040404 30%, #0b0908 65%, #15110e 100%);
+            color: #f7f7f7;
+            box-shadow: 0 12px 30px rgba(31, 29, 11, 0.18), 0 8px 20px rgba(143, 161, 74, .14);
         }
 
         .header-cta {
@@ -417,7 +450,7 @@
 
         .header-cta:hover,
         .btn-primary:hover {
-            color: #050505;
+            color: #f7f7f7;
             transform: translateY(-2px);
             box-shadow: 0 18px 38px rgba(107, 122, 52, .22), 0 12px 28px rgba(143, 161, 74, .18);
         }
