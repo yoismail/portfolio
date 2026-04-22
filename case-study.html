@@ -60,6 +60,7 @@
             --radius: 24px;
             --radius-sm: 18px;
             --max: 1140px;
+            --reading-max: 980px;
             --hh: 80px;
             --blur: 28px;
             --tag-blur: 14px;
@@ -163,7 +164,7 @@
         }
 
         .container-reading {
-            width: min(calc(100% - 2rem), 980px);
+            width: min(calc(100% - 2rem), var(--reading-max));
             margin: 0 auto;
         }
 
@@ -975,7 +976,7 @@
                 <div class="glass hero-copy">
                     <span class="eyebrow">Featured Portfolio Project</span>
                     <div class="hero-subtitle">Python ETL • PostgreSQL • star schema • orchestration</div>
-                    <h1>PayFlow is the project where I started designing pipelines for trust, reruns, and analytics-not
+                    <h1>PayFlow is the project where I started designing pipelines for trust, reruns, and analytics, not
                         just cleanup.</h1>
                     <p class="lead">This case study shows how I approached a real data engineering problem: not only
                         cleaning data, but building a modular workflow that stays readable, supports resets, loads a
@@ -1118,7 +1119,8 @@
                 <div class="trust-grid">
                     <div class="glass card">
                         <span class="eyebrow">Key engineering concepts</span>
-                        <h2>This project proves stronger engineering judgment than a typical portfolio ETL build.</h2>
+                        <h2>This project demonstrates a more structured, production-minded approach to data engineering.
+                        </h2>
                         <div class="proof-strip" style="margin-top:.5rem">
                             <div class="proof-chip"><strong>Logging</strong><span>Timed and observable execution</span>
                             </div>
@@ -1214,7 +1216,7 @@
         <section id="outcomes" class="section">
             <div class="container-reading">
                 <span class="eyebrow">Outcomes</span>
-                <h2 style="margin-top:.9rem">What this project proved about my engineering approach.</h2>
+                <h2 style="margin-top:.9rem">What this project proves about the way I approach data systems.</h2>
                 <div class="proof-grid" style="margin-top:1.35rem">
                     <article class="glass card">
                         <h3>Delivery outcomes</h3>
