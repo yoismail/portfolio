@@ -26,55 +26,48 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&family=Syne:wght@700;800&display=swap"
         rel="stylesheet" />
+
     <style>
         :root {
-            /* Core Backgrounds */
             --bg: #030303;
             --bg-2: #090909;
             --bg-3: #121212;
 
-            /* Premium Espresso Glass Surfaces */
             --surface: rgba(28, 20, 16, 0.78);
             --surface-2: rgba(16, 11, 9, 0.92);
             --surface-soft: rgba(255, 248, 240, 0.035);
 
-            /* Borders */
             --border: rgba(255, 245, 235, 0.08);
             --border-strong: rgba(205, 138, 70, 0.42);
             --topline: rgba(255, 255, 255, 0.10);
 
-            /* Typography */
             --text: #FFF8F2;
             --muted: #C9B8A8;
             --muted-2: #E8D8C8;
 
-            /* Apple x Coffee Accent System */
             --primary: #5C3B2A;
-            /* espresso */
             --primary-2: #B87333;
-            /* bronze */
             --primary-3: #E2B07A;
-            /* latte glow */
 
-            /* Shadows */
             --shadow:
                 0 28px 80px rgba(0, 0, 0, .58),
                 0 10px 26px rgba(0, 0, 0, .30);
 
-            /* Glow */
             --glow:
                 0 0 0 1px rgba(255, 255, 255, .02),
                 0 0 28px rgba(184, 115, 51, .14),
                 0 0 54px rgba(92, 59, 42, .12);
 
-            /* Radius / Layout */
             --radius: 24px;
             --radius-sm: 18px;
-            --max: 1180px;
+            --max: 1140px;
             --hh: 80px;
             --blur: 28px;
             --tag-blur: 14px;
-
+            --section-space: 4.8rem;
+            --grid-gap: 1rem;
+            --card-gap: 1.05rem;
+            --card-pad: 1.35rem;
         }
 
         *,
@@ -171,7 +164,7 @@
         }
 
         .section {
-            padding: 5rem 0;
+            padding: var(--section-space) 0;
         }
 
         .section-head {
@@ -200,23 +193,29 @@
 
         h1,
         h2,
-        h3 {
+        h3,
+        h4 {
             font-family: 'Syne', sans-serif;
             letter-spacing: -.03em;
         }
 
         h1 {
-            font-size: clamp(2.8rem, 6vw, 5.6rem);
-            line-height: .93;
+            font-size: clamp(2.7rem, 6vw, 5.25rem);
+            line-height: .94;
         }
 
         h2 {
-            font-size: clamp(1.8rem, 3vw, 3.15rem);
-            line-height: 1.02;
+            font-size: clamp(1.85rem, 3vw, 3rem);
+            line-height: 1.04;
         }
 
         h3 {
-            font-size: 1.14rem;
+            font-size: 1.12rem;
+            line-height: 1.24;
+        }
+
+        h4 {
+            font-size: .95rem;
             line-height: 1.2;
         }
 
@@ -225,13 +224,18 @@
         }
 
         .lead {
-            font-size: clamp(1rem, 1.5vw, 1.15rem);
+            font-size: clamp(1rem, 1.45vw, 1.12rem);
             color: var(--muted-2);
-            max-width: 68ch;
+            max-width: 66ch;
         }
 
         .muted {
             color: var(--muted);
+        }
+
+        .section-note {
+            max-width: 70ch;
+            margin-top: .72rem;
         }
 
         .eyebrow,
@@ -252,6 +256,7 @@
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             box-shadow: inset 0 1px 0 rgba(255, 255, 255, .06);
+            width: fit-content;
         }
 
         .kicker {
@@ -269,21 +274,26 @@
             box-shadow: var(--shadow), inset 0 1px 0 rgba(255, 255, 255, .07), inset 0 -1px 0 rgba(255, 255, 255, .02);
             backdrop-filter: blur(var(--blur)) saturate(130%);
             -webkit-backdrop-filter: blur(var(--blur)) saturate(130%);
-            transition: transform .28s cubic-bezier(.22, .68, 0, 1.2), border-color .22s ease, box-shadow .22s ease;
+            transition: transform .28s cubic-bezier(.22, .68, 0, 1.2), border-color .22s ease, box-shadow .22s ease, opacity .22s ease;
         }
 
         .glass:hover {
-            transform: translateY(-6px);
+            transform: translateY(-4px);
             border-color: var(--border-strong);
             box-shadow: var(--shadow), var(--glow), inset 0 1px 0 rgba(255, 255, 255, .10);
         }
 
         .card {
-            padding: 1.45rem;
+            padding: var(--card-pad);
             display: flex;
             flex-direction: column;
-            gap: 1rem;
+            gap: var(--card-gap);
             min-height: 100%;
+        }
+
+        .card p,
+        .card ul {
+            max-width: 64ch;
         }
 
         .surface-soft {
@@ -455,20 +465,37 @@
             box-shadow: 0 18px 38px rgba(107, 122, 52, .22), 0 12px 28px rgba(143, 161, 74, .18);
         }
 
+        .btn {
+            padding: .84rem 1.1rem;
+            border: 1px solid rgba(255, 255, 255, .10);
+            font-size: .92rem;
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, .05);
+            color: var(--text);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, .09);
+            color: var(--text);
+            transform: translateY(-2px);
+        }
+
         .hero {
-            padding: clamp(3rem, 5vw, 5rem) 0 4rem;
+            padding: clamp(2.8rem, 5vw, 4.6rem) 0 3.8rem;
         }
 
         .hero-grid {
             display: grid;
-            grid-template-columns: minmax(0, 1.2fr) minmax(320px, .8fr);
-            gap: 1.15rem;
-            align-items: stretch;
+            grid-template-columns: minmax(0, 1.1fr) minmax(320px, .9fr);
+            gap: 1rem;
+            align-items: start;
         }
 
         .hero-copy,
         .hero-panel {
-            padding: 1.6rem;
+            padding: 1.45rem;
         }
 
         .hero-copy {
@@ -487,7 +514,7 @@
 
         .hero-proof {
             display: grid;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
+            grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: .75rem;
             margin-top: .2rem;
         }
@@ -504,7 +531,7 @@
             display: block;
             font-family: 'JetBrains Mono', monospace;
             color: var(--primary-2);
-            font-size: 1.14rem;
+            font-size: 1.05rem;
             margin-bottom: .18rem;
         }
 
@@ -517,24 +544,7 @@
             display: flex;
             flex-wrap: wrap;
             gap: .75rem;
-            padding-top: .25rem;
-        }
-
-        .btn {
-            padding: .84rem 1.1rem;
-            border: 1px solid rgba(255, 255, 255, .10);
-            font-size: .92rem;
-        }
-
-        .btn-secondary {
-            background: rgba(255, 255, 255, .05);
-            color: var(--text);
-        }
-
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, .09);
-            color: var(--text);
-            transform: translateY(-2px);
+            padding-top: .2rem;
         }
 
         .hero-panel {
@@ -567,7 +577,8 @@
         .contact-links,
         .filter-row,
         .proof-strip,
-        .trust-links {
+        .trust-links,
+        .signal-strip {
             display: flex;
             flex-wrap: wrap;
             gap: .55rem;
@@ -575,36 +586,100 @@
 
         .feature-grid,
         .contact-grid,
-        .trust-grid {
+        .trust-grid,
+        .signal-grid {
             display: grid;
-            grid-template-columns: minmax(0, 1.1fr) minmax(300px, .9fr);
-            gap: 1rem;
+            grid-template-columns: minmax(0, 1.12fr) minmax(280px, .88fr);
+            gap: var(--grid-gap);
+            align-items: start;
         }
 
         .grid-2 {
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 1rem;
+            align-items: start;
         }
 
         .skills-grid {
             display: grid;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
-            gap: 1rem;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: var(--grid-gap);
+            align-items: start;
         }
 
         .project-grid {
             display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 1rem;
-            align-items: stretch;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 1.1rem;
+            align-items: start;
+            margin-top: 1.35rem;
+            transition: opacity .22s ease, transform .22s ease;
         }
 
+        .project-grid.is-filtering {
+            opacity: .45;
+            transform: translateY(8px);
+        }
+
+        .project-highlight {
+            grid-column: span 2;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-highlight::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at top right, rgba(184, 115, 51, .16), transparent 28%),
+                linear-gradient(135deg, rgba(255, 255, 255, .02), transparent 42%);
+            pointer-events: none;
+        }
+
+        .project-card-inner {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            min-height: 100%;
+        }
+
+        .project-summary-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: .9rem;
+            align-items: start;
+        }
+
+        .project-subgrid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: .9rem;
+            align-items: start;
+        }
+
+        .project-mini-block,
+        .signal-block,
+        .proof-column,
         .callout {
-            padding: 1rem 1.06rem;
+            padding: 1rem 1.05rem;
             border-radius: 16px;
             background: rgba(255, 255, 255, .04);
             border: 1px solid rgba(255, 255, 255, .08);
+        }
+
+        .project-mini-block h4,
+        .signal-block h3,
+        .proof-column h3 {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--primary-2);
+            font-size: .78rem;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            margin-bottom: .45rem;
         }
 
         .tag {
@@ -691,8 +766,8 @@
         }
 
         .proof-chip {
-            flex: 1 1 110px;
-            min-width: 110px;
+            flex: 1 1 160px;
+            min-width: 160px;
             padding: .82rem .9rem;
             border-radius: 16px;
             background: rgba(255, 255, 255, .04);
@@ -703,7 +778,7 @@
             display: block;
             color: var(--primary-2);
             font-family: 'JetBrains Mono', monospace;
-            font-size: .92rem;
+            font-size: .9rem;
             margin-bottom: .12rem;
         }
 
@@ -714,9 +789,14 @@
 
         .architecture {
             display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: .6rem;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: .65rem;
             margin-top: .1rem;
+            align-items: stretch;
+        }
+
+        .architecture.architecture-4 {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
         }
 
         .arch-stage {
@@ -771,6 +851,8 @@
             color: var(--text);
             cursor: pointer;
             font-size: .86rem;
+            position: relative;
+            overflow: hidden;
         }
 
         .filter-btn:hover,
@@ -781,9 +863,106 @@
             transform: translateY(-1px);
         }
 
-        .section-note {
-            max-width: 72ch;
-            margin-top: .72rem;
+        .filter-btn.is-active::after {
+            content: '';
+            position: absolute;
+            inset: auto 18% 8px 18%;
+            height: 2px;
+            border-radius: 999px;
+            background: var(--primary-2);
+        }
+
+        .filter-feedback-wrap {
+            display: flex;
+            align-items: center;
+            gap: .75rem;
+            flex-wrap: wrap;
+            margin-top: .8rem;
+        }
+
+        .filter-feedback {
+            display: inline-flex;
+            align-items: center;
+            gap: .45rem;
+            padding: .58rem .88rem;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, .08);
+            background: rgba(255, 255, 255, .05);
+            color: var(--muted-2);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: .78rem;
+            letter-spacing: .02em;
+            transition: opacity .24s ease, transform .24s ease;
+        }
+
+        .filter-feedback.is-updating {
+            opacity: .6;
+            transform: translateY(2px);
+        }
+
+        .filter-flash {
+            display: inline-flex;
+            align-items: center;
+            gap: .4rem;
+            min-height: 2.2rem;
+            padding: .52rem .82rem;
+            border-radius: 999px;
+            background: rgba(184, 115, 51, .10);
+            border: 1px solid rgba(184, 115, 51, .18);
+            color: var(--primary-2);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: .76rem;
+            opacity: 0;
+            transform: translateY(6px);
+            pointer-events: none;
+            transition: opacity .22s ease, transform .22s ease;
+        }
+
+        .filter-flash.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .filter-flash-dot {
+            width: .42rem;
+            height: .42rem;
+            border-radius: 999px;
+            background: var(--primary-2);
+            box-shadow: 0 0 0 0 rgba(184, 115, 51, .45);
+            animation: pulseDot 1.3s ease-out infinite;
+        }
+
+        @keyframes pulseDot {
+            0% {
+                box-shadow: 0 0 0 0 rgba(184, 115, 51, .40);
+            }
+
+            100% {
+                box-shadow: 0 0 0 12px rgba(184, 115, 51, 0);
+            }
+        }
+
+        .project-skeleton {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-skeleton::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            transform: translateX(-100%);
+            background: linear-gradient(90deg,
+                    transparent,
+                    rgba(255, 255, 255, .06),
+                    transparent);
+            animation: skeletonSweep .9s ease forwards;
+        }
+
+        @keyframes skeletonSweep {
+            to {
+                transform: translateX(100%);
+            }
         }
 
         .bullet-free {
@@ -810,6 +989,11 @@
             color: var(--primary-2);
             font-family: 'JetBrains Mono', monospace;
             font-size: .8rem;
+            text-align: right;
+        }
+
+        .signal-section {
+            padding-top: 0;
         }
 
         footer {
@@ -832,17 +1016,58 @@
             display: none;
         }
 
-        @media (max-width: 1024px) {
+        @media (min-width: 1200px) {
+            :root {
+                --card-pad: 1.55rem;
+                --card-gap: 1.15rem;
+                --section-space: 5.2rem;
+            }
+
+            .hero-proof {
+                grid-template-columns: repeat(4, minmax(0, 1fr));
+            }
+
+            .architecture.architecture-4 {
+                grid-template-columns: repeat(4, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 1080px) {
 
             .hero-grid,
             .feature-grid,
             .contact-grid,
-            .skills-grid,
-            .trust-grid {
+            .trust-grid,
+            .signal-grid,
+            .project-summary-grid {
                 grid-template-columns: 1fr;
             }
 
+            .project-subgrid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-panel,
+            .hero-copy {
+                padding: 1.3rem;
+            }
+        }
+
+        @media (max-width: 900px) {
             .project-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .project-highlight {
+                grid-column: span 1;
+            }
+
+            .skills-grid,
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-proof {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
             }
         }
@@ -850,36 +1075,65 @@
         @media (max-width: 760px) {
             :root {
                 --hh: 68px;
+                --section-space: 3.5rem;
+                --card-pad: 1.08rem;
+                --card-gap: .95rem;
             }
 
             .container {
-                width: min(calc(100% - 1.2rem), var(--max));
-            }
-
-            .section {
-                padding: 3.6rem 0;
+                width: min(calc(100% - 1.15rem), var(--max));
             }
 
             .hero {
-                padding: 2rem 0 3rem;
+                padding: 1.9rem 0 2.8rem;
+            }
+
+            .hero-grid,
+            .architecture,
+            .architecture.architecture-4 {
+                grid-template-columns: 1fr;
             }
 
             .hero-copy,
             .hero-panel,
             .card {
-                padding: 1.12rem;
-            }
-
-            .hero-grid,
-            .grid-2,
-            .project-grid,
-            .skills-grid,
-            .architecture {
-                grid-template-columns: 1fr;
+                padding: var(--card-pad);
             }
 
             .hero-proof {
                 grid-template-columns: 1fr 1fr;
+            }
+
+            .hero-actions,
+            .card-links,
+            .contact-links,
+            .trust-links,
+            .filter-row {
+                gap: .65rem;
+            }
+
+            .hero-actions .btn,
+            .card-links a,
+            .contact-link,
+            .trust-link {
+                width: 100%;
+            }
+
+            .proof-chip {
+                min-width: 100%;
+            }
+
+            .filter-feedback-wrap {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .filter-feedback,
+            .filter-flash {
+                display: flex;
+                width: 100%;
+                justify-content: center;
+                text-align: center;
             }
 
             .site-nav {
@@ -941,11 +1195,29 @@
 
         @media (max-width: 520px) {
             h1 {
-                font-size: 2.35rem;
+                font-size: 2.25rem;
+            }
+
+            h2 {
+                font-size: 1.75rem;
             }
 
             .hero-proof {
                 grid-template-columns: 1fr;
+            }
+
+            .metric-line {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: .25rem;
+            }
+
+            .metric-line span {
+                text-align: left;
+            }
+
+            .brand-copy span {
+                font-size: .74rem;
             }
         }
 
@@ -958,6 +1230,12 @@
             *::before,
             *::after {
                 animation: none !important;
+                transition: none !important;
+            }
+
+            .project-grid,
+            .filter-feedback,
+            .filter-flash {
                 transition: none !important;
             }
         }
@@ -1003,13 +1281,13 @@
                 <div class="glass hero-copy">
                     <span class="eyebrow">Data Engineer • Python • SQL • PostgreSQL</span>
                     <div class="hero-subtitle">ETL pipelines • warehouse design • analytics-ready data systems</div>
-                    <h1>I build data pipelines and warehouse models that teams can trust.</h1>
-                    <p class="lead">I am a Data Engineer with a Product Operations background, focused on Python ETL
-                        workflows, PostgreSQL warehouse design, and analytics-ready data structures built for reruns,
-                        clarity, and maintainability.</p>
+                    <h1>I build data pipelines, warehouse models, and reporting foundations that teams can trust.</h1>
+                    <p class="lead">I am a Data Engineer with a Product Operations background, focused on modular Python
+                        ETL workflows, PostgreSQL warehouse design, and analytics-ready data structures built for
+                        clarity, reruns, and maintainability.</p>
                     <p class="muted">My portfolio is designed to show more than tools. It shows how I think about stage
-                        separation, schema design, debugging paths, business context, and delivery quality when a
-                        project needs to be extended or handed over.</p>
+                        separation, schema design, data quality, debugging paths, business context, and delivery quality
+                        when a project needs to be extended or handed over.</p>
 
                     <div class="hero-actions">
                         <a class="btn btn-primary" href="#projects">View Projects</a>
@@ -1018,27 +1296,27 @@
 
                     <div class="hero-proof" aria-label="Portfolio proof points">
                         <div class="proof-stat"><strong>3</strong><span>Flagship data projects</span></div>
-                        <div class="proof-stat"><strong>5+</strong><span>Final warehouse tables in YINC</span></div>
-                        <div class="proof-stat"><strong>3-layer</strong><span>Raw → processed → analytics
-                                thinking</span></div>
-                        <div class="proof-stat"><strong>UK-ready</strong><span>ATS-aligned Data Engineer
-                                positioning</span></div>
+                        <div class="proof-stat"><strong>1</strong><span>Deep ETL + warehouse case study</span></div>
+                        <div class="proof-stat"><strong>Star schema</strong><span>Dimensional thinking in
+                                practice</span></div>
+                        <div class="proof-stat"><strong>UK-ready</strong><span>Clear Data Engineer positioning</span>
+                        </div>
                     </div>
                 </div>
 
                 <aside class="glass hero-panel" aria-label="Recruiter snapshot">
                     <div>
                         <div class="kicker">What I bring</div>
-                        <div class="panel-list" style="margin-top:1rem">
+                        <div class="panel-list">
                             <div class="panel-item">
                                 <strong>Python ETL delivery</strong>
-                                <p class="muted">I build modular extraction, transformation, and loading workflows with
-                                    cleaner stage ownership.</p>
+                                <p class="muted">I build modular extraction, cleaning, transform, and warehouse loading
+                                    workflows with clearer stage ownership.</p>
                             </div>
                             <div class="panel-item">
                                 <strong>Warehouse design mindset</strong>
-                                <p class="muted">I focus on relational structures, naming clarity, analytics readiness,
-                                    and maintainable query paths.</p>
+                                <p class="muted">I focus on relational structures, dimensions and facts, analytics
+                                    readiness, and maintainable query paths.</p>
                             </div>
                             <div class="panel-item">
                                 <strong>Operations-informed execution</strong>
@@ -1048,9 +1326,9 @@
                         </div>
                     </div>
 
-                    <div class="surface-soft" style="padding:1rem">
+                    <div class="surface-soft card">
                         <div class="kicker">Core stack</div>
-                        <div class="quick-stack" style="margin-top:.75rem">
+                        <div class="quick-stack">
                             <span class="tag c1">Python</span>
                             <span class="tag c2">Pandas</span>
                             <span class="tag c3">SQL</span>
@@ -1062,46 +1340,85 @@
             </div>
         </section>
 
+        <section class="section signal-section" id="signal">
+            <div class="container signal-grid">
+                <div class="glass card">
+                    <span class="eyebrow">Why this portfolio is different</span>
+                    <h2>I show engineering judgment, not just tool familiarity.</h2>
+                    <p class="lead">The strongest signal here is not “I used Python and SQL.” It is that the projects
+                        show stage separation, warehouse logic, repeatable execution, and the ability to explain why the
+                        architecture is structured the way it is.</p>
+                    <div class="signal-strip">
+                        <div class="proof-chip"><strong>Problem-first</strong><span>Each project solves a different
+                                engineering challenge</span></div>
+                        <div class="proof-chip"><strong>Outcome-aware</strong><span>Built for reporting, analysis, and
+                                maintainability</span></div>
+                        <div class="proof-chip"><strong>Readable</strong><span>Clear for recruiters and technical
+                                reviewers</span></div>
+                    </div>
+                </div>
+
+                <aside class="glass card">
+                    <span class="eyebrow">30-second review</span>
+                    <div class="bullet-free">
+                        <div class="metric-line"><strong>Best proof</strong><span>PayFlow</span></div>
+                        <div class="metric-line"><strong>Strength</strong><span>ETL + Warehousing</span></div>
+                        <div class="metric-line"><strong>Delivery style</strong><span>Structured + modular</span></div>
+                        <div class="metric-line"><strong>Target roles</strong><span>Data Engineer / Analytics
+                                Engineer</span></div>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
         <section id="featured" class="section">
             <div class="container feature-grid">
                 <article class="glass card">
                     <span class="eyebrow">Featured Case Study</span>
                     <h2>PayFlow Database Optimization II</h2>
-                    <p>This is my strongest portfolio project for showing how I think like a Data Engineer. I used
-                        PayFlow to practice modular ETL design, warehouse-focused data shaping, rerun-safe loading, and
-                        clearer separation between transformation logic and analytics outputs.</p>
-                    <p class="muted">The goal was to move beyond one-script data cleaning and build something closer to
-                        a production-minded workflow: explicit stages, clearer responsibilities, and a structure that
-                        remains readable when logic changes.</p>
+                    <p>
+                    <p>This project demonstrates a more structured, production-minded approach to data engineering. It
+                        was built to move beyond one-script cleaning into a clearer ETL system with raw ingestion,
+                        staged cleaning, star-schema warehouse loading, orchestration, observability, and rerun-safe
+                        resets.</p>
+                    </p>
+                    <p class="muted">The project reflects a production-style workflow: standardized transforms,
+                        SQL-defined warehouse structures, dimension and fact construction, reset tooling, and logging
+                        that makes the pipeline easier to troubleshoot and extend.</p>
 
-                    <div class="architecture" aria-label="PayFlow architecture overview">
-                        <div class="arch-stage"><strong>Raw</strong><span>Source staging</span></div>
-                        <div class="arch-stage"><strong>Processed</strong><span>Typed transforms</span></div>
-                        <div class="arch-stage"><strong>Analytics</strong><span>Warehouse outputs</span></div>
+                    <div class="architecture architecture-4" aria-label="PayFlow architecture overview">
+                        <div class="arch-stage"><strong>Raw</strong><span>Source ingestion and validation</span></div>
+                        <div class="arch-stage"><strong>Staging</strong><span>Cleaned, standardized tables</span></div>
+                        <div class="arch-stage"><strong>Analytics</strong><span>Dimensions and facts in
+                                PostgreSQL</span></div>
+                        <div class="arch-stage"><strong>Orchestration</strong><span>Full pipeline execution flow</span>
+                        </div>
                     </div>
 
                     <div class="proof-strip">
-                        <div class="proof-chip"><strong>Modular ETL</strong><span>Separated stage ownership</span></div>
-                        <div class="proof-chip"><strong>Rerun Safety</strong><span>Reset and reload path</span></div>
-                        <div class="proof-chip"><strong>Schema Design</strong><span>Explicit analytics structure</span>
+                        <div class="proof-chip"><strong>Star schema</strong><span>Customer, seller, product, payments,
+                                dates</span></div>
+                        <div class="proof-chip"><strong>Idempotent</strong><span>Reset-safe development runs</span>
                         </div>
+                        <div class="proof-chip"><strong>Observability</strong><span>Logging, timing, fail-fast
+                                execution</span></div>
                     </div>
 
                     <div class="grid-2">
                         <div class="callout">
-                            <div class="kicker">What I delivered</div>
-                            <ul class="proof-list" style="margin-top:.75rem">
-                                <li>Modular ETL workflow with clearer stage boundaries.</li>
-                                <li>Raw → processed → analytics structure reflected in project layout.</li>
-                                <li>Safer rerun path during development and redesign.</li>
+                            <div class="kicker">Problem solved</div>
+                            <ul class="proof-list">
+                                <li>Reduced the fragility of one-off script runs during redesign and testing.</li>
+                                <li>Separated staging, transformation, and analytics loading responsibilities.</li>
+                                <li>Created a warehouse-ready structure instead of stopping at cleaned files.</li>
                             </ul>
                         </div>
                         <div class="callout">
-                            <div class="kicker">Why it matters</div>
-                            <ul class="proof-list" style="margin-top:.75rem">
-                                <li>Improved maintainability by separating transform and load responsibilities.</li>
-                                <li>Made debugging easier by keeping warehouse logic explicit.</li>
-                                <li>Created cleaner foundations for analytics and reporting use cases.</li>
+                            <div class="kicker">What it enables</div>
+                            <ul class="proof-list">
+                                <li>Cleaner downstream analysis through explicit dimension and fact tables.</li>
+                                <li>Safer reruns with wipe-and-rebuild support during development.</li>
+                                <li>Better maintainability when business rules or schema logic change.</li>
                             </ul>
                         </div>
                     </div>
@@ -1115,17 +1432,17 @@
 
                 <aside class="glass card">
                     <span class="eyebrow">Recruiter Snapshot</span>
-                    <h3>Why I am interview-ready</h3>
+                    <h3>Why this project raises the portfolio</h3>
                     <div class="bullet-free">
-                        <div class="metric-line"><strong>Role focus</strong><span>Data Engineer</span></div>
-                        <div class="metric-line"><strong>Strength</strong><span>ETL + Warehousing</span></div>
-                        <div class="metric-line"><strong>Delivery style</strong><span>Structured + readable</span></div>
-                        <div class="metric-line"><strong>Next stack</strong><span>AWS • Airflow • Spark</span></div>
+                        <div class="metric-line"><strong>Architecture</strong><span>Multi-layer ETL</span></div>
+                        <div class="metric-line"><strong>Warehouse</strong><span>Star schema</span></div>
+                        <div class="metric-line"><strong>Execution</strong><span>run_all.py orchestration</span></div>
+                        <div class="metric-line"><strong>Reliability</strong><span>wipe_all.py resets</span></div>
                     </div>
-                    <div class="surface-soft" style="padding:1rem">
+                    <div class="surface-soft card">
                         <div class="kicker">Best-fit roles</div>
-                        <p class="muted" style="margin-top:.6rem">Junior Data Engineer, Analytics Engineer, Data
-                            Platform Analyst, or technically strong operations roles with a data backbone.</p>
+                        <p class="muted">Junior Data Engineer, Analytics Engineer, Data Platform Analyst, or technically
+                            strong operations roles with a data backbone.</p>
                     </div>
                     <div class="card-links">
                         <a href="#contact">Contact Me</a>
@@ -1147,15 +1464,16 @@
                     <div class="grid-2">
                         <div class="callout">
                             <div class="kicker">Engineering signals</div>
-                            <ul class="proof-list" style="margin-top:.75rem">
+                            <ul class="proof-list">
                                 <li>Environment-based configuration instead of hardcoded credentials.</li>
-                                <li>Explicit stage boundaries across extract, transform, and load steps.</li>
+                                <li>Explicit stage boundaries across extract, clean, transform, and warehouse load
+                                    steps.</li>
                                 <li>Analytics-ready schema thinking, not only one-off cleaning.</li>
                             </ul>
                         </div>
                         <div class="callout">
                             <div class="kicker">Business signals</div>
-                            <ul class="proof-list" style="margin-top:.75rem">
+                            <ul class="proof-list">
                                 <li>Operations background that strengthens delivery judgment.</li>
                                 <li>Clearer thinking about handoffs, trust, and output usability.</li>
                                 <li>Portfolio storytelling that explains why design choices matter.</li>
@@ -1163,6 +1481,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="glass card">
                     <span class="eyebrow">Quick links</span>
                     <h3>Review the strongest proof fast</h3>
@@ -1182,10 +1501,16 @@
                 <div class="section-head">
                     <div>
                         <span class="eyebrow">Projects</span>
-                        <h2 style="margin-top:.9rem">Projects built around different engineering problems.</h2>
-                        <p class="lead section-note">Each project below highlights a different strength: relational
-                            modeling, layered platform thinking, and rerun-safe warehouse delivery. Together they show a
-                            stronger Data Engineer profile than repeating one project pattern.</p>
+                        <h2>Projects built around different engineering problems.</h2>
+                        <p class="lead section-note">
+                        <p class="lead section-note">
+                            Each project highlights a different data engineering capability: PayFlow demonstrates
+                            production-style ETL and warehouse design, YINC focuses on relational modeling and
+                            structured database loading, while ChocoDelight showcases layered pipelines and
+                            analytics-ready data outputs. Together, they show how I approach data systems from ingestion
+                            to insight.
+                        </p>
+                        </p>
                     </div>
                 </div>
 
@@ -1197,42 +1522,67 @@
                     <button class="filter-btn" data-filter="case-study" type="button">Case Study</button>
                 </div>
 
-                <div id="projectGrid" class="project-grid" style="margin-top:1.35rem"></div>
+                <div class="filter-feedback-wrap">
+                    <div class="filter-feedback" id="filterFeedback" aria-live="polite">Showing: All • 3 projects</div>
+                    <div class="filter-flash" id="filterFlash" aria-hidden="true">
+                        <span class="filter-flash-dot"></span>
+                        <span id="filterFlashText">Filter applied</span>
+                    </div>
+                </div>
+
+                <div id="projectGrid" class="project-grid"></div>
             </div>
         </section>
 
         <section id="skills" class="section">
             <div class="container">
                 <span class="eyebrow">Skills</span>
-                <h2 style="margin-top:.9rem">Tools I actually used while building these projects.</h2>
-                <div class="skills-grid" style="margin-top:1.3rem">
+                <h2>Tools I actually used while building these projects.</h2>
+                <div class="skills-grid">
                     <div class="glass card">
                         <h3>Data Engineering</h3>
-                        <div class="tag-row"><span class="tag c1">Python</span><span class="tag c2">Pandas</span><span
-                                class="tag c3">SQL</span><span class="tag c4">PostgreSQL</span><span
-                                class="tag c5">ETL</span></div>
+                        <div class="tag-row">
+                            <span class="tag c1">Python</span>
+                            <span class="tag c2">Pandas</span>
+                            <span class="tag c3">SQL</span>
+                            <span class="tag c4">PostgreSQL</span>
+                            <span class="tag c5">ETL</span>
+                        </div>
                         <p class="muted">Extraction, cleaning, validation, relational loading, and analytics table
                             preparation.</p>
                     </div>
+
                     <div class="glass card">
                         <h3>Warehouse Design</h3>
-                        <div class="tag-row"><span class="tag c3">Schema Design</span><span class="tag c1">Dimensional
-                                Modeling</span><span class="tag c2">Normalization</span><span class="tag c4">Fact
-                                Tables</span></div>
+                        <div class="tag-row">
+                            <span class="tag c3">Schema Design</span>
+                            <span class="tag c1">Dimensional Modeling</span>
+                            <span class="tag c2">Normalization</span>
+                            <span class="tag c4">Fact Tables</span>
+                        </div>
                         <p class="muted">I focus on structures that are easier to query, validate, and hand over.</p>
                     </div>
+
                     <div class="glass card">
                         <h3>Engineering Habits</h3>
-                        <div class="tag-row"><span class="tag c5">Git</span><span class="tag c2">Environment
-                                Variables</span><span class="tag c1">Modular Scripts</span><span class="tag c3">Rerun
-                                Safety</span></div>
+                        <div class="tag-row">
+                            <span class="tag c5">Git</span>
+                            <span class="tag c2">Environment Variables</span>
+                            <span class="tag c1">Modular Scripts</span>
+                            <span class="tag c3">Rerun Safety</span>
+                        </div>
                         <p class="muted">I design projects so changes can be made without breaking the whole workflow.
                         </p>
                     </div>
+
                     <div class="glass card">
                         <h3>Next-Step Stack</h3>
-                        <div class="tag-row"><span class="tag c4">Airflow</span><span class="tag c1">AWS</span><span
-                                class="tag c2">Spark</span><span class="tag c3">Analytics Engineering</span></div>
+                        <div class="tag-row">
+                            <span class="tag c4">Airflow</span>
+                            <span class="tag c1">AWS</span>
+                            <span class="tag c2">Spark</span>
+                            <span class="tag c3">Analytics Engineering</span>
+                        </div>
                         <p class="muted">These are the platforms and workflows I am actively building toward for more
                             production-grade work.</p>
                     </div>
@@ -1245,11 +1595,13 @@
                 <div class="glass card">
                     <span class="eyebrow">Contact</span>
                     <h2>Open to Data Engineer opportunities in the UK.</h2>
-                    <p>I am interested in roles where I can contribute to ETL pipelines, warehouse design,
-                        analytics-ready data preparation, or technically strong platform and operations work with a
-                        clear data backbone.</p>
-                    <p class="muted">Best starting points are the case study, project repositories, GitHub profile, and
-                        CV linked below.</p>
+                    <p>Are you looking for a Data Engineer who's passionate about building robust ETL pipelines,
+                        architecting efficient data warehouses, and crafting analytics-ready data solutions? I'm
+                        actively seeking opportunities in the UK where I can leverage my technical skills to strengthen
+                        your data backbone and drive impactful platform and operations work.</p>
+                    <p class="muted">Want to see what I can do? My case study, project repositories, and GitHub
+                        profileoffer a deep dive into my capabilities. My CV is also available for a
+                        comprehensive overview. Let's build something amazing together!</p>
                     <div class="contact-links">
                         <a class="contact-link" href="mailto:ismailyomi@gmail.com" aria-label="Email Yomi Ismail">
                             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -1258,6 +1610,7 @@
                             </svg>
                             Email
                         </a>
+
                         <a class="contact-link" href="https://github.com/yoismail" target="_blank" rel="noopener"
                             aria-label="GitHub">
                             <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -1266,6 +1619,7 @@
                             </svg>
                             GitHub
                         </a>
+
                         <a class="contact-link" href="https://www.linkedin.com/in/yomi-ismail/" target="_blank"
                             rel="noopener" aria-label="LinkedIn">
                             <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -1274,6 +1628,7 @@
                             </svg>
                             LinkedIn
                         </a>
+
                         <a class="contact-link" href="cv/Copy%20of%20Yomi%20Ismail%20CV%20-%20DE.docx.pdf"
                             target="_blank" rel="noopener" aria-label="Download CV">
                             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -1309,142 +1664,331 @@
     </footer>
 
     <script>
-        const projects = [
-            {
-                title: "YINC E-Commerce Case Study",
-                repo: "https://github.com/yoismail/yinc_ecommerce_case_study",
-                live: "https://github.com/yoismail/yinc_ecommerce_case_study",
-                label: "Normalization and relational loading",
-                category: "warehouse etl",
-                description: "A relational ETL project that converts raw e-commerce CSV data into a cleaner PostgreSQL model with clearer entity boundaries and analytics-ready structure.",
-                details: "This project sharpened the fundamentals: normalized tables, customer-product-order separation, cleaner schema design, and environment-based database access.",
-                impact: [
-                    "Separated raw e-commerce records into cleaner relational entities.",
-                    "Improved maintainability through environment-based configuration.",
-                    "Created a more query-friendly warehouse structure for analysis."
-                ],
-                metrics: ["5+ final relational tables", "CSV-to-PostgreSQL ETL flow", "Environment-variable DB connection", "Cleaner entity separation"],
-                stack: ["Python", "Pandas", "PostgreSQL", "Normalization", "ETL"],
-                stages: [
-                    { title: "Extract", desc: "CSV source files" },
-                    { title: "Model", desc: "Relational entities" },
-                    { title: "Load", desc: "Dedicated schema" }
-                ]
-            },
-            {
-                title: "ChocoDelight Data Platform",
-                repo: "https://github.com/yoismail/choco_delight_data_platform",
-                live: "https://github.com/yoismail/choco_delight_data_platform",
-                label: "Layered platform thinking",
-                category: "analytics",
-                description: "A layered data platform project built around ingestion, shaping, and analytics outputs rather than one flat transformation script.",
-                details: "The valuable part here was end-to-end flow ownership: ingesting source data, applying feature engineering, and shaping warehouse-friendly outputs that are easier to reason about later.",
-                impact: [
-                    "Improved stage clarity by separating ingestion, shaping, and analytics concerns.",
-                    "Made transformation ownership more explicit within the workflow.",
-                    "Positioned outputs closer to analytics-mart thinking than simple cleaned files."
-                ],
-                metrics: ["Multi-layer pipeline structure", "Feature engineering workflow", "Analytics-ready outputs", "Explicit staging and reporting separation"],
-                stack: ["Python", "Warehouse Modeling", "Feature Engineering", "Analytics Marts", "SQL"],
-                stages: [
-                    { title: "Ingest", desc: "Source collection" },
-                    { title: "Shape", desc: "Feature engineering" },
-                    { title: "Serve", desc: "Analytics outputs" }
-                ]
-            },
-            {
-                title: "PayFlow Database Optimization II",
-                repo: "https://github.com/yoismail/payflow_case_study",
-                live: "case-study.html",
-                label: "Featured project and case study",
-                category: "case-study etl",
-                description: "A production-minded ETL case study built around modular workflow design, rerun-safe loading, explicit warehouse logic, and analytics-ready structures.",
-                details: "This project pushed hardest on maintainability: separating transformation and warehouse loading, adding a reset path, and making the project easier to trust, troubleshoot, and extend.",
-                impact: [
-                    "Improved rerun safety with a reset-and-reload workflow.",
-                    "Reduced debugging friction by separating transform and load logic.",
-                    "Created a stronger warehouse foundation for downstream analysis."
-                ],
-                metrics: ["Raw → processed → analytics pattern", "Modular Python workflow", "Reset and reload support", "Warehouse-oriented schema design"],
-                stack: ["Python", "Pandas", "PostgreSQL", "SQLAlchemy", "Case Study"],
-                stages: [
-                    { title: "Raw", desc: "Source staging" },
-                    { title: "Processed", desc: "Typed transforms" },
-                    { title: "Analytics", desc: "Warehouse outputs" }
-                ]
-            }
-        ];
+        const project1 = {
+            id: "project-1",
+            title: "PayFlow Database Optimization II",
+            repo: "https://github.com/yoismail/payflow_case_study",
+            live: "case-study.html",
+            label: "Featured project and case study",
+            category: "case-study etl warehouse analytics",
+            isFeatured: true,
+            summary: "A production-style ETL and warehouse case study built to turn raw e-commerce data into cleaned staging outputs and analytics-ready PostgreSQL tables through a modular, repeatable pipeline.",
+            description: "This project is the clearest picture of how I think about maintainability, observability, rerun safety, and warehouse design. It was designed to move beyond one-off data cleaning into a structured workflow that teams can trust.",
+            problem: "The main problem was turning a script-heavy pipeline into a clearer system with clean stage ownership, repeatable runs, and warehouse outputs built for analysis instead of only cleanup.",
+            architectureTitle: "Raw → staging → analytics warehouse → orchestration",
+            details: "The architecture includes raw ingestion, standardized cleaning, SQL-defined warehouse structures, dimension and fact construction, wipe-and-rerun tooling, and full orchestration through a single entrypoint.",
+            metrics: [
+                "Multi-layer ETL architecture",
+                "Star schema warehouse design",
+                "wipe_all.py reset support",
+                "run_all.py orchestration"
+            ],
+            stack: ["Python", "Pandas", "SQL", "PostgreSQL", "SQLAlchemy", "Star Schema", "Logging", "Orchestration"],
+            stages: [
+                { title: "Raw", desc: "Downloaded and validated source CSVs" },
+                { title: "Staging", desc: "Cleaned, standardized intermediate tables" },
+                { title: "Analytics", desc: "Dimensions and facts for reporting" },
+                { title: "Orchestration", desc: "Repeatable full pipeline execution" }
+            ],
+            concepts: [
+                "Star schema modeling with dimensions and fact tables",
+                "Schema-driven SQL warehouse creation",
+                "Idempotent-style resets for safe reruns",
+                "Logging and timing for observability",
+                "Fail-fast execution across pipeline steps"
+            ],
+            businessValue: [
+                "Makes analytics output easier to query and extend.",
+                "Reduces debugging friction by keeping stage boundaries explicit.",
+                "Supports safer development and redesign through reset-and-rerun workflows."
+            ],
+            impact: [
+                "Built a clearer raw → staging → analytics flow instead of one large script.",
+                "Improved trust in the pipeline with reset tooling and repeatable execution paths.",
+                "Created a stronger warehouse foundation through explicit dimensions, facts, and SQL-led table design."
+            ]
+        };
+
+        const project2 = {
+            id: "project-2",
+            title: "YINC E-Commerce Case Study",
+            repo: "https://github.com/yoismail/yinc_ecommerce_case_study",
+            live: "https://github.com/yoismail/yinc_ecommerce_case_study",
+            label: "Normalization and relational loading",
+            category: "warehouse etl",
+            isFeatured: false,
+            summary: "A relational ETL project that turns raw e-commerce CSV data into a cleaner PostgreSQL model with clearer entity boundaries and structured loading paths.",
+            description: "This project is strongest on relational thinking: splitting operational records into more maintainable entities and creating a cleaner schema for querying and analysis.",
+            problem: "The challenge here was moving from flat operational data into more reliable relational structures with better table separation.",
+            details: "The project highlights normalized modeling, clearer customer-product-order boundaries, and environment-based database access.",
+            metrics: [
+                "Relational entity modeling",
+                "CSV-to-PostgreSQL ETL flow",
+                "Environment-based configuration"
+            ],
+            stack: ["Python", "Pandas", "PostgreSQL", "Normalization", "ETL"],
+            stages: [
+                { title: "Extract", desc: "CSV source files" },
+                { title: "Model", desc: "Relational entities" },
+                { title: "Load", desc: "Dedicated PostgreSQL schema" }
+            ],
+            impact: [
+                "Separated raw e-commerce records into cleaner relational entities.",
+                "Improved maintainability through environment-based configuration.",
+                "Created a more query-friendly structure for downstream use."
+            ]
+        };
+
+        const project3 = {
+            id: "project-3",
+            title: "ChocoDelight Data Platform",
+            repo: "https://github.com/yoismail/choco_delight_data_platform",
+            live: "https://github.com/yoismail/choco_delight_data_platform",
+            label: "Layered platform thinking",
+            category: "analytics",
+            isFeatured: false,
+            summary: "A layered data platform project built around ingestion, shaping, and analytics-ready outputs rather than one flat transformation script.",
+            description: "This project is strongest on stage separation and platform thinking: collecting source data, shaping it, and serving outputs closer to analytics-mart logic.",
+            problem: "The challenge was designing a workflow that feels more like a small platform than a single transformation job.",
+            details: "The core signal is ownership across ingest, shape, and serve layers rather than only cleaning a dataset once.",
+            metrics: [
+                "Layered pipeline structure",
+                "Feature engineering workflow",
+                "Analytics-ready outputs"
+            ],
+            stack: ["Python", "Feature Engineering", "Analytics Marts", "Warehouse Modeling", "SQL"],
+            stages: [
+                { title: "Ingest", desc: "Source collection" },
+                { title: "Shape", desc: "Transform and engineer features" },
+                { title: "Serve", desc: "Analytics outputs" }
+            ],
+            impact: [
+                "Improved stage clarity by separating ingestion, shaping, and analytics concerns.",
+                "Made transformation ownership more explicit within the workflow.",
+                "Positioned outputs closer to analytics-mart thinking than simple cleaned files."
+            ]
+        };
+
+        const projects = [project1, project2, project3];
 
         const grid = document.getElementById('projectGrid');
         const filterBtns = [...document.querySelectorAll('.filter-btn')];
+        const filterFeedback = document.getElementById('filterFeedback');
+        const filterFlash = document.getElementById('filterFlash');
+        const filterFlashText = document.getElementById('filterFlashText');
+        const projectsSection = document.getElementById('projects');
         const tagClass = i => `c${(i % 5) + 1}`;
+        let flashTimer;
+
+        function prettifyFilterLabel(filter) {
+            const labels = {
+                all: "All",
+                etl: "ETL",
+                warehouse: "Warehousing",
+                analytics: "Analytics",
+                "case-study": "Case Study"
+            };
+            return labels[filter] || filter;
+        }
+
+        function renderFeaturedProjectCard(project) {
+            return `
+                <article class="glass card project-highlight project-skeleton" id="${project.id}">
+                    <div class="project-card-inner">
+                        <div class="project-top">
+                            <div class="kicker">${project.label}</div>
+                            <span class="project-category">${project.category.replace('case-study', 'case study')}</span>
+                        </div>
+
+                        <h3>${project.title}</h3>
+                        <p>${project.summary}</p>
+                        <p class="muted">${project.description}</p>
+
+                        <div class="project-summary-grid">
+                            <div class="project-mini-block">
+                                <h4>Problem statement</h4>
+                                <p class="muted">${project.problem}</p>
+                            </div>
+                            <div class="project-mini-block">
+                                <h4>Architecture</h4>
+                                <p class="muted">${project.architectureTitle}</p>
+                            </div>
+                        </div>
+
+                        <div class="architecture architecture-4" aria-label="${project.title} architecture overview">
+                            ${project.stages.map(stage => `
+                                <div class="arch-stage">
+                                    <strong>${stage.title}</strong>
+                                    <span>${stage.desc}</span>
+                                </div>`).join('')}
+                        </div>
+
+                        <div class="proof-strip">
+                            ${project.metrics.map(metric => {
+                const parts = metric.split(/ (.+)/);
+                return `<div class="proof-chip"><strong>${parts[0]}</strong><span>${parts[1] || ''}</span></div>`;
+            }).join('')}
+                        </div>
+
+                        <div class="project-subgrid">
+                            <div class="callout">
+                                <div class="kicker">Key engineering concepts</div>
+                                <ul class="proof-list">
+                                    ${project.concepts.map(item => `<li>${item}</li>`).join('')}
+                                </ul>
+                            </div>
+                            <div class="callout">
+                                <div class="kicker">Business value</div>
+                                <ul class="proof-list">
+                                    ${project.businessValue.map(item => `<li>${item}</li>`).join('')}
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="tag-row">
+                            ${project.stack.map((item, i) => `<span class="tag ${tagClass(i)}">${item}</span>`).join('')}
+                        </div>
+
+                        <p class="muted">${project.details}</p>
+
+                        <ul class="proof-list">
+                            ${project.impact.map(item => `<li>${item}</li>`).join('')}
+                        </ul>
+
+                        <div class="card-links">
+                            <a href="${project.live}">Read Case Study</a>
+                            <a href="${project.repo}" target="_blank" rel="noopener">GitHub</a>
+                        </div>
+                    </div>
+                </article>
+            `;
+        }
+
+        function renderStandardProjectCard(project) {
+            return `
+                <article class="glass card project-skeleton" id="${project.id}">
+                    <div class="project-top">
+                        <div class="kicker">${project.label}</div>
+                        <span class="project-category">${project.category.replace('case-study', 'case study')}</span>
+                    </div>
+
+                    <h3>${project.title}</h3>
+                    <p>${project.summary}</p>
+                    <p class="muted">${project.description}</p>
+
+                    <div class="architecture" aria-label="${project.title} architecture overview">
+                        ${project.stages.map(stage => `
+                            <div class="arch-stage">
+                                <strong>${stage.title}</strong>
+                                <span>${stage.desc}</span>
+                            </div>`).join('')}
+                    </div>
+
+                    <div class="proof-strip">
+                        ${project.metrics.map(metric => {
+                const parts = metric.split(/ (.+)/);
+                return `<div class="proof-chip"><strong>${parts[0]}</strong><span>${parts[1] || ''}</span></div>`;
+            }).join('')}
+                    </div>
+
+                    <div class="tag-row">
+                        ${project.stack.map((item, i) => `<span class="tag ${tagClass(i)}">${item}</span>`).join('')}
+                    </div>
+
+                    <p class="muted">${project.details}</p>
+
+                    <ul class="proof-list">
+                        ${project.impact.map(item => `<li>${item}</li>`).join('')}
+                    </ul>
+
+                    <div class="card-links">
+                        <a href="${project.live}" target="_blank" rel="noopener">View Repository</a>
+                        <a href="${project.repo}" target="_blank" rel="noopener">GitHub</a>
+                    </div>
+                </article>
+            `;
+        }
+
+        function getFilteredProjects(filter = 'all') {
+            return filter === 'all'
+                ? projects
+                : projects.filter(project => project.category.split(' ').includes(filter));
+        }
+
+        function updateFeedback(filter, count) {
+            const label = prettifyFilterLabel(filter);
+            const noun = count === 1 ? 'project' : 'projects';
+            filterFeedback.textContent = `Showing: ${label} • ${count} ${noun}`;
+        }
+
+        function showFlash(filter, count) {
+            const label = prettifyFilterLabel(filter);
+            const noun = count === 1 ? 'project' : 'projects';
+            filterFlashText.textContent = `${label} filter applied • ${count} ${noun}`;
+            filterFlash.classList.add('show');
+            clearTimeout(flashTimer);
+            flashTimer = setTimeout(() => {
+                filterFlash.classList.remove('show');
+            }, 1700);
+        }
 
         function renderProjects(filter = 'all') {
-            const filtered = filter === 'all' ? projects : projects.filter(project => project.category.split(' ').includes(filter));
+            const filtered = getFilteredProjects(filter);
 
             grid.innerHTML = filtered.map(project => {
-                const primaryHref = project.title.includes('PayFlow') ? 'case-study.html' : project.live;
-                const primaryLabel = project.title.includes('PayFlow') ? 'Read Case Study' : 'View Repository';
-                const primaryAttrs = project.title.includes('PayFlow') ? '' : 'target="_blank" rel="noopener"';
-
-                return `
-          <article class="glass card">
-            <div class="project-top">
-              <div class="kicker">${project.label}</div>
-              <span class="project-category">${project.category.replace('case-study', 'case study')}</span>
-            </div>
-            <h3>${project.title}</h3>
-            <p>${project.description}</p>
-            <p class="muted">${project.details}</p>
-
-            <div class="architecture" aria-label="${project.title} architecture overview">
-              ${project.stages.map(stage => `
-                <div class="arch-stage">
-                  <strong>${stage.title}</strong>
-                  <span>${stage.desc}</span>
-                </div>`).join('')}
-            </div>
-
-            <div class="proof-strip">
-              ${project.metrics.slice(0, 3).map(metric => {
-                    const parts = metric.split(/ (.+)/);
-                    return `<div class="proof-chip"><strong>${parts[0]}</strong><span>${parts[1] || ''}</span></div>`;
-                }).join('')}
-            </div>
-
-            <div class="tag-row">
-              ${project.stack.map((item, i) => `<span class="tag ${tagClass(i)}">${item}</span>`).join('')}
-            </div>
-
-            <ul class="proof-list">
-              ${project.impact.map(item => `<li>${item}</li>`).join('')}
-            </ul>
-
-            <div class="card-links">
-              <a href="${primaryHref}" ${primaryAttrs}>${primaryLabel}</a>
-              <a href="${project.repo}" target="_blank" rel="noopener">GitHub</a>
-            </div>
-          </article>`;
+                return project.isFeatured ? renderFeaturedProjectCard(project) : renderStandardProjectCard(project);
             }).join('');
+
+            updateFeedback(filter, filtered.length);
+
+            requestAnimationFrame(() => {
+                grid.querySelectorAll('.project-skeleton').forEach(card => {
+                    setTimeout(() => card.classList.remove('project-skeleton'), 450);
+                });
+            });
+
+            return filtered.length;
+        }
+
+        function applyFilter(filter) {
+            filterBtns.forEach(button => button.classList.remove('is-active'));
+            const activeBtn = filterBtns.find(btn => btn.dataset.filter === filter);
+            if (activeBtn) activeBtn.classList.add('is-active');
+
+            filterFeedback.classList.add('is-updating');
+            grid.classList.add('is-filtering');
+
+            setTimeout(() => {
+                const count = renderProjects(filter);
+                filterFeedback.classList.remove('is-updating');
+                grid.classList.remove('is-filtering');
+                showFlash(filter, count);
+
+                const topOffset = projectsSection.getBoundingClientRect().top + window.scrollY - 110;
+                window.scrollTo({
+                    top: topOffset,
+                    behavior: 'smooth'
+                });
+            }, 180);
         }
 
         renderProjects();
 
         filterBtns.forEach(btn => {
             btn.addEventListener('click', () => {
-                filterBtns.forEach(button => button.classList.remove('is-active'));
-                btn.classList.add('is-active');
-                renderProjects(btn.dataset.filter);
+                applyFilter(btn.dataset.filter);
             });
         });
 
         const toggle = document.getElementById('navToggle');
         const nav = document.getElementById('siteNav');
+
         const closeNav = () => {
             nav.classList.remove('open');
             toggle.setAttribute('aria-expanded', 'false');
             document.body.classList.remove('menu-open');
         };
+
         const openNav = () => {
             nav.classList.add('open');
             toggle.setAttribute('aria-expanded', 'true');

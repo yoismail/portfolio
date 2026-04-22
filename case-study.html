@@ -6,20 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PayFlow Case Study | Yomi Ismail</title>
     <meta name="description"
-        content="PayFlow case study by Yomi Ismail — a production-minded ETL project focused on modular pipeline design, PostgreSQL warehouse structure, rerun safety, and analytics-ready delivery." />
+        content="PayFlow case study by Yomi Ismail — a production-minded ETL and warehouse project focused on modular pipeline design, star schema modeling, orchestration, rerun safety, and analytics-ready delivery." />
     <meta name="keywords"
-        content="PayFlow, Yomi Ismail, Data Engineer, Python, ETL, PostgreSQL, SQLAlchemy, Data Warehouse, Analytics Schema" />
+        content="PayFlow, Yomi Ismail, Data Engineer, Python, ETL, PostgreSQL, SQLAlchemy, Data Warehouse, Analytics Schema, Star Schema" />
     <meta name="author" content="Yomi Ismail" />
     <meta property="og:title" content="PayFlow Case Study | Yomi Ismail" />
     <meta property="og:description"
-        content="A production-minded ETL case study focused on modular design, warehouse thinking, and rerun-safe delivery." />
+        content="A production-minded ETL and warehouse case study focused on modular design, star schema modeling, orchestration, and rerun-safe delivery." />
     <meta property="og:type" content="website" />
     <meta property="og:image" content="images/portfolio-preview.png" />
     <meta property="og:url" content="https://yoismail.github.io/portfolio/case-study.html" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="PayFlow Case Study | Yomi Ismail" />
     <meta name="twitter:description"
-        content="A production-minded ETL case study focused on modular design, warehouse thinking, and rerun-safe delivery." />
+        content="A production-minded ETL and warehouse case study focused on modular design, warehouse thinking, orchestration, and rerun-safe delivery." />
     <link rel="canonical" href="https://yoismail.github.io/portfolio/case-study.html" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -28,52 +28,45 @@
         rel="stylesheet" />
     <style>
         :root {
-            /* Core Backgrounds */
             --bg: #030303;
             --bg-2: #090909;
             --bg-3: #121212;
 
-            /* Premium Espresso Glass Surfaces */
             --surface: rgba(28, 20, 16, 0.78);
             --surface-2: rgba(16, 11, 9, 0.92);
             --surface-soft: rgba(255, 248, 240, 0.035);
 
-            /* Borders */
             --border: rgba(255, 245, 235, 0.08);
             --border-strong: rgba(205, 138, 70, 0.42);
             --topline: rgba(255, 255, 255, 0.10);
 
-            /* Typography */
             --text: #FFF8F2;
             --muted: #C9B8A8;
             --muted-2: #E8D8C8;
 
-            /* Apple x Coffee Accent System */
             --primary: #5C3B2A;
-            /* espresso */
             --primary-2: #B87333;
-            /* bronze */
             --primary-3: #E2B07A;
-            /* latte glow */
 
-            /* Shadows */
             --shadow:
                 0 28px 80px rgba(0, 0, 0, .58),
                 0 10px 26px rgba(0, 0, 0, .30);
 
-            /* Glow */
             --glow:
                 0 0 0 1px rgba(255, 255, 255, .02),
                 0 0 28px rgba(184, 115, 51, .14),
                 0 0 54px rgba(92, 59, 42, .12);
 
-            /* Radius / Layout */
             --radius: 24px;
             --radius-sm: 18px;
-            --max: 1180px;
+            --max: 1140px;
             --hh: 80px;
             --blur: 28px;
             --tag-blur: 14px;
+            --section-space: 4.8rem;
+            --grid-gap: 1rem;
+            --card-gap: 1.05rem;
+            --card-pad: 1.35rem;
         }
 
         *,
@@ -169,8 +162,13 @@
             margin: 0 auto;
         }
 
+        .container-reading {
+            width: min(calc(100% - 2rem), 980px);
+            margin: 0 auto;
+        }
+
         .section {
-            padding: 5rem 0;
+            padding: var(--section-space) 0;
         }
 
         .skip-link {
@@ -191,34 +189,45 @@
 
         h1,
         h2,
-        h3 {
+        h3,
+        h4 {
             font-family: 'Syne', sans-serif;
             letter-spacing: -.03em;
         }
 
         h1 {
-            font-size: clamp(2.8rem, 6vw, 5.25rem);
-            line-height: .93;
+            font-size: clamp(2.65rem, 6vw, 5rem);
+            line-height: .95;
         }
 
         h2 {
-            font-size: clamp(1.8rem, 3vw, 3.1rem);
-            line-height: 1.02;
+            font-size: clamp(1.8rem, 3vw, 3rem);
+            line-height: 1.04;
         }
 
         h3 {
-            font-size: 1.14rem;
+            font-size: 1.12rem;
+            line-height: 1.24;
+        }
+
+        h4 {
+            font-size: 1rem;
             line-height: 1.2;
         }
 
         .lead {
-            font-size: clamp(1rem, 1.5vw, 1.15rem);
+            font-size: clamp(1rem, 1.45vw, 1.12rem);
             color: var(--muted-2);
-            max-width: 68ch;
+            max-width: 64ch;
         }
 
         .muted {
             color: var(--muted);
+        }
+
+        .section-note {
+            max-width: 68ch;
+            margin-top: .72rem;
         }
 
         .eyebrow,
@@ -239,6 +248,7 @@
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             box-shadow: inset 0 1px 0 rgba(255, 255, 255, .06);
+            width: fit-content;
         }
 
         .kicker {
@@ -260,17 +270,22 @@
         }
 
         .glass:hover {
-            transform: translateY(-6px);
+            transform: translateY(-4px);
             border-color: var(--border-strong);
             box-shadow: var(--shadow), var(--glow), inset 0 1px 0 rgba(255, 255, 255, .10);
         }
 
         .card {
-            padding: 1.45rem;
+            padding: var(--card-pad);
             display: flex;
             flex-direction: column;
-            gap: 1rem;
+            gap: var(--card-gap);
             min-height: 100%;
+        }
+
+        .card p,
+        .card ul {
+            max-width: 64ch;
         }
 
         .surface-soft {
@@ -441,27 +456,37 @@
             box-shadow: 0 18px 38px rgba(107, 122, 52, .22), 0 12px 28px rgba(143, 161, 74, .18);
         }
 
-
         .btn {
             padding: .84rem 1.1rem;
             border: 1px solid rgba(255, 255, 255, .10);
             font-size: .92rem;
         }
 
+        .btn-secondary {
+            background: rgba(255, 255, 255, .05);
+            color: var(--text);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, .09);
+            color: var(--text);
+            transform: translateY(-2px);
+        }
+
         .hero {
-            padding: clamp(3rem, 5vw, 5rem) 0 4rem;
+            padding: clamp(2.8rem, 5vw, 4.6rem) 0 3.8rem;
         }
 
         .hero-grid {
             display: grid;
-            grid-template-columns: minmax(0, 1.18fr) minmax(320px, .82fr);
-            gap: 1.15rem;
-            align-items: stretch;
+            grid-template-columns: minmax(0, 1.08fr) minmax(320px, .92fr);
+            gap: 1rem;
+            align-items: start;
         }
 
         .hero-copy,
         .hero-side {
-            padding: 1.6rem;
+            padding: 1.45rem;
         }
 
         .hero-copy {
@@ -480,7 +505,7 @@
 
         .hero-proof {
             display: grid;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
+            grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: .75rem;
             margin-top: .2rem;
         }
@@ -497,7 +522,7 @@
             display: block;
             font-family: 'JetBrains Mono', monospace;
             color: var(--primary-2);
-            font-size: 1.06rem;
+            font-size: 1.02rem;
             margin-bottom: .18rem;
         }
 
@@ -555,34 +580,22 @@
             color: #dfdfdf;
         }
 
-        .proof-grid {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 1rem;
-        }
-
-        .timeline-grid {
-            display: grid;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
-            gap: 1rem;
-        }
-
-        .other-grid {
+        .proof-grid,
+        .timeline-grid,
+        .other-grid,
+        .trust-grid,
+        .signal-grid {
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 1rem;
-        }
-
-        .trust-grid {
-            display: grid;
-            grid-template-columns: minmax(0, 1.08fr) minmax(300px, .92fr);
-            gap: 1rem;
+            gap: var(--grid-gap);
+            align-items: start;
         }
 
         .architecture {
             display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: .75rem;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: .7rem;
+            align-items: stretch;
         }
 
         .arch-stage {
@@ -657,8 +670,8 @@
         }
 
         .proof-chip {
-            flex: 1 1 120px;
-            min-width: 120px;
+            flex: 1 1 160px;
+            min-width: 160px;
             padding: .82rem .92rem;
             border-radius: 16px;
             background: rgba(255, 255, 255, .04);
@@ -669,7 +682,7 @@
             display: block;
             color: var(--primary-2);
             font-family: 'JetBrains Mono', monospace;
-            font-size: .92rem;
+            font-size: .9rem;
             margin-bottom: .12rem;
         }
 
@@ -697,6 +710,7 @@
             color: var(--primary-2);
             font-family: 'JetBrains Mono', monospace;
             font-size: .8rem;
+            text-align: right;
         }
 
         .number-pill {
@@ -733,46 +747,96 @@
             display: none;
         }
 
-        @media (max-width: 1024px) {
+        @media (min-width: 1200px) {
+            :root {
+                --card-pad: 1.55rem;
+                --card-gap: 1.15rem;
+                --section-space: 5.2rem;
+            }
 
-            .hero-grid,
-            .proof-grid,
-            .timeline-grid,
-            .other-grid,
-            .trust-grid {
-                grid-template-columns: 1fr;
+            .hero-proof {
+                grid-template-columns: repeat(4, minmax(0, 1fr));
             }
 
             .architecture {
+                grid-template-columns: repeat(4, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 1080px) {
+
+            .hero-grid,
+            .trust-grid,
+            .signal-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .hero-copy,
+            .hero-side {
+                padding: 1.3rem;
+            }
+        }
+
+        @media (max-width: 900px) {
+
+            .proof-grid,
+            .timeline-grid,
+            .other-grid,
+            .trust-grid,
+            .signal-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-proof,
+            .architecture {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
             }
         }
 
         @media (max-width: 760px) {
             :root {
                 --hh: 68px;
+                --section-space: 3.5rem;
+                --card-pad: 1.08rem;
+                --card-gap: .95rem;
             }
 
-            .container {
-                width: min(calc(100% - 1.2rem), var(--max));
-            }
-
-            .section {
-                padding: 3.6rem 0;
+            .container,
+            .container-reading {
+                width: min(calc(100% - 1.15rem), var(--max));
             }
 
             .hero {
-                padding: 2rem 0 3rem;
+                padding: 1.9rem 0 2.8rem;
             }
 
             .hero-copy,
             .hero-side,
             .card {
-                padding: 1.12rem;
+                padding: var(--card-pad);
             }
 
-            .hero-proof {
-                grid-template-columns: 1fr 1fr;
+            .hero-proof,
+            .architecture {
+                grid-template-columns: 1fr;
+            }
+
+            .mini-nav,
+            .proof-row,
+            .related-links,
+            .proof-strip,
+            .tag-row {
+                gap: .65rem;
+            }
+
+            .mini-nav a,
+            .proof-row a,
+            .related-links a {
+                width: 100%;
+            }
+
+            .proof-chip {
+                min-width: 100%;
             }
 
             .site-nav {
@@ -834,11 +898,25 @@
 
         @media (max-width: 520px) {
             h1 {
-                font-size: 2.3rem;
+                font-size: 2.25rem;
             }
 
-            .hero-proof {
-                grid-template-columns: 1fr;
+            h2 {
+                font-size: 1.75rem;
+            }
+
+            .metric-line {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: .25rem;
+            }
+
+            .metric-line span {
+                text-align: left;
+            }
+
+            .brand-copy span {
+                font-size: .74rem;
             }
         }
 
@@ -878,7 +956,7 @@
             <nav class="site-nav" id="siteNav" aria-label="Case study navigation">
                 <a href="#overview">Overview</a>
                 <a href="#architecture">Architecture</a>
-                <a href="#timeline">Process</a>
+                <a href="#process">Process</a>
                 <a href="#outcomes">Outcomes</a>
                 <a href="#related">Related</a>
                 <a href="index.html">Portfolio</a>
@@ -896,15 +974,15 @@
             <div class="container hero-grid">
                 <div class="glass hero-copy">
                     <span class="eyebrow">Featured Portfolio Project</span>
-                    <div class="hero-subtitle">Python ETL • PostgreSQL • modular warehouse delivery</div>
-                    <h1>PayFlow is where I started thinking less like a student project builder and more like a Data
-                        Engineer.</h1>
-                    <p class="lead">This case study shows how I approached pipeline design when the real challenge was
-                        not only data cleaning. The challenge was building a workflow that could survive change, stay
-                        readable, support reruns, and make warehouse intent explicit.</p>
-                    <p class="muted">I used PayFlow to practice production-minded habits: stage separation, rerun-safe
-                        design, clearer warehouse loading paths, and a project structure that remains understandable
-                        when requirements evolve.</p>
+                    <div class="hero-subtitle">Python ETL • PostgreSQL • star schema • orchestration</div>
+                    <h1>PayFlow is the project where I started designing pipelines for trust, reruns, and analytics-not
+                        just cleanup.</h1>
+                    <p class="lead">This case study shows how I approached a real data engineering problem: not only
+                        cleaning data, but building a modular workflow that stays readable, supports resets, loads a
+                        warehouse deliberately, and remains easier to extend when business logic changes.</p>
+                    <p class="muted">I used PayFlow to practice production-minded habits: stage separation,
+                        schema-defined warehouse loading, observability through logging, orchestration through a single
+                        entrypoint, and environment resets that make iteration safer during development.</p>
 
                     <div class="mini-nav">
                         <a href="https://github.com/yoismail/payflow_case_study" target="_blank" rel="noopener">View
@@ -913,12 +991,14 @@
                     </div>
 
                     <div class="hero-proof" aria-label="PayFlow proof points">
-                        <div class="proof-stat"><strong>3-layer</strong><span>Raw → processed → analytics</span></div>
-                        <div class="proof-stat"><strong>Modular</strong><span>Separated ETL responsibilities</span>
-                        </div>
-                        <div class="proof-stat"><strong>Rerun-safe</strong><span>Reset and reload workflow</span></div>
-                        <div class="proof-stat"><strong>Warehouse-first</strong><span>Analytics-ready structure</span>
-                        </div>
+                        <div class="proof-stat"><strong>5 layers</strong><span>Raw → staging → transform → analytics →
+                                BI thinking</span></div>
+                        <div class="proof-stat"><strong>Star schema</strong><span>Dimensions and facts in
+                                PostgreSQL</span></div>
+                        <div class="proof-stat"><strong>Orchestrated</strong><span>Single-command full pipeline
+                                run</span></div>
+                        <div class="proof-stat"><strong>Reset-safe</strong><span>Idempotent-style development
+                                cycles</span></div>
                     </div>
                 </div>
 
@@ -930,65 +1010,103 @@
                             <span class="tag c2">Pandas</span>
                             <span class="tag c3">PostgreSQL</span>
                             <span class="tag c4">SQLAlchemy</span>
-                            <span class="tag c5">Analytics Schema</span>
+                            <span class="tag c5">Star Schema</span>
                         </div>
                     </div>
 
-                    <div class="surface-soft" style="padding:1rem">
+                    <div class="surface-soft card">
                         <div class="kicker">Why this project matters</div>
                         <div style="display:grid; gap:.7rem; margin-top:.8rem">
-                            <div class="metric-line"><strong>Project type</strong><span>ETL case study</span></div>
-                            <div class="metric-line"><strong>Main signal</strong><span>Delivery discipline</span></div>
-                            <div class="metric-line"><strong>Strength shown</strong><span>Structure +
-                                    maintainability</span></div>
-                            <div class="metric-line"><strong>Best for</strong><span>Hiring review</span></div>
+                            <div class="metric-line"><strong>Project type</strong><span>ETL + Warehouse Case
+                                    Study</span></div>
+                            <div class="metric-line"><strong>Main signal</strong><span>Structure +
+                                    Maintainability</span></div>
+                            <div class="metric-line"><strong>Core assets</strong><span>run_all.py + wipe_all.py</span>
+                            </div>
+                            <div class="metric-line"><strong>Best for</strong><span>Technical hiring review</span></div>
                         </div>
                     </div>
                 </aside>
             </div>
         </section>
 
+        <section class="section" id="signal">
+            <div class="container signal-grid">
+                <div class="glass card">
+                    <span class="eyebrow">Why this case study is stronger</span>
+                    <h2>This is not just a cleaned dataset project. It is a workflow design project.</h2>
+                    <p class="lead">The strongest signal in PayFlow is not that I used Python and SQL. It is that I
+                        built a repeatable ETL system with distinct layers, SQL-defined warehouse structures, observable
+                        execution, and a reset path for safer iteration.</p>
+                    <div class="proof-strip">
+                        <div class="proof-chip"><strong>Problem-first</strong><span>Built around pipeline reliability,
+                                not just transforms</span></div>
+                        <div class="proof-chip"><strong>Architecture-aware</strong><span>Warehouse intent stays visible
+                                across layers</span></div>
+                        <div class="proof-chip"><strong>Recruiter-friendly</strong><span>Easy to scan without losing
+                                technical depth</span></div>
+                    </div>
+                </div>
+
+                <aside class="glass card">
+                    <span class="eyebrow">30-second review</span>
+                    <ul class="detail-list">
+                        <li>Multi-layer ETL architecture from raw data to analytics outputs.</li>
+                        <li>Star schema with dimensions and fact tables for reporting use cases.</li>
+                        <li>Reset tooling for deterministic reruns during redesign and debugging.</li>
+                        <li>Single-entrypoint orchestration with logged, timed execution.</li>
+                    </ul>
+                </aside>
+            </div>
+        </section>
+
         <section id="architecture" class="section">
-            <div class="container">
+            <div class="container-reading">
                 <span class="eyebrow">Problem → Solution → Architecture</span>
-                <h2 style="margin-top:.9rem">The problem was not just loading data. It was avoiding a workflow that
-                    breaks as soon as logic changes.</h2>
-                <p class="lead" style="margin-top:.75rem; max-width:72ch">I wanted the project to be easier to change
-                    without losing control of the output. That meant making each stage easier to reason about, keeping
-                    warehouse intent explicit, and avoiding a design where everything is tangled together.</p>
+                <h2 style="margin-top:.9rem">The problem was not only loading data. It was preventing the workflow from
+                    becoming fragile as the logic evolved.</h2>
+                <p class="lead section-note">I wanted the project to be easier to change without losing control of the
+                    output. That meant separating responsibilities, keeping warehouse logic explicit, validating data
+                    quality at multiple stages, and making full reruns predictable.</p>
 
                 <div class="proof-grid" style="margin-top:1.35rem">
                     <article class="glass card">
                         <h3>Problem</h3>
-                        <p>When extraction, transformation, table creation, and analytics loading all live in the same
-                            place, every change creates more debugging friction. Reruns feel unsafe and the design
-                            becomes harder to trust.</p>
+                        <p>When extraction, cleaning, table creation, and analytics loading are mixed together, every
+                            schema change increases debugging friction. The workflow becomes harder to trust, and reruns
+                            become riskier.</p>
                         <div class="proof-strip">
                             <div class="proof-chip"><strong>Risk</strong><span>Tangled responsibilities</span></div>
-                            <div class="proof-chip"><strong>Impact</strong><span>Slow debugging cycles</span></div>
+                            <div class="proof-chip"><strong>Impact</strong><span>Unclear reruns and slower
+                                    debugging</span></div>
                         </div>
                     </article>
 
                     <article class="glass card">
                         <h3>Solution</h3>
-                        <p>I separated responsibilities so each stage could be reasoned about independently. That made
-                            it easier to trace failures, adjust table logic, and keep warehouse loading deliberate
-                            instead of accidental.</p>
+                        <p>I separated the workflow into raw ingestion, staging clean-up, transform logic, analytics
+                            loading, and orchestration. That made failures easier to trace and made warehouse behavior
+                            more deliberate.</p>
                         <div class="proof-strip">
                             <div class="proof-chip"><strong>Method</strong><span>Stage separation</span></div>
-                            <div class="proof-chip"><strong>Benefit</strong><span>Clearer ownership</span></div>
+                            <div class="proof-chip"><strong>Benefit</strong><span>Clearer ownership and
+                                    maintainability</span></div>
                         </div>
                     </article>
 
                     <article class="glass card">
                         <h3>Architecture Choice</h3>
-                        <p>I treated raw, processed, and analytics thinking as separate concerns. That made the final
-                            warehouse design more intentional and reduced the chance of hiding reporting logic in the
-                            wrong layer.</p>
+                        <p>I treated each layer as a separate engineering concern: raw data as source truth, staging for
+                            clean standardized tables, transform for dimensional preparation, analytics for warehouse
+                            delivery, and orchestration for repeatable runs.</p>
                         <div class="architecture" aria-label="PayFlow architecture stages">
-                            <div class="arch-stage"><strong>Raw</strong><span>Source staging</span></div>
-                            <div class="arch-stage"><strong>Processed</strong><span>Typed transforms</span></div>
-                            <div class="arch-stage"><strong>Analytics</strong><span>Warehouse outputs</span></div>
+                            <div class="arch-stage"><strong>Raw</strong><span>Immutable source CSVs</span></div>
+                            <div class="arch-stage"><strong>Staging</strong><span>Cleaned standardized tables</span>
+                            </div>
+                            <div class="arch-stage"><strong>Transform</strong><span>Dimension and fact
+                                    preparation</span></div>
+                            <div class="arch-stage"><strong>Analytics</strong><span>Warehouse outputs in
+                                    PostgreSQL</span></div>
                         </div>
                     </article>
                 </div>
@@ -996,94 +1114,131 @@
         </section>
 
         <section class="section" id="trust">
-            <div class="container trust-grid">
-                <div class="glass card">
-                    <span class="eyebrow">What this proves</span>
-                    <h2>This project shows stronger engineering judgment than a typical portfolio ETL build.</h2>
-                    <div class="proof-strip" style="margin-top:.5rem">
-                        <div class="proof-chip"><strong>Rerun path</strong><span>Safer redesign cycles</span></div>
-                        <div class="proof-chip"><strong>Explicit loading</strong><span>Warehouse intent stays
-                                visible</span></div>
-                        <div class="proof-chip"><strong>Stage clarity</strong><span>Debugging becomes simpler</span>
+            <div class="container">
+                <div class="trust-grid">
+                    <div class="glass card">
+                        <span class="eyebrow">Key engineering concepts</span>
+                        <h2>This project proves stronger engineering judgment than a typical portfolio ETL build.</h2>
+                        <div class="proof-strip" style="margin-top:.5rem">
+                            <div class="proof-chip"><strong>Logging</strong><span>Timed and observable execution</span>
+                            </div>
+                            <div class="proof-chip"><strong>Schema-driven</strong><span>SQL-defined warehouse
+                                    tables</span></div>
+                            <div class="proof-chip"><strong>Idempotent</strong><span>Reset-safe development
+                                    cycles</span></div>
+                        </div>
+                        <div class="proof-grid" style="margin-top:1rem">
+                            <div class="card surface-soft">
+                                <h4>Warehouse modeling</h4>
+                                <ul class="proof-list">
+                                    <li>Dimensions for customer, seller, product, payment type, and date.</li>
+                                    <li>Fact tables for orders, order items, and payments.</li>
+                                    <li>Foreign keys, surrogate keys, and analytics-ready query paths.</li>
+                                </ul>
+                            </div>
+                            <div class="card surface-soft">
+                                <h4>Pipeline operations</h4>
+                                <ul class="proof-list">
+                                    <li>Full workflow orchestration through one script.</li>
+                                    <li>Environment reset support for deterministic reruns.</li>
+                                    <li>Fail-fast, logged execution across major steps.</li>
+                                </ul>
+                            </div>
+                            <div class="card surface-soft">
+                                <h4>Data quality thinking</h4>
+                                <ul class="proof-list">
+                                    <li>Validation during extract, clean, and transform phases.</li>
+                                    <li>Standardized columns and typed timestamp handling.</li>
+                                    <li>Explicit stage ownership to reduce hidden logic.</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="glass card">
-                    <span class="eyebrow">Key review points</span>
-                    <ul class="detail-list">
-                        <li>Modular ETL workflow instead of a single-script pipeline.</li>
-                        <li>Warehouse-oriented thinking with clearer analytics targets.</li>
-                        <li>Reset and reload approach to support safer reruns during iteration.</li>
-                        <li>Project structure designed for readability and maintainability.</li>
-                    </ul>
+
+                    <div class="glass card">
+                        <span class="eyebrow">Technical stack</span>
+                        <div class="metric-line"><strong>Language</strong><span>Python 3.x</span></div>
+                        <div class="metric-line"><strong>Processing</strong><span>pandas</span></div>
+                        <div class="metric-line"><strong>Database</strong><span>PostgreSQL</span></div>
+                        <div class="metric-line"><strong>Loader / ORM</strong><span>SQLAlchemy</span></div>
+                        <div class="metric-line"><strong>Environment</strong><span>dotenv</span></div>
+                        <div class="metric-line"><strong>Logging</strong><span>Custom formatter + timing</span></div>
+                        <div class="metric-line"><strong>Orchestration</strong><span>Python subprocess DAG</span></div>
+                        <div class="metric-line"><strong>Source</strong><span>Olist public e-commerce dataset</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <section id="timeline" class="section">
-            <div class="container">
+        <section id="process" class="section">
+            <div class="container-reading">
                 <span class="eyebrow">Delivery Process</span>
-                <h2 style="margin-top:.9rem">How I worked through the project.</h2>
+                <h2 style="margin-top:.9rem">How the pipeline is structured from reset to warehouse delivery.</h2>
+                <p class="lead section-note">The repo makes the process explicit: reset the environment, extract the
+                    source data, explore and validate it, clean and stage it, then transform and load a star-schema
+                    warehouse through orchestrated execution.</p>
+
                 <div class="timeline-grid" style="margin-top:1.35rem">
                     <article class="glass card">
                         <div class="number-pill">01</div>
-                        <h3>Clarify entities and flow</h3>
-                        <p>I started by understanding which entities should move through the pipeline and what the final
-                            analytics shape needed to support.</p>
+                        <h3>Wipe Phase</h3>
+                        <p>Resets schemas and data folders so the environment returns to a clean state before execution.
+                            This supports deterministic reruns during redesign and debugging.</p>
                     </article>
 
                     <article class="glass card">
                         <div class="number-pill">02</div>
-                        <h3>Separate transformation from loading</h3>
-                        <p>I avoided putting every responsibility in one place. That made the workflow easier to reason
-                            about and reduced mental overhead during debugging.</p>
+                        <h3>Extract + Explore</h3>
+                        <p>Downloads and validates the raw CSV data, then logs shapes, heads, dtypes, row counts, and
+                            missing values to make the input easier to reason about.</p>
                     </article>
 
                     <article class="glass card">
                         <div class="number-pill">03</div>
-                        <h3>Design for reruns</h3>
-                        <p>I added reset and reload thinking because I knew the project would evolve as I refined schema
-                            structure and warehouse logic.</p>
+                        <h3>Clean + Stage</h3>
+                        <p>Cleans customers, sellers, and transactions, handles cancellations and timestamps, writes
+                            cleaned outputs, and loads standardized tables into staging.</p>
                     </article>
 
                     <article class="glass card">
                         <div class="number-pill">04</div>
-                        <h3>Refine for readability</h3>
-                        <p>I used the project to practice structuring code and folders in a way that would still make
-                            sense when I returned later.</p>
+                        <h3>Transform + Load</h3>
+                        <p>Builds dimensions and fact tables, maps keys, preserves referential integrity, and loads the
+                            analytics schema through an orchestrated, logged workflow.</p>
                     </article>
                 </div>
             </div>
         </section>
 
         <section id="outcomes" class="section">
-            <div class="container">
+            <div class="container-reading">
                 <span class="eyebrow">Outcomes</span>
-                <h2 style="margin-top:.9rem">What this project proved.</h2>
+                <h2 style="margin-top:.9rem">What this project proved about my engineering approach.</h2>
                 <div class="proof-grid" style="margin-top:1.35rem">
                     <article class="glass card">
                         <h3>Delivery outcomes</h3>
                         <ul class="proof-list">
-                            <li>Modular workflow that is easier to explain and rerun.</li>
-                            <li>Analytics loading treated as a deliberate stage, not an afterthought.</li>
-                            <li>Warehouse design choices made more visible in project structure.</li>
+                            <li>Built a modular workflow that is easier to explain, rerun, and extend.</li>
+                            <li>Made analytics loading a deliberate stage instead of an afterthought.</li>
+                            <li>Kept warehouse design choices visible in both code structure and SQL assets.</li>
                         </ul>
                     </article>
 
                     <article class="glass card">
                         <h3>Technical lessons</h3>
                         <ul class="proof-list">
-                            <li>Separation of concerns reduces debugging friction.</li>
+                            <li>Separation of concerns reduces debugging friction and improves readability.</li>
                             <li>Explicit load paths make warehouse behavior easier to trust.</li>
-                            <li>Rerun safety matters when a project is evolving quickly.</li>
+                            <li>Reset tooling matters when the project is evolving quickly.</li>
                         </ul>
                     </article>
 
                     <article class="glass card">
-                        <h3>Career takeaway</h3>
-                        <p>PayFlow strengthened my instincts for delivery discipline. I became more deliberate about
-                            what belongs in transformation code, what belongs in loading code, and what needs to exist
-                            so another iteration does not break the project.</p>
+                        <h3>Business value</h3>
+                        <p>This pipeline enables cleaner reporting and analytics by moving from raw operational data
+                            into structures designed for BI-style queries, repeatable execution, and easier future
+                            extension.</p>
                         <div class="proof-row">
                             <a href="https://github.com/yoismail/payflow_case_study" target="_blank" rel="noopener">Open
                                 repository</a>
@@ -1101,9 +1256,8 @@
                 <div class="other-grid" style="margin-top:1.35rem">
                     <article class="glass card">
                         <h3>YINC E-Commerce Case Study</h3>
-                        <p>I used YINC to strengthen the fundamentals: standardized columns, cleaner entity boundaries,
-                            and a simpler relational model loaded into PostgreSQL without skipping the structural work.
-                        </p>
+                        <p>YINC strengthened the fundamentals: cleaner entity boundaries, normalized relational tables,
+                            and a clearer CSV-to-PostgreSQL flow focused on data modeling discipline.</p>
                         <div class="tag-row">
                             <span class="tag c1">CSV Ingestion</span>
                             <span class="tag c2">Normalization</span>
@@ -1117,9 +1271,8 @@
 
                     <article class="glass card">
                         <h3>ChocoDelight Data Platform</h3>
-                        <p>ChocoDelight pushed me toward more layered platform thinking. I worked through staging,
-                            feature engineering, warehouse-friendly shaping, and analytics-oriented outputs more
-                            deliberately.</p>
+                        <p>ChocoDelight pushed me toward more layered platform thinking, with ingestion, shaping,
+                            feature engineering, and analytics-oriented outputs handled more deliberately.</p>
                         <div class="tag-row">
                             <span class="tag c4">Layered Pipeline</span>
                             <span class="tag c5">Feature Engineering</span>
@@ -1146,11 +1299,13 @@
     <script>
         const toggle = document.getElementById('navToggle');
         const nav = document.getElementById('siteNav');
+
         const closeNav = () => {
             nav.classList.remove('open');
             toggle.setAttribute('aria-expanded', 'false');
             document.body.classList.remove('menu-open');
         };
+
         const openNav = () => {
             nav.classList.add('open');
             toggle.setAttribute('aria-expanded', 'true');
