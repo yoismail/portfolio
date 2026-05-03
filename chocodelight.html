@@ -1,0 +1,1976 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>ChocoDelight Case Study — Yomi Ismail</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="description"
+        content="ChocoDelight Data Platform: a layered ETL pipeline that turns a flat chocolate sales dataset into a structured PostgreSQL warehouse with raw, operational, and analytics schemas." />
+
+    <!-- Favicon -->
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#fafaf8" media="(prefers-color-scheme: light)" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="ChocoDelight — Layered ETL &amp; Dimensional Warehouse" />
+    <meta property="og:description"
+        content="An end-to-end data platform that transforms a flat chocolate sales dataset into a layered PostgreSQL warehouse with raw, operational, and analytics schemas." />
+    <meta property="og:image" content="og-image.svg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="ChocoDelight data platform case study by Yomi Ismail" />
+    <meta property="og:locale" content="en_GB" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="ChocoDelight Case Study — Yomi Ismail" />
+    <meta name="twitter:description"
+        content="An end-to-end data platform with raw, operational, and analytics schemas in PostgreSQL." />
+    <meta name="twitter:image" content="og-image.svg" />
+
+    <!-- Schema.org structured data -->
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CreativeWork",
+  "name": "ChocoDelight Data Platform — Layered ETL &amp; Dimensional Warehouse",
+  "creator": {
+    "@type": "Person",
+    "name": "Yomi Ismail",
+    "jobTitle": "Data Engineer"
+  },
+  "keywords": [
+    "Data Engineering","ETL","PostgreSQL","Python","pandas",
+    "SQLAlchemy","Star Schema","Dimensional Modeling","Layered Architecture"
+  ],
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "Yomi Ismail — Portfolio"
+  }
+}
+</script>
+
+    <!-- Plausible analytics -->
+    <script defer data-domain="YOUR-DOMAIN.com" src="https://plausible.io/js/script.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Syne:wght@400;600;700;800&family=Inter:wght@400;500&display=swap"
+        rel="stylesheet" />
+    <style>
+        /* ── DARK TOKENS ──────────────────────────────────────── */
+        :root {
+            --bg: #000;
+            --bg-nav: rgba(0, 0, 0, .9);
+            --bg-alt: #080808;
+            --bg-surf: #0d0d0d;
+            --bg-card: #131313;
+            --bg-card2: #1a1a1a;
+            --bdr: rgba(255, 255, 255, .07);
+            --bdr-hi: rgba(129, 140, 248, .5);
+            --acc: #818cf8;
+            --acc-s: rgba(129, 140, 248, .1);
+            --acc-g: rgba(129, 140, 248, .25);
+            --acc-2: #2dd4bf;
+            --grad: linear-gradient(115deg, #818cf8 0%, #a78bfa 40%, #2dd4bf 100%);
+            --teal: #2dd4bf;
+            --teal-s: rgba(45, 212, 191, .09);
+            --amber: #fbbf24;
+            --amber-s: rgba(251, 191, 36, .09);
+            --green: #34d399;
+            --green-s: rgba(52, 211, 153, .09);
+            --h1: #f0f0f0;
+            --h2: #c8d0e0;
+            --h3: #606880;
+            --fd: 'Syne', sans-serif;
+            --fm: 'IBM Plex Mono', monospace;
+            --fb: 'Inter', sans-serif;
+            --r: .75rem;
+            --rsm: .375rem;
+            --nav: 68px;
+            --ez: cubic-bezier(.16, 1, .3, 1);
+        }
+
+        /* ── RESET ────────────────────────────────────────────── */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: calc(var(--nav) + 1rem);
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: var(--fb);
+            background: var(--bg);
+            color: var(--h2);
+            line-height: 1.65;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            transition: background .3s var(--ez), color .3s var(--ez);
+        }
+
+        /* ── NAV ──────────────────────────────────────────────── */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 200;
+            height: var(--nav);
+            background: var(--bg-nav);
+            backdrop-filter: blur(18px) saturate(180%);
+            -webkit-backdrop-filter: blur(18px) saturate(180%);
+            border-bottom: 1px solid var(--bdr);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 clamp(1rem, 4vw, 2.5rem);
+            transition: background .3s, border-color .3s;
+            gap: 1rem;
+        }
+
+        .nav-brand {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-decoration: none;
+            white-space: nowrap;
+            flex-shrink: 0;
+            line-height: 1.1;
+            gap: .1rem;
+        }
+
+        .nav-brand .name {
+            font-family: var(--fd);
+            font-size: .95rem;
+            font-weight: 700;
+            letter-spacing: -.02em;
+            color: var(--h1);
+            transition: color .2s;
+        }
+
+        .nav-brand .title {
+            font-family: var(--fm);
+            font-size: .6rem;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: var(--acc);
+        }
+
+        .nav-brand:hover .name {
+            color: var(--acc);
+        }
+
+        @media(max-width:600px) {
+            .nav-brand .name {
+                font-size: .85rem;
+            }
+
+            .nav-brand .title {
+                font-size: .55rem;
+                letter-spacing: .1em;
+            }
+        }
+
+        @media(max-width:420px) {
+            .nav-brand .title {
+                display: none;
+            }
+
+            .nav-brand .name {
+                font-size: .82rem;
+            }
+        }
+
+        /* nav links horizontal scroll on mobile */
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: .15rem;
+            flex: 1;
+            justify-content: center;
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            -webkit-overflow-scrolling: touch;
+            scroll-behavior: smooth;
+            mask-image: linear-gradient(to right, transparent, #000 1.5rem, #000 calc(100% - 1.5rem), transparent);
+            -webkit-mask-image: linear-gradient(to right, transparent, #000 1.5rem, #000 calc(100% - 1.5rem), transparent);
+        }
+
+        .nav-links::-webkit-scrollbar {
+            display: none;
+        }
+
+        .nav-links a {
+            font-size: .78rem;
+            color: var(--h3);
+            text-decoration: none;
+            padding: .4rem .8rem;
+            border-radius: var(--rsm);
+            transition: color .18s, background .18s;
+            position: relative;
+            flex-shrink: 0;
+            white-space: nowrap;
+        }
+
+        .nav-links a:hover {
+            color: var(--h1);
+            background: var(--acc-s);
+        }
+
+        .nav-links a.active {
+            color: var(--acc);
+            background: var(--acc-s);
+        }
+
+        @media(max-width:760px) {
+            .nav-links {
+                justify-content: flex-start;
+            }
+
+            .nav-links a {
+                font-size: .74rem;
+                padding: .35rem .65rem;
+            }
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: .6rem;
+            flex-shrink: 0;
+        }
+
+        .theme-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: .35rem;
+            font-family: var(--fm);
+            font-size: .68rem;
+            padding: .32rem .8rem;
+            border-radius: 999px;
+            border: 1px solid var(--bdr);
+            background: var(--bg-surf);
+            color: var(--h3);
+            cursor: pointer;
+            transition: all .18s var(--ez);
+            white-space: nowrap;
+        }
+
+        .theme-btn:hover {
+            border-color: var(--acc);
+            color: var(--acc);
+            background: var(--acc-s);
+        }
+
+        @media(max-width:520px) {
+            .theme-btn span:not(.theme-icon) {
+                display: none;
+            }
+
+            .theme-btn {
+                padding: .4rem;
+            }
+        }
+
+        /* light nav */
+        [data-theme="light"] nav {
+            background: rgba(255, 255, 255, .96);
+            border-bottom-color: rgba(0, 0, 0, .08);
+            box-shadow: 0 1px 0 rgba(0, 0, 0, .04), 0 4px 16px rgba(0, 0, 0, .04);
+        }
+
+        [data-theme="light"] .nav-brand .name {
+            color: #0f172a;
+        }
+
+        [data-theme="light"] .nav-brand .title {
+            color: #4f46e5;
+        }
+
+        [data-theme="light"] .nav-brand:hover .name {
+            color: #4f46e5;
+        }
+
+        [data-theme="light"] .nav-links a {
+            color: #64748b;
+        }
+
+        [data-theme="light"] .nav-links a:hover {
+            color: #0f172a;
+            background: rgba(79, 70, 229, .06);
+        }
+
+        [data-theme="light"] .nav-links a.active {
+            color: #4f46e5;
+            background: rgba(79, 70, 229, .08);
+        }
+
+        [data-theme="light"] .theme-btn {
+            background: #f8fafc;
+            border-color: rgba(0, 0, 0, .1);
+            color: #475569;
+        }
+
+        [data-theme="light"] .theme-btn:hover {
+            border-color: #4f46e5;
+            color: #4f46e5;
+            background: #eef2ff;
+        }
+
+        /* ── LAYOUT ───────────────────────────────────────────── */
+        .page {
+            position: relative;
+            z-index: 1;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 clamp(1rem, 4vw, 2.5rem);
+            padding-top: var(--nav);
+            overflow-x: clip;
+        }
+
+        /* ── SECTIONS ─────────────────────────────────────────── */
+        section {
+            padding: 5.5rem 0;
+            position: relative;
+        }
+
+        .sec-alt {
+            background: var(--bg-alt);
+            margin-left: calc(-1 * clamp(1rem, 4vw, 2.5rem));
+            margin-right: calc(-1 * clamp(1rem, 4vw, 2.5rem));
+            padding: 5.5rem clamp(1rem, 4vw, 2.5rem);
+        }
+
+        [data-theme="light"] .sec-alt {
+            background: #f1f5f9;
+        }
+
+        .sec-num {
+            position: absolute;
+            top: 3rem;
+            font-family: var(--fd);
+            font-size: clamp(5rem, 12vw, 9rem);
+            font-weight: 800;
+            line-height: 1;
+            pointer-events: none;
+            user-select: none;
+            letter-spacing: -.06em;
+            color: rgba(255, 255, 255, .04);
+            right: 0;
+        }
+
+        .sec-alt .sec-num {
+            right: clamp(1rem, 4vw, 2.5rem);
+        }
+
+        [data-theme="light"] .sec-num {
+            color: rgba(79, 70, 229, .07);
+        }
+
+        .kicker {
+            font-family: var(--fm);
+            font-size: .66rem;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--acc);
+            margin-bottom: .6rem;
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+        }
+
+        .kicker::before {
+            content: '';
+            width: 16px;
+            height: 1.5px;
+            background: var(--acc);
+            border-radius: 1px;
+            flex-shrink: 0;
+        }
+
+        [data-theme="light"] .kicker {
+            color: #4f46e5;
+        }
+
+        [data-theme="light"] .kicker::before {
+            background: #4f46e5;
+        }
+
+        h2 {
+            font-family: var(--fd);
+            font-size: clamp(1.75rem, 3.2vw, 2.4rem);
+            font-weight: 700;
+            letter-spacing: -.04em;
+            margin-bottom: .6rem;
+            color: var(--h1);
+        }
+
+        [data-theme="light"] h2 {
+            color: #0f172a;
+        }
+
+        .section-intro {
+            font-size: .93rem;
+            color: var(--h2);
+            max-width: 38rem;
+            margin-bottom: 2.25rem;
+            line-height: 1.75;
+        }
+
+        [data-theme="light"] .section-intro {
+            color: #334155;
+        }
+
+        /* ── CASE-STUDY HERO ──────────────────────────────────── */
+        #cs-hero {
+            padding: 5rem 0 3.5rem;
+            border-bottom: 1px solid var(--bdr);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: .4rem;
+            font-family: var(--fm);
+            font-size: .7rem;
+            color: var(--h3);
+            text-decoration: none;
+            margin-bottom: 1.5rem;
+            transition: color .18s, gap .2s var(--ez);
+        }
+
+        .back-link:hover {
+            color: var(--acc);
+            gap: .6rem;
+            text-decoration: none;
+        }
+
+        [data-theme="light"] .back-link {
+            color: #64748b;
+        }
+
+        [data-theme="light"] .back-link:hover {
+            color: #4f46e5;
+        }
+
+        .cs-title {
+            font-family: var(--fd);
+            font-size: clamp(2rem, 5vw, 3.4rem);
+            font-weight: 800;
+            letter-spacing: -.04em;
+            line-height: 1.05;
+            margin-bottom: 1.1rem;
+            color: var(--h1);
+        }
+
+        [data-theme="light"] .cs-title {
+            color: #0f172a;
+        }
+
+        .cs-title .hi {
+            background: var(--grad);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+        }
+
+        [data-theme="light"] .cs-title .hi {
+            background: linear-gradient(115deg, #4f46e5 0%, #7c3aed 45%, #0d9488 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+        }
+
+        .cs-sub {
+            font-size: 1rem;
+            color: var(--h2);
+            max-width: 620px;
+            line-height: 1.75;
+            margin-bottom: 2rem;
+        }
+
+        [data-theme="light"] .cs-sub {
+            color: #334155;
+        }
+
+        .meta-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .5rem;
+            margin-bottom: 2rem;
+        }
+
+        .meta-pill {
+            font-family: var(--fm);
+            font-size: .7rem;
+            padding: .32rem .85rem;
+            border-radius: 999px;
+            border: 1px solid var(--bdr);
+            background: var(--bg-surf);
+            color: var(--h3);
+            letter-spacing: .04em;
+        }
+
+        .meta-pill.acc {
+            border-color: rgba(129, 140, 248, .4);
+            color: var(--acc);
+            background: var(--acc-s);
+        }
+
+        [data-theme="light"] .meta-pill {
+            background: #f1f5f9;
+            border-color: rgba(0, 0, 0, .1);
+            color: #475569;
+        }
+
+        [data-theme="light"] .meta-pill.acc {
+            border-color: rgba(79, 70, 229, .4);
+            color: #4f46e5;
+            background: #eef2ff;
+        }
+
+        /* stat strip */
+        .stat-strip {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1px;
+            background: var(--bdr);
+            border: 1px solid var(--bdr);
+            border-radius: var(--r);
+            overflow: hidden;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-strip::before {
+            content: '';
+            position: absolute;
+            inset: -40px;
+            background: radial-gradient(ellipse at 30% 50%, rgba(129, 140, 248, .18), transparent 60%),
+                radial-gradient(ellipse at 80% 50%, rgba(45, 212, 191, .12), transparent 60%);
+            pointer-events: none;
+            z-index: -1;
+            filter: blur(20px);
+        }
+
+        [data-theme="light"] .stat-strip::before {
+            background: radial-gradient(ellipse at 30% 50%, rgba(79, 70, 229, .1), transparent 60%),
+                radial-gradient(ellipse at 80% 50%, rgba(13, 148, 136, .08), transparent 60%);
+        }
+
+        .stat-cell {
+            background: var(--bg-card);
+            padding: 1.25rem 1.4rem;
+            transition: background .18s;
+        }
+
+        .stat-cell:hover {
+            background: var(--bg-card2);
+        }
+
+        .stat-num {
+            font-family: var(--fd);
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--h1);
+            line-height: 1;
+            margin-bottom: .3rem;
+        }
+
+        .stat-label {
+            font-family: var(--fm);
+            font-size: .62rem;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            color: var(--h3);
+        }
+
+        [data-theme="light"] .stat-strip {
+            background: rgba(0, 0, 0, .08);
+            border-color: rgba(0, 0, 0, .1);
+        }
+
+        [data-theme="light"] .stat-cell {
+            background: #fff;
+        }
+
+        [data-theme="light"] .stat-cell:hover {
+            background: #f8fafc;
+        }
+
+        [data-theme="light"] .stat-num {
+            color: #0f172a;
+        }
+
+        [data-theme="light"] .stat-label {
+            color: #64748b;
+        }
+
+        /* ── CARDS ────────────────────────────────────────────── */
+        .card-grid {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .grid-2 {
+            grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+        }
+
+        .grid-3 {
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--bdr);
+            border-radius: var(--r);
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+            isolation: isolate;
+            transition: border-color .2s var(--ez), transform .2s var(--ez), box-shadow .2s var(--ez);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1.5px;
+            background: linear-gradient(90deg, transparent, var(--acc), transparent);
+            opacity: 0;
+            transition: opacity .2s;
+        }
+
+        .card:hover {
+            border-color: var(--bdr-hi);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 28px rgba(0, 0, 0, .25);
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        [data-theme="light"] .card {
+            background: #fff;
+            border-color: rgba(0, 0, 0, .09);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, .05), 0 4px 16px rgba(0, 0, 0, .04);
+        }
+
+        [data-theme="light"] .card:hover {
+            border-color: rgba(79, 70, 229, .4);
+            box-shadow: 0 8px 28px rgba(79, 70, 229, .12);
+        }
+
+        [data-theme="light"] .card::before {
+            background: linear-gradient(90deg, transparent, #4f46e5, transparent);
+        }
+
+        .card h3 {
+            font-family: var(--fd);
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: .6rem;
+            color: var(--h1);
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+        }
+
+        [data-theme="light"] .card h3 {
+            color: #0f172a;
+        }
+
+        .card p {
+            font-size: .86rem;
+            color: var(--h2);
+            line-height: 1.7;
+            margin-bottom: .7rem;
+        }
+
+        [data-theme="light"] .card p {
+            color: #334155;
+        }
+
+        .card ul {
+            padding-left: 1.1rem;
+            font-size: .85rem;
+            color: var(--h2);
+            line-height: 1.75;
+        }
+
+        [data-theme="light"] .card ul {
+            color: #334155;
+        }
+
+        .card ul li {
+            margin-bottom: .25rem;
+        }
+
+        .card ul li strong {
+            color: var(--h1);
+            font-weight: 500;
+        }
+
+        [data-theme="light"] .card ul li strong {
+            color: #0f172a;
+        }
+
+        /* ── PIPELINE VISUAL ──────────────────────────────────── */
+        .pipeline-visual {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 1px;
+            background: var(--bdr);
+            border: 1px solid var(--bdr);
+            border-radius: var(--r);
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+
+        [data-theme="light"] .pipeline-visual {
+            background: rgba(0, 0, 0, .08);
+            border-color: rgba(0, 0, 0, .1);
+        }
+
+        .pipe-node-cs {
+            background: var(--bg-card);
+            padding: 1.2rem 1rem;
+            position: relative;
+            transition: background .18s;
+        }
+
+        .pipe-node-cs:hover {
+            background: var(--bg-card2);
+        }
+
+        [data-theme="light"] .pipe-node-cs {
+            background: #fff;
+        }
+
+        [data-theme="light"] .pipe-node-cs:hover {
+            background: #f8fafc;
+        }
+
+        .pipe-step-num {
+            font-family: var(--fm);
+            font-size: .6rem;
+            letter-spacing: .12em;
+            color: var(--acc);
+            text-transform: uppercase;
+            margin-bottom: .35rem;
+        }
+
+        [data-theme="light"] .pipe-step-num {
+            color: #4f46e5;
+        }
+
+        .pipe-step-name {
+            font-family: var(--fd);
+            font-size: .85rem;
+            font-weight: 600;
+            color: var(--h1);
+            margin-bottom: .2rem;
+        }
+
+        [data-theme="light"] .pipe-step-name {
+            color: #0f172a;
+        }
+
+        .pipe-step-detail {
+            font-size: .72rem;
+            color: var(--h3);
+            line-height: 1.45;
+            margin-bottom: .4rem;
+        }
+
+        [data-theme="light"] .pipe-step-detail {
+            color: #64748b;
+        }
+
+        .pipe-script {
+            font-family: var(--fm);
+            font-size: .65rem;
+            color: var(--amber);
+        }
+
+        [data-theme="light"] .pipe-script {
+            color: #92400e;
+        }
+
+        /* ── CODE BLOCK ───────────────────────────────────────── */
+        .code-block {
+            background: #020812;
+            border: 1px solid rgba(129, 140, 248, .18);
+            border-radius: var(--r);
+            padding: 1.25rem 1.4rem;
+            font-family: var(--fm);
+            font-size: .78rem;
+            line-height: 1.7;
+            overflow-x: auto;
+            margin-bottom: 1rem;
+            color: var(--h2);
+            position: relative;
+            transition: border-color .25s var(--ez), box-shadow .25s var(--ez);
+        }
+
+        .code-block::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 1.4rem;
+            right: 1.4rem;
+            height: 2px;
+            background: var(--grad);
+            border-radius: 0 0 2px 2px;
+            opacity: .65;
+        }
+
+        .code-block:hover {
+            border-color: rgba(129, 140, 248, .35);
+            box-shadow: 0 8px 32px rgba(129, 140, 248, .15);
+        }
+
+        [data-theme="light"] .code-block {
+            background: #0f172a;
+            border-color: rgba(129, 140, 248, .25);
+            color: #e2e8f0;
+        }
+
+        [data-theme="light"] .code-block:hover {
+            border-color: rgba(129, 140, 248, .5);
+            box-shadow: 0 8px 32px rgba(79, 70, 229, .18);
+        }
+
+        .code-block .cm {
+            color: #5c6580;
+        }
+
+        .code-block .ck {
+            color: var(--acc);
+        }
+
+        .code-block .cs {
+            color: var(--teal);
+        }
+
+        .code-block .cn {
+            color: var(--amber);
+        }
+
+        .code-block .cv {
+            color: #e879f9;
+        }
+
+        .code-block .ct {
+            color: var(--h2);
+        }
+
+        /* ── SCHEMA PILLS ─────────────────────────────────────── */
+        .schema-block {
+            background: var(--bg-card);
+            border: 1px solid var(--bdr);
+            border-radius: var(--r);
+            padding: 1.5rem;
+        }
+
+        [data-theme="light"] .schema-block {
+            background: #fff;
+            border-color: rgba(0, 0, 0, .09);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, .05);
+        }
+
+        .schema-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .schema-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .schema-label {
+            font-family: var(--fm);
+            font-size: .62rem;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: var(--h3);
+            margin-bottom: .5rem;
+        }
+
+        [data-theme="light"] .schema-label {
+            color: #64748b;
+        }
+
+        .schema-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .4rem;
+        }
+
+        .schema-pill {
+            font-family: var(--fm);
+            font-size: .74rem;
+            padding: .32rem .8rem;
+            border-radius: var(--rsm);
+            border: 1px solid var(--bdr);
+            background: var(--bg-surf);
+            color: var(--h3);
+        }
+
+        .schema-pill.fact {
+            border-color: rgba(129, 140, 248, .4);
+            color: var(--acc);
+            background: var(--acc-s);
+        }
+
+        .schema-pill.dim {
+            border-color: rgba(45, 212, 191, .4);
+            color: var(--teal);
+            background: var(--teal-s);
+        }
+
+        .schema-pill.orch {
+            border-color: rgba(251, 191, 36, .3);
+            color: var(--amber);
+            background: var(--amber-s);
+        }
+
+        .schema-pill.raw {
+            border-color: rgba(248, 113, 113, .3);
+            color: #fca5a5;
+            background: rgba(248, 113, 113, .08);
+        }
+
+        [data-theme="light"] .schema-pill {
+            background: #f1f5f9;
+            border-color: rgba(0, 0, 0, .1);
+            color: #475569;
+        }
+
+        [data-theme="light"] .schema-pill.fact {
+            border-color: rgba(79, 70, 229, .4);
+            color: #4f46e5;
+            background: #eef2ff;
+        }
+
+        [data-theme="light"] .schema-pill.dim {
+            border-color: rgba(15, 118, 110, .4);
+            color: #0f766e;
+            background: #ccfbf1;
+        }
+
+        [data-theme="light"] .schema-pill.orch {
+            border-color: rgba(146, 64, 14, .35);
+            color: #92400e;
+            background: #fef3c7;
+        }
+
+        [data-theme="light"] .schema-pill.raw {
+            border-color: rgba(185, 28, 28, .35);
+            color: #b91c1c;
+            background: #fee2e2;
+        }
+
+        /* ── DECISION TABLE ───────────────────────────────────── */
+        .decision-wrapper {
+            border: 1px solid var(--bdr);
+            border-radius: var(--r);
+            overflow: hidden;
+        }
+
+        .decision-row {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 1px;
+            background: var(--bdr);
+        }
+
+        .decision-cell {
+            background: var(--bg-card);
+            padding: .95rem 1.15rem;
+            font-size: .85rem;
+        }
+
+        .decision-cell:first-child {
+            font-family: var(--fm);
+            font-size: .78rem;
+            color: var(--acc);
+        }
+
+        .decision-cell:last-child {
+            color: var(--h2);
+            line-height: 1.65;
+        }
+
+        [data-theme="light"] .decision-wrapper {
+            border-color: rgba(0, 0, 0, .09);
+        }
+
+        [data-theme="light"] .decision-row {
+            background: rgba(0, 0, 0, .08);
+        }
+
+        [data-theme="light"] .decision-cell {
+            background: #fff;
+        }
+
+        [data-theme="light"] .decision-cell:first-child {
+            color: #4f46e5;
+        }
+
+        [data-theme="light"] .decision-cell:last-child {
+            color: #334155;
+        }
+
+        @media(max-width:640px) {
+            .decision-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ── IMPACT METRICS ───────────────────────────────────── */
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .impact-card {
+            background: var(--bg-card);
+            border: 1px solid var(--bdr);
+            border-radius: var(--r);
+            padding: 1.5rem;
+            text-align: center;
+            transition: border-color .2s, transform .2s;
+        }
+
+        .impact-card:hover {
+            border-color: var(--bdr-hi);
+            transform: translateY(-2px);
+        }
+
+        [data-theme="light"] .impact-card {
+            background: #fff;
+            border-color: rgba(0, 0, 0, .09);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, .05);
+        }
+
+        [data-theme="light"] .impact-card:hover {
+            border-color: rgba(79, 70, 229, .35);
+            box-shadow: 0 6px 20px rgba(79, 70, 229, .1);
+        }
+
+        .impact-num {
+            font-family: var(--fd);
+            font-size: 2.4rem;
+            font-weight: 800;
+            line-height: 1;
+            margin-bottom: .4rem;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            filter: drop-shadow(0 4px 16px currentColor);
+        }
+
+        .impact-num.green {
+            background-image: linear-gradient(135deg, #34d399, #10b981);
+            color: #34d399;
+        }
+
+        .impact-num.acc {
+            background-image: linear-gradient(135deg, #818cf8, #a78bfa);
+            color: #818cf8;
+        }
+
+        .impact-num.teal {
+            background-image: linear-gradient(135deg, #2dd4bf, #22d3ee);
+            color: #2dd4bf;
+        }
+
+        .impact-num.amber {
+            background-image: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: #fbbf24;
+        }
+
+        [data-theme="light"] .impact-num.green {
+            background-image: linear-gradient(135deg, #166534, #15803d);
+            color: #166534;
+        }
+
+        [data-theme="light"] .impact-num.acc {
+            background-image: linear-gradient(135deg, #4f46e5, #7c3aed);
+            color: #4f46e5;
+        }
+
+        [data-theme="light"] .impact-num.teal {
+            background-image: linear-gradient(135deg, #0f766e, #0891b2);
+            color: #0f766e;
+        }
+
+        [data-theme="light"] .impact-num.amber {
+            background-image: linear-gradient(135deg, #92400e, #b45309);
+            color: #92400e;
+        }
+
+        .impact-label {
+            font-size: .83rem;
+            color: var(--h2);
+            line-height: 1.55;
+        }
+
+        [data-theme="light"] .impact-label {
+            color: #334155;
+        }
+
+        /* ── TAGS ─────────────────────────────────────────────── */
+        .tag-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .3rem;
+            margin-top: .5rem;
+        }
+
+        .tag {
+            font-family: var(--fm);
+            font-size: .66rem;
+            padding: .18rem .55rem;
+            border-radius: var(--rsm);
+            background: var(--bg-surf);
+            color: var(--h3);
+            border: 1px solid var(--bdr);
+            letter-spacing: .04em;
+            transition: border-color .15s, color .15s;
+        }
+
+        .tag:hover {
+            border-color: var(--acc);
+            color: var(--acc);
+        }
+
+        [data-theme="light"] .tag {
+            background: #eef2ff;
+            border-color: rgba(79, 70, 229, .18);
+            color: #4f46e5;
+        }
+
+        [data-theme="light"] .tag:hover {
+            background: #e0e7ff;
+            border-color: #4f46e5;
+        }
+
+        /* ── BUTTONS ──────────────────────────────────────────── */
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: .4rem;
+            padding: .7rem 1.5rem;
+            background: var(--acc);
+            color: #fff;
+            border-radius: 999px;
+            font-size: .86rem;
+            font-weight: 500;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: transform .2s var(--ez), box-shadow .2s var(--ez);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 28px var(--acc-g);
+            text-decoration: none;
+        }
+
+        [data-theme="light"] .btn-primary {
+            background: #4f46e5;
+        }
+
+        [data-theme="light"] .btn-primary:hover {
+            box-shadow: 0 10px 28px rgba(79, 70, 229, .35);
+        }
+
+        .btn-ghost {
+            display: inline-flex;
+            align-items: center;
+            gap: .4rem;
+            padding: .7rem 1.4rem;
+            background: var(--bg-card);
+            color: var(--h2);
+            border: 1px solid var(--bdr);
+            border-radius: 999px;
+            font-size: .86rem;
+            text-decoration: none;
+            cursor: pointer;
+            transition: border-color .2s, color .2s, background .2s;
+        }
+
+        .btn-ghost:hover {
+            border-color: var(--bdr-hi);
+            color: var(--h1);
+            background: var(--acc-s);
+            text-decoration: none;
+        }
+
+        [data-theme="light"] .btn-ghost {
+            background: #fff;
+            border-color: rgba(0, 0, 0, .12);
+            color: #1e293b;
+        }
+
+        [data-theme="light"] .btn-ghost:hover {
+            border-color: #4f46e5;
+            color: #4f46e5;
+            background: #eef2ff;
+        }
+
+        /* ── CTA ──────────────────────────────────────────────── */
+        .cta-card {
+            background: var(--bg-card);
+            border: 1px solid var(--bdr);
+            border-radius: var(--r);
+            padding: 2.25rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-card::after {
+            content: '';
+            position: absolute;
+            bottom: -60px;
+            right: -60px;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, var(--acc-g), transparent 70%);
+            pointer-events: none;
+        }
+
+        [data-theme="light"] .cta-card {
+            background: #fff;
+            border-color: rgba(0, 0, 0, .09);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, .05);
+        }
+
+        [data-theme="light"] .cta-card::after {
+            background: radial-gradient(circle, rgba(79, 70, 229, .1), transparent 70%);
+        }
+
+        .cta-card h3 {
+            font-family: var(--fd);
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: .4rem;
+            color: var(--h1);
+        }
+
+        [data-theme="light"] .cta-card h3 {
+            color: #0f172a;
+        }
+
+        .cta-card p {
+            font-size: .88rem;
+            color: var(--h2);
+        }
+
+        [data-theme="light"] .cta-card p {
+            color: #334155;
+        }
+
+        .cta-actions {
+            display: flex;
+            gap: .65rem;
+            flex-wrap: wrap;
+        }
+
+        /* ── FOOTER ───────────────────────────────────────────── */
+        footer {
+            position: relative;
+            z-index: 1;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 1.5rem clamp(1rem, 4vw, 2.5rem);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: .4rem;
+            border-top: 1px solid var(--bdr);
+            text-align: center;
+        }
+
+        [data-theme="light"] footer {
+            border-color: rgba(0, 0, 0, .07);
+        }
+
+        .footer-brand {
+            font-family: var(--fm);
+            font-size: .68rem;
+            color: var(--h3);
+            letter-spacing: .1em;
+            text-transform: uppercase;
+        }
+
+        [data-theme="light"] .footer-brand {
+            color: #94a3b8;
+        }
+
+        .footer-note {
+            font-size: .76rem;
+            color: var(--h3);
+            font-style: italic;
+        }
+
+        [data-theme="light"] .footer-note {
+            color: #94a3b8;
+        }
+
+        /* ── BACK TO TOP ──────────────────────────────────────── */
+        .to-top {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            z-index: 150;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: var(--bg-card);
+            border: 1px solid var(--bdr);
+            color: var(--h2);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: translateY(8px);
+            pointer-events: none;
+            transition: opacity .25s var(--ez), transform .25s var(--ez), border-color .18s, background .18s;
+        }
+
+        .to-top.show {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .to-top:hover {
+            border-color: var(--acc);
+            color: var(--acc);
+            background: var(--acc-s);
+        }
+
+        [data-theme="light"] .to-top {
+            background: #fff;
+            border-color: rgba(0, 0, 0, .1);
+            color: #475569;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, .08);
+        }
+
+        [data-theme="light"] .to-top:hover {
+            border-color: #4f46e5;
+            color: #4f46e5;
+            background: #eef2ff;
+        }
+
+        /* ── ANIMATIONS ───────────────────────────────────────── */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity .65s var(--ez), transform .65s var(--ez);
+        }
+
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ── MOBILE ───────────────────────────────────────────── */
+        @media(max-width:520px) {
+            .stat-strip {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .pipeline-visual {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .cta-card {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .sec-num {
+                font-size: 4.5rem;
+            }
+
+            .to-top {
+                bottom: 1rem;
+                right: 1rem;
+                width: 38px;
+                height: 38px;
+            }
+        }
+
+        @media(max-width:380px) {
+            .pipeline-visual {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAV -->
+    <nav>
+        <a class="nav-brand" href="index.html">
+            <span class="name">Yomi Ismail</span>
+            <span class="title">Data Engineer</span>
+        </a>
+        <div class="nav-links">
+            <a href="#cs-hero">Overview</a>
+            <a href="#problem">Problem</a>
+            <a href="#architecture">Architecture</a>
+            <a href="#schema">Schema</a>
+            <a href="#features">Features</a>
+            <a href="#decisions">Decisions</a>
+            <a href="#impact">Impact</a>
+            <a href="index.html">← Portfolio</a>
+        </div>
+        <div class="nav-right">
+            <button class="theme-btn" id="themeToggle" aria-label="Toggle theme">
+                <span class="theme-icon" id="themeIcon">☀️</span>
+                <span id="themeLabel">Light</span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="page">
+
+        <!-- CASE STUDY HERO -->
+        <section id="cs-hero">
+            <a href="index.html" class="back-link">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 12H5M12 19l-7-7 7-7" />
+                </svg>
+                Back to portfolio
+            </a>
+            <div class="kicker">Case Study · Layered Data Platform</div>
+            <h1 class="cs-title">ChocoDelight <span class="hi">Data Platform</span><br />&amp; analytics warehouse</h1>
+            <p class="cs-sub">A layered data platform that turns a flat, messy chocolate sales dataset into a structured
+                PostgreSQL warehouse. Three schemas (raw, operational, analytics), modular ETL with feature engineering,
+                and a single-command orchestrator that runs the entire pipeline end to end.</p>
+            <div class="meta-row">
+                <span class="meta-pill acc">Layered architecture</span>
+                <span class="meta-pill">Kaggle source dataset</span>
+                <span class="meta-pill">3-schema design</span>
+                <span class="meta-pill">Dimensional model</span>
+                <span class="meta-pill">PostgreSQL</span>
+            </div>
+            <div class="stat-strip">
+                <div class="stat-cell">
+                    <div class="stat-num">3</div>
+                    <div class="stat-label">schema layers</div>
+                </div>
+                <div class="stat-cell">
+                    <div class="stat-num">5</div>
+                    <div class="stat-label">source CSVs</div>
+                </div>
+                <div class="stat-cell">
+                    <div class="stat-num">4</div>
+                    <div class="stat-label">dimension tables</div>
+                </div>
+                <div class="stat-cell">
+                    <div class="stat-num">1</div>
+                    <div class="stat-label">fact table</div>
+                </div>
+                <div class="stat-cell">
+                    <div class="stat-num">10+</div>
+                    <div class="stat-label">engineered features</div>
+                </div>
+                <div class="stat-cell">
+                    <div class="stat-num">1</div>
+                    <div class="stat-label">command to run</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROBLEM -->
+        <section id="problem" class="fade-up sec-alt">
+            <span class="sec-num">01</span>
+            <div class="kicker">The Problem</div>
+            <h2>Flat, messy, undocumented</h2>
+            <p class="section-intro">The source data is a single Kaggle dataset with five flat CSV files (calendar,
+                customers, products, sales, stores). It is the kind of dataset that looks tidy on the surface but breaks
+                the moment you try to model it for analytics. Inconsistent IDs, missing reference rows, no surrogate
+                keys, and zero separation between source data and analytical structure.</p>
+            <div class="card-grid grid-2">
+                <div class="card">
+                    <h3>Source data issues</h3>
+                    <ul>
+                        <li>Mixed casing and inconsistent text values across categorical columns</li>
+                        <li>Missing product records that appeared in sales but not in products</li>
+                        <li>No surrogate keys, only natural string IDs prone to drift</li>
+                        <li>Numeric metrics stored as strings with currency symbols</li>
+                        <li>No referential integrity enforced anywhere</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>Modelling gaps</h3>
+                    <ul>
+                        <li>No separation between raw, operational, and analytics layers</li>
+                        <li>No engineered features, just raw values exposed to analysts</li>
+                        <li>No date dimension or calendar attributes for time-based analysis</li>
+                        <li>No customer segmentation or product tier classification</li>
+                        <li>No outlier detection or margin bucketing for BI workloads</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- ARCHITECTURE -->
+        <section id="architecture" class="fade-up">
+            <span class="sec-num">02</span>
+            <div class="kicker">Architecture</div>
+            <h2>Three-layer pipeline</h2>
+            <p class="section-intro">The platform is built around a layered architecture that separates concerns at
+                every stage. Raw data is preserved untouched, the operational layer stores cleaned and standardised
+                tables, and the analytics layer is the dimensional warehouse used for reporting. Each layer has its own
+                PostgreSQL schema and its own loader module.</p>
+
+            <div class="pipeline-visual">
+                <div class="pipe-node-cs">
+                    <div class="pipe-step-num">Step 01</div>
+                    <div class="pipe-step-name">Wipe</div>
+                    <div class="pipe-step-detail">Reset folders and reset all 3 schemas</div>
+                    <div class="pipe-script">wipe_all.py</div>
+                </div>
+                <div class="pipe-node-cs">
+                    <div class="pipe-step-num">Step 02</div>
+                    <div class="pipe-step-name">Extract</div>
+                    <div class="pipe-step-detail">Download dataset via Kaggle CLI, unzip, validate</div>
+                    <div class="pipe-script">extract.py</div>
+                </div>
+                <div class="pipe-node-cs">
+                    <div class="pipe-step-num">Step 03</div>
+                    <div class="pipe-step-name">Clean</div>
+                    <div class="pipe-step-detail">Standardise, type cast, engineer features, write cleaned CSVs</div>
+                    <div class="pipe-script">clean.py</div>
+                </div>
+                <div class="pipe-node-cs">
+                    <div class="pipe-step-num">Step 04</div>
+                    <div class="pipe-step-name">Transform</div>
+                    <div class="pipe-step-detail">Build dim &amp; fact tables, validate FK integrity</div>
+                    <div class="pipe-script">transform.py</div>
+                </div>
+                <div class="pipe-node-cs">
+                    <div class="pipe-step-num">Step 05</div>
+                    <div class="pipe-step-name">Load Layers</div>
+                    <div class="pipe-step-detail">Load raw → operational → analytics in order</div>
+                    <div class="pipe-script">load_*_schema.py</div>
+                </div>
+                <div class="pipe-node-cs">
+                    <div class="pipe-step-num">Step 06</div>
+                    <div class="pipe-step-name">Orchestrate</div>
+                    <div class="pipe-step-detail">Single-command pipeline runner with structured logs</div>
+                    <div class="pipe-script">run_all.py</div>
+                </div>
+            </div>
+
+            <div class="code-block">
+                <span class="cm"># Run the entire pipeline end-to-end</span>
+                <br /><span class="ck">python</span> <span class="cs">-m</span> <span class="ct">etl.run_all</span>
+                <br />
+                <br /><span class="cm"># What run_all.py executes, in order:</span>
+                <br /><span class="cn">1.</span> <span class="ct">wipe_all</span> <span class="cm">→ drop folders +
+                    reset all 3 schemas</span>
+                <br /><span class="cn">2.</span> <span class="ct">extract</span> <span class="cm">→ Kaggle CLI download,
+                    unzip, log row counts</span>
+                <br /><span class="cn">3.</span> <span class="ct">clean</span> <span class="cm">→ standardise, type
+                    cast, engineer features</span>
+                <br /><span class="cn">4.</span> <span class="ct">transform</span> <span class="cm">→ build dim &amp;
+                    fact tables, validate FKs</span>
+                <br /><span class="cn">5.</span> <span class="ct">load_raw_schema</span> <span class="cm">→ raw_data
+                    schema (source fidelity)</span>
+                <br /><span class="cn">6.</span> <span class="ct">load_operationals_schema</span> <span class="cm">→
+                    operationals schema (cleaned)</span>
+                <br /><span class="cn">7.</span> <span class="ct">load_analytics_schema</span> <span class="cm">→
+                    analytics schema (dim + fact)</span>
+                <br />
+                <br /><span class="cm"># Every step: timed, logged via custom ColorFormatter, fail-fast</span>
+            </div>
+        </section>
+
+        <!-- SCHEMA -->
+        <section id="schema" class="fade-up sec-alt">
+            <span class="sec-num">03</span>
+            <div class="kicker">Schema Design</div>
+            <h2>Three schemas, one warehouse</h2>
+            <p class="section-intro">Each schema has a clear, single responsibility. Raw is for source fidelity and
+                audit. Operational is for cleaned, standardised data with engineered features but no modelling.
+                Analytics is the dimensional warehouse, indexed and ready for BI workloads.</p>
+
+            <div class="schema-block" style="margin-bottom:1rem;">
+                <div class="schema-group">
+                    <div class="schema-label">raw_data schema (source fidelity, untouched)</div>
+                    <div class="schema-pills">
+                        <span class="schema-pill raw">raw_data.calendar</span>
+                        <span class="schema-pill raw">raw_data.customers</span>
+                        <span class="schema-pill raw">raw_data.products</span>
+                        <span class="schema-pill raw">raw_data.sales</span>
+                        <span class="schema-pill raw">raw_data.stores</span>
+                    </div>
+                </div>
+                <div class="schema-group">
+                    <div class="schema-label">operationals schema (cleaned, standardised, feature-engineered)</div>
+                    <div class="schema-pills">
+                        <span class="schema-pill orch">operationals.cleaned_calendar</span>
+                        <span class="schema-pill orch">operationals.cleaned_customers</span>
+                        <span class="schema-pill orch">operationals.cleaned_products</span>
+                        <span class="schema-pill orch">operationals.cleaned_sales</span>
+                        <span class="schema-pill orch">operationals.cleaned_stores</span>
+                    </div>
+                </div>
+                <div class="schema-group">
+                    <div class="schema-label">analytics schema (dimensional model, BI-ready)</div>
+                    <div class="schema-pills">
+                        <span class="schema-pill dim">analytics.dim_calendar</span>
+                        <span class="schema-pill dim">analytics.dim_customers</span>
+                        <span class="schema-pill dim">analytics.dim_products</span>
+                        <span class="schema-pill dim">analytics.dim_stores</span>
+                        <span class="schema-pill fact">analytics.fact_sales</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="code-block">
+                <span class="cm">-- Star schema lineage</span>
+                <br />
+                <br /><span class="cs">dim_calendar</span> <span class="cn">─┐</span>
+                <br /><span class="cs">dim_customers</span> <span class="cn">─┼──&gt;</span> <span
+                    class="cv">fact_sales</span>
+                <br /><span class="cs">dim_products</span> <span class="cn">─┤</span>
+                <br /><span class="cs">dim_stores</span> <span class="cn">─┘</span>
+                <br />
+                <br /><span class="cm">-- Foreign keys validated before fact load</span>
+                <br /><span class="cm">-- Indexes on natural keys, foreign keys, and analytical filter columns</span>
+            </div>
+        </section>
+
+        <!-- FEATURES -->
+        <section id="features" class="fade-up">
+            <span class="sec-num">04</span>
+            <div class="kicker">Feature Engineering</div>
+            <h2>From raw values to analytics-ready features</h2>
+            <p class="section-intro">The cleaning stage is not just type casting and null handling. Each table gets
+                domain-specific engineered features that make downstream BI work meaningful, not mechanical.</p>
+            <div class="card-grid grid-3">
+                <div class="card">
+                    <h3>Customers</h3>
+                    <ul>
+                        <li><strong>Tenure metrics:</strong> days, months, years from join date</li>
+                        <li><strong>Customer segment</strong> derived from tenure thresholds</li>
+                        <li>Standardised gender and demographic fields</li>
+                        <li>Surrogate <strong>customer_key</strong> for the dim table</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>Calendar</h3>
+                    <ul>
+                        <li>Renamed and re-parsed date columns for safe joins</li>
+                        <li><strong>Quarter, season, day type</strong> derived from date</li>
+                        <li>Formatted date strings for display layers</li>
+                        <li>Surrogate <strong>calendar_key</strong> for FK joins</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>Products</h3>
+                    <ul>
+                        <li>Standardised text fields and categorical values</li>
+                        <li><strong>Brand tier</strong> classification logic</li>
+                        <li>Backfilled missing product records (P0000, P0201)</li>
+                        <li>Surrogate <strong>product_key</strong> for the dim table</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>Stores</h3>
+                    <ul>
+                        <li>Country-to-region mapping</li>
+                        <li><strong>Region tier</strong> classification by market</li>
+                        <li>Standardised location fields for joins</li>
+                        <li>Surrogate <strong>store_key</strong> for the dim table</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>Sales</h3>
+                    <ul>
+                        <li>Coerced numeric metrics (revenue, cost, margin)</li>
+                        <li><strong>Revenue buckets</strong> and <strong>margin buckets</strong></li>
+                        <li><strong>Outlier flag</strong> for unusually large transactions</li>
+                        <li><strong>Time of day</strong> categorisation from order timestamp</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>Cross-cutting</h3>
+                    <ul>
+                        <li>Foreign key validation before fact construction</li>
+                        <li>Indexes on dim natural keys and fact FKs</li>
+                        <li>Indexes on analytical filters (revenue_bucket, time_of_day)</li>
+                        <li>FK constraints enforced at the DDL level</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- DECISIONS -->
+        <section id="decisions" class="fade-up sec-alt">
+            <span class="sec-num">05</span>
+            <div class="kicker">Key Decisions</div>
+            <h2>Design choices &amp; tradeoffs</h2>
+            <div class="decision-wrapper">
+                <div class="decision-row">
+                    <div class="decision-cell">Three explicit schemas</div>
+                    <div class="decision-cell">Raw, operational, and analytics each have their own schema rather than
+                        collapsing into one. This makes lineage obvious, makes auditing trivial, and lets each layer be
+                        wiped or rebuilt independently. Slightly more storage cost, much clearer mental model.</div>
+                </div>
+                <div class="decision-row">
+                    <div class="decision-cell">Wipe-then-load</div>
+                    <div class="decision-cell">Each pipeline run drops and recreates all schemas before loading. No
+                        upsert logic, no partial-load bugs, fully deterministic output. Trade-off: not suitable for very
+                        large datasets, but ideal for project-scale reproducibility and CI testing.</div>
+                </div>
+                <div class="decision-row">
+                    <div class="decision-cell">Surrogate keys</div>
+                    <div class="decision-cell">Every dim table uses a surrogate integer key (customer_key, product_key,
+                        etc.) rather than the natural string ID. Decouples the warehouse from upstream source
+                        identifiers and supports slowly changing dimensions if needed later.</div>
+                </div>
+                <div class="decision-row">
+                    <div class="decision-cell">Feature engineering in cleaning</div>
+                    <div class="decision-cell">Engineered features (tenure, segments, buckets, time of day) are computed
+                        in the cleaning stage, not in BI tools. Analysts get clean, semantically meaningful columns from
+                        day one, and the logic lives in version-controlled Python rather than SQL workbooks.</div>
+                </div>
+                <div class="decision-row">
+                    <div class="decision-cell">Modular loaders</div>
+                    <div class="decision-cell">Each schema has its own loader module (load_raw_schema,
+                        load_operationals_schema, load_analytics_schema). Each one can be run independently for
+                        debugging, and the orchestrator just composes them. No god-script.</div>
+                </div>
+                <div class="decision-row">
+                    <div class="decision-cell">FK validation before fact load</div>
+                    <div class="decision-cell">Before loading fact_sales, the transform stage validates that every
+                        customer_key, product_key, store_key, and calendar_key exists in its respective dimension.
+                        Catches referential integrity issues before they reach the warehouse.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- IMPACT -->
+        <section id="impact" class="fade-up">
+            <span class="sec-num">06</span>
+            <div class="kicker">Outcomes</div>
+            <h2>What the platform enables</h2>
+            <div class="impact-grid">
+                <div class="impact-card">
+                    <div class="impact-num green">3 schemas</div>
+                    <div class="impact-label">Clean separation between raw, operational, and analytics layers</div>
+                </div>
+                <div class="impact-card">
+                    <div class="impact-num acc">10+ feats</div>
+                    <div class="impact-label">Engineered features available to BI on day one (segments, buckets, tiers)
+                    </div>
+                </div>
+                <div class="impact-card">
+                    <div class="impact-num teal">1 cmd</div>
+                    <div class="impact-label">Full pipeline runs end-to-end with <strong>python -m etl.run_all</strong>
+                    </div>
+                </div>
+                <div class="impact-card">
+                    <div class="impact-num amber">5 tbls</div>
+                    <div class="impact-label">Analytics-ready dim + fact tables, FK-validated and indexed</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TECH STACK -->
+        <section id="tech" class="fade-up sec-alt">
+            <span class="sec-num">07</span>
+            <div class="kicker">Tech Stack</div>
+            <h2>Tools &amp; technology</h2>
+            <div class="card">
+                <div class="tag-row" style="margin-top:.25rem;margin-bottom:1.25rem;">
+                    <span class="tag">Python 3.x</span>
+                    <span class="tag">pandas</span>
+                    <span class="tag">PostgreSQL</span>
+                    <span class="tag">SQLAlchemy</span>
+                    <span class="tag">psycopg2-binary</span>
+                    <span class="tag">python-dotenv</span>
+                    <span class="tag">Kaggle CLI</span>
+                    <span class="tag">Structured logging</span>
+                    <span class="tag">Git</span>
+                </div>
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;">
+                    <div>
+                        <div class="schema-label" style="margin-bottom:.3rem;">Language</div>
+                        <div style="font-size:.85rem;color:var(--h2);">Python 3.x for ETL, transforms, orchestration
+                        </div>
+                    </div>
+                    <div>
+                        <div class="schema-label" style="margin-bottom:.3rem;">Processing</div>
+                        <div style="font-size:.85rem;color:var(--h2);">pandas for cleaning, type casting, feature
+                            engineering</div>
+                    </div>
+                    <div>
+                        <div class="schema-label" style="margin-bottom:.3rem;">Database</div>
+                        <div style="font-size:.85rem;color:var(--h2);">PostgreSQL with three explicit schemas</div>
+                    </div>
+                    <div>
+                        <div class="schema-label" style="margin-bottom:.3rem;">Loader</div>
+                        <div style="font-size:.85rem;color:var(--h2);">SQLAlchemy + psycopg2 for connection management
+                            and bulk loads</div>
+                    </div>
+                    <div>
+                        <div class="schema-label" style="margin-bottom:.3rem;">Source ingestion</div>
+                        <div style="font-size:.85rem;color:var(--h2);">Kaggle CLI for automated dataset download</div>
+                    </div>
+                    <div>
+                        <div class="schema-label" style="margin-bottom:.3rem;">Observability</div>
+                        <div style="font-size:.85rem;color:var(--h2);">Custom ColorFormatter for readable terminal logs
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="fade-up">
+            <div class="cta-card">
+                <div>
+                    <h3>View the full source code</h3>
+                    <p>Every ETL module, SQL DDL file, and orchestration script on GitHub.</p>
+                </div>
+                <div class="cta-actions">
+                    <a href="https://github.com/yoismail/choco_delight_data_platform" target="_blank"
+                        rel="noopener noreferrer" class="btn-primary">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+                        </svg>
+                        View on GitHub
+                    </a>
+                    <a href="index.html#contact" class="btn-ghost">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect width="20" height="16" x="2" y="4" rx="2" />
+                            <path d="M2 7l10 7 10-7" />
+                        </svg>
+                        Get in touch
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <footer>
+        <div class="footer-brand">Yomi Ismail · Data Engineer · <span id="year"></span></div>
+        <div class="footer-note">Built with intention.</div>
+    </footer>
+
+    <button class="to-top" id="toTop" aria-label="Scroll to top">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 19V5M5 12l7-7 7 7" />
+        </svg>
+    </button>
+
+    <script>
+        /* theme */
+        (function () {
+            const root = document.documentElement;
+            const btn = document.getElementById('themeToggle');
+            const icon = document.getElementById('themeIcon');
+            const lbl = document.getElementById('themeLabel');
+            function apply(t) {
+                root.setAttribute('data-theme', t);
+                icon.textContent = t === 'dark' ? '☀️' : '🌙';
+                lbl.textContent = t === 'dark' ? 'Light' : 'Dark';
+            }
+            apply(localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light'));
+            btn.addEventListener('click', () => {
+                const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+                apply(next); localStorage.setItem('theme', next);
+            });
+            document.getElementById('year').textContent = new Date().getFullYear();
+        })();
+
+        /* fade-in on scroll */
+        (function () {
+            const io = new IntersectionObserver(entries => {
+                entries.forEach(e => {
+                    if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+                });
+            }, { threshold: 0.07 });
+            document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
+        })();
+
+        /* active nav highlight */
+        (function () {
+            const sections = document.querySelectorAll('section[id]');
+            const links = document.querySelectorAll('.nav-links a[href^="#"]');
+            const map = new Map();
+            links.forEach(a => {
+                const href = a.getAttribute('href');
+                if (href.startsWith('#')) map.set(href.slice(1), a);
+            });
+            const io = new IntersectionObserver(entries => {
+                entries.forEach(e => {
+                    const link = map.get(e.target.id);
+                    if (!link) return;
+                    if (e.isIntersecting) {
+                        links.forEach(l => l.classList.remove('active'));
+                        link.classList.add('active');
+                    }
+                });
+            }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
+            sections.forEach(s => io.observe(s));
+        })();
+
+        /* back to top */
+        (function () {
+            const btn = document.getElementById('toTop');
+            if (!btn) return;
+            function update() {
+                if (window.scrollY > 500) btn.classList.add('show');
+                else btn.classList.remove('show');
+            }
+            window.addEventListener('scroll', update, { passive: true });
+            btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+        })();
+    </script>
+</body>
+
+</html>
