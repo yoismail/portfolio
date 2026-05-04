@@ -1588,7 +1588,7 @@
                     <div class="pipe-script">transform.py</div>
                 </div>
                 <div class="pipe-node-cs">
-                    <div class="pipe-step-num">Step 05</div>
+                    <div class="pipe-step-num">Step 05</div><br>
                     <div class="pipe-step-name">Load Layers</div>
                     <div class="pipe-step-detail">Load raw → operational → analytics in order</div>
                     <div class="pipe-script">load_*_schema.py</div>
@@ -1685,7 +1685,7 @@
         <section id="features" class="fade-up">
             <span class="sec-num">04</span>
             <div class="kicker">Feature Engineering</div>
-            <h2>From raw values <br>to analytics-ready features</h2>
+            <h2>From raw values <br> to analytics-ready features</h2>
             <p class="section-intro">The cleaning stage is not just type casting and null handling. Each table gets
                 domain-specific engineered features that make downstream BI work meaningful, not mechanical.</p>
             <div class="card-grid grid-3">
@@ -1748,7 +1748,7 @@
 
         <!-- DECISIONS -->
         <section id="decisions" class="fade-up sec-alt">
-            <span class="sec-num">05 </span> <br>
+            <span class="sec-num">05</span>
             <div class="kicker">Key Decisions</div>
             <h2>Design choices &amp; tradeoffs</h2>
             <div class="decision-wrapper">
@@ -1854,7 +1854,7 @@
 
         <!-- TECH STACK -->
         <section id="tech" class="fade-up sec-alt">
-            <span class="sec-num">07</span> <br>
+            <span class="sec-num">07</span><br>
             <div class="kicker">Tech Stack</div>
             <h2>Tools &amp; technology</h2>
             <div class="card">
@@ -1956,7 +1956,7 @@
                 icon.textContent = t === 'dark' ? '☀️' : '🌙';
                 lbl.textContent = t === 'dark' ? 'Light' : 'Dark';
             }
-            apply(localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light'));
+            apply(localStorage.getItem('theme') || 'dark');
             btn.addEventListener('click', () => {
                 const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
                 apply(next); localStorage.setItem('theme', next);

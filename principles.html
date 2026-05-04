@@ -1024,7 +1024,7 @@
                 icon.textContent = t === 'dark' ? '☀️' : '🌙';
                 lbl.textContent = t === 'dark' ? 'Light' : 'Dark';
             }
-            apply(localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light'));
+            apply(localStorage.getItem('theme') || 'dark');
             btn.addEventListener('click', () => {
                 const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
                 apply(next); localStorage.setItem('theme', next);

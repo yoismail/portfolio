@@ -2359,7 +2359,7 @@
 
         <!-- SKILLS -->
         <section id="tech-stack" class="fade-up sec-alt">
-            <span class="sec-num">05</span>
+            <span class="sec-num">05</span><br>
             <div class="kicker">Stack</div>
             <h2>Skills &amp; tech stack</h2>
             <p class="section-intro">Production-proven tools I use daily, and working knowledge I'm actively building
@@ -2444,7 +2444,7 @@
 
         <!-- CV -->
         <section id="cv" class="fade-up sec-alt">
-            <span class="sec-num">07</span> <br>
+            <span class="sec-num">07</span><br>
             <div class="kicker">CV</div>
             <h2>Download my CV</h2>
             <div class="cv-card">
@@ -2484,8 +2484,7 @@
                 <h2>Let's build<br /><span style="color:var(--teal);">something together.</span></h2>
                 <p>I'm open to roles such as Junior Data Engineer, Analytics Engineer, Data Platform Analyst, or
                     technically focused operations positions with a strong data component. Available for remote or
-                    hybrid opportunities across the UK. <br>If you're hiring or have a project you'd like to discuss,
-                    feel
+                    hybrid opportunities across the UK. If you're hiring or have a project you'd like to discuss, feel
                     free to get in touch.</p>
                 <div class="contact-links">
                     <a href="mailto:ismailyomi@gmail.com" class="contact-link">
@@ -2541,7 +2540,7 @@
                 icon.textContent = t === 'dark' ? '☀️' : '🌙';
                 lbl.textContent = t === 'dark' ? 'Light' : 'Dark';
             }
-            apply(localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light'));
+            apply(localStorage.getItem('theme') || 'dark');
             btn.addEventListener('click', () => {
                 const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
                 apply(next); localStorage.setItem('theme', next);

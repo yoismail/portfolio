@@ -1480,7 +1480,7 @@
                 Back to portfolio
             </a>
             <div class="kicker">Case Study · End-to-End Data Engineering</div>
-            <h1 class="cs-title">PayFlow — <span class="hi">ETL pipeline</span><br />&amp; data warehouse</h1>
+            <h1 class="cs-title">PayFlow - <span class="hi">ETL pipeline</span><br />&amp; data warehouse</h1>
             <p class="cs-sub">A production-style ETL pipeline transforming raw Brazilian e-commerce data into a
                 PostgreSQL star schema warehouse, with clean staging, idempotent loads, structured observability, and a
                 single-command orchestrator.</p>
@@ -1713,7 +1713,8 @@
                 <div class="card">
                     <h3>Config-driven</h3>
                     <p>All DB credentials and input paths managed via <strong>.env</strong> and
-                        <strong>db_config.py</strong>. No hardcoded values anywhere in the codebase.</p>
+                        <strong>db_config.py</strong>. No hardcoded values anywhere in the codebase.
+                    </p>
                 </div>
                 <div class="card">
                     <h3>Pre-load validation</h3>
@@ -1725,7 +1726,7 @@
 
         <!-- DECISIONS -->
         <section id="decisions" class="fade-up sec-alt">
-            <span class="sec-num">05</span>
+            <span class="sec-num">05</span><br>
             <div class="kicker">Key Decisions</div>
             <h2>Design choices &amp; tradeoffs</h2>
             <div class="decision-wrapper">
@@ -1792,7 +1793,7 @@
 
         <!-- TECH STACK -->
         <section id="tech" class="fade-up sec-alt">
-            <span class="sec-num">07</span>
+            <span class="sec-num">07</span> <br>
             <div class="kicker">Tech Stack</div>
             <h2>Tools &amp; technology</h2>
             <div class="card">
@@ -1893,7 +1894,7 @@
                 icon.textContent = t === 'dark' ? '☀️' : '🌙';
                 lbl.textContent = t === 'dark' ? 'Light' : 'Dark';
             }
-            apply(localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light'));
+            apply(localStorage.getItem('theme') || 'dark');
             btn.addEventListener('click', () => {
                 const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
                 apply(next); localStorage.setItem('theme', next);
