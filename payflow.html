@@ -13,7 +13,7 @@
     <link rel="alternate icon" href="svg/favicon.svg" />
 
     <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
-    <meta name="theme-color" content="#fafaf8" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#f8fafc" media="(prefers-color-scheme: light)" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="article" />
@@ -82,32 +82,32 @@
         :root {
             --bg: #000;
             --bg-nav: rgba(0, 0, 0, .9);
-            --bg-alt: #080808;
-            --bg-surf: #0d0d0d;
-            --bg-card: #131313;
-            --bg-card2: #1a1a1a;
-            --bdr: rgba(255, 255, 255, .07);
-            --bdr-hi: rgba(124, 127, 255, .5);
+            --bg-alt: #060810;
+            --bg-surf: #0a0d14;
+            --bg-card: #0f131b;
+            --bg-card2: #141923;
+            --bdr: rgba(120, 160, 255, .08);
+            --bdr-hi: rgba(34, 211, 238, .5);
             --acc: #818cf8;
             --acc-s: rgba(129, 140, 248, .1);
             --acc-g: rgba(129, 140, 248, .25);
-            --acc-2: #2dd4bf;
-            --grad: linear-gradient(115deg, #818cf8 0%, #a78bfa 40%, #2dd4bf 100%);
-            --teal: #2dd4bf;
-            --teal-s: rgba(45, 212, 191, .09);
+            --acc-2: #22d3ee;
+            --grad: linear-gradient(115deg, #818cf8 0%, #6366f1 35%, #22d3ee 100%);
+            --teal: #22d3ee;
+            --teal-s: rgba(34, 211, 238, .09);
             --amber: #fbbf24;
             --amber-s: rgba(251, 191, 36, .09);
             --green: #34d399;
             --green-s: rgba(52, 211, 153, .09);
             --red: #f87171;
-            --h1: #f0f0f0;
-            --h2: #c8d0e0;
-            --h3: #606880;
+            --h1: #eef2f7;
+            --h2: #b8c2d4;
+            --h3: #5c6680;
             --fd: 'Syne', sans-serif;
             --fm: 'IBM Plex Mono', monospace;
             --fb: 'Inter', sans-serif;
-            --r: .75rem;
-            --rsm: .375rem;
+            --r: .5rem;
+            --rsm: .25rem;
             --nav: 68px;
             --ez: cubic-bezier(.16, 1, .3, 1);
         }
@@ -447,6 +447,159 @@
 
         [data-theme="light"] .section-intro {
             color: #334155;
+        }
+
+        /* ── STICKY TOC ───────────────────────────────────────── */
+        .cs-toc {
+            position: fixed;
+            top: calc(var(--nav) + 3rem);
+            left: 1.75rem;
+            width: 170px;
+            z-index: 50;
+            font-family: var(--fm);
+            display: none;
+            opacity: 0;
+            transform: translateX(-8px);
+            transition: opacity .4s var(--ez), transform .4s var(--ez);
+        }
+
+        .cs-toc.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        @media(min-width:1280px) {
+            .cs-toc {
+                display: block;
+            }
+        }
+
+        .cs-toc-label {
+            font-size: .58rem;
+            letter-spacing: .18em;
+            color: var(--h3);
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            padding-bottom: .55rem;
+            border-bottom: 1px solid var(--bdr);
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+        }
+
+        .cs-toc-label::before {
+            content: '';
+            width: 14px;
+            height: 1.5px;
+            background: var(--acc);
+            border-radius: 1px;
+        }
+
+        [data-theme="light"] .cs-toc-label {
+            color: #64748b;
+            border-bottom-color: rgba(0, 0, 0, .08);
+        }
+
+        [data-theme="light"] .cs-toc-label::before {
+            background: #4f46e5;
+        }
+
+        .cs-toc ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: .05rem;
+        }
+
+        .cs-toc a {
+            display: flex;
+            gap: .55rem;
+            align-items: flex-start;
+            font-size: .72rem;
+            color: var(--h3);
+            text-decoration: none;
+            padding: .4rem 0 .4rem .65rem;
+            border-left: 1px solid var(--bdr);
+            transition: color .2s, border-color .2s, padding-left .2s var(--ez);
+            line-height: 1.4;
+        }
+
+        .cs-toc a:hover {
+            color: var(--h2);
+            border-left-color: var(--h3);
+            padding-left: .85rem;
+            text-decoration: none;
+        }
+
+        .cs-toc a.active {
+            color: var(--acc);
+            border-left-color: var(--acc);
+            border-left-width: 2px;
+            padding-left: .8rem;
+            font-weight: 500;
+        }
+
+        [data-theme="light"] .cs-toc a {
+            color: #64748b;
+            border-left-color: rgba(0, 0, 0, .1);
+        }
+
+        [data-theme="light"] .cs-toc a:hover {
+            color: #334155;
+            border-left-color: #94a3b8;
+        }
+
+        [data-theme="light"] .cs-toc a.active {
+            color: #4f46e5;
+            border-left-color: #4f46e5;
+        }
+
+        .cs-toc-num {
+            font-size: .62rem;
+            color: var(--acc);
+            min-width: 18px;
+            flex-shrink: 0;
+            letter-spacing: .04em;
+            padding-top: .05rem;
+        }
+
+        [data-theme="light"] .cs-toc-num {
+            color: #4f46e5;
+        }
+
+        /* reading time meta */
+        .cs-meta {
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem;
+            font-family: var(--fm);
+            font-size: .66rem;
+            color: var(--h3);
+            letter-spacing: .05em;
+            margin-bottom: 1.25rem;
+            padding: .3rem .8rem;
+            border: 1px solid var(--bdr);
+            border-radius: 999px;
+            background: var(--bg-surf);
+            width: fit-content;
+        }
+
+        .cs-meta::before {
+            content: '';
+            width: 5px;
+            height: 5px;
+            background: var(--acc);
+            border-radius: 50%;
+        }
+
+        [data-theme="light"] .cs-meta {
+            background: #f1f5f9;
+            border-color: rgba(0, 0, 0, .08);
+            color: #64748b;
+        }
+
+        [data-theme="light"] .cs-meta::before {
+            background: #4f46e5;
         }
 
         /* ── CASE-STUDY HERO ──────────────────────────────────── */
@@ -835,7 +988,7 @@
             background: #020812;
             border: 1px solid rgba(129, 140, 248, .18);
             border-radius: var(--r);
-            padding: 1.25rem 1.4rem;
+            padding: 1.25rem 1.4rem 1.25rem 3rem;
             font-family: var(--fm);
             font-size: .78rem;
             line-height: 1.7;
@@ -850,28 +1003,44 @@
             content: '';
             position: absolute;
             top: 0;
-            left: 1.4rem;
-            right: 1.4rem;
+            left: 0;
+            bottom: 0;
+            width: 2.2rem;
+            background: rgba(129, 140, 248, .04);
+            border-right: 1px solid rgba(129, 140, 248, .12);
+            border-radius: var(--r) 0 0 var(--r);
+        }
+
+        .code-block::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 2.2rem;
+            right: 0;
             height: 2px;
             background: var(--grad);
-            border-radius: 0 0 2px 2px;
-            opacity: .65;
+            opacity: .7;
         }
 
         .code-block:hover {
-            border-color: rgba(129, 140, 248, .35);
-            box-shadow: 0 8px 32px rgba(129, 140, 248, .15);
+            border-color: rgba(34, 211, 238, .4);
+            box-shadow: 0 8px 32px rgba(34, 211, 238, .12);
         }
 
         [data-theme="light"] .code-block {
-            background: #0f172a;
-            border-color: rgba(129, 140, 248, .25);
+            background: #0b1220;
+            border-color: rgba(129, 140, 248, .3);
             color: #e2e8f0;
         }
 
+        [data-theme="light"] .code-block::before {
+            background: rgba(129, 140, 248, .06);
+            border-right-color: rgba(129, 140, 248, .18);
+        }
+
         [data-theme="light"] .code-block:hover {
-            border-color: rgba(129, 140, 248, .5);
-            box-shadow: 0 8px 32px rgba(79, 70, 229, .18);
+            border-color: rgba(34, 211, 238, .5);
+            box-shadow: 0 8px 32px rgba(8, 145, 178, .18);
         }
 
         .code-block .cm {
@@ -981,7 +1150,7 @@
 
         [data-theme="light"] .schema-pill.dim {
             border-color: rgba(15, 118, 110, .4);
-            color: #0f766e;
+            color: #0891b2;
             background: #ccfbf1;
         }
 
@@ -1007,7 +1176,7 @@
 
         .decision-cell {
             background: var(--bg-card);
-            padding: .95rem 1.15rem;
+            padding: .75rem 1.1rem;
             font-size: .85rem;
         }
 
@@ -1124,8 +1293,8 @@
         }
 
         [data-theme="light"] .impact-num.teal {
-            background-image: linear-gradient(135deg, #0f766e, #0891b2);
-            color: #0f766e;
+            background-image: linear-gradient(135deg, #0891b2, #0891b2);
+            color: #0891b2;
         }
 
         [data-theme="light"] .impact-num.amber {
@@ -1444,6 +1613,21 @@
 
 <body>
 
+    <!-- STICKY TOC (desktop only) -->
+    <aside class="cs-toc" id="csToc" aria-label="Case study contents">
+        <div class="cs-toc-label">Contents</div>
+        <ul>
+            <li><a href="#cs-hero"><span class="cs-toc-num">00</span><span>Overview</span></a></li>
+            <li><a href="#problem"><span class="cs-toc-num">01</span><span>The Problem</span></a></li>
+            <li><a href="#architecture"><span class="cs-toc-num">02</span><span>Architecture</span></a></li>
+            <li><a href="#schema"><span class="cs-toc-num">03</span><span>Schema Design</span></a></li>
+            <li><a href="#approach"><span class="cs-toc-num">04</span><span>Engineering</span></a></li>
+            <li><a href="#decisions"><span class="cs-toc-num">05</span><span>Decisions</span></a></li>
+            <li><a href="#impact"><span class="cs-toc-num">06</span><span>Impact</span></a></li>
+            <li><a href="#tech"><span class="cs-toc-num">07</span><span>Tech Stack</span></a></li>
+        </ul>
+    </aside>
+
     <!-- NAV -->
     <nav>
         <a class="nav-brand" href="index.html">
@@ -1479,6 +1663,7 @@
                 </svg>
                 Back to portfolio
             </a>
+            <div class="cs-meta">~6 min read · Updated May 2026</div>
             <div class="kicker">Case Study · End-to-End Data Engineering</div>
             <h1 class="cs-title">PayFlow - <span class="hi">ETL pipeline</span><br />&amp; data warehouse</h1>
             <p class="cs-sub">A production-style ETL pipeline transforming raw Brazilian e-commerce data into a
@@ -1726,7 +1911,7 @@
 
         <!-- DECISIONS -->
         <section id="decisions" class="fade-up sec-alt">
-            <span class="sec-num">05</span><br>
+            <span class="sec-num">05</span>
             <div class="kicker">Key Decisions</div>
             <h2>Design choices &amp; tradeoffs</h2>
             <div class="decision-wrapper">
@@ -1931,6 +2116,38 @@
                     }
                 });
             }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
+            sections.forEach(s => io.observe(s));
+        })();
+
+        /* sticky TOC sync */
+        (function () {
+            const toc = document.getElementById('csToc');
+            if (!toc) return;
+            const tocLinks = toc.querySelectorAll('a');
+            const tocMap = new Map();
+            tocLinks.forEach(a => {
+                const id = a.getAttribute('href').slice(1);
+                tocMap.set(id, a);
+            });
+            // show after scrolling past hero
+            function update() {
+                if (window.scrollY > 400) toc.classList.add('show');
+                else toc.classList.remove('show');
+            }
+            window.addEventListener('scroll', update, { passive: true });
+            update();
+            // sync active state
+            const sections = document.querySelectorAll('section[id]');
+            const io = new IntersectionObserver(entries => {
+                entries.forEach(e => {
+                    const link = tocMap.get(e.target.id);
+                    if (!link) return;
+                    if (e.isIntersecting) {
+                        tocLinks.forEach(l => l.classList.remove('active'));
+                        link.classList.add('active');
+                    }
+                });
+            }, { rootMargin: '-30% 0px -60% 0px', threshold: 0 });
             sections.forEach(s => io.observe(s));
         })();
 

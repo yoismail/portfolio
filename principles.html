@@ -55,7 +55,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Syne:wght@400;600;700;800&family=Inter:wght@400;500&display=swap"
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Lora:ital,wght@0,400;0,500;1,400&family=Syne:wght@400;600;700;800&family=Inter:wght@400;500&display=swap"
         rel="stylesheet" />
     <style>
         /* ── DARK TOKENS ──────────────────────────────────────── */
@@ -451,19 +451,44 @@
             color: #64748b;
         }
 
-        /* ── PRINCIPLES LIST ──────────────────────────────────── */
+        /* ── PRINCIPLES LIST (editorial treatment) ────────────── */
         #principles {
             padding: 2.5rem 0 5rem;
         }
 
         .principle {
             position: relative;
-            padding: 2.5rem 0;
+            padding: 3rem 0 3rem 2.5rem;
             border-bottom: 1px solid var(--bdr);
+        }
+
+        .principle::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 3rem;
+            bottom: 3rem;
+            width: 1px;
+            background: var(--bdr);
+            transition: background .25s var(--ez);
+        }
+
+        .principle:hover::before {
+            background: var(--acc);
+        }
+
+        [data-theme="light"] .principle:hover::before {
+            background: #4f46e5;
         }
 
         .principle:last-child {
             border-bottom: none;
+        }
+
+        @media(max-width:600px) {
+            .principle {
+                padding-left: 1.5rem;
+            }
         }
 
         .principle-num {
@@ -495,11 +520,11 @@
 
         .principle-title {
             font-family: var(--fd);
-            font-size: clamp(1.35rem, 2.8vw, 1.85rem);
+            font-size: clamp(1.4rem, 2.8vw, 1.95rem);
             font-weight: 700;
             letter-spacing: -.02em;
             line-height: 1.2;
-            margin-bottom: 1.1rem;
+            margin-bottom: 1.4rem;
             color: var(--h1);
         }
 
@@ -507,15 +532,17 @@
             color: #0f172a;
         }
 
+        /* serif body — the editorial move */
         .principle-body {
-            font-size: .95rem;
+            font-family: 'Lora', Georgia, serif;
+            font-size: 1.05rem;
             color: var(--h2);
-            line-height: 1.8;
-            max-width: 640px;
+            line-height: 1.85;
+            max-width: 620px;
         }
 
         .principle-body p {
-            margin-bottom: 1rem;
+            margin-bottom: 1.1rem;
         }
 
         .principle-body p:last-child {
@@ -535,8 +562,33 @@
             color: #0f172a;
         }
 
+        /* drop cap on first paragraph */
+        .principle-body>p:first-child::first-letter {
+            font-family: var(--fd);
+            font-weight: 800;
+            font-size: 3.4em;
+            line-height: .85;
+            float: left;
+            margin: .18em .12em -.05em 0;
+            background: var(--grad);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            letter-spacing: -.04em;
+        }
+
+        [data-theme="light"] .principle-body>p:first-child::first-letter {
+            background: linear-gradient(115deg, #4f46e5, #7c3aed, #0d9488);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+        }
+
         .tradeoff {
-            margin-top: 1.25rem;
+            font-family: var(--fb);
+            margin-top: 1.5rem;
             padding: 1rem 1.2rem;
             border-left: 2px solid var(--acc);
             background: var(--acc-s);
@@ -545,6 +597,7 @@
             color: var(--h2);
             font-style: italic;
             line-height: 1.7;
+            max-width: 620px;
         }
 
         .tradeoff strong {
@@ -567,6 +620,64 @@
 
         [data-theme="light"] .tradeoff strong {
             color: #4f46e5;
+        }
+
+        /* footnote — applied in */
+        .applied-in {
+            font-family: var(--fm);
+            font-size: .7rem;
+            color: var(--h3);
+            letter-spacing: .04em;
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px dashed var(--bdr);
+            max-width: 620px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: .5rem .85rem;
+            align-items: baseline;
+        }
+
+        .applied-in::before {
+            content: '§';
+            color: var(--acc);
+            font-family: var(--fd);
+            font-size: 1rem;
+            font-weight: 600;
+            margin-right: .1rem;
+        }
+
+        .applied-in a {
+            color: var(--h2);
+            text-decoration: none;
+            border-bottom: 1px solid var(--bdr);
+            padding-bottom: 1px;
+            transition: color .15s, border-color .15s;
+        }
+
+        .applied-in a:hover {
+            color: var(--acc);
+            border-color: var(--acc);
+            text-decoration: none;
+        }
+
+        [data-theme="light"] .applied-in {
+            color: #94a3b8;
+            border-top-color: rgba(0, 0, 0, .1);
+        }
+
+        [data-theme="light"] .applied-in::before {
+            color: #4f46e5;
+        }
+
+        [data-theme="light"] .applied-in a {
+            color: #475569;
+            border-color: rgba(0, 0, 0, .15);
+        }
+
+        [data-theme="light"] .applied-in a:hover {
+            color: #4f46e5;
+            border-color: #4f46e5;
         }
 
         /* ── CTA ──────────────────────────────────────────────── */
@@ -880,6 +991,11 @@
                     Slower to bootstrap a new table. Slightly more boilerplate. Worth every line for the durability and
                     clarity it buys.
                 </div>
+                <div class="applied-in">
+                    Applied in
+                    <a href="payflow.html#schema">PayFlow · Schema Design</a>
+                    <a href="chocodelight.html#schema">ChocoDelight · Schema Design</a>
+                </div>
             </div>
 
             <div class="principle fade-up">
@@ -899,6 +1015,11 @@
                     Storage and compute cost on every run. Acceptable until you are processing tens of millions of rows.
                     Past that, incremental logic becomes worth the additional complexity.
                 </div>
+                <div class="applied-in">
+                    Applied in
+                    <a href="payflow.html#decisions">PayFlow · Decisions</a>
+                    <a href="chocodelight.html#decisions">ChocoDelight · Decisions</a>
+                </div>
             </div>
 
             <div class="principle fade-up">
@@ -911,6 +1032,11 @@
                     <p>Good logs read like a flight recorder. They tell you exactly what happened, in order, with enough
                         context that you do not need to rerun anything to reconstruct the incident. Bad logs say
                         "something went wrong" and leave you opening the database to check the row counts yourself.</p>
+                </div>
+                <div class="applied-in">
+                    Applied in
+                    <a href="payflow.html#approach">PayFlow · Engineering Approach</a>
+                    <a href="chocodelight.html#tech">ChocoDelight · Tech Stack</a>
                 </div>
             </div>
 
@@ -931,6 +1057,11 @@
                     Validation logic adds code surface area. Worth it. The alternative is a warehouse that contains data
                     nobody trusts.
                 </div>
+                <div class="applied-in">
+                    Applied in
+                    <a href="payflow.html#approach">PayFlow · Pre-load Validation</a>
+                    <a href="chocodelight.html#decisions">ChocoDelight · FK Validation</a>
+                </div>
             </div>
 
             <div class="principle fade-up">
@@ -946,6 +1077,11 @@
                         production with no code changes. A pipeline with hardcoded values runs in exactly one place and
                         breaks in every other.</p>
                 </div>
+                <div class="applied-in">
+                    Applied in
+                    <a href="payflow.html#approach">PayFlow · Config-driven</a>
+                    <a href="chocodelight.html#tech">ChocoDelight · Tech Stack</a>
+                </div>
             </div>
 
             <div class="principle fade-up">
@@ -958,6 +1094,11 @@
                         isolation.</p>
                     <p>The opposite pattern (a single 800-line script that does everything) is faster to write and
                         impossible to maintain. I have inherited those scripts. I will never write one.</p>
+                </div>
+                <div class="applied-in">
+                    Applied in
+                    <a href="payflow.html#architecture">PayFlow · Architecture</a>
+                    <a href="chocodelight.html#architecture">ChocoDelight · Architecture</a>
                 </div>
             </div>
 
@@ -977,6 +1118,10 @@
                     <strong>Trade-off</strong>
                     Slower to iterate on a new segment definition during exploration. Worth it once the definition is
                     settled, because the cost of duplicated business logic compounds quickly.
+                </div>
+                <div class="applied-in">
+                    Applied in
+                    <a href="chocodelight.html#features">ChocoDelight · Feature Engineering</a>
                 </div>
             </div>
 

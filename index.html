@@ -12,8 +12,8 @@
     <link rel="icon" href="svg/favicon.svg" type="image/svg+xml" />
     <link rel="alternate icon" href="svg/favicon.svg" />
 
-    <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
-    <meta name="theme-color" content="#fafaf8" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#050402" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#fafaf6" media="(prefers-color-scheme: light)" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
@@ -85,33 +85,33 @@
     <style>
         /* ── DARK TOKENS ──────────────────────────────────────── */
         :root {
-            --bg: #000;
-            --bg-nav: rgba(0, 0, 0, .9);
-            --bg-alt: #080808;
-            --bg-surf: #0d0d0d;
-            --bg-card: #131313;
-            --bg-card2: #1a1a1a;
+            --bg: #050402;
+            --bg-nav: rgba(5, 4, 2, .9);
+            --bg-alt: #0c0a07;
+            --bg-surf: #100d09;
+            --bg-card: #15130f;
+            --bg-card2: #1c1914;
             --bdr: rgba(255, 255, 255, .07);
-            --bdr-hi: rgba(124, 127, 255, .5);
-            --acc: #818cf8;
-            --acc-s: rgba(129, 140, 248, .1);
-            --acc-g: rgba(129, 140, 248, .25);
-            --acc-2: #2dd4bf;
-            --grad: linear-gradient(115deg, #818cf8 0%, #a78bfa 40%, #2dd4bf 100%);
+            --bdr-hi: rgba(16, 185, 129, .5);
+            --acc: #10b981;
+            --acc-s: rgba(16, 185, 129, .1);
+            --acc-g: rgba(16, 185, 129, .25);
+            --acc-2: #818cf8;
+            --grad: linear-gradient(115deg, #10b981 0%, #34d399 35%, #818cf8 100%);
             --teal: #2dd4bf;
             --teal-s: rgba(45, 212, 191, .09);
             --amber: #fbbf24;
             --amber-s: rgba(251, 191, 36, .09);
             --green: #34d399;
             --green-s: rgba(52, 211, 153, .09);
-            --h1: #f0f0f0;
-            --h2: #c8d0e0;
-            --h3: #606880;
+            --h1: #f3eee5;
+            --h2: #c9c2b3;
+            --h3: #62594c;
             --fd: 'Syne', sans-serif;
             --fm: 'IBM Plex Mono', monospace;
             --fb: 'Inter', sans-serif;
-            --r: .75rem;
-            --rsm: .375rem;
+            --r: 1rem;
+            --rsm: .5rem;
             --nav: 68px;
             --ez: cubic-bezier(.16, 1, .3, 1);
         }
@@ -318,11 +318,11 @@
         }
 
         [data-theme="light"] .nav-brand .title {
-            color: #4f46e5;
+            color: #047857;
         }
 
         [data-theme="light"] .nav-brand:hover .name {
-            color: #4f46e5;
+            color: #047857;
         }
 
         [data-theme="light"] .nav-links a {
@@ -331,23 +331,23 @@
 
         [data-theme="light"] .nav-links a:hover {
             color: #0f172a;
-            background: rgba(79, 70, 229, .06);
+            background: rgba(4, 120, 87, .06);
         }
 
         [data-theme="light"] .nav-links a.active {
-            color: #4f46e5;
-            background: rgba(79, 70, 229, .08);
+            color: #047857;
+            background: rgba(4, 120, 87, .08);
         }
 
         [data-theme="light"] .theme-btn {
-            background: #f8fafc;
+            background: #faf8f3;
             border-color: rgba(0, 0, 0, .1);
             color: #475569;
         }
 
         [data-theme="light"] .theme-btn:hover {
-            border-color: #4f46e5;
-            color: #4f46e5;
+            border-color: #047857;
+            color: #047857;
             background: #eef2ff;
         }
 
@@ -376,7 +376,7 @@
         }
 
         [data-theme="light"] .sec-alt {
-            background: #f1f5f9;
+            background: #f4f1ea;
         }
 
         .sec-num {
@@ -415,19 +415,34 @@
 
         .kicker::before {
             content: '';
-            width: 16px;
-            height: 1.5px;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
             background: var(--acc);
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, .18);
+            flex-shrink: 0;
+        }
+
+        .kicker::after {
+            content: '';
+            width: 14px;
+            height: 1.5px;
+            background: linear-gradient(90deg, var(--acc), transparent);
             border-radius: 1px;
             flex-shrink: 0;
         }
 
         [data-theme="light"] .kicker {
-            color: #4f46e5;
+            color: #047857;
         }
 
         [data-theme="light"] .kicker::before {
-            background: #4f46e5;
+            background: #047857;
+            box-shadow: 0 0 0 3px rgba(4, 120, 87, .15);
+        }
+
+        [data-theme="light"] .kicker::after {
+            background: linear-gradient(90deg, #047857, transparent);
         }
 
         h2 {
@@ -484,7 +499,7 @@
         }
 
         [data-theme="light"] #hero-grid {
-            background-image: linear-gradient(rgba(99, 102, 241, .1) 1px, transparent 1px), linear-gradient(90deg, rgba(99, 102, 241, .1) 1px, transparent 1px);
+            background-image: linear-gradient(rgba(16, 185, 129, .1) 1px, transparent 1px), linear-gradient(90deg, rgba(16, 185, 129, .1) 1px, transparent 1px);
         }
 
         [data-theme="light"] #hero-grid::after {
@@ -497,10 +512,10 @@
             gap: .5rem;
             font-family: var(--fm);
             font-size: .68rem;
-            color: var(--green);
+            color: var(--amber);
             letter-spacing: .05em;
-            border: 1px solid rgba(52, 211, 153, .22);
-            background: var(--green-s);
+            border: 1px solid rgba(251, 191, 36, .22);
+            background: var(--amber-s);
             border-radius: 999px;
             padding: .3rem .85rem;
             margin-bottom: 1.5rem;
@@ -510,33 +525,33 @@
         }
 
         [data-theme="light"] .hero-badge {
-            color: #166534;
-            border-color: rgba(22, 101, 52, .3);
-            background: rgba(22, 101, 52, .07);
+            color: #92400e;
+            border-color: rgba(146, 64, 14, .3);
+            background: rgba(146, 64, 14, .07);
         }
 
         .badge-dot {
             width: 6px;
             height: 6px;
-            background: var(--green);
+            background: var(--amber);
             border-radius: 50%;
             animation: blink 2s infinite;
             flex-shrink: 0;
         }
 
         [data-theme="light"] .badge-dot {
-            background: #16a34a;
+            background: #d97706;
         }
 
         @keyframes blink {
 
             0%,
             100% {
-                box-shadow: 0 0 0 0 rgba(52, 211, 153, .4);
+                box-shadow: 0 0 0 0 rgba(251, 191, 36, .4);
             }
 
             50% {
-                box-shadow: 0 0 0 5px rgba(52, 211, 153, 0);
+                box-shadow: 0 0 0 5px rgba(251, 191, 36, 0);
             }
         }
 
@@ -566,7 +581,7 @@
         }
 
         [data-theme="light"] .hero-title .hi {
-            background: linear-gradient(115deg, #4f46e5 0%, #7c3aed 45%, #0d9488 100%);
+            background: linear-gradient(115deg, #047857 0%, #059669 40%, #3730a3 100%);
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -614,7 +629,7 @@
         }
 
         [data-theme="light"] .hero-avail span {
-            color: #4f46e5;
+            color: #047857;
         }
 
         .pipe-flow {
@@ -640,15 +655,15 @@
         }
 
         .pipe-node.lit {
-            border-color: rgba(129, 140, 248, .45);
+            border-color: rgba(16, 185, 129, .45);
             color: var(--acc);
-            background: linear-gradient(135deg, rgba(129, 140, 248, .1), rgba(45, 212, 191, .06));
+            background: linear-gradient(135deg, rgba(16, 185, 129, .1), rgba(45, 212, 191, .06));
         }
 
         [data-theme="light"] .pipe-node.lit {
-            border-color: rgba(79, 70, 229, .4);
-            color: #4f46e5;
-            background: linear-gradient(135deg, rgba(79, 70, 229, .07), rgba(13, 148, 136, .05));
+            border-color: rgba(4, 120, 87, .4);
+            color: #047857;
+            background: linear-gradient(135deg, rgba(4, 120, 87, .07), rgba(13, 148, 136, .05));
         }
 
         .pipe-arrow {
@@ -659,7 +674,7 @@
         }
 
         [data-theme="light"] .pipe-node {
-            background: #f1f5f9;
+            background: #f4f1ea;
             border-color: rgba(0, 0, 0, .1);
             color: #475569;
         }
@@ -699,11 +714,11 @@
         }
 
         [data-theme="light"] .btn-primary {
-            background: #4f46e5;
+            background: #047857;
         }
 
         [data-theme="light"] .btn-primary:hover {
-            box-shadow: 0 10px 28px rgba(79, 70, 229, .35);
+            box-shadow: 0 10px 28px rgba(4, 120, 87, .35);
         }
 
         .btn-ghost {
@@ -735,8 +750,8 @@
         }
 
         [data-theme="light"] .btn-ghost:hover {
-            border-color: #4f46e5;
-            color: #4f46e5;
+            border-color: #047857;
+            color: #047857;
             background: #eef2ff;
         }
 
@@ -758,7 +773,7 @@
             content: '';
             position: absolute;
             inset: -40px;
-            background: radial-gradient(ellipse at 30% 50%, rgba(129, 140, 248, .18), transparent 60%),
+            background: radial-gradient(ellipse at 30% 50%, rgba(16, 185, 129, .18), transparent 60%),
                 radial-gradient(ellipse at 80% 50%, rgba(45, 212, 191, .12), transparent 60%);
             pointer-events: none;
             z-index: -1;
@@ -766,7 +781,7 @@
         }
 
         [data-theme="light"] .stat-strip::before {
-            background: radial-gradient(ellipse at 30% 50%, rgba(79, 70, 229, .1), transparent 60%),
+            background: radial-gradient(ellipse at 30% 50%, rgba(4, 120, 87, .1), transparent 60%),
                 radial-gradient(ellipse at 80% 50%, rgba(13, 148, 136, .08), transparent 60%);
         }
 
@@ -807,7 +822,7 @@
         }
 
         [data-theme="light"] .stat-cell:hover {
-            background: #f8fafc;
+            background: #faf8f3;
         }
 
         [data-theme="light"] .stat-num {
@@ -832,7 +847,7 @@
             background: var(--bg-card);
             border: 1px solid var(--bdr);
             border-radius: var(--r);
-            padding: 1.5rem;
+            padding: 1.75rem;
             position: relative;
             overflow: hidden;
             isolation: isolate;
@@ -868,12 +883,12 @@
         }
 
         [data-theme="light"] .card:hover {
-            border-color: rgba(79, 70, 229, .4);
-            box-shadow: 0 8px 28px rgba(79, 70, 229, .12);
+            border-color: rgba(4, 120, 87, .4);
+            box-shadow: 0 8px 28px rgba(4, 120, 87, .12);
         }
 
         [data-theme="light"] .card::before {
-            background: linear-gradient(90deg, transparent, #4f46e5, transparent);
+            background: linear-gradient(90deg, transparent, #047857, transparent);
         }
 
         .card h3 {
@@ -936,13 +951,13 @@
 
         [data-theme="light"] .tag {
             background: #eef2ff;
-            border-color: rgba(79, 70, 229, .18);
-            color: #4f46e5;
+            border-color: rgba(4, 120, 87, .18);
+            color: #047857;
         }
 
         [data-theme="light"] .tag:hover {
             background: #e0e7ff;
-            border-color: #4f46e5;
+            border-color: #047857;
         }
 
         .card-link {
@@ -962,7 +977,7 @@
         }
 
         [data-theme="light"] .card-link {
-            color: #4f46e5;
+            color: #047857;
         }
 
         .scale-row {
@@ -1046,12 +1061,12 @@
         }
 
         [data-theme="light"] .principles-teaser:hover {
-            border-color: rgba(79, 70, 229, .4);
-            box-shadow: 0 12px 32px rgba(79, 70, 229, .12);
+            border-color: rgba(4, 120, 87, .4);
+            box-shadow: 0 12px 32px rgba(4, 120, 87, .12);
         }
 
         [data-theme="light"] .principles-teaser::after {
-            background: radial-gradient(circle, rgba(79, 70, 229, .1), transparent 70%);
+            background: radial-gradient(circle, rgba(4, 120, 87, .1), transparent 70%);
         }
 
         .pt-grid {
@@ -1091,7 +1106,7 @@
         }
 
         [data-theme="light"] .pt-left h3 .hi {
-            background: linear-gradient(115deg, #4f46e5, #7c3aed, #0d9488);
+            background: linear-gradient(115deg, #047857, #059669, #3730a3);
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -1118,7 +1133,7 @@
             color: var(--acc);
             text-decoration: none;
             padding: .6rem 1.1rem;
-            border: 1px solid rgba(129, 140, 248, .35);
+            border: 1px solid rgba(16, 185, 129, .35);
             border-radius: 999px;
             background: var(--acc-s);
             transition: all .2s var(--ez);
@@ -1132,14 +1147,14 @@
         }
 
         [data-theme="light"] .pt-cta {
-            color: #4f46e5;
+            color: #047857;
             background: #eef2ff;
-            border-color: rgba(79, 70, 229, .3);
+            border-color: rgba(4, 120, 87, .3);
         }
 
         [data-theme="light"] .pt-cta:hover {
-            border-color: #4f46e5;
-            box-shadow: 0 6px 18px rgba(79, 70, 229, .2);
+            border-color: #047857;
+            box-shadow: 0 6px 18px rgba(4, 120, 87, .2);
         }
 
         .pt-list {
@@ -1175,7 +1190,7 @@
         }
 
         [data-theme="light"] .pt-list .pt-num {
-            color: #4f46e5;
+            color: #047857;
         }
 
         .pt-list strong {
@@ -1221,12 +1236,12 @@
         }
 
         [data-theme="light"] .feature-card:hover {
-            border-color: rgba(79, 70, 229, .35);
-            box-shadow: 0 12px 40px rgba(79, 70, 229, .1);
+            border-color: rgba(4, 120, 87, .35);
+            box-shadow: 0 12px 40px rgba(4, 120, 87, .1);
         }
 
         [data-theme="light"] .feature-card::after {
-            background: radial-gradient(circle, rgba(79, 70, 229, .1), transparent 70%);
+            background: radial-gradient(circle, rgba(4, 120, 87, .1), transparent 70%);
         }
 
         .feature-card h3 {
@@ -1298,7 +1313,7 @@
         }
 
         [data-theme="light"] .arch-step:hover {
-            background: #f8fafc;
+            background: #faf8f3;
         }
 
         .arch-num {
@@ -1310,7 +1325,7 @@
         }
 
         [data-theme="light"] .arch-num {
-            color: #4f46e5;
+            color: #047857;
         }
 
         .arch-name {
@@ -1352,7 +1367,7 @@
         }
 
         [data-theme="light"] .timeline::before {
-            background: linear-gradient(to bottom, #4f46e5, #0f766e 65%, transparent);
+            background: linear-gradient(to bottom, #047857, #0f766e 65%, transparent);
         }
 
         .tl-item {
@@ -1382,13 +1397,13 @@
         }
 
         [data-theme="light"] .tl-dot {
-            background: #f1f5f9;
-            border-color: #4f46e5;
+            background: #f4f1ea;
+            border-color: #047857;
         }
 
         [data-theme="light"] .tl-item:first-child .tl-dot {
-            background: #4f46e5;
-            box-shadow: 0 0 0 4px rgba(79, 70, 229, .12), 0 0 12px rgba(79, 70, 229, .2);
+            background: #047857;
+            box-shadow: 0 0 0 4px rgba(4, 120, 87, .12), 0 0 12px rgba(4, 120, 87, .2);
         }
 
         .tl-period {
@@ -1401,7 +1416,7 @@
         }
 
         [data-theme="light"] .tl-period {
-            color: #4f46e5;
+            color: #047857;
         }
 
         .tl-company {
@@ -1451,15 +1466,15 @@
         }
 
         .tl-badge.current {
-            background: var(--green-s);
-            color: var(--green);
-            border: 1px solid rgba(52, 211, 153, .25);
+            background: var(--amber-s);
+            color: var(--amber);
+            border: 1px solid rgba(251, 191, 36, .25);
         }
 
         .tl-badge.fintech {
-            background: var(--amber-s);
-            color: var(--amber);
-            border: 1px solid rgba(251, 191, 36, .22);
+            background: rgba(167, 139, 250, .09);
+            color: #a78bfa;
+            border: 1px solid rgba(167, 139, 250, .22);
         }
 
         .tl-badge.banking {
@@ -1469,15 +1484,15 @@
         }
 
         [data-theme="light"] .tl-badge.current {
-            color: #166534;
-            background: #dcfce7;
-            border-color: #86efac;
-        }
-
-        [data-theme="light"] .tl-badge.fintech {
             color: #92400e;
             background: #fef3c7;
             border-color: #fcd34d;
+        }
+
+        [data-theme="light"] .tl-badge.fintech {
+            color: #5b21b6;
+            background: #ede9fe;
+            border-color: #c4b5fd;
         }
 
         [data-theme="light"] .tl-badge.banking {
@@ -1585,12 +1600,12 @@
         }
 
         [data-theme="light"] .skills-col-label.proven {
-            color: #4f46e5;
+            color: #047857;
             border-color: rgba(0, 0, 0, .08);
         }
 
         [data-theme="light"] .skills-col-label.proven::before {
-            background: #4f46e5;
+            background: #047857;
         }
 
         [data-theme="light"] .skills-col-label.growing {
@@ -1645,13 +1660,13 @@
         }
 
         [data-theme="light"] .stag.proven {
-            border-color: rgba(79, 70, 229, .3);
-            color: #4f46e5;
+            border-color: rgba(4, 120, 87, .3);
+            color: #047857;
             background: #eef2ff;
         }
 
         [data-theme="light"] .stag.proven:hover {
-            border-color: #4f46e5;
+            border-color: #047857;
         }
 
         [data-theme="light"] .stag.growing {
@@ -1698,7 +1713,7 @@
         }
 
         [data-theme="light"] .cert-cell:hover {
-            background: #f8fafc;
+            background: #faf8f3;
         }
 
         .cert-issuer {
@@ -1710,7 +1725,7 @@
         }
 
         [data-theme="light"] .cert-issuer {
-            color: #4f46e5;
+            color: #047857;
         }
 
         .cert-name {
@@ -1803,7 +1818,7 @@
         }
 
         [data-theme="light"] #contact {
-            background: #f1f5f9;
+            background: #f4f1ea;
             border-color: rgba(0, 0, 0, .07);
         }
 
@@ -1870,14 +1885,14 @@
         [data-theme="light"] .contact-link {
             background: #fff;
             border-color: rgba(0, 0, 0, .1);
-            color: #4f46e5;
+            color: #047857;
             box-shadow: 0 1px 3px rgba(0, 0, 0, .04);
         }
 
         [data-theme="light"] .contact-link:hover {
-            border-color: #4f46e5;
+            border-color: #047857;
             background: #eef2ff;
-            box-shadow: 0 4px 16px rgba(79, 70, 229, .12);
+            box-shadow: 0 4px 16px rgba(4, 120, 87, .12);
         }
 
         /* ── FOOTER ───────────────────────────────────────────── */
@@ -1963,8 +1978,8 @@
         }
 
         [data-theme="light"] .to-top:hover {
-            border-color: #4f46e5;
-            color: #4f46e5;
+            border-color: #047857;
+            color: #047857;
             background: #eef2ff;
         }
 
@@ -2359,7 +2374,7 @@
 
         <!-- SKILLS -->
         <section id="tech-stack" class="fade-up sec-alt">
-            <span class="sec-num">05</span><br>
+            <span class="sec-num">05</span>
             <div class="kicker">Stack</div>
             <h2>Skills &amp; tech stack</h2>
             <p class="section-intro">Production-proven tools I use daily, and working knowledge I'm actively building
@@ -2450,7 +2465,7 @@
             <div class="cv-card">
                 <div class="cv-text">
                     <h3>Yomi Ismail — Data Engineer</h3>
-                    <p>Full work history, ETL projects, data warehousing and analytics engineering contributions.</p>
+                    <p>Concise snapshot of my experience across industries.</p>
                 </div>
                 <div class="cv-actions">
                     <a href="cv/Copy%20of%20Yomi%20Ismail%20CV%20-%20DE.docx.pdf" class="btn-primary" download>
@@ -2482,7 +2497,7 @@
             <div class="contact-inner fade-up">
                 <div class="kicker" style="justify-content:center;">Contact</div>
                 <h2>Let's build<br /><span style="color:var(--teal);">something together.</span></h2>
-                <p>I'm open to roles such as Junior Data Engineer, Analytics Engineer, Data Platform Analyst, or
+                <p>I'm open to roles such as Data Engineer, Analytics Engineer, Data Platform Analyst, or
                     technically focused operations positions with a strong data component. Available for remote or
                     hybrid opportunities across the UK. If you're hiring or have a project you'd like to discuss, feel
                     free to get in touch.</p>
