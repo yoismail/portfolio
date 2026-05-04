@@ -1,0 +1,1352 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PayFlow Case Study | Yomi Ismail</title>
+    <meta name="description"
+        content="PayFlow case study by Yomi Ismail — a production-minded ETL and warehouse project focused on modular pipeline design, star schema modeling, orchestration, rerun safety, and analytics-ready delivery." />
+    <meta name="keywords"
+        content="PayFlow, Yomi Ismail, Data Engineer, Python, ETL, PostgreSQL, SQLAlchemy, Data Warehouse, Analytics Schema, Star Schema" />
+    <meta name="author" content="Yomi Ismail" />
+    <meta property="og:title" content="PayFlow Case Study | Yomi Ismail" />
+    <meta property="og:description"
+        content="A production-minded ETL and warehouse case study focused on modular design, star schema modeling, orchestration, and rerun-safe delivery." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="images/portfolio-preview.png" />
+    <meta property="og:url" content="https://yoismail.github.io/portfolio/case-study.html" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="PayFlow Case Study | Yomi Ismail" />
+    <meta name="twitter:description"
+        content="A production-minded ETL and warehouse case study focused on modular design, warehouse thinking, orchestration, and rerun-safe delivery." />
+    <link rel="canonical" href="https://yoismail.github.io/portfolio/case-study.html" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&family=Syne:wght@700;800&display=swap"
+        rel="stylesheet" />
+    <style>
+        :root {
+            --bg: #030303;
+            --bg-2: #090909;
+            --bg-3: #121212;
+
+            --surface: rgba(28, 20, 16, 0.78);
+            --surface-2: rgba(16, 11, 9, 0.92);
+            --surface-soft: rgba(255, 248, 240, 0.035);
+
+            --border: rgba(255, 245, 235, 0.08);
+            --border-strong: rgba(205, 138, 70, 0.42);
+            --topline: rgba(255, 255, 255, 0.10);
+
+            --text: #FFF8F2;
+            --muted: #C9B8A8;
+            --muted-2: #E8D8C8;
+
+            --primary: #5C3B2A;
+            --primary-2: #B87333;
+            --primary-3: #E2B07A;
+
+            --shadow:
+                0 28px 80px rgba(0, 0, 0, .58),
+                0 10px 26px rgba(0, 0, 0, .30);
+
+            --glow:
+                0 0 0 1px rgba(255, 255, 255, .02),
+                0 0 28px rgba(184, 115, 51, .14),
+                0 0 54px rgba(92, 59, 42, .12);
+
+            --radius: 24px;
+            --radius-sm: 18px;
+            --max: 1140px;
+            --hh: 80px;
+            --blur: 28px;
+            --tag-blur: 14px;
+            --section-space: 4.8rem;
+            --grid-gap: 1rem;
+            --card-gap: 1.05rem;
+            --card-pad: 1.35rem;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            color: var(--text);
+            background:
+                radial-gradient(circle at top, rgba(184, 115, 51, .16) 0%, transparent 24%),
+                radial-gradient(circle at 80% 15%, rgba(92, 59, 42, .12) 0%, transparent 22%),
+                linear-gradient(180deg, #000000 0%, #040404 30%, #0b0908 65%, #15110e 100%);
+            line-height: 1.65;
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        body.menu-open {
+            overflow: hidden;
+        }
+
+        img,
+        svg {
+            display: block;
+            max-width: 100%;
+        }
+
+        a {
+            color: var(--primary-2);
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: var(--text);
+        }
+
+        button {
+            font: inherit;
+        }
+
+        *:focus-visible {
+            outline: 2px solid var(--primary-2);
+            outline-offset: 3px;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background:
+                radial-gradient(circle at 14% 14%, rgba(107, 122, 52, .16), transparent 24%),
+                radial-gradient(circle at 86% 12%, rgba(143, 161, 74, .12), transparent 22%),
+                radial-gradient(circle at 82% 78%, rgba(255, 255, 255, .04), transparent 18%),
+                linear-gradient(rgba(255, 255, 255, .015) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, .015) 1px, transparent 1px);
+            background-size: auto, auto, auto, 32px 32px, 32px 32px;
+            pointer-events: none;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            background:
+                linear-gradient(180deg, rgba(5, 5, 5, .50) 0%, rgba(5, 5, 5, .74) 42%, rgba(5, 5, 5, .92) 100%),
+                radial-gradient(ellipse 58% 44% at 50% 0%, rgba(107, 122, 52, .10), transparent 62%);
+            backdrop-filter: blur(2px);
+            -webkit-backdrop-filter: blur(2px);
+            pointer-events: none;
+        }
+
+        .site-header,
+        main,
+        footer {
+            position: relative;
+            z-index: 2;
+        }
+
+        .container {
+            width: min(calc(100% - 2rem), var(--max));
+            margin: 0 auto;
+        }
+
+        .container-reading {
+            width: min(calc(100% - 2rem), 980px);
+            margin: 0 auto;
+        }
+
+        .section {
+            padding: var(--section-space) 0;
+        }
+
+        .skip-link {
+            position: absolute;
+            left: -9999px;
+            top: 1rem;
+            z-index: 100;
+            background: var(--primary-2);
+            color: #050505;
+            padding: .8rem 1rem;
+            border-radius: 999px;
+            font-weight: 700;
+        }
+
+        .skip-link:focus {
+            left: 1rem;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: 'Syne', sans-serif;
+            letter-spacing: -.03em;
+        }
+
+        h1 {
+            font-size: clamp(2.65rem, 6vw, 5rem);
+            line-height: .95;
+        }
+
+        h2 {
+            font-size: clamp(1.8rem, 3vw, 3rem);
+            line-height: 1.04;
+        }
+
+        h3 {
+            font-size: 1.12rem;
+            line-height: 1.24;
+        }
+
+        h4 {
+            font-size: 1rem;
+            line-height: 1.2;
+        }
+
+        .lead {
+            font-size: clamp(1rem, 1.45vw, 1.12rem);
+            color: var(--muted-2);
+            max-width: 64ch;
+        }
+
+        .muted {
+            color: var(--muted);
+        }
+
+        .section-note {
+            max-width: 68ch;
+            margin-top: .72rem;
+        }
+
+        .eyebrow,
+        .kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem;
+            padding: .44rem .86rem;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, .08);
+            background: rgba(255, 255, 255, .05);
+            color: var(--primary-2);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: .72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .09em;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, .06);
+            width: fit-content;
+        }
+
+        .kicker {
+            padding: 0;
+            border: 0;
+            background: none;
+            box-shadow: none;
+        }
+
+        .glass {
+            background: linear-gradient(180deg, rgba(255, 255, 255, .07) 0%, rgba(255, 255, 255, .025) 2%, var(--surface) 18%, var(--surface-2) 100%);
+            border: 1px solid var(--border);
+            border-top-color: var(--topline);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow), inset 0 1px 0 rgba(255, 255, 255, .07), inset 0 -1px 0 rgba(255, 255, 255, .02);
+            backdrop-filter: blur(var(--blur)) saturate(130%);
+            -webkit-backdrop-filter: blur(var(--blur)) saturate(130%);
+            transition: transform .28s cubic-bezier(.22, .68, 0, 1.2), border-color .22s ease, box-shadow .22s ease;
+        }
+
+        .glass:hover {
+            transform: translateY(-4px);
+            border-color: var(--border-strong);
+            box-shadow: var(--shadow), var(--glow), inset 0 1px 0 rgba(255, 255, 255, .10);
+        }
+
+        .card {
+            padding: var(--card-pad);
+            display: flex;
+            flex-direction: column;
+            gap: var(--card-gap);
+            min-height: 100%;
+        }
+
+        .card p,
+        .card ul {
+            max-width: 64ch;
+        }
+
+        .surface-soft {
+            background: linear-gradient(180deg, rgba(255, 255, 255, .05), rgba(255, 255, 255, .025));
+            border: 1px solid rgba(255, 255, 255, .08);
+            border-radius: var(--radius-sm);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 70;
+            height: var(--hh);
+            background: rgba(8, 8, 8, .70);
+            border-bottom: 1px solid rgba(255, 255, 255, .06);
+            backdrop-filter: blur(22px) saturate(130%);
+            -webkit-backdrop-filter: blur(22px) saturate(130%);
+        }
+
+        .header-inner {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: .8rem;
+            min-width: 0;
+        }
+
+        .brand-mark {
+            width: 2.65rem;
+            height: 2.65rem;
+            border-radius: 14px;
+            display: grid;
+            place-items: center;
+            background:
+                radial-gradient(circle at top, rgba(184, 115, 51, .16) 0%, transparent 24%),
+                radial-gradient(circle at 80% 15%, rgba(92, 59, 42, .12) 0%, transparent 22%),
+                linear-gradient(180deg, #000000 0%, #040404 30%, #0b0908 65%, #15110e 100%);
+            border: 1px solid rgba(255, 255, 255, .12);
+            color: var(--text);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: .92rem;
+            font-weight: 700;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, .08), 0 0 20px rgba(107, 122, 52, .08);
+            flex-shrink: 0;
+        }
+
+        .brand-copy strong {
+            display: block;
+            font-size: .98rem;
+            color: var(--text);
+        }
+
+        .brand-copy span {
+            display: block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: .78rem;
+            color: var(--muted);
+        }
+
+        .nav-toggle {
+            display: none;
+            width: 2.75rem;
+            height: 2.75rem;
+            border-radius: 11px;
+            border: 1px solid rgba(255, 255, 255, .10);
+            background: rgba(255, 255, 255, .05);
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .ham {
+            width: 18px;
+            height: 13px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .ham span {
+            height: 2px;
+            border-radius: 999px;
+            background: var(--primary-2);
+            transition: .24s ease;
+            transform-origin: center;
+        }
+
+        .nav-toggle[aria-expanded="true"] .ham span:nth-child(1) {
+            transform: translateY(5.5px) rotate(45deg);
+        }
+
+        .nav-toggle[aria-expanded="true"] .ham span:nth-child(2) {
+            opacity: 0;
+            transform: scaleX(0);
+        }
+
+        .nav-toggle[aria-expanded="true"] .ham span:nth-child(3) {
+            transform: translateY(-5.5px) rotate(-45deg);
+        }
+
+        .site-nav {
+            display: flex;
+            align-items: center;
+            gap: .25rem;
+            flex-wrap: wrap;
+        }
+
+        .site-nav a {
+            padding: .64rem .9rem;
+            border-radius: 999px;
+            color: var(--muted);
+            font-size: .9rem;
+            font-weight: 500;
+            transition: background .2s, color .2s, transform .2s;
+        }
+
+        .site-nav a:hover,
+        .site-nav a.is-active {
+            background: rgba(255, 255, 255, .07);
+            color: var(--text);
+            transform: translateY(-1px);
+        }
+
+        .header-cta,
+        .btn,
+        .mini-nav a,
+        .proof-row a,
+        .related-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: .5rem;
+            border-radius: 999px;
+            font-weight: 700;
+            transition: transform .22s cubic-bezier(.22, .68, 0, 1.2), box-shadow .22s, background .22s, border-color .22s, color .22s;
+        }
+
+        .header-cta,
+        .btn-primary {
+            background:
+                radial-gradient(circle at top, rgba(184, 115, 51, .16) 0%, transparent 24%),
+                radial-gradient(circle at 80% 15%, rgba(92, 59, 42, .12) 0%, transparent 22%),
+                linear-gradient(180deg, #000000 0%, #040404 30%, #0b0908 65%, #15110e 100%);
+            color: #f7f7f7;
+            box-shadow: 0 12px 30px rgba(31, 29, 11, 0.18), 0 8px 20px rgba(143, 161, 74, .14);
+        }
+
+        .header-cta {
+            padding: .76rem 1.12rem;
+            font-size: .88rem;
+            white-space: nowrap;
+        }
+
+        .header-cta:hover,
+        .btn-primary:hover {
+            color: #f7f7f7;
+            transform: translateY(-2px);
+            box-shadow: 0 18px 38px rgba(107, 122, 52, .22), 0 12px 28px rgba(143, 161, 74, .18);
+        }
+
+        .btn {
+            padding: .84rem 1.1rem;
+            border: 1px solid rgba(255, 255, 255, .10);
+            font-size: .92rem;
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, .05);
+            color: var(--text);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, .09);
+            color: var(--text);
+            transform: translateY(-2px);
+        }
+
+        .hero {
+            padding: clamp(2.8rem, 5vw, 4.6rem) 0 3.8rem;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.08fr) minmax(320px, .92fr);
+            gap: 1rem;
+            align-items: start;
+        }
+
+        .hero-copy,
+        .hero-side {
+            padding: 1.45rem;
+        }
+
+        .hero-copy {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .hero-subtitle {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--primary-2);
+            font-size: .82rem;
+            text-transform: uppercase;
+            letter-spacing: .1em;
+        }
+
+        .hero-proof {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: .75rem;
+            margin-top: .2rem;
+        }
+
+        .proof-stat {
+            padding: .95rem;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, .05);
+            border: 1px solid rgba(255, 255, 255, .08);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, .03);
+        }
+
+        .proof-stat strong {
+            display: block;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--primary-2);
+            font-size: 1.02rem;
+            margin-bottom: .18rem;
+        }
+
+        .proof-stat span {
+            font-size: .8rem;
+            color: var(--muted);
+        }
+
+        .mini-nav,
+        .tag-row,
+        .proof-row,
+        .related-links,
+        .proof-strip {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .55rem;
+        }
+
+        .mini-nav a,
+        .proof-row a,
+        .related-links a {
+            padding: .76rem .94rem;
+            border: 1px solid rgba(255, 255, 255, .10);
+            background: rgba(255, 255, 255, .05);
+            color: var(--text);
+            font-size: .88rem;
+        }
+
+        .mini-nav a:hover,
+        .proof-row a:hover,
+        .related-links a:hover {
+            background: rgba(255, 255, 255, .09);
+            border-color: rgba(143, 161, 74, .28);
+            color: var(--text);
+            transform: translateY(-2px);
+        }
+
+        .hero-side {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            justify-content: space-between;
+        }
+
+        .detail-list,
+        .proof-list {
+            display: grid;
+            gap: .65rem;
+            padding-left: 1.1rem;
+            margin: 0;
+        }
+
+        .detail-list li,
+        .proof-list li {
+            color: #dfdfdf;
+        }
+
+        .proof-grid,
+        .timeline-grid,
+        .other-grid,
+        .trust-grid,
+        .signal-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: var(--grid-gap);
+            align-items: start;
+        }
+
+        .architecture {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: .7rem;
+            align-items: stretch;
+        }
+
+        .arch-stage {
+            padding: .88rem .8rem;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, .04);
+            border: 1px solid rgba(255, 255, 255, .08);
+            text-align: center;
+        }
+
+        .arch-stage strong {
+            display: block;
+            color: var(--primary-2);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: .84rem;
+            margin-bottom: .12rem;
+        }
+
+        .arch-stage span {
+            font-size: .78rem;
+            color: var(--muted);
+        }
+
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            padding: .38rem .74rem;
+            border-radius: 999px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: .7rem;
+            font-weight: 700;
+            border: 1px solid transparent;
+            backdrop-filter: blur(var(--tag-blur)) saturate(140%);
+            -webkit-backdrop-filter: blur(var(--tag-blur)) saturate(140%);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, .06);
+            transition: transform .2s cubic-bezier(.22, .68, 0, 1.25), box-shadow .2s, background .2s, border-color .2s;
+        }
+
+        .tag:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 22px rgba(0, 0, 0, .22), 0 0 20px rgba(107, 122, 52, .10);
+        }
+
+        .tag.c1 {
+            background: rgba(107, 122, 52, .18);
+            border-color: rgba(107, 122, 52, .32);
+            color: #e1e8c4;
+        }
+
+        .tag.c2 {
+            background: rgba(143, 161, 74, .14);
+            border-color: rgba(143, 161, 74, .28);
+            color: #eef5d2;
+        }
+
+        .tag.c3 {
+            background: rgba(255, 255, 255, .08);
+            border-color: rgba(255, 255, 255, .12);
+            color: var(--text);
+        }
+
+        .tag.c4 {
+            background: rgba(78, 88, 40, .20);
+            border-color: rgba(107, 122, 52, .24);
+            color: #d8e1b1;
+        }
+
+        .tag.c5 {
+            background: rgba(255, 255, 255, .05);
+            border-color: rgba(255, 255, 255, .10);
+            color: var(--text);
+        }
+
+        .proof-chip {
+            flex: 1 1 160px;
+            min-width: 160px;
+            padding: .82rem .92rem;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, .04);
+            border: 1px solid rgba(255, 255, 255, .08);
+        }
+
+        .proof-chip strong {
+            display: block;
+            color: var(--primary-2);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: .9rem;
+            margin-bottom: .12rem;
+        }
+
+        .proof-chip span {
+            color: var(--muted);
+            font-size: .78rem;
+        }
+
+        .metric-line {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: .76rem .9rem;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, .04);
+            border: 1px solid rgba(255, 255, 255, .08);
+        }
+
+        .metric-line strong {
+            color: var(--text);
+            font-size: .92rem;
+        }
+
+        .metric-line span {
+            color: var(--primary-2);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: .8rem;
+            text-align: right;
+        }
+
+        .number-pill {
+            display: inline-grid;
+            place-items: center;
+            width: 2.25rem;
+            height: 2.25rem;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, .06);
+            border: 1px solid rgba(255, 255, 255, .10);
+            color: var(--primary-2);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: .82rem;
+            font-weight: 700;
+        }
+
+        footer {
+            padding: 2.2rem 0;
+            border-top: 1px solid rgba(255, 255, 255, .07);
+            text-align: center;
+        }
+
+        .footer-copy {
+            color: var(--muted);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: .82rem;
+        }
+
+        .desktop-only {
+            display: inline-flex;
+        }
+
+        .mobile-only {
+            display: none;
+        }
+
+        @media (min-width: 1200px) {
+            :root {
+                --card-pad: 1.55rem;
+                --card-gap: 1.15rem;
+                --section-space: 5.2rem;
+            }
+
+            .hero-proof {
+                grid-template-columns: repeat(4, minmax(0, 1fr));
+            }
+
+            .architecture {
+                grid-template-columns: repeat(4, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 1080px) {
+
+            .hero-grid,
+            .trust-grid,
+            .signal-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-copy,
+            .hero-side {
+                padding: 1.3rem;
+            }
+        }
+
+        @media (max-width: 900px) {
+
+            .proof-grid,
+            .timeline-grid,
+            .other-grid,
+            .trust-grid,
+            .signal-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-proof,
+            .architecture {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 760px) {
+            :root {
+                --hh: 68px;
+                --section-space: 3.5rem;
+                --card-pad: 1.08rem;
+                --card-gap: .95rem;
+            }
+
+            .container,
+            .container-reading {
+                width: min(calc(100% - 1.15rem), var(--max));
+            }
+
+            .hero {
+                padding: 1.9rem 0 2.8rem;
+            }
+
+            .hero-copy,
+            .hero-side,
+            .card {
+                padding: var(--card-pad);
+            }
+
+            .hero-proof,
+            .architecture {
+                grid-template-columns: 1fr;
+            }
+
+            .mini-nav,
+            .proof-row,
+            .related-links,
+            .proof-strip,
+            .tag-row {
+                gap: .65rem;
+            }
+
+            .mini-nav a,
+            .proof-row a,
+            .related-links a {
+                width: 100%;
+            }
+
+            .proof-chip {
+                min-width: 100%;
+            }
+
+            .site-nav {
+                position: fixed;
+                left: .7rem;
+                right: .7rem;
+                top: calc(var(--hh) + .35rem);
+                flex-direction: column;
+                align-items: stretch;
+                gap: .35rem;
+                padding: .9rem;
+                border-radius: 20px;
+                background: rgba(12, 12, 12, .94);
+                border: 1px solid rgba(255, 255, 255, .08);
+                box-shadow: 0 28px 72px rgba(0, 0, 0, .55);
+                backdrop-filter: blur(28px) saturate(125%);
+                -webkit-backdrop-filter: blur(28px) saturate(125%);
+                opacity: 0;
+                visibility: hidden;
+                transform: translateY(-12px) scale(.98);
+                transition: opacity .26s ease, transform .26s ease, visibility .26s ease;
+                z-index: 60;
+            }
+
+            .site-nav.open {
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(0) scale(1);
+            }
+
+            .site-nav a {
+                width: 100%;
+                text-align: center;
+                justify-content: center;
+                padding: .92rem;
+                border-radius: 13px;
+            }
+
+            .nav-toggle {
+                display: inline-flex;
+            }
+
+            .desktop-only {
+                display: none;
+            }
+
+            .mobile-only {
+                display: inline-flex;
+            }
+
+            .site-nav .header-cta.mobile-only {
+                width: 100%;
+                margin-top: .55rem;
+                padding: 1rem 1.2rem;
+                border-radius: 15px;
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 520px) {
+            h1 {
+                font-size: 2.25rem;
+            }
+
+            h2 {
+                font-size: 1.75rem;
+            }
+
+            .metric-line {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: .25rem;
+            }
+
+            .metric-line span {
+                text-align: left;
+            }
+
+            .brand-copy span {
+                font-size: .74rem;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            *,
+            *::before,
+            *::after {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+
+    <header class="site-header">
+        <div class="container header-inner">
+            <a class="brand" href="index.html" aria-label="Return to main portfolio">
+                <div class="brand-mark">YI</div>
+                <div class="brand-copy">
+                    <strong>Yomi Ismail</strong>
+                    <span>PayFlow Case Study</span>
+                </div>
+            </a>
+
+            <button class="nav-toggle" id="navToggle" aria-label="Open navigation menu" aria-controls="siteNav"
+                aria-expanded="false">
+                <div class="ham" aria-hidden="true"><span></span><span></span><span></span></div>
+            </button>
+
+            <nav class="site-nav" id="siteNav" aria-label="Case study navigation">
+                <a href="#overview">Overview</a>
+                <a href="#architecture">Architecture</a>
+                <a href="#process">Process</a>
+                <a href="#outcomes">Outcomes</a>
+                <a href="#related">Related</a>
+                <a href="index.html">Portfolio</a>
+                <a class="header-cta mobile-only" href="cv/Copy%20of%20Yomi%20Ismail%20CV%20-%20DE.docx.pdf"
+                    target="_blank" rel="noopener">Download CV</a>
+            </nav>
+
+            <a class="header-cta desktop-only" href="cv/Copy%20of%20Yomi%20Ismail%20CV%20-%20DE.docx.pdf"
+                target="_blank" rel="noopener">Download CV</a>
+        </div>
+    </header>
+
+    <main id="main-content">
+        <section class="hero" id="overview">
+            <div class="container hero-grid">
+                <div class="glass hero-copy">
+                    <span class="eyebrow">Featured Portfolio Project</span>
+                    <div class="hero-subtitle">Python ETL • PostgreSQL • star schema • orchestration</div>
+                    <h1>PayFlow is the project where I started designing pipelines for trust, reruns, and analytics-not
+                        just cleanup.</h1>
+                    <p class="lead">This case study shows how I approached a real data engineering problem: not only
+                        cleaning data, but building a modular workflow that stays readable, supports resets, loads a
+                        warehouse deliberately, and remains easier to extend when business logic changes.</p>
+                    <p class="muted">I used PayFlow to practice production-minded habits: stage separation,
+                        schema-defined warehouse loading, observability through logging, orchestration through a single
+                        entrypoint, and environment resets that make iteration safer during development.</p>
+
+                    <div class="mini-nav">
+                        <a href="https://github.com/yoismail/payflow_case_study" target="_blank" rel="noopener">View
+                            GitHub Repo</a>
+                        <a class="btn btn-primary" href="index.html">Back to Portfolio</a>
+                    </div>
+
+                    <div class="hero-proof" aria-label="PayFlow proof points">
+                        <div class="proof-stat"><strong>5 layers</strong><span>Raw → staging → transform → analytics →
+                                BI thinking</span></div>
+                        <div class="proof-stat"><strong>Star schema</strong><span>Dimensions and facts in
+                                PostgreSQL</span></div>
+                        <div class="proof-stat"><strong>Orchestrated</strong><span>Single-command full pipeline
+                                run</span></div>
+                        <div class="proof-stat"><strong>Reset-safe</strong><span>Idempotent-style development
+                                cycles</span></div>
+                    </div>
+                </div>
+
+                <aside class="glass hero-side">
+                    <div>
+                        <span class="eyebrow">Recruiter Snapshot</span>
+                        <div class="tag-row" style="margin-top:1rem">
+                            <span class="tag c1">Python</span>
+                            <span class="tag c2">Pandas</span>
+                            <span class="tag c3">PostgreSQL</span>
+                            <span class="tag c4">SQLAlchemy</span>
+                            <span class="tag c5">Star Schema</span>
+                        </div>
+                    </div>
+
+                    <div class="surface-soft card">
+                        <div class="kicker">Why this project matters</div>
+                        <div style="display:grid; gap:.7rem; margin-top:.8rem">
+                            <div class="metric-line"><strong>Project type</strong><span>ETL + Warehouse Case
+                                    Study</span></div>
+                            <div class="metric-line"><strong>Main signal</strong><span>Structure +
+                                    Maintainability</span></div>
+                            <div class="metric-line"><strong>Core assets</strong><span>run_all.py + wipe_all.py</span>
+                            </div>
+                            <div class="metric-line"><strong>Best for</strong><span>Technical hiring review</span></div>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+        <section class="section" id="signal">
+            <div class="container signal-grid">
+                <div class="glass card">
+                    <span class="eyebrow">Why this case study is stronger</span>
+                    <h2>This is not just a cleaned dataset project. It is a workflow design project.</h2>
+                    <p class="lead">The strongest signal in PayFlow is not that I used Python and SQL. It is that I
+                        built a repeatable ETL system with distinct layers, SQL-defined warehouse structures, observable
+                        execution, and a reset path for safer iteration.</p>
+                    <div class="proof-strip">
+                        <div class="proof-chip"><strong>Problem-first</strong><span>Built around pipeline reliability,
+                                not just transforms</span></div>
+                        <div class="proof-chip"><strong>Architecture-aware</strong><span>Warehouse intent stays visible
+                                across layers</span></div>
+                        <div class="proof-chip"><strong>Recruiter-friendly</strong><span>Easy to scan without losing
+                                technical depth</span></div>
+                    </div>
+                </div>
+
+                <aside class="glass card">
+                    <span class="eyebrow">30-second review</span>
+                    <ul class="detail-list">
+                        <li>Multi-layer ETL architecture from raw data to analytics outputs.</li>
+                        <li>Star schema with dimensions and fact tables for reporting use cases.</li>
+                        <li>Reset tooling for deterministic reruns during redesign and debugging.</li>
+                        <li>Single-entrypoint orchestration with logged, timed execution.</li>
+                    </ul>
+                </aside>
+            </div>
+        </section>
+
+        <section id="architecture" class="section">
+            <div class="container-reading">
+                <span class="eyebrow">Problem → Solution → Architecture</span>
+                <h2 style="margin-top:.9rem">The problem was not only loading data. It was preventing the workflow from
+                    becoming fragile as the logic evolved.</h2>
+                <p class="lead section-note">I wanted the project to be easier to change without losing control of the
+                    output. That meant separating responsibilities, keeping warehouse logic explicit, validating data
+                    quality at multiple stages, and making full reruns predictable.</p>
+
+                <div class="proof-grid" style="margin-top:1.35rem">
+                    <article class="glass card">
+                        <h3>Problem</h3>
+                        <p>When extraction, cleaning, table creation, and analytics loading are mixed together, every
+                            schema change increases debugging friction. The workflow becomes harder to trust, and reruns
+                            become riskier.</p>
+                        <div class="proof-strip">
+                            <div class="proof-chip"><strong>Risk</strong><span>Tangled responsibilities</span></div>
+                            <div class="proof-chip"><strong>Impact</strong><span>Unclear reruns and slower
+                                    debugging</span></div>
+                        </div>
+                    </article>
+
+                    <article class="glass card">
+                        <h3>Solution</h3>
+                        <p>I separated the workflow into raw ingestion, staging clean-up, transform logic, analytics
+                            loading, and orchestration. That made failures easier to trace and made warehouse behavior
+                            more deliberate.</p>
+                        <div class="proof-strip">
+                            <div class="proof-chip"><strong>Method</strong><span>Stage separation</span></div>
+                            <div class="proof-chip"><strong>Benefit</strong><span>Clearer ownership and
+                                    maintainability</span></div>
+                        </div>
+                    </article>
+
+                    <article class="glass card">
+                        <h3>Architecture Choice</h3>
+                        <p>I treated each layer as a separate engineering concern: raw data as source truth, staging for
+                            clean standardized tables, transform for dimensional preparation, analytics for warehouse
+                            delivery, and orchestration for repeatable runs.</p>
+                        <div class="architecture" aria-label="PayFlow architecture stages">
+                            <div class="arch-stage"><strong>Raw</strong><span>Immutable source CSVs</span></div>
+                            <div class="arch-stage"><strong>Staging</strong><span>Cleaned standardized tables</span>
+                            </div>
+                            <div class="arch-stage"><strong>Transform</strong><span>Dimension and fact
+                                    preparation</span></div>
+                            <div class="arch-stage"><strong>Analytics</strong><span>Warehouse outputs in
+                                    PostgreSQL</span></div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="trust">
+            <div class="container">
+                <div class="trust-grid">
+                    <div class="glass card">
+                        <span class="eyebrow">Key engineering concepts</span>
+                        <h2>This project proves stronger engineering judgment than a typical portfolio ETL build.</h2>
+                        <div class="proof-strip" style="margin-top:.5rem">
+                            <div class="proof-chip"><strong>Logging</strong><span>Timed and observable execution</span>
+                            </div>
+                            <div class="proof-chip"><strong>Schema-driven</strong><span>SQL-defined warehouse
+                                    tables</span></div>
+                            <div class="proof-chip"><strong>Idempotent</strong><span>Reset-safe development
+                                    cycles</span></div>
+                        </div>
+                        <div class="proof-grid" style="margin-top:1rem">
+                            <div class="card surface-soft">
+                                <h4>Warehouse modeling</h4>
+                                <ul class="proof-list">
+                                    <li>Dimensions for customer, seller, product, payment type, and date.</li>
+                                    <li>Fact tables for orders, order items, and payments.</li>
+                                    <li>Foreign keys, surrogate keys, and analytics-ready query paths.</li>
+                                </ul>
+                            </div>
+                            <div class="card surface-soft">
+                                <h4>Pipeline operations</h4>
+                                <ul class="proof-list">
+                                    <li>Full workflow orchestration through one script.</li>
+                                    <li>Environment reset support for deterministic reruns.</li>
+                                    <li>Fail-fast, logged execution across major steps.</li>
+                                </ul>
+                            </div>
+                            <div class="card surface-soft">
+                                <h4>Data quality thinking</h4>
+                                <ul class="proof-list">
+                                    <li>Validation during extract, clean, and transform phases.</li>
+                                    <li>Standardized columns and typed timestamp handling.</li>
+                                    <li>Explicit stage ownership to reduce hidden logic.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass card">
+                        <span class="eyebrow">Technical stack</span>
+                        <div class="metric-line"><strong>Language</strong><span>Python 3.x</span></div>
+                        <div class="metric-line"><strong>Processing</strong><span>pandas</span></div>
+                        <div class="metric-line"><strong>Database</strong><span>PostgreSQL</span></div>
+                        <div class="metric-line"><strong>Loader / ORM</strong><span>SQLAlchemy</span></div>
+                        <div class="metric-line"><strong>Environment</strong><span>dotenv</span></div>
+                        <div class="metric-line"><strong>Logging</strong><span>Custom formatter + timing</span></div>
+                        <div class="metric-line"><strong>Orchestration</strong><span>Python subprocess DAG</span></div>
+                        <div class="metric-line"><strong>Source</strong><span>Olist public e-commerce dataset</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="process" class="section">
+            <div class="container-reading">
+                <span class="eyebrow">Delivery Process</span>
+                <h2 style="margin-top:.9rem">How the pipeline is structured from reset to warehouse delivery.</h2>
+                <p class="lead section-note">The repo makes the process explicit: reset the environment, extract the
+                    source data, explore and validate it, clean and stage it, then transform and load a star-schema
+                    warehouse through orchestrated execution.</p>
+
+                <div class="timeline-grid" style="margin-top:1.35rem">
+                    <article class="glass card">
+                        <div class="number-pill">01</div>
+                        <h3>Wipe Phase</h3>
+                        <p>Resets schemas and data folders so the environment returns to a clean state before execution.
+                            This supports deterministic reruns during redesign and debugging.</p>
+                    </article>
+
+                    <article class="glass card">
+                        <div class="number-pill">02</div>
+                        <h3>Extract + Explore</h3>
+                        <p>Downloads and validates the raw CSV data, then logs shapes, heads, dtypes, row counts, and
+                            missing values to make the input easier to reason about.</p>
+                    </article>
+
+                    <article class="glass card">
+                        <div class="number-pill">03</div>
+                        <h3>Clean + Stage</h3>
+                        <p>Cleans customers, sellers, and transactions, handles cancellations and timestamps, writes
+                            cleaned outputs, and loads standardized tables into staging.</p>
+                    </article>
+
+                    <article class="glass card">
+                        <div class="number-pill">04</div>
+                        <h3>Transform + Load</h3>
+                        <p>Builds dimensions and fact tables, maps keys, preserves referential integrity, and loads the
+                            analytics schema through an orchestrated, logged workflow.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="outcomes" class="section">
+            <div class="container-reading">
+                <span class="eyebrow">Outcomes</span>
+                <h2 style="margin-top:.9rem">What this project proved about my engineering approach.</h2>
+                <div class="proof-grid" style="margin-top:1.35rem">
+                    <article class="glass card">
+                        <h3>Delivery outcomes</h3>
+                        <ul class="proof-list">
+                            <li>Built a modular workflow that is easier to explain, rerun, and extend.</li>
+                            <li>Made analytics loading a deliberate stage instead of an afterthought.</li>
+                            <li>Kept warehouse design choices visible in both code structure and SQL assets.</li>
+                        </ul>
+                    </article>
+
+                    <article class="glass card">
+                        <h3>Technical lessons</h3>
+                        <ul class="proof-list">
+                            <li>Separation of concerns reduces debugging friction and improves readability.</li>
+                            <li>Explicit load paths make warehouse behavior easier to trust.</li>
+                            <li>Reset tooling matters when the project is evolving quickly.</li>
+                        </ul>
+                    </article>
+
+                    <article class="glass card">
+                        <h3>Business value</h3>
+                        <p>This pipeline enables cleaner reporting and analytics by moving from raw operational data
+                            into structures designed for BI-style queries, repeatable execution, and easier future
+                            extension.</p>
+                        <div class="proof-row">
+                            <a href="https://github.com/yoismail/payflow_case_study" target="_blank" rel="noopener">Open
+                                repository</a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="related" class="section">
+            <div class="container">
+                <span class="eyebrow">Related Projects</span>
+                <h2 style="margin-top:.9rem">The rest of the portfolio supports the same story from different angles.
+                </h2>
+                <div class="other-grid" style="margin-top:1.35rem">
+                    <article class="glass card">
+                        <h3>YINC E-Commerce Case Study</h3>
+                        <p>YINC strengthened the fundamentals: cleaner entity boundaries, normalized relational tables,
+                            and a clearer CSV-to-PostgreSQL flow focused on data modeling discipline.</p>
+                        <div class="tag-row">
+                            <span class="tag c1">CSV Ingestion</span>
+                            <span class="tag c2">Normalization</span>
+                            <span class="tag c3">PostgreSQL</span>
+                        </div>
+                        <div class="related-links">
+                            <a href="https://github.com/yoismail/yinc_ecommerce_case_study" target="_blank"
+                                rel="noopener">View Repository</a>
+                        </div>
+                    </article>
+
+                    <article class="glass card">
+                        <h3>ChocoDelight Data Platform</h3>
+                        <p>ChocoDelight pushed me toward more layered platform thinking, with ingestion, shaping,
+                            feature engineering, and analytics-oriented outputs handled more deliberately.</p>
+                        <div class="tag-row">
+                            <span class="tag c4">Layered Pipeline</span>
+                            <span class="tag c5">Feature Engineering</span>
+                            <span class="tag c2">Analytics Marts</span>
+                        </div>
+                        <div class="related-links">
+                            <a href="https://github.com/yoismail/choco_delight_data_platform" target="_blank"
+                                rel="noopener">View Repository</a>
+                            <a href="index.html#projects">Back to projects</a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p class="footer-copy">© 2026 <a href="mailto:ismailyomi@gmail.com">Yomi Ismail</a> · Built with intention.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        const toggle = document.getElementById('navToggle');
+        const nav = document.getElementById('siteNav');
+
+        const closeNav = () => {
+            nav.classList.remove('open');
+            toggle.setAttribute('aria-expanded', 'false');
+            document.body.classList.remove('menu-open');
+        };
+
+        const openNav = () => {
+            nav.classList.add('open');
+            toggle.setAttribute('aria-expanded', 'true');
+            document.body.classList.add('menu-open');
+        };
+
+        toggle.addEventListener('click', () => {
+            toggle.getAttribute('aria-expanded') === 'true' ? closeNav() : openNav();
+        });
+
+        [...nav.querySelectorAll('a')].forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 760) closeNav();
+            });
+        });
+
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 760) closeNav();
+        });
+
+        document.addEventListener('keydown', event => {
+            if (event.key === 'Escape') closeNav();
+        });
+
+        const sections = [...document.querySelectorAll('main section[id]')];
+        const navLinks = [...document.querySelectorAll('.site-nav a[href^="#"]')];
+
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                navLinks.forEach(link => {
+                    link.classList.toggle('is-active', link.getAttribute('href') === `#${entry.target.id}`);
+                });
+            });
+        }, {
+            rootMargin: '-35% 0px -45% 0px',
+            threshold: 0.1
+        });
+
+        sections.forEach(section => observer.observe(section));
+    </script>
+</body>
+
+</html>

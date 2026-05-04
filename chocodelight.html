@@ -9,14 +9,15 @@
         content="ChocoDelight Data Platform: a layered ETL pipeline that turns a flat chocolate sales dataset into a structured PostgreSQL warehouse with raw, operational, and analytics schemas." />
 
     <!-- Favicon -->
-    <link rel="icon" href="svg\favicon.svg" type="image/svg+xml" />
-    <link rel="alternate icon" href="svg\favicon.svg" />
+    <link rel="icon" href="svg/favicon.svg" type="image/svg+xml" />
+    <link rel="alternate icon" href="svg/favicon.svg" />
+
     <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
     <meta name="theme-color" content="#fafaf8" media="(prefers-color-scheme: light)" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="article" />
-    <meta property="og:title" content="ChocoDelight — Layered ETL &amp; Dimensional Warehouse" />
+    <meta property="og:title" content="ChocoDelight | Layered ETL &amp; Dimensional Warehouse" />
     <meta property="og:description"
         content="An end-to-end data platform that transforms a flat chocolate sales dataset into a layered PostgreSQL warehouse with raw, operational, and analytics schemas." />
     <meta property="og:image" content="og-image.svg" />
@@ -27,7 +28,7 @@
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="ChocoDelight Case Study — Yomi Ismail" />
+    <meta name="twitter:title" content="ChocoDelight Case Study | Yomi Ismail" />
     <meta name="twitter:description"
         content="An end-to-end data platform with raw, operational, and analytics schemas in PostgreSQL." />
     <meta name="twitter:image" content="og-image.svg" />
@@ -1456,6 +1457,7 @@
             <a href="#features">Features</a>
             <a href="#decisions">Decisions</a>
             <a href="#impact">Impact</a>
+            <a href="principles.html">Principles</a>
             <a href="index.html">← Portfolio</a>
         </div>
         <div class="nav-right">
@@ -1683,7 +1685,7 @@
         <section id="features" class="fade-up">
             <span class="sec-num">04</span>
             <div class="kicker">Feature Engineering</div>
-            <h2>From raw values <br> to analytics-ready features</h2>
+            <h2>From raw values <br>to analytics-ready features</h2>
             <p class="section-intro">The cleaning stage is not just type casting and null handling. Each table gets
                 domain-specific engineered features that make downstream BI work meaningful, not mechanical.</p>
             <div class="card-grid grid-3">
@@ -1746,7 +1748,7 @@
 
         <!-- DECISIONS -->
         <section id="decisions" class="fade-up sec-alt">
-            <span class="sec-num">05</span>
+            <span class="sec-num">05 </span> <br>
             <div class="kicker">Key Decisions</div>
             <h2>Design choices &amp; tradeoffs</h2>
             <div class="decision-wrapper">
@@ -1814,11 +1816,45 @@
                     <div class="impact-label">Analytics-ready dim + fact tables, FK-validated and indexed</div>
                 </div>
             </div>
+
+            <h3
+                style="font-family:var(--fd);font-size:1.1rem;font-weight:600;margin-top:2.5rem;margin-bottom:.85rem;color:var(--h1);">
+                What this warehouse can answer</h3>
+            <p style="font-size:.88rem;color:var(--h2);max-width:640px;line-height:1.7;margin-bottom:1.25rem;">The
+                dimensional model directly supports the kind of questions a sales or growth team would ask of a
+                chocolate-retail dataset. Each one is a single SQL query against the analytics schema, not a multi-step
+                pivot in a spreadsheet.</p>
+            <div class="card-grid grid-3">
+                <div class="card">
+                    <h3>Revenue analysis</h3>
+                    <ul>
+                        <li>Revenue by product, store, or region</li>
+                        <li>Margin analysis with bucket segmentation</li>
+                        <li>Outlier flagging for unusually large transactions</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>Customer behaviour</h3>
+                    <ul>
+                        <li>Customer segmentation by tenure</li>
+                        <li>Cohort comparison across joining periods</li>
+                        <li>Repeat-buyer identification via fact_sales</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>Time &amp; seasonality</h3>
+                    <ul>
+                        <li>Quarter and season-based performance</li>
+                        <li>Day-type and time-of-day sales patterns</li>
+                        <li>Year-over-year trend analysis via dim_calendar</li>
+                    </ul>
+                </div>
+            </div>
         </section>
 
         <!-- TECH STACK -->
         <section id="tech" class="fade-up sec-alt">
-            <span class="sec-num">07</span>
+            <span class="sec-num">07</span> <br>
             <div class="kicker">Tech Stack</div>
             <h2>Tools &amp; technology</h2>
             <div class="card">

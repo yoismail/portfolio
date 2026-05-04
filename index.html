@@ -9,25 +9,26 @@
         content="Data Engineer at Amdari Inc. Building production ETL pipelines, star schema warehouses, and CI/CD-ready data infrastructure. 6+ years across data engineering and fintech." />
 
     <!-- Favicon -->
-    <link rel="icon" href="svg\favicon.svg" type="image/svg+xml" />
-    <link rel="alternate icon" href="svg\favicon.svg" />
+    <link rel="icon" href="svg/favicon.svg" type="image/svg+xml" />
+    <link rel="alternate icon" href="svg/favicon.svg" />
+
     <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
     <meta name="theme-color" content="#fafaf8" media="(prefers-color-scheme: light)" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Yomi Ismail - Data Engineer" />
+    <meta property="og:title" content="Yomi Ismail | Data Engineer" />
     <meta property="og:description"
         content="Data Engineer at Amdari Inc. Building production ETL pipelines, star schema warehouses, and CI/CD-ready data infrastructure." />
     <meta property="og:image" content="og-image.svg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Yomi Ismail, Data Engineer - From fintech operations to data pipelines" />
+    <meta property="og:image:alt" content="Yomi Ismail, Data Engineer | Building data systems analysts trust" />
     <meta property="og:locale" content="en_GB" />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Yomi Ismail - Data Engineer" />
+    <meta name="twitter:title" content="Yomi Ismail | Data Engineer" />
     <meta name="twitter:description"
         content="Data Engineer at Amdari Inc. Building production ETL pipelines, star schema warehouses, and CI/CD-ready data infrastructure." />
     <meta name="twitter:image" content="og-image.svg" />
@@ -998,6 +999,194 @@
             background: #0f766e;
         }
 
+        /* ── PRINCIPLES TEASER ────────────────────────────────── */
+        .principles-teaser {
+            background: var(--bg-card);
+            border: 1px solid var(--bdr);
+            border-radius: var(--r);
+            padding: 2.25rem;
+            position: relative;
+            overflow: hidden;
+            isolation: isolate;
+            transition: border-color .25s var(--ez), transform .25s var(--ez), box-shadow .25s var(--ez);
+        }
+
+        .principles-teaser::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            background: var(--grad);
+        }
+
+        .principles-teaser::after {
+            content: '';
+            position: absolute;
+            top: -100px;
+            right: -100px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, var(--acc-g), transparent 70%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .principles-teaser:hover {
+            border-color: var(--bdr-hi);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, .25);
+        }
+
+        [data-theme="light"] .principles-teaser {
+            background: #fff;
+            border-color: rgba(0, 0, 0, .09);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, .05), 0 4px 16px rgba(0, 0, 0, .04);
+        }
+
+        [data-theme="light"] .principles-teaser:hover {
+            border-color: rgba(79, 70, 229, .4);
+            box-shadow: 0 12px 32px rgba(79, 70, 229, .12);
+        }
+
+        [data-theme="light"] .principles-teaser::after {
+            background: radial-gradient(circle, rgba(79, 70, 229, .1), transparent 70%);
+        }
+
+        .pt-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        @media(max-width:760px) {
+            .pt-grid {
+                grid-template-columns: 1fr;
+                gap: 1.75rem;
+            }
+        }
+
+        .pt-left h3 {
+            font-family: var(--fd);
+            font-size: clamp(1.4rem, 2.8vw, 1.85rem);
+            font-weight: 700;
+            letter-spacing: -.02em;
+            line-height: 1.2;
+            margin-bottom: .85rem;
+            color: var(--h1);
+        }
+
+        [data-theme="light"] .pt-left h3 {
+            color: #0f172a;
+        }
+
+        .pt-left h3 .hi {
+            background: var(--grad);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+        }
+
+        [data-theme="light"] .pt-left h3 .hi {
+            background: linear-gradient(115deg, #4f46e5, #7c3aed, #0d9488);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+        }
+
+        .pt-left p {
+            font-size: .92rem;
+            color: var(--h2);
+            line-height: 1.75;
+            margin-bottom: 1.25rem;
+        }
+
+        [data-theme="light"] .pt-left p {
+            color: #334155;
+        }
+
+        .pt-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: .4rem;
+            font-family: var(--fm);
+            font-size: .78rem;
+            color: var(--acc);
+            text-decoration: none;
+            padding: .6rem 1.1rem;
+            border: 1px solid rgba(129, 140, 248, .35);
+            border-radius: 999px;
+            background: var(--acc-s);
+            transition: all .2s var(--ez);
+        }
+
+        .pt-cta:hover {
+            border-color: var(--acc);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 18px var(--acc-g);
+            text-decoration: none;
+        }
+
+        [data-theme="light"] .pt-cta {
+            color: #4f46e5;
+            background: #eef2ff;
+            border-color: rgba(79, 70, 229, .3);
+        }
+
+        [data-theme="light"] .pt-cta:hover {
+            border-color: #4f46e5;
+            box-shadow: 0 6px 18px rgba(79, 70, 229, .2);
+        }
+
+        .pt-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: .9rem;
+        }
+
+        .pt-list li {
+            display: flex;
+            gap: .85rem;
+            align-items: flex-start;
+            font-size: .86rem;
+            color: var(--h2);
+            line-height: 1.55;
+        }
+
+        [data-theme="light"] .pt-list li {
+            color: #334155;
+        }
+
+        .pt-list .pt-num {
+            font-family: var(--fm);
+            font-size: .62rem;
+            color: var(--acc);
+            letter-spacing: .1em;
+            min-width: 32px;
+            padding-top: .18rem;
+            flex-shrink: 0;
+        }
+
+        [data-theme="light"] .pt-list .pt-num {
+            color: #4f46e5;
+        }
+
+        .pt-list strong {
+            color: var(--h1);
+            font-weight: 500;
+        }
+
+        [data-theme="light"] .pt-list strong {
+            color: #0f172a;
+        }
+
         /* ── FEATURE CARD ─────────────────────────────────────── */
         .feature-card {
             background: var(--bg-card);
@@ -1848,6 +2037,7 @@
             <a href="#featured-case-study">Case Study</a>
             <a href="#projects">Projects</a>
             <a href="#experience">Experience</a>
+            <a href="principles.html">Principles</a>
             <a href="#tech-stack">Stack</a>
             <a href="#cv">CV</a>
             <a href="#contact">Contact</a>
@@ -1869,10 +2059,11 @@
                 <span class="badge-dot"></span>
                 Currently at Amdari Inc. · open to new roles
             </div>
-            <h1 class="hero-title fade-up">Building data systems <span class="hi">analysts trust</span></h1>
+            <h1 class="hero-title fade-up">Building data systems<br /><span class="hi">analysts trust.</span></h1>
             <p class="hero-bio fade-up">
                 Six years inside fintech and banking systems showed me what bad data costs. Now I build the pipelines
-                that fix it: production ETL, star schema warehouses, and CI/CD-ready infrastructure. </p>
+                that fix it: <strong>production ETL, star schema warehouses, and CI/CD-ready infrastructure</strong>.
+            </p>
             <p class="hero-avail fade-up">
                 Based in Suffolk, England · <span>Remote or hybrid · UK-based roles</span>
             </p>
@@ -2123,9 +2314,52 @@
             </div>
         </section>
 
-        <!-- SKILLS -->
-        <section id="tech-stack" class="fade-up">
+        <!-- PRINCIPLES TEASER -->
+        <section id="principles-teaser" class="fade-up">
             <span class="sec-num">04</span>
+            <div class="kicker">How I Think</div>
+            <h2>Engineering principles</h2>
+            <p class="section-intro">Every project on this site follows a small set of positions I have taken often
+                enough that they feel less like opinions and more like defaults.</p>
+
+            <div class="principles-teaser">
+                <div class="pt-grid">
+                    <div class="pt-left">
+                        <h3>Seven principles I bring to <span class="hi">every project.</span></h3>
+                        <p>These are not borrowed from blog posts. They are positions I have defended in pull requests,
+                            learned from incidents, and applied in production. Each one comes with the trade-off I
+                            accept by holding it.</p>
+                        <a href="principles.html" class="pt-cta">
+                            Read all seven principles
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M5 12h14M12 5l7 7-7 7" />
+                            </svg>
+                        </a>
+                    </div>
+                    <ul class="pt-list">
+                        <li><span class="pt-num">01</span><span><strong>Schema is the source of truth</strong>, not
+                                Python.</span></li>
+                        <li><span class="pt-num">02</span><span><strong>Idempotency is a contract</strong>, not a
+                                feature.</span></li>
+                        <li><span class="pt-num">03</span><span>Write logs <strong>assuming you'll be debugging at
+                                    2am</strong>.</span></li>
+                        <li><span class="pt-num">04</span><span>Validate before you load, <strong>not
+                                    after</strong>.</span></li>
+                        <li><span class="pt-num">05</span><span>Configuration belongs in <strong>environment
+                                    variables</strong>, not code.</span></li>
+                        <li><span class="pt-num">06</span><span><strong>Modular ETL</strong> beats monolithic scripts,
+                                always.</span></li>
+                        <li><span class="pt-num">07</span><span>Engineer features in the warehouse, <strong>not in
+                                    dashboards</strong>.</span></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- SKILLS -->
+        <section id="tech-stack" class="fade-up sec-alt">
+            <span class="sec-num">05</span>
             <div class="kicker">Stack</div>
             <h2>Skills &amp; tech stack</h2>
             <p class="section-intro">Production-proven tools I use daily, and working knowledge I'm actively building
@@ -2170,10 +2404,10 @@
         </section>
 
         <!-- CERTIFICATIONS -->
-        <section id="certifications" class="fade-up sec-alt">
-            <span class="sec-num">05</span>
+        <section id="certifications" class="fade-up">
+            <span class="sec-num">06</span>
             <div class="kicker">Certifications</div>
-            <h2>Credentials</h2> <br>
+            <h2>Credentials</h2>
             <div class="cert-grid">
                 <div class="cert-cell">
                     <div class="cert-issuer">10Analytics</div>
@@ -2209,8 +2443,8 @@
         </section>
 
         <!-- CV -->
-        <section id="cv" class="fade-up">
-            <span class="sec-num">06</span>
+        <section id="cv" class="fade-up sec-alt">
+            <span class="sec-num">07</span> <br>
             <div class="kicker">CV</div>
             <h2>Download my CV</h2>
             <div class="cv-card">
@@ -2250,7 +2484,8 @@
                 <h2>Let's build<br /><span style="color:var(--teal);">something together.</span></h2>
                 <p>I'm open to roles such as Junior Data Engineer, Analytics Engineer, Data Platform Analyst, or
                     technically focused operations positions with a strong data component. Available for remote or
-                    hybrid opportunities across the UK. If you're hiring or have a project you'd like to discuss, feel
+                    hybrid opportunities across the UK. <br>If you're hiring or have a project you'd like to discuss,
+                    feel
                     free to get in touch.</p>
                 <div class="contact-links">
                     <a href="mailto:ismailyomi@gmail.com" class="contact-link">
