@@ -383,14 +383,15 @@
             position: absolute;
             top: 3rem;
             font-family: var(--fd);
-            font-size: clamp(5rem, 12vw, 9rem);
+            font-size: clamp(4rem, 9vw, 7.5rem);
             font-weight: 800;
             line-height: 1;
             pointer-events: none;
             user-select: none;
             letter-spacing: -.06em;
             color: rgba(255, 255, 255, .04);
-            right: 0;
+            right: -.5rem;
+            z-index: 0;
         }
 
         .sec-alt .sec-num {
@@ -452,6 +453,10 @@
             letter-spacing: -.04em;
             margin-bottom: .6rem;
             color: var(--h1);
+            max-width: min(100%, 720px);
+            position: relative;
+            z-index: 2;
+            padding-right: 1rem;
         }
 
         [data-theme="light"] h2 {
@@ -2179,9 +2184,9 @@
             <span class="sec-num">02</span>
             <div class="kicker">Projects</div>
             <h2>Selected projects</h2>
-            <p class="section-intro">Two flagship case studies covering different architectural patterns: a star-schema
-                warehouse on real e-commerce data, and a layered three-schema platform for analytics-ready features. A
-                third project is in progress.</p>
+            <p class="section-intro">Three flagship case studies covering different architectural patterns: a
+                star-schema warehouse on real e-commerce data, a layered three-schema analytics platform, and a live web
+                scraping pipeline. A fourth project is in progress.</p>
             <div class="card-grid grid-2">
                 <article class="card">
                     <h3>ChocoDelight Data Platform</h3>
@@ -2197,8 +2202,22 @@
                             CLI</span></div>
                     <a href="chocodelight.html" class="card-link">View case study →</a>
                 </article>
-                <article class="card" style="opacity:.85;">
-                    <h3>Project 3 · Coming soon</h3>
+                <article class="card">
+                    <h3>AliExpress Laptop ETL</h3>
+                    <div class="card-sub">Live web scraping · Selenium · feature engineering</div>
+                    <p>A production-style web scraping pipeline that scrapes 10 pages of AliExpress laptop listings,
+                        cleans and enriches the data with discount metrics and price bands, and appends only new records
+                        to PostgreSQL. Append-only loads, in-memory df passing, and a health check before scraping.</p>
+                    <div class="scale-row"><span><span class="sdot"></span>10 pages per run</span><span><span
+                                class="sdot"></span>6 engineered features</span><span><span
+                                class="sdot"></span>Append-only loads</span></div>
+                    <div class="tag-row"><span class="tag">Python</span><span class="tag">Selenium</span><span
+                            class="tag">BeautifulSoup</span><span class="tag">pandas</span><span
+                            class="tag">PostgreSQL</span></div>
+                    <a href="aliexpress.html" class="card-link">View case study →</a>
+                </article>
+                <article class="card" style="opacity:.85;grid-column:1/-1;">
+                    <h3>Project 4 · Coming soon</h3>
                     <div class="card-sub">Analytics engineering with dbt + BigQuery</div>
                     <p>A modern analytics engineering project on a public dataset. Source-to-mart transformations in
                         dbt, materialised models in BigQuery, automated tests at every layer, generated lineage docs,
@@ -2459,13 +2478,13 @@
 
         <!-- CV -->
         <section id="cv" class="fade-up sec-alt">
-            <span class="sec-num">07</span><br>
+            <span class="sec-num">07</span>
             <div class="kicker">CV</div>
             <h2>Download my CV</h2>
             <div class="cv-card">
                 <div class="cv-text">
                     <h3>Yomi Ismail — Data Engineer</h3>
-                    <p>Concise snapshot of my experience across industries.</p>
+                    <p>Full work history, ETL projects, data warehousing and analytics engineering contributions.</p>
                 </div>
                 <div class="cv-actions">
                     <a href="cv/Copy%20of%20Yomi%20Ismail%20CV%20-%20DE.docx.pdf" class="btn-primary" download>
@@ -2497,7 +2516,7 @@
             <div class="contact-inner fade-up">
                 <div class="kicker" style="justify-content:center;">Contact</div>
                 <h2>Let's build<br /><span style="color:var(--teal);">something together.</span></h2>
-                <p>I'm open to roles such as Data Engineer, Analytics Engineer, Data Platform Analyst, or
+                <p>I'm open to roles such as Junior Data Engineer, Analytics Engineer, Data Platform Analyst, or
                     technically focused operations positions with a strong data component. Available for remote or
                     hybrid opportunities across the UK. If you're hiring or have a project you'd like to discuss, feel
                     free to get in touch.</p>

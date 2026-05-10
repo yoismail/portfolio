@@ -3,73 +3,52 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title>PayFlow Case Study | Yomi Ismail</title>
+    <title>AliExpress Case Study | Yomi Ismail</title>
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta name="description"
-        content="PayFlow: A production-grade ETL pipeline and star schema data warehouse built with Python, SQL, and PostgreSQL on the Olist Brazilian E-Commerce dataset." />
+        content="AliExpress Laptop ETL Pipeline: a production-grade web scraping and ETL pipeline built with Python, Selenium, BeautifulSoup, and PostgreSQL. Scrapes live listings, enriches data, and loads it for analytics." />
 
     <!-- Favicon -->
     <link rel="icon" href="svg/favicon.svg" type="image/svg+xml" />
     <link rel="alternate icon" href="svg/favicon.svg" />
 
-    <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
-    <meta name="theme-color" content="#f8fafc" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#08060a" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#fdf2f4" media="(prefers-color-scheme: light)" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="article" />
-    <meta property="og:title" content="PayFlow | End-to-End ETL & Data Warehouse Case Study" />
+    <meta property="og:title" content="AliExpress Laptop ETL Pipeline | Yomi Ismail" />
     <meta property="og:description"
-        content="A production-grade ETL pipeline and star schema warehouse built with Python, SQL, PostgreSQL and SQLAlchemy. By Yomi Ismail, Data Engineer." />
+        content="A production-grade web scraping and ETL pipeline. Selenium + BeautifulSoup + PostgreSQL, with feature engineering and live source health checks." />
     <meta property="og:image" content="og-image.svg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="PayFlow ETL pipeline case study by Yomi Ismail" />
+    <meta property="og:image:alt" content="AliExpress Laptop ETL Pipeline case study by Yomi Ismail" />
     <meta property="og:locale" content="en_GB" />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="PayFlow Case Study | Yomi Ismail" />
+    <meta name="twitter:title" content="AliExpress Case Study | Yomi Ismail" />
     <meta name="twitter:description"
-        content="A production-grade ETL pipeline and star schema warehouse built with Python, SQL, PostgreSQL and SQLAlchemy." />
+        content="Web scraping pipeline with Selenium, BeautifulSoup, PostgreSQL, and production-grade logging." />
     <meta name="twitter:image" content="og-image.svg" />
 
-    <!-- Schema.org structured data -->
+    <!-- Schema.org -->
     <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "CreativeWork",
-  "name": "PayFlow — End-to-End ETL & Data Warehouse",
-  "headline": "Production-style ETL pipeline transforming raw Brazilian e-commerce data into a PostgreSQL star schema warehouse",
-  "author": {
-    "@type": "Person",
-    "name": "Yomi Ismail",
-    "jobTitle": "Data Engineer",
-    "sameAs": [
-      "https://www.linkedin.com/in/yomi-ismail",
-      "https://github.com/yoismail"
-    ]
-  },
-  "about": [
-    "ETL Pipeline",
-    "Data Warehousing",
-    "Star Schema",
-    "PostgreSQL",
-    "Python",
-    "SQLAlchemy",
-    "Idempotent Loads",
-    "Structured Logging"
+  "name": "AliExpress Laptop ETL Pipeline | Web Scraping &amp; PostgreSQL Warehouse",
+  "creator": { "@type": "Person", "name": "Yomi Ismail", "jobTitle": "Data Engineer" },
+  "keywords": [
+    "Web Scraping","ETL","Selenium","BeautifulSoup","Python","pandas",
+    "PostgreSQL","SQLAlchemy","Feature Engineering","E-commerce Data"
   ],
-  "codeRepository": "https://github.com/yoismail/payflow_case_study",
-  "programmingLanguage": ["Python", "SQL"],
-  "isPartOf": {
-    "@type": "WebSite",
-    "name": "Yomi Ismail — Portfolio"
-  }
+  "isPartOf": { "@type": "WebSite", "name": "Yomi Ismail | Portfolio" }
 }
 </script>
 
-    <!-- Plausible Analytics — privacy-friendly, no cookies -->
-    <!-- TIP: replace YOUR-DOMAIN.com below with your real domain once deployed -->
+    <!-- Plausible -->
     <script defer data-domain="YOUR-DOMAIN.com" src="https://plausible.io/js/script.js"></script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -78,36 +57,36 @@
         href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Syne:wght@400;600;700;800&family=Inter:wght@400;500&display=swap"
         rel="stylesheet" />
     <style>
-        /* ── DARK TOKENS ──────────────────────────────────────── */
+        /* ── DARK TOKENS — coral/rose lead, live-commerce energy ─ */
         :root {
-            --bg: #000;
-            --bg-nav: rgba(0, 0, 0, .9);
-            --bg-alt: #060810;
-            --bg-surf: #0a0d14;
-            --bg-card: #0f131b;
-            --bg-card2: #141923;
-            --bdr: rgba(120, 160, 255, .08);
-            --bdr-hi: rgba(34, 211, 238, .5);
-            --acc: #818cf8;
-            --acc-s: rgba(129, 140, 248, .1);
-            --acc-g: rgba(129, 140, 248, .25);
-            --acc-2: #22d3ee;
-            --grad: linear-gradient(115deg, #818cf8 0%, #6366f1 35%, #22d3ee 100%);
-            --teal: #22d3ee;
-            --teal-s: rgba(34, 211, 238, .09);
+            --bg: #08060a;
+            --bg-nav: rgba(8, 6, 10, .9);
+            --bg-alt: #0e0a10;
+            --bg-surf: #131017;
+            --bg-card: #18141d;
+            --bg-card2: #201b27;
+            --bdr: rgba(255, 255, 255, .07);
+            --bdr-hi: rgba(244, 63, 94, .5);
+            --acc: #f43f5e;
+            --acc-s: rgba(244, 63, 94, .1);
+            --acc-g: rgba(244, 63, 94, .25);
+            --acc-2: #818cf8;
+            --grad: linear-gradient(115deg, #f43f5e 0%, #fb7185 30%, #818cf8 100%);
+            --teal: #2dd4bf;
+            --teal-s: rgba(45, 212, 191, .09);
             --amber: #fbbf24;
             --amber-s: rgba(251, 191, 36, .09);
             --green: #34d399;
             --green-s: rgba(52, 211, 153, .09);
             --red: #f87171;
-            --h1: #eef2f7;
-            --h2: #b8c2d4;
-            --h3: #5c6680;
+            --h1: #f5edee;
+            --h2: #c8bec0;
+            --h3: #685a5e;
             --fd: 'Syne', sans-serif;
             --fm: 'IBM Plex Mono', monospace;
             --fb: 'Inter', sans-serif;
-            --r: .5rem;
-            --rsm: .25rem;
+            --r: .625rem;
+            --rsm: .3125rem;
             --nav: 68px;
             --ez: cubic-bezier(.16, 1, .3, 1);
         }
@@ -124,6 +103,7 @@
         html {
             scroll-behavior: smooth;
             scroll-padding-top: calc(var(--nav) + 1rem);
+            overflow-x: hidden;
         }
 
         body {
@@ -209,7 +189,6 @@
             }
         }
 
-        /* nav links — horizontal scroll on mobile */
         .nav-links {
             display: flex;
             align-items: center;
@@ -303,47 +282,47 @@
 
         /* light nav */
         [data-theme="light"] nav {
-            background: rgba(255, 255, 255, .96);
+            background: rgba(253, 242, 244, .96);
             border-bottom-color: rgba(0, 0, 0, .08);
             box-shadow: 0 1px 0 rgba(0, 0, 0, .04), 0 4px 16px rgba(0, 0, 0, .04);
         }
 
         [data-theme="light"] .nav-brand .name {
-            color: #0f172a;
+            color: #1c0d11;
         }
 
         [data-theme="light"] .nav-brand .title {
-            color: #4f46e5;
+            color: #be123c;
         }
 
         [data-theme="light"] .nav-brand:hover .name {
-            color: #4f46e5;
+            color: #be123c;
         }
 
         [data-theme="light"] .nav-links a {
-            color: #64748b;
+            color: #7c6168;
         }
 
         [data-theme="light"] .nav-links a:hover {
-            color: #0f172a;
-            background: rgba(79, 70, 229, .06);
+            color: #1c0d11;
+            background: rgba(190, 18, 60, .06);
         }
 
         [data-theme="light"] .nav-links a.active {
-            color: #4f46e5;
-            background: rgba(79, 70, 229, .08);
+            color: #be123c;
+            background: rgba(190, 18, 60, .08);
         }
 
         [data-theme="light"] .theme-btn {
-            background: #f8fafc;
+            background: #fef5f7;
             border-color: rgba(0, 0, 0, .1);
-            color: #475569;
+            color: #7c6168;
         }
 
         [data-theme="light"] .theme-btn:hover {
-            border-color: #4f46e5;
-            color: #4f46e5;
-            background: #eef2ff;
+            border-color: #be123c;
+            color: #be123c;
+            background: #fce7eb;
         }
 
         /* ── LAYOUT ───────────────────────────────────────────── */
@@ -354,6 +333,7 @@
             margin: 0 auto;
             padding: 0 clamp(1rem, 4vw, 2.5rem);
             padding-top: var(--nav);
+            overflow-x: clip;
         }
 
         /* ── SECTIONS ─────────────────────────────────────────── */
@@ -370,22 +350,21 @@
         }
 
         [data-theme="light"] .sec-alt {
-            background: #f1f5f9;
+            background: #fce7eb;
         }
 
         .sec-num {
             position: absolute;
             top: 3rem;
             font-family: var(--fd);
-            font-size: clamp(4rem, 9vw, 7.5rem);
+            font-size: clamp(5rem, 12vw, 9rem);
             font-weight: 800;
             line-height: 1;
             pointer-events: none;
             user-select: none;
             letter-spacing: -.06em;
             color: rgba(255, 255, 255, .04);
-            right: -.5rem;
-            z-index: 0;
+            right: 0;
         }
 
         .sec-alt .sec-num {
@@ -393,7 +372,7 @@
         }
 
         [data-theme="light"] .sec-num {
-            color: rgba(67, 56, 202, .07);
+            color: rgba(190, 18, 60, .07);
         }
 
         .kicker {
@@ -410,19 +389,34 @@
 
         .kicker::before {
             content: '';
-            width: 16px;
-            height: 1.5px;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
             background: var(--acc);
+            box-shadow: 0 0 0 3px rgba(244, 63, 94, .18);
+            flex-shrink: 0;
+        }
+
+        .kicker::after {
+            content: '';
+            width: 14px;
+            height: 1.5px;
+            background: linear-gradient(90deg, var(--acc), transparent);
             border-radius: 1px;
             flex-shrink: 0;
         }
 
         [data-theme="light"] .kicker {
-            color: #4f46e5;
+            color: #be123c;
         }
 
         [data-theme="light"] .kicker::before {
-            background: #4f46e5;
+            background: #be123c;
+            box-shadow: 0 0 0 3px rgba(190, 18, 60, .15);
+        }
+
+        [data-theme="light"] .kicker::after {
+            background: linear-gradient(90deg, #be123c, transparent);
         }
 
         h2 {
@@ -439,7 +433,7 @@
         }
 
         [data-theme="light"] h2 {
-            color: #0f172a;
+            color: #1c0d11;
         }
 
         .section-intro {
@@ -451,7 +445,7 @@
         }
 
         [data-theme="light"] .section-intro {
-            color: #334155;
+            color: #4a2c35;
         }
 
         /* ── STICKY TOC ───────────────────────────────────────── */
@@ -501,12 +495,12 @@
         }
 
         [data-theme="light"] .cs-toc-label {
-            color: #64748b;
+            color: #7c6168;
             border-bottom-color: rgba(0, 0, 0, .08);
         }
 
         [data-theme="light"] .cs-toc-label::before {
-            background: #4f46e5;
+            background: #be123c;
         }
 
         .cs-toc ul {
@@ -545,18 +539,18 @@
         }
 
         [data-theme="light"] .cs-toc a {
-            color: #64748b;
+            color: #7c6168;
             border-left-color: rgba(0, 0, 0, .1);
         }
 
         [data-theme="light"] .cs-toc a:hover {
-            color: #334155;
-            border-left-color: #94a3b8;
+            color: #4a2c35;
+            border-left-color: #94606e;
         }
 
         [data-theme="light"] .cs-toc a.active {
-            color: #4f46e5;
-            border-left-color: #4f46e5;
+            color: #be123c;
+            border-left-color: #be123c;
         }
 
         .cs-toc-num {
@@ -569,10 +563,9 @@
         }
 
         [data-theme="light"] .cs-toc-num {
-            color: #4f46e5;
+            color: #be123c;
         }
 
-        /* reading time meta */
         .cs-meta {
             display: inline-flex;
             align-items: center;
@@ -598,13 +591,13 @@
         }
 
         [data-theme="light"] .cs-meta {
-            background: #f1f5f9;
+            background: #fef5f7;
             border-color: rgba(0, 0, 0, .08);
-            color: #64748b;
+            color: #7c6168;
         }
 
         [data-theme="light"] .cs-meta::before {
-            background: #4f46e5;
+            background: #be123c;
         }
 
         /* ── CASE-STUDY HERO ──────────────────────────────────── */
@@ -632,11 +625,11 @@
         }
 
         [data-theme="light"] .back-link {
-            color: #64748b;
+            color: #7c6168;
         }
 
         [data-theme="light"] .back-link:hover {
-            color: #4f46e5;
+            color: #be123c;
         }
 
         .cs-title {
@@ -650,7 +643,7 @@
         }
 
         [data-theme="light"] .cs-title {
-            color: #0f172a;
+            color: #1c0d11;
         }
 
         .cs-title .hi {
@@ -662,7 +655,7 @@
         }
 
         [data-theme="light"] .cs-title .hi {
-            background: linear-gradient(115deg, #4f46e5 0%, #7c3aed 45%, #0d9488 100%);
+            background: linear-gradient(115deg, #be123c 0%, #e11d48 45%, #4338ca 100%);
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -678,7 +671,56 @@
         }
 
         [data-theme="light"] .cs-sub {
-            color: #334155;
+            color: #4a2c35;
+        }
+
+        /* live-source indicator — unique signature for this page */
+        .live-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: .55rem;
+            font-family: var(--fm);
+            font-size: .68rem;
+            color: var(--acc);
+            letter-spacing: .06em;
+            text-transform: uppercase;
+            padding: .32rem .9rem;
+            border-radius: 999px;
+            border: 1px solid rgba(244, 63, 94, .3);
+            background: var(--acc-s);
+            margin-bottom: 1.5rem;
+            width: fit-content;
+        }
+
+        .live-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--acc);
+            border-radius: 50%;
+            animation: livepulse 2s infinite;
+            flex-shrink: 0;
+        }
+
+        @keyframes livepulse {
+
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 rgba(244, 63, 94, .5);
+            }
+
+            50% {
+                box-shadow: 0 0 0 6px rgba(244, 63, 94, 0);
+            }
+        }
+
+        [data-theme="light"] .live-pill {
+            color: #be123c;
+            border-color: rgba(190, 18, 60, .3);
+            background: rgba(190, 18, 60, .06);
+        }
+
+        [data-theme="light"] .live-dot {
+            background: #be123c;
         }
 
         .meta-row {
@@ -700,21 +742,21 @@
         }
 
         .meta-pill.acc {
-            border-color: rgba(124, 127, 255, .4);
+            border-color: rgba(244, 63, 94, .4);
             color: var(--acc);
             background: var(--acc-s);
         }
 
         [data-theme="light"] .meta-pill {
-            background: #f1f5f9;
+            background: #fef5f7;
             border-color: rgba(0, 0, 0, .1);
-            color: #475569;
+            color: #7c6168;
         }
 
         [data-theme="light"] .meta-pill.acc {
-            border-color: rgba(79, 70, 229, .4);
-            color: #4f46e5;
-            background: #eef2ff;
+            border-color: rgba(190, 18, 60, .4);
+            color: #be123c;
+            background: rgba(190, 18, 60, .06);
         }
 
         /* stat strip */
@@ -734,16 +776,14 @@
             content: '';
             position: absolute;
             inset: -40px;
-            background: radial-gradient(ellipse at 30% 50%, rgba(129, 140, 248, .18), transparent 60%),
-                radial-gradient(ellipse at 80% 50%, rgba(45, 212, 191, .12), transparent 60%);
+            background: radial-gradient(ellipse at 30% 50%, rgba(244, 63, 94, .18), transparent 60%), radial-gradient(ellipse at 80% 50%, rgba(129, 140, 248, .12), transparent 60%);
             pointer-events: none;
             z-index: -1;
             filter: blur(20px);
         }
 
         [data-theme="light"] .stat-strip::before {
-            background: radial-gradient(ellipse at 30% 50%, rgba(79, 70, 229, .1), transparent 60%),
-                radial-gradient(ellipse at 80% 50%, rgba(13, 148, 136, .08), transparent 60%);
+            background: radial-gradient(ellipse at 30% 50%, rgba(190, 18, 60, .1), transparent 60%), radial-gradient(ellipse at 80% 50%, rgba(67, 56, 202, .08), transparent 60%);
         }
 
         .stat-cell {
@@ -783,15 +823,15 @@
         }
 
         [data-theme="light"] .stat-cell:hover {
-            background: #f8fafc;
+            background: #fef5f7;
         }
 
         [data-theme="light"] .stat-num {
-            color: #0f172a;
+            color: #1c0d11;
         }
 
         [data-theme="light"] .stat-label {
-            color: #64748b;
+            color: #7c6168;
         }
 
         /* ── CARDS ────────────────────────────────────────────── */
@@ -848,12 +888,12 @@
         }
 
         [data-theme="light"] .card:hover {
-            border-color: rgba(79, 70, 229, .4);
-            box-shadow: 0 8px 28px rgba(79, 70, 229, .12);
+            border-color: rgba(190, 18, 60, .4);
+            box-shadow: 0 8px 28px rgba(190, 18, 60, .12);
         }
 
         [data-theme="light"] .card::before {
-            background: linear-gradient(90deg, transparent, #4f46e5, transparent);
+            background: linear-gradient(90deg, transparent, #be123c, transparent);
         }
 
         .card h3 {
@@ -868,7 +908,7 @@
         }
 
         [data-theme="light"] .card h3 {
-            color: #0f172a;
+            color: #1c0d11;
         }
 
         .card p {
@@ -879,7 +919,7 @@
         }
 
         [data-theme="light"] .card p {
-            color: #334155;
+            color: #4a2c35;
         }
 
         .card ul {
@@ -890,7 +930,7 @@
         }
 
         [data-theme="light"] .card ul {
-            color: #334155;
+            color: #4a2c35;
         }
 
         .card ul li {
@@ -903,7 +943,7 @@
         }
 
         [data-theme="light"] .card ul li strong {
-            color: #0f172a;
+            color: #1c0d11;
         }
 
         /* ── PIPELINE VISUAL ──────────────────────────────────── */
@@ -939,7 +979,7 @@
         }
 
         [data-theme="light"] .pipe-node-cs:hover {
-            background: #f8fafc;
+            background: #fef5f7;
         }
 
         .pipe-step-num {
@@ -952,7 +992,7 @@
         }
 
         [data-theme="light"] .pipe-step-num {
-            color: #4f46e5;
+            color: #be123c;
         }
 
         .pipe-step-name {
@@ -964,7 +1004,7 @@
         }
 
         [data-theme="light"] .pipe-step-name {
-            color: #0f172a;
+            color: #1c0d11;
         }
 
         .pipe-step-detail {
@@ -975,7 +1015,7 @@
         }
 
         [data-theme="light"] .pipe-step-detail {
-            color: #64748b;
+            color: #7c6168;
         }
 
         .pipe-script {
@@ -988,10 +1028,10 @@
             color: #92400e;
         }
 
-        /* ── CODE BLOCK ───────────────────────────────────────── */
+        /* ── CODE BLOCK — with gutter like PayFlow ────────────── */
         .code-block {
-            background: #020812;
-            border: 1px solid rgba(129, 140, 248, .18);
+            background: #0a0710;
+            border: 1px solid rgba(244, 63, 94, .18);
             border-radius: var(--r);
             padding: 1.25rem 1.4rem 1.25rem 3rem;
             font-family: var(--fm);
@@ -1011,8 +1051,8 @@
             left: 0;
             bottom: 0;
             width: 2.2rem;
-            background: rgba(129, 140, 248, .04);
-            border-right: 1px solid rgba(129, 140, 248, .12);
+            background: rgba(244, 63, 94, .04);
+            border-right: 1px solid rgba(244, 63, 94, .12);
             border-radius: var(--r) 0 0 var(--r);
         }
 
@@ -1028,24 +1068,24 @@
         }
 
         .code-block:hover {
-            border-color: rgba(34, 211, 238, .4);
-            box-shadow: 0 8px 32px rgba(34, 211, 238, .12);
+            border-color: rgba(244, 63, 94, .35);
+            box-shadow: 0 8px 32px rgba(244, 63, 94, .12);
         }
 
         [data-theme="light"] .code-block {
-            background: #0b1220;
-            border-color: rgba(129, 140, 248, .3);
-            color: #e2e8f0;
+            background: #1c0d11;
+            border-color: rgba(244, 63, 94, .3);
+            color: #f5edee;
         }
 
         [data-theme="light"] .code-block::before {
-            background: rgba(129, 140, 248, .06);
-            border-right-color: rgba(129, 140, 248, .18);
+            background: rgba(244, 63, 94, .07);
+            border-right-color: rgba(244, 63, 94, .18);
         }
 
         [data-theme="light"] .code-block:hover {
-            border-color: rgba(34, 211, 238, .5);
-            box-shadow: 0 8px 32px rgba(8, 145, 178, .18);
+            border-color: rgba(244, 63, 94, .5);
+            box-shadow: 0 8px 32px rgba(190, 18, 60, .18);
         }
 
         .code-block .cm {
@@ -1057,7 +1097,7 @@
         }
 
         .code-block .cs {
-            color: var(--teal);
+            color: #fb7185;
         }
 
         .code-block .cn {
@@ -1072,97 +1112,86 @@
             color: var(--h2);
         }
 
-        /* ── SCHEMA PILLS ─────────────────────────────────────── */
-        .schema-block {
+        /* ── DATA TABLE (for extracted columns / engineered features) ── */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: .85rem;
             background: var(--bg-card);
             border: 1px solid var(--bdr);
             border-radius: var(--r);
-            padding: 1.5rem;
+            overflow: hidden;
+            margin-bottom: 1.25rem;
         }
 
-        [data-theme="light"] .schema-block {
-            background: #fff;
-            border-color: rgba(0, 0, 0, .09);
-            box-shadow: 0 1px 3px rgba(0, 0, 0, .05);
-        }
-
-        .schema-group {
-            margin-bottom: 1.2rem;
-        }
-
-        .schema-group:last-child {
-            margin-bottom: 0;
-        }
-
-        .schema-label {
+        .data-table thead th {
+            background: var(--bg-surf);
             font-family: var(--fm);
             font-size: .62rem;
             letter-spacing: .14em;
             text-transform: uppercase;
             color: var(--h3);
-            margin-bottom: .5rem;
+            padding: .85rem 1.1rem;
+            text-align: left;
+            font-weight: 500;
+            border-bottom: 1px solid var(--bdr);
         }
 
-        [data-theme="light"] .schema-label {
-            color: #64748b;
+        .data-table tbody td {
+            padding: .75rem 1.1rem;
+            border-bottom: 1px solid var(--bdr);
+            color: var(--h2);
+            vertical-align: top;
         }
 
-        .schema-pills {
-            display: flex;
-            flex-wrap: wrap;
-            gap: .4rem;
+        .data-table tbody tr:last-child td {
+            border-bottom: none;
         }
 
-        .schema-pill {
+        .data-table tbody tr:hover td {
+            background: var(--bg-card2);
+        }
+
+        .data-table tbody td:first-child {
             font-family: var(--fm);
-            font-size: .74rem;
-            padding: .32rem .8rem;
-            border-radius: var(--rsm);
-            border: 1px solid var(--bdr);
-            background: var(--bg-surf);
-            color: var(--h3);
-        }
-
-        .schema-pill.fact {
-            border-color: rgba(124, 127, 255, .4);
+            font-size: .78rem;
             color: var(--acc);
-            background: var(--acc-s);
+            white-space: nowrap;
         }
 
-        .schema-pill.dim {
-            border-color: rgba(45, 212, 191, .4);
-            color: var(--teal);
-            background: var(--teal-s);
+        [data-theme="light"] .data-table {
+            background: #fff;
+            border-color: rgba(0, 0, 0, .09);
         }
 
-        .schema-pill.orch {
-            border-color: rgba(251, 191, 36, .3);
-            color: var(--amber);
-            background: var(--amber-s);
+        [data-theme="light"] .data-table thead th {
+            background: #fef5f7;
+            color: #7c6168;
+            border-bottom-color: rgba(0, 0, 0, .08);
         }
 
-        [data-theme="light"] .schema-pill {
-            background: #f1f5f9;
-            border-color: rgba(0, 0, 0, .1);
-            color: #475569;
+        [data-theme="light"] .data-table tbody td {
+            color: #4a2c35;
+            border-bottom-color: rgba(0, 0, 0, .06);
         }
 
-        [data-theme="light"] .schema-pill.fact {
-            border-color: rgba(79, 70, 229, .4);
-            color: #4f46e5;
-            background: #eef2ff;
+        [data-theme="light"] .data-table tbody tr:hover td {
+            background: #fef5f7;
         }
 
-        [data-theme="light"] .schema-pill.dim {
-            border-color: rgba(15, 118, 110, .4);
-            color: #0891b2;
-            background: #ccfbf1;
+        [data-theme="light"] .data-table tbody td:first-child {
+            color: #be123c;
         }
 
-        [data-theme="light"] .schema-pill.orch {
-            border-color: rgba(146, 64, 14, .35);
-            color: #92400e;
-            background: #fef3c7;
+        @media(max-width:600px) {
+            .data-table {
+                font-size: .78rem;
+            }
+
+            .data-table thead th,
+            .data-table tbody td {
+                padding: .6rem .8rem;
+            }
         }
 
         /* ── DECISION TABLE ───────────────────────────────────── */
@@ -1209,11 +1238,11 @@
         }
 
         [data-theme="light"] .decision-cell:first-child {
-            color: #4f46e5;
+            color: #be123c;
         }
 
         [data-theme="light"] .decision-cell:last-child {
-            color: #334155;
+            color: #4a2c35;
         }
 
         @media(max-width:640px) {
@@ -1250,8 +1279,8 @@
         }
 
         [data-theme="light"] .impact-card:hover {
-            border-color: rgba(79, 70, 229, .35);
-            box-shadow: 0 6px 20px rgba(79, 70, 229, .1);
+            border-color: rgba(190, 18, 60, .35);
+            box-shadow: 0 6px 20px rgba(190, 18, 60, .1);
         }
 
         .impact-num {
@@ -1267,12 +1296,12 @@
             filter: drop-shadow(0 4px 16px currentColor);
         }
 
-        .impact-num.green {
-            background-image: linear-gradient(135deg, #34d399, #10b981);
-            color: #34d399;
+        .impact-num.acc {
+            background-image: linear-gradient(135deg, #f43f5e, #fb7185);
+            color: #f43f5e;
         }
 
-        .impact-num.acc {
+        .impact-num.indigo {
             background-image: linear-gradient(135deg, #818cf8, #a78bfa);
             color: #818cf8;
         }
@@ -1287,19 +1316,19 @@
             color: #fbbf24;
         }
 
-        [data-theme="light"] .impact-num.green {
-            background-image: linear-gradient(135deg, #166534, #15803d);
-            color: #166534;
+        [data-theme="light"] .impact-num.acc {
+            background-image: linear-gradient(135deg, #be123c, #e11d48);
+            color: #be123c;
         }
 
-        [data-theme="light"] .impact-num.acc {
-            background-image: linear-gradient(135deg, #4f46e5, #7c3aed);
-            color: #4f46e5;
+        [data-theme="light"] .impact-num.indigo {
+            background-image: linear-gradient(135deg, #4338ca, #6366f1);
+            color: #4338ca;
         }
 
         [data-theme="light"] .impact-num.teal {
-            background-image: linear-gradient(135deg, #0891b2, #0891b2);
-            color: #0891b2;
+            background-image: linear-gradient(135deg, #0f766e, #0891b2);
+            color: #0f766e;
         }
 
         [data-theme="light"] .impact-num.amber {
@@ -1314,7 +1343,7 @@
         }
 
         [data-theme="light"] .impact-label {
-            color: #334155;
+            color: #4a2c35;
         }
 
         /* ── TAGS ─────────────────────────────────────────────── */
@@ -1343,14 +1372,14 @@
         }
 
         [data-theme="light"] .tag {
-            background: #eef2ff;
-            border-color: rgba(79, 70, 229, .18);
-            color: #4f46e5;
+            background: rgba(190, 18, 60, .05);
+            border-color: rgba(190, 18, 60, .18);
+            color: #be123c;
         }
 
         [data-theme="light"] .tag:hover {
-            background: #e0e7ff;
-            border-color: #4f46e5;
+            background: rgba(190, 18, 60, .1);
+            border-color: #be123c;
         }
 
         /* ── BUTTONS ──────────────────────────────────────────── */
@@ -1377,11 +1406,11 @@
         }
 
         [data-theme="light"] .btn-primary {
-            background: #4f46e5;
+            background: #be123c;
         }
 
         [data-theme="light"] .btn-primary:hover {
-            box-shadow: 0 10px 28px rgba(79, 70, 229, .35);
+            box-shadow: 0 10px 28px rgba(190, 18, 60, .35);
         }
 
         .btn-ghost {
@@ -1409,13 +1438,13 @@
         [data-theme="light"] .btn-ghost {
             background: #fff;
             border-color: rgba(0, 0, 0, .12);
-            color: #1e293b;
+            color: #3d1d24;
         }
 
         [data-theme="light"] .btn-ghost:hover {
-            border-color: #4f46e5;
-            color: #4f46e5;
-            background: #eef2ff;
+            border-color: #be123c;
+            color: #be123c;
+            background: #fef5f7;
         }
 
         /* ── CTA ──────────────────────────────────────────────── */
@@ -1451,7 +1480,7 @@
         }
 
         [data-theme="light"] .cta-card::after {
-            background: radial-gradient(circle, rgba(79, 70, 229, .1), transparent 70%);
+            background: radial-gradient(circle, rgba(190, 18, 60, .1), transparent 70%);
         }
 
         .cta-card h3 {
@@ -1463,7 +1492,7 @@
         }
 
         [data-theme="light"] .cta-card h3 {
-            color: #0f172a;
+            color: #1c0d11;
         }
 
         .cta-card p {
@@ -1472,7 +1501,7 @@
         }
 
         [data-theme="light"] .cta-card p {
-            color: #334155;
+            color: #4a2c35;
         }
 
         .cta-actions {
@@ -1509,7 +1538,7 @@
         }
 
         [data-theme="light"] .footer-brand {
-            color: #94a3b8;
+            color: #94606e;
         }
 
         .footer-note {
@@ -1519,7 +1548,7 @@
         }
 
         [data-theme="light"] .footer-note {
-            color: #94a3b8;
+            color: #94606e;
         }
 
         /* ── BACK TO TOP ──────────────────────────────────────── */
@@ -1559,14 +1588,14 @@
         [data-theme="light"] .to-top {
             background: #fff;
             border-color: rgba(0, 0, 0, .1);
-            color: #475569;
+            color: #3d1d24;
             box-shadow: 0 4px 14px rgba(0, 0, 0, .08);
         }
 
         [data-theme="light"] .to-top:hover {
-            border-color: #4f46e5;
-            color: #4f46e5;
-            background: #eef2ff;
+            border-color: #be123c;
+            color: #be123c;
+            background: #fef5f7;
         }
 
         /* ── ANIMATIONS ───────────────────────────────────────── */
@@ -1625,8 +1654,8 @@
             <li><a href="#cs-hero"><span class="cs-toc-num">00</span><span>Overview</span></a></li>
             <li><a href="#problem"><span class="cs-toc-num">01</span><span>The Problem</span></a></li>
             <li><a href="#architecture"><span class="cs-toc-num">02</span><span>Architecture</span></a></li>
-            <li><a href="#schema"><span class="cs-toc-num">03</span><span>Schema Design</span></a></li>
-            <li><a href="#approach"><span class="cs-toc-num">04</span><span>Engineering</span></a></li>
+            <li><a href="#scraping"><span class="cs-toc-num">03</span><span>Scraping</span></a></li>
+            <li><a href="#features"><span class="cs-toc-num">04</span><span>Features</span></a></li>
             <li><a href="#decisions"><span class="cs-toc-num">05</span><span>Decisions</span></a></li>
             <li><a href="#impact"><span class="cs-toc-num">06</span><span>Impact</span></a></li>
             <li><a href="#tech"><span class="cs-toc-num">07</span><span>Tech Stack</span></a></li>
@@ -1643,7 +1672,8 @@
             <a href="#cs-hero">Overview</a>
             <a href="#problem">Problem</a>
             <a href="#architecture">Architecture</a>
-            <a href="#schema">Schema</a>
+            <a href="#scraping">Scraping</a>
+            <a href="#features">Features</a>
             <a href="#decisions">Decisions</a>
             <a href="#impact">Impact</a>
             <a href="principles.html">Principles</a>
@@ -1659,7 +1689,7 @@
 
     <div class="page">
 
-        <!-- CASE STUDY HERO -->
+        <!-- HERO -->
         <section id="cs-hero">
             <a href="index.html" class="back-link">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
@@ -1669,38 +1699,40 @@
                 Back to portfolio
             </a>
             <div class="cs-meta">~6 min read · Updated May 2026</div>
-            <div class="kicker">Case Study · End-to-End Data Engineering</div>
-            <h1 class="cs-title">PayFlow — <span class="hi">ETL pipeline</span><br />&amp; data warehouse</h1>
-            <p class="cs-sub">A production-style ETL pipeline transforming raw Brazilian e-commerce data into a
-                PostgreSQL star schema warehouse, with clean staging, idempotent loads, structured observability, and a
-                single-command orchestrator.</p>
+            <div class="kicker">Case Study · Live Web Scraping &amp; ETL</div>
+            <div class="live-pill">
+                <span class="live-dot"></span>
+                Live data source
+            </div>
+            <h1 class="cs-title">AliExpress Laptop <span class="hi">ETL Pipeline</span><br />&amp; PostgreSQL warehouse
+            </h1>
+            <p class="cs-sub">A production-style web scraping pipeline that scrapes 10 pages of AliExpress laptop
+                listings, validates and enriches the data with discount metrics and price bands, and appends only new
+                records to a PostgreSQL warehouse. Modular, idempotent at the load layer, observable, and ready to
+                rerun.</p>
             <div class="meta-row">
-                <span class="meta-pill acc">Production-grade ETL</span>
-                <span class="meta-pill">Olist Brazilian E-Commerce</span>
-                <span class="meta-pill">9 source CSVs</span>
-                <span class="meta-pill">100K+ orders</span>
-                <span class="meta-pill">PostgreSQL star schema</span>
+                <span class="meta-pill acc">Live web scraping</span>
+                <span class="meta-pill">Selenium + BeautifulSoup</span>
+                <span class="meta-pill">10 pages per run</span>
+                <span class="meta-pill">PostgreSQL warehouse</span>
+                <span class="meta-pill">Append-only loads</span>
             </div>
             <div class="stat-strip">
                 <div class="stat-cell">
-                    <div class="stat-num">100K+</div>
-                    <div class="stat-label">orders processed</div>
+                    <div class="stat-num">10</div>
+                    <div class="stat-label">pages scraped</div>
                 </div>
                 <div class="stat-cell">
                     <div class="stat-num">9</div>
-                    <div class="stat-label">source CSVs</div>
+                    <div class="stat-label">source columns</div>
+                </div>
+                <div class="stat-cell">
+                    <div class="stat-num">6</div>
+                    <div class="stat-label">engineered features</div>
                 </div>
                 <div class="stat-cell">
                     <div class="stat-num">4</div>
-                    <div class="stat-label">pipeline layers</div>
-                </div>
-                <div class="stat-cell">
-                    <div class="stat-num">4</div>
-                    <div class="stat-label">dimension tables</div>
-                </div>
-                <div class="stat-cell">
-                    <div class="stat-num">2</div>
-                    <div class="stat-label">fact tables</div>
+                    <div class="stat-label">ETL stages</div>
                 </div>
                 <div class="stat-cell">
                     <div class="stat-num">1</div>
@@ -1713,29 +1745,30 @@
         <section id="problem" class="fade-up sec-alt">
             <span class="sec-num">01</span>
             <div class="kicker">The Problem</div>
-            <h2>Raw, inconsistent, untrusted</h2>
-            <p class="section-intro">The raw Olist dataset is 9 separate CSV files with inconsistent naming, mixed data
-                types, duplicate records, and no clear separation between source data and analytics-ready tables. This
-                is a realistic representation of what raw data looks like in production environments.</p>
+            <h2>Live, hostile, unstructured</h2>
+            <p class="section-intro">E-commerce pages are not built to be scraped. They lazy-load content, show cookie
+                banners on every visit, detect automated browsers, and change their HTML layout without warning. The
+                data you eventually pull is raw text full of inconsistencies. A pipeline that works once is easy. A
+                pipeline that works repeatedly, against a live site, is the harder problem.</p>
             <div class="card-grid grid-2">
                 <div class="card">
-                    <h3>Data quality issues</h3>
+                    <h3>Scraping challenges</h3>
                     <ul>
-                        <li>Inconsistent column naming and casing across files</li>
-                        <li>Mixed datetime formats and string-typed numeric columns</li>
-                        <li>Duplicate order records and orphaned foreign keys</li>
-                        <li>Missing values in critical join columns</li>
-                        <li>No referential integrity between raw files</li>
+                        <li>Lazy-loaded listings that need explicit waits</li>
+                        <li>Cookie banners blocking content on every visit</li>
+                        <li>Bot detection flags on default browser automation</li>
+                        <li>Pagination behaviour that varies between page loads</li>
+                        <li>Inconsistent HTML structure across listing variants</li>
                     </ul>
                 </div>
                 <div class="card">
-                    <h3>Workflow issues</h3>
+                    <h3>Data quality challenges</h3>
                     <ul>
-                        <li>No separation between raw, staging, and analytics data</li>
-                        <li>Manual, one-off cleaning scripts that broke on rerun</li>
-                        <li>No logging, so failures were silent and hard to diagnose</li>
-                        <li>No idempotency, so reruns created duplicate rows</li>
-                        <li>Analysts couldn't trust downstream metrics</li>
+                        <li>Prices stored as strings with currency symbols</li>
+                        <li>Missing original prices on non-discounted items</li>
+                        <li>Duplicate listings across consecutive page loads</li>
+                        <li>No surrogate keys, only listing text as identity</li>
+                        <li>Mixed casing and inconsistent shipping labels</li>
                     </ul>
                 </div>
             </div>
@@ -1745,172 +1778,221 @@
         <section id="architecture" class="fade-up">
             <span class="sec-num">02</span>
             <div class="kicker">Architecture</div>
-            <h2>Pipeline structure</h2>
-            <p class="section-intro">The pipeline follows a classic multi-layer warehouse architecture: raw data stays
-                immutable, a staging layer normalises and validates it, and the analytics layer builds the star schema
-                from clean inputs.</p>
+            <h2>Four-stage pipeline</h2>
+            <p class="section-intro">The pipeline runs end to end with a single command. Each stage is an isolated
+                module that can also run independently. A DataFrame is passed in memory between extract, transform, and
+                load — no intermediate file unless requested — keeping the pipeline fast and the failure surface
+                predictable.</p>
 
             <div class="pipeline-visual">
                 <div class="pipe-node-cs">
                     <div class="pipe-step-num">Step 01</div>
-                    <div class="pipe-step-name">Wipe</div>
-                    <div class="pipe-step-detail">Reset schemas &amp; folders to a clean state</div>
-                    <div class="pipe-script">wipe_all.py</div>
+                    <div class="pipe-step-name">Health Check</div>
+                    <div class="pipe-step-detail">HTTP + browser test before scraping</div>
+                    <div class="pipe-script">scraper.py</div>
                 </div>
                 <div class="pipe-node-cs">
                     <div class="pipe-step-num">Step 02</div>
                     <div class="pipe-step-name">Extract</div>
-                    <div class="pipe-step-detail">Download, unzip &amp; validate raw CSVs from Kaggle</div>
+                    <div class="pipe-step-detail">Scrape 10 pages, parse HTML, return DataFrame</div>
                     <div class="pipe-script">extract.py</div>
                 </div>
                 <div class="pipe-node-cs">
                     <div class="pipe-step-num">Step 03</div>
-                    <div class="pipe-step-name">Explore</div>
-                    <div class="pipe-step-detail">Auto-discover shape, dtypes, missing values</div>
-                    <div class="pipe-script">explore.py</div>
-                </div>
-                <div class="pipe-node-cs">
-                    <div class="pipe-step-num">Step 04</div>
-                    <div class="pipe-step-name">Clean</div>
-                    <div class="pipe-step-detail">Standardise, cast types, load staging schema</div>
-                    <div class="pipe-script">clean.py</div>
-                </div>
-                <div class="pipe-node-cs">
-                    <div class="pipe-step-num">Step 05</div>
                     <div class="pipe-step-name">Transform</div>
-                    <div class="pipe-step-detail">Build full star schema (dims + facts)</div>
+                    <div class="pipe-step-detail">Clean prices, dedupe, engineer features, validate</div>
                     <div class="pipe-script">transform.py</div>
                 </div>
                 <div class="pipe-node-cs">
-                    <div class="pipe-step-num">Step 06</div>
+                    <div class="pipe-step-num">Step 04</div>
+                    <div class="pipe-step-name">Load</div>
+                    <div class="pipe-step-detail">Dedupe vs existing, append only new rows</div>
+                    <div class="pipe-script">load.py</div>
+                </div>
+                <div class="pipe-node-cs">
+                    <div class="pipe-step-num">Step 05</div>
                     <div class="pipe-step-name">Orchestrate</div>
-                    <div class="pipe-step-detail">Single-command DAG with timing + logs</div>
+                    <div class="pipe-step-detail">Single command, in-memory df passing, timed</div>
                     <div class="pipe-script">run_all.py</div>
                 </div>
             </div>
 
             <div class="code-block">
-                <span class="cm"># Run the full pipeline in one command</span>
+                <span class="cm"># Run the full pipeline end-to-end</span>
                 <br /><span class="ck">python</span> <span class="cs">-m</span> <span class="ct">etl.run_all</span>
                 <br />
                 <br /><span class="cm"># What run_all.py executes:</span>
-                <br /><span class="cn">1.</span> <span class="ct">wipe_all</span> <span class="cm">→ drop &amp; recreate
-                    staging + analytics schemas</span>
-                <br /><span class="cn">2.</span> <span class="ct">extract</span> <span class="cm">→ download Kaggle
-                    ZIPs, validate CSVs, log row counts</span>
-                <br /><span class="cn">3.</span> <span class="ct">clean</span> <span class="cm">→ cast types, handle
-                    nulls, load staging schema</span>
-                <br /><span class="cn">4.</span> <span class="ct">transform</span> <span class="cm">→ build dim_* +
-                    fact_* tables in analytics schema</span>
+                <br /><span class="cn">1.</span> <span class="ct">scraper.health_check()</span> <span class="cm">→ HTTP
+                    request + real browser test</span>
+                <br /><span class="cn">2.</span> <span class="ct">extract.scrape()</span> <span class="cm">→ 10 pages,
+                    returns DataFrame</span>
+                <br /><span class="cn">3.</span> <span class="ct">transform.clean(df)</span> <span class="cm">→ type
+                    cast, dedupe, engineer features</span>
+                <br /><span class="cn">4.</span> <span class="ct">load.append(df)</span> <span class="cm">→ dedupe vs
+                    DB, append only new rows</span>
                 <br />
-                <br /><span class="cm"># All steps: timed, logged, fail-fast</span>
+                <br /><span class="cm"># Every step: timed, logged via custom ColorFormatter, fail-fast</span>
             </div>
         </section>
 
-        <!-- SCHEMA -->
-        <section id="schema" class="fade-up sec-alt">
+        <!-- SCRAPING -->
+        <section id="scraping" class="fade-up sec-alt">
             <span class="sec-num">03</span>
-            <div class="kicker">Schema Design</div>
-            <h2>Star schema</h2>
-            <p class="section-intro">The analytics layer is a fully normalised star schema optimised for BI workloads.
-                Surrogate keys, FK constraints, and date key mapping throughout. All tables are defined explicitly in
-                SQL DDL, not inferred from Python.</p>
-
-            <div class="schema-block" style="margin-bottom:1rem;">
-                <div class="schema-group">
-                    <div class="schema-label">Staging schema (cleaned 1:1 from raw, validated)</div>
-                    <div class="schema-pills">
-                        <span class="schema-pill orch">staging_customers</span>
-                        <span class="schema-pill orch">staging_orders</span>
-                        <span class="schema-pill orch">staging_order_items</span>
-                        <span class="schema-pill orch">staging_payments</span>
-                    </div>
-                </div>
-                <div class="schema-group">
-                    <div class="schema-label">Fact tables (transactional grain, surrogate keys, FK integrity)</div>
-                    <div class="schema-pills">
-                        <span class="schema-pill fact">fact_orders</span>
-                        <span class="schema-pill fact">fact_order_items</span>
-                    </div>
-                </div>
-                <div class="schema-group">
-                    <div class="schema-label">Dimension tables (conformed, reusable, date-key mapped)</div>
-                    <div class="schema-pills">
-                        <span class="schema-pill dim">dim_customer</span>
-                        <span class="schema-pill dim">dim_product</span>
-                        <span class="schema-pill dim">dim_seller</span>
-                        <span class="schema-pill dim">dim_date</span>
-                    </div>
-                </div>
-                <div class="schema-group">
-                    <div class="schema-label">ETL modules &amp; orchestration</div>
-                    <div class="schema-pills">
-                        <span class="schema-pill orch">extract.py</span>
-                        <span class="schema-pill orch">explore.py</span>
-                        <span class="schema-pill orch">clean.py</span>
-                        <span class="schema-pill orch">transform.py</span>
-                        <span class="schema-pill orch">run_all.py</span>
-                        <span class="schema-pill orch">wipe_all.py</span>
-                        <span class="schema-pill orch">logger.py</span>
-                        <span class="schema-pill orch">db_config.py</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="code-block">
-                <span class="cm">-- Example: fact_orders (simplified DDL)</span>
-                <br /><span class="ck">CREATE TABLE</span> <span class="cs">analytics.fact_orders</span> (
-                <br /> &nbsp;&nbsp;<span class="cv">order_key</span> <span class="cn">SERIAL PRIMARY KEY</span>,
-                <br /> &nbsp;&nbsp;<span class="cv">order_id</span> <span class="cn">TEXT NOT NULL</span>,
-                <br /> &nbsp;&nbsp;<span class="cv">customer_key</span> <span class="cn">INT REFERENCES</span> <span
-                    class="cs">dim_customer</span>(<span class="cv">customer_key</span>),
-                <br /> &nbsp;&nbsp;<span class="cv">date_key</span> <span class="cn">INT REFERENCES</span> <span
-                    class="cs">dim_date</span>(<span class="cv">date_key</span>),
-                <br /> &nbsp;&nbsp;<span class="cv">order_status</span> <span class="cn">TEXT</span>,
-                <br /> &nbsp;&nbsp;<span class="cv">item_count</span> <span class="cn">INT</span>,
-                <br /> &nbsp;&nbsp;<span class="cv">total_value</span> <span class="cn">NUMERIC(12,2)</span>
-                <br />);
-            </div>
-        </section>
-
-        <!-- APPROACH -->
-        <section id="approach" class="fade-up">
-            <span class="sec-num">04</span>
-            <div class="kicker">Engineering Approach</div>
-            <h2>How it's built</h2>
+            <div class="kicker">Scraping Layer</div>
+            <h2>Reliable scraping, hostile target</h2>
+            <p class="section-intro">The extraction layer is the most fragile part of any web scraping pipeline. I
+                treated it as a system with explicit reliability requirements, not a script to be rerun until it works.
+            </p>
             <div class="card-grid grid-3">
                 <div class="card">
-                    <h3>Modular ETL</h3>
-                    <p>Each stage is an isolated Python module (extract, clean, transform), independently testable and
-                        replaceable. No monolithic scripts.</p>
+                    <h3>Health check first</h3>
+                    <p>Before scraping, <strong>scraper.py</strong> sends an HTTP request to AliExpress and opens a real
+                        Chrome browser. If either fails, the pipeline aborts with a clear error instead of producing
+                        garbage output.</p>
                 </div>
                 <div class="card">
-                    <h3>Idempotent loads</h3>
-                    <p><strong>wipe_all.py</strong> drops and recreates all schemas before each run, guaranteeing clean,
-                        deterministic output with no duplicate rows.</p>
+                    <h3>Bot detection avoidance</h3>
+                    <p>Selenium is configured to disable common automation flags. The browser opens looking like a real
+                        user agent, not a default Chromedriver instance.</p>
                 </div>
                 <div class="card">
-                    <h3>SQL-first modeling</h3>
-                    <p>All warehouse tables defined in explicit SQL DDL files, not inferred from pandas DataFrames.
-                        Schema is the source of truth, not Python.</p>
+                    <h3>Cookie banner auto-accept</h3>
+                    <p>The scraper waits for the cookie banner to render, dismisses it, then continues. No human
+                        intervention, no scraped HTML hidden behind a modal.</p>
                 </div>
                 <div class="card">
-                    <h3>Production-grade logging</h3>
-                    <p>Cross-platform <strong>ColorFormatter</strong> with UTF-8 detection, rotating file logs (no ANSI
-                        codes), emoji-safe console output, section banners, and timing decorators on every stage. Built
-                        for incident debugging at 2am.</p>
-                </div>
-                <div class="card">
-                    <h3>Config-driven</h3>
-                    <p>All DB credentials and input paths managed via <strong>.env</strong> and
-                        <strong>db_config.py</strong>. No hardcoded values anywhere in the codebase.
+                    <h3>Explicit waits, not sleep</h3>
+                    <p>Every page transition uses <strong>WebDriverWait</strong> against a specific element selector. No
+                        <strong>time.sleep()</strong> guesses. The scraper waits exactly as long as needed and no
+                        longer.
                     </p>
                 </div>
                 <div class="card">
-                    <h3>Pre-load validation</h3>
-                    <p>Validation at extract, clean, and transform stages. Row counts, schema checks, null counts, and
-                        dataset profiling via <strong>explore.py</strong> before any data reaches the warehouse.</p>
+                    <h3>BeautifulSoup for parsing</h3>
+                    <p>Selenium handles navigation. BeautifulSoup handles parsing. Each tool does what it is best at,
+                        and the parsing logic is unit-testable without spinning up a browser.</p>
                 </div>
+                <div class="card">
+                    <h3>Pagination across 10 pages</h3>
+                    <p>The scraper walks through all 10 pages of laptop listings in a single run, with retry logic at
+                        each page transition. Failure on page 7 does not corrupt the data from pages 1 through 6.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- FEATURES -->
+        <section id="features" class="fade-up">
+            <span class="sec-num">04</span>
+            <div class="kicker">Feature Engineering</div>
+            <h2>From raw scrape to analytics-ready</h2>
+            <p class="section-intro">The transform stage does more than clean data. It engineers business-friendly
+                features that turn raw scraped text into something a BI tool or SQL query can answer questions against.
+            </p>
+
+            <h3 style="font-family:var(--fd);font-size:1.05rem;font-weight:600;color:var(--h1);margin-bottom:.8rem;">
+                Source columns scraped</h3>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Column</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>product_name</td>
+                        <td>Full listing title</td>
+                    </tr>
+                    <tr>
+                        <td>product_price</td>
+                        <td>Current sale price (£)</td>
+                    </tr>
+                    <tr>
+                        <td>was_price</td>
+                        <td>Original crossed-out price (£)</td>
+                    </tr>
+                    <tr>
+                        <td>discount_info</td>
+                        <td>Discount label from the listing</td>
+                    </tr>
+                    <tr>
+                        <td>extra_discount</td>
+                        <td>Additional coupon or offer</td>
+                    </tr>
+                    <tr>
+                        <td>shipping_status</td>
+                        <td>Free shipping or not</td>
+                    </tr>
+                    <tr>
+                        <td>total_sold_count</td>
+                        <td>Number of units sold</td>
+                    </tr>
+                    <tr>
+                        <td>top_selling_status</td>
+                        <td>Top selling on AliExpress flag</td>
+                    </tr>
+                    <tr>
+                        <td>scraped_at</td>
+                        <td>Timestamp of scrape</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3
+                style="font-family:var(--fd);font-size:1.05rem;font-weight:600;color:var(--h1);margin-top:2.25rem;margin-bottom:.8rem;">
+                Features engineered in transform</h3>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Column</th>
+                        <th>Logic</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>discount_amount</td>
+                        <td><strong>was_price − product_price</strong> in £</td>
+                    </tr>
+                    <tr>
+                        <td>discount_percentage</td>
+                        <td>% saved off the original price</td>
+                    </tr>
+                    <tr>
+                        <td>is_on_sale</td>
+                        <td>Boolean. Was-price exists and is higher than current price</td>
+                    </tr>
+                    <tr>
+                        <td>is_free_shipping</td>
+                        <td>Boolean. Free shipping offered on the listing</td>
+                    </tr>
+                    <tr>
+                        <td>is_top_seller</td>
+                        <td>Boolean. Top-selling badge present on the listing</td>
+                    </tr>
+                    <tr>
+                        <td>price_band</td>
+                        <td>Budget / Mid-Range / Upper-Mid / Premium / Luxury</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="code-block" style="margin-top:1.5rem;">
+                <span class="cm">-- Example queries the warehouse can answer:</span>
+                <br />
+                <br /><span class="cm">-- Which laptops offer the best discount?</span>
+                <br /><span class="ck">SELECT</span> <span class="ct">product_name, product_price,
+                    discount_percentage</span>
+                <br /><span class="ck">FROM</span> <span class="cs">laptops</span>
+                <br /><span class="ck">WHERE</span> <span class="ct">is_on_sale =</span> <span class="cn">TRUE</span>
+                <br /><span class="ck">ORDER BY</span> <span class="ct">discount_percentage</span> <span
+                    class="ck">DESC</span> <span class="ck">LIMIT</span> <span class="cn">10</span>;
+                <br />
+                <br /><span class="cm">-- What price band has the most listings?</span>
+                <br /><span class="ck">SELECT</span> <span class="ct">price_band,</span> <span
+                    class="ck">COUNT</span>(*) <span class="ck">AS</span> <span class="ct">total</span>
+                <br /><span class="ck">FROM</span> <span class="cs">laptops</span>
+                <br /><span class="ck">GROUP BY</span> <span class="ct">price_band</span>
+                <br /><span class="ck">ORDER BY</span> <span class="ct">total</span> <span class="ck">DESC</span>;
             </div>
         </section>
 
@@ -1921,34 +2003,45 @@
             <h2>Design choices &amp; tradeoffs</h2>
             <div class="decision-wrapper">
                 <div class="decision-row">
-                    <div class="decision-cell">SQL-first modeling</div>
-                    <div class="decision-cell">Tables defined in <strong>.sql</strong> DDL files, not generated from
-                        Python types. Makes the schema auditable, reviewable, and portable. A recruiter or data analyst
-                        can read the schema without touching Python.</div>
+                    <div class="decision-cell">Selenium + BeautifulSoup</div>
+                    <div class="decision-cell">Selenium handles dynamic JavaScript rendering and navigation.
+                        BeautifulSoup handles parsing the resulting HTML. Each tool stays in its lane. The parsing layer
+                        is unit-testable without launching a browser, which is the difference between an hour of
+                        debugging and ten seconds of pytest.</div>
                 </div>
                 <div class="decision-row">
-                    <div class="decision-cell">Idempotent wipe</div>
-                    <div class="decision-cell">Rather than upsert logic, the pipeline resets entirely on each run.
-                        Simpler to reason about, eliminates partial-load bugs, and makes the pipeline safe for scheduled
-                        execution.</div>
+                    <div class="decision-cell">Append-only load</div>
+                    <div class="decision-cell">Unlike PayFlow and ChocoDelight, which wipe and reload, this pipeline
+                        appends. Scraping a live source is non-idempotent at the source layer (data changes between
+                        runs), so the load step deduplicates against existing rows before inserting. New listings get
+                        added, old data stays untouched, no row is ever duplicated.</div>
                 </div>
                 <div class="decision-row">
-                    <div class="decision-cell">Surrogate keys</div>
-                    <div class="decision-cell">All dimension and fact tables use surrogate integer keys (SERIAL) rather
-                        than natural keys from the source data. Decouples the warehouse from upstream source system
-                        changes.</div>
+                    <div class="decision-cell">In-memory df passing</div>
+                    <div class="decision-cell">Extract, transform, and load pass a DataFrame directly between stages
+                        instead of always writing CSVs to disk between steps. This keeps the orchestrated pipeline fast.
+                        Each step can still be run independently and writes its CSV output if you need to inspect
+                        intermediate state.</div>
                 </div>
                 <div class="decision-row">
-                    <div class="decision-cell">Staging layer</div>
-                    <div class="decision-cell">Raw data is never written to directly by the analytics layer. The staging
-                        schema acts as a clean intermediate layer, validating and standardising before promotion to the
-                        warehouse.</div>
+                    <div class="decision-cell">Explicit waits, never sleep</div>
+                    <div class="decision-cell"><strong>time.sleep()</strong> is a guess. <strong>WebDriverWait</strong>
+                        is a contract. Every page interaction waits for a specific element to be present or
+                        interactable, not for a hardcoded number of seconds. Scraper is faster on fast networks, more
+                        reliable on slow ones, and never flaky for reasons that should not matter.</div>
                 </div>
                 <div class="decision-row">
-                    <div class="decision-cell">Semantic naming</div>
-                    <div class="decision-cell">All warehouse tables and columns use business-readable names
-                        (<strong>dim_customer</strong>, <strong>order_status</strong>) rather than source system codes.
-                        Analytics teams can query without a data dictionary.</div>
+                    <div class="decision-cell">Health check before scrape</div>
+                    <div class="decision-cell">Before extract.py runs, scraper.py confirms AliExpress is reachable via
+                        HTTP and Chrome can launch successfully. If either fails, the pipeline aborts before scraping a
+                        single page. Saves time on broken environments and surfaces config issues clearly.</div>
+                </div>
+                <div class="decision-row">
+                    <div class="decision-cell">Feature engineering in Python</div>
+                    <div class="decision-cell">Discount percentage, price bands, and boolean flags are computed in the
+                        transform stage in pandas, not as derived columns in SQL views. Logic lives in
+                        version-controlled Python where it can be tested, reviewed, and changed in one place. Downstream
+                        analytics see clean, semantically meaningful columns.</div>
                 </div>
             </div>
         </section>
@@ -1956,18 +2049,18 @@
         <!-- IMPACT -->
         <section id="impact" class="fade-up">
             <span class="sec-num">06</span>
-            <div class="kicker">Impact</div>
-            <h2>Business outcomes</h2>
+            <div class="kicker">Outcomes</div>
+            <h2>What this pipeline enables</h2>
             <div class="impact-grid">
                 <div class="impact-card">
-                    <div class="impact-num green">↓80%</div>
-                    <div class="impact-label">Reduction in manual cleaning steps (from 12 ad-hoc scripts to a single
-                        orchestrated run)</div>
+                    <div class="impact-num acc">10 pages</div>
+                    <div class="impact-label">Scraped end-to-end in a single run with retry logic at every page
+                        transition</div>
                 </div>
                 <div class="impact-card">
-                    <div class="impact-num acc">↓90%</div>
-                    <div class="impact-label">Fewer pipeline inconsistencies through pre-load validation and idempotent
-                        design</div>
+                    <div class="impact-num indigo">6 features</div>
+                    <div class="impact-label">Engineered in the transform stage (discount %, price bands, three boolean
+                        flags)</div>
                 </div>
                 <div class="impact-card">
                     <div class="impact-num teal">1 cmd</div>
@@ -1975,8 +2068,43 @@
                     </div>
                 </div>
                 <div class="impact-card">
-                    <div class="impact-num amber">6 tbls</div>
-                    <div class="impact-label">Analytics-ready warehouse tables (2 facts, 4 dims) ready for BI</div>
+                    <div class="impact-num amber">0 dupes</div>
+                    <div class="impact-label">Append-only loads with pre-insert deduplication. Reruns never corrupt the
+                        warehouse</div>
+                </div>
+            </div>
+
+            <h3
+                style="font-family:var(--fd);font-size:1.1rem;font-weight:600;margin-top:2.5rem;margin-bottom:.85rem;color:var(--h1);">
+                What this warehouse can answer</h3>
+            <p style="font-size:.88rem;color:var(--h2);max-width:640px;line-height:1.7;margin-bottom:1.25rem;">Each
+                engineered feature directly enables a category of analytical question. Below are real business questions
+                a price-intelligence team or competitive-analysis team would ask of this data, all answerable with a
+                single SQL query.</p>
+            <div class="card-grid grid-3">
+                <div class="card">
+                    <h3>Pricing intelligence</h3>
+                    <ul>
+                        <li>Best-discount laptops right now</li>
+                        <li>Average price by price band</li>
+                        <li>Discount distribution across the catalog</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>Listing patterns</h3>
+                    <ul>
+                        <li>Share of listings on sale at any time</li>
+                        <li>Free-shipping vs paid-shipping price differential</li>
+                        <li>Top-seller flag correlation with discount depth</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>Trend tracking</h3>
+                    <ul>
+                        <li>Price changes over time per listing</li>
+                        <li>Listing churn (new vs returning items)</li>
+                        <li>Long-running discounts vs flash sales</li>
+                    </ul>
                 </div>
             </div>
         </section>
@@ -1988,42 +2116,46 @@
             <h2>Tools &amp; technology</h2>
             <div class="card">
                 <div class="tag-row" style="margin-top:.25rem;margin-bottom:1.25rem;">
-                    <span class="tag">Python 3.x</span>
-                    <span class="tag">SQL (DDL)</span>
-                    <span class="tag">PostgreSQL</span>
-                    <span class="tag">SQLAlchemy</span>
+                    <span class="tag">Python 3.10+</span>
+                    <span class="tag">Selenium</span>
+                    <span class="tag">BeautifulSoup</span>
                     <span class="tag">pandas</span>
-                    <span class="tag">dotenv</span>
-                    <span class="tag">logging</span>
+                    <span class="tag">SQLAlchemy</span>
+                    <span class="tag">PostgreSQL</span>
+                    <span class="tag">psycopg2-binary</span>
+                    <span class="tag">python-dotenv</span>
+                    <span class="tag">structured logging</span>
                     <span class="tag">Git</span>
-                    <span class="tag">Kaggle API</span>
                 </div>
                 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;">
                     <div>
-                        <div class="schema-label" style="margin-bottom:.3rem;">Language</div>
-                        <div style="font-size:.85rem;color:var(--h2);">Python 3.x for ETL logic and orchestration</div>
-                    </div>
-                    <div>
-                        <div class="schema-label" style="margin-bottom:.3rem;">Processing</div>
-                        <div style="font-size:.85rem;color:var(--h2);">pandas for cleaning and type casting</div>
-                    </div>
-                    <div>
-                        <div class="schema-label" style="margin-bottom:.3rem;">Database</div>
-                        <div style="font-size:.85rem;color:var(--h2);">PostgreSQL for staging &amp; analytics schemas
+                        <div class="kicker" style="margin-bottom:.3rem;">Language</div>
+                        <div style="font-size:.85rem;color:var(--h2);">Python 3.10+ for ETL logic and orchestration
                         </div>
                     </div>
                     <div>
-                        <div class="schema-label" style="margin-bottom:.3rem;">ORM / Loader</div>
-                        <div style="font-size:.85rem;color:var(--h2);">SQLAlchemy for connection management and bulk
-                            loads</div>
+                        <div class="kicker" style="margin-bottom:.3rem;">Scraping</div>
+                        <div style="font-size:.85rem;color:var(--h2);">Selenium for navigation, BeautifulSoup for
+                            parsing</div>
                     </div>
                     <div>
-                        <div class="schema-label" style="margin-bottom:.3rem;">Observability</div>
-                        <div style="font-size:.85rem;color:var(--h2);">Custom ColorFormatter + timing decorators</div>
+                        <div class="kicker" style="margin-bottom:.3rem;">Processing</div>
+                        <div style="font-size:.85rem;color:var(--h2);">pandas for cleaning, type casting, feature
+                            engineering</div>
                     </div>
                     <div>
-                        <div class="schema-label" style="margin-bottom:.3rem;">Config</div>
-                        <div style="font-size:.85rem;color:var(--h2);">dotenv with zero hardcoded credentials</div>
+                        <div class="kicker" style="margin-bottom:.3rem;">Database</div>
+                        <div style="font-size:.85rem;color:var(--h2);">PostgreSQL with a single laptops table,
+                            append-only loads</div>
+                    </div>
+                    <div>
+                        <div class="kicker" style="margin-bottom:.3rem;">Loader</div>
+                        <div style="font-size:.85rem;color:var(--h2);">SQLAlchemy + psycopg2 with pre-insert dedup</div>
+                    </div>
+                    <div>
+                        <div class="kicker" style="margin-bottom:.3rem;">Observability</div>
+                        <div style="font-size:.85rem;color:var(--h2);">Cross-platform ColorFormatter + timing decorators
+                        </div>
                     </div>
                 </div>
             </div>
@@ -2034,11 +2166,11 @@
             <div class="cta-card">
                 <div>
                     <h3>View the full source code</h3>
-                    <p>All ETL scripts, SQL DDL, orchestration logic, and logging utilities on GitHub.</p>
+                    <p>Every scraper module, transform function, and SQL DDL on GitHub.</p>
                 </div>
                 <div class="cta-actions">
-                    <a href="https://github.com/yoismail/payflow_case_study" target="_blank" rel="noopener noreferrer"
-                        class="btn-primary">
+                    <a href="https://github.com/yoismail/aliExpress_laptop_ETL_pipeline" target="_blank"
+                        rel="noopener noreferrer" class="btn-primary">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
                             <path
                                 d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
@@ -2064,7 +2196,6 @@
         <div class="footer-note">Built with intention.</div>
     </footer>
 
-    <!-- BACK TO TOP -->
     <button class="to-top" id="toTop" aria-label="Scroll to top">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
             stroke-linecap="round" stroke-linejoin="round">
@@ -2092,7 +2223,7 @@
             document.getElementById('year').textContent = new Date().getFullYear();
         })();
 
-        /* fade-in on scroll */
+        /* fade-in */
         (function () {
             const io = new IntersectionObserver(entries => {
                 entries.forEach(e => {
@@ -2134,14 +2265,12 @@
                 const id = a.getAttribute('href').slice(1);
                 tocMap.set(id, a);
             });
-            // show after scrolling past hero
             function update() {
                 if (window.scrollY > 400) toc.classList.add('show');
                 else toc.classList.remove('show');
             }
             window.addEventListener('scroll', update, { passive: true });
             update();
-            // sync active state
             const sections = document.querySelectorAll('section[id]');
             const io = new IntersectionObserver(entries => {
                 entries.forEach(e => {

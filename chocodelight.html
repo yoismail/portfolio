@@ -364,14 +364,15 @@
             position: absolute;
             top: 3rem;
             font-family: var(--fd);
-            font-size: clamp(5rem, 12vw, 9rem);
+            font-size: clamp(4rem, 9vw, 7.5rem);
             font-weight: 800;
             line-height: 1;
             pointer-events: none;
             user-select: none;
             letter-spacing: -.06em;
             color: rgba(255, 255, 255, .04);
-            right: 0;
+            right: -.5rem;
+            z-index: 0;
         }
 
         .sec-alt .sec-num {
@@ -433,6 +434,10 @@
             letter-spacing: -.04em;
             margin-bottom: .6rem;
             color: var(--h1);
+            max-width: min(100%, 720px);
+            position: relative;
+            z-index: 2;
+            padding-right: 1rem;
         }
 
         [data-theme="light"] h2 {
@@ -1874,7 +1879,7 @@
         <section id="features" class="fade-up">
             <span class="sec-num">04</span>
             <div class="kicker">Feature Engineering</div>
-            <h2>From raw values <br>to analytics-ready features</h2>
+            <h2>From raw values to analytics-ready features</h2>
             <p class="section-intro">The cleaning stage is not just type casting and null handling. Each table gets
                 domain-specific engineered features that make downstream BI work meaningful, not mechanical.</p>
             <div class="card-grid grid-3">
@@ -1937,7 +1942,7 @@
 
         <!-- DECISIONS -->
         <section id="decisions" class="fade-up sec-alt">
-            <span class="sec-num">05</span> <br>
+            <span class="sec-num">05</span>
             <div class="kicker">Key Decisions</div>
             <h2>Design choices &amp; tradeoffs</h2>
             <div class="decision-wrapper">
@@ -2043,7 +2048,7 @@
 
         <!-- TECH STACK -->
         <section id="tech" class="fade-up sec-alt">
-            <span class="sec-num">07</span><br>
+            <span class="sec-num">07</span>
             <div class="kicker">Tech Stack</div>
             <h2>Tools &amp; technology</h2>
             <div class="card">
