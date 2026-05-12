@@ -1706,14 +1706,14 @@
             </div>
             <h1 class="cs-title">AliExpress Laptop <span class="hi">ETL Pipeline</span><br />&amp; PostgreSQL warehouse
             </h1>
-            <p class="cs-sub">A production-style web scraping pipeline that scrapes 10 pages of AliExpress laptop
+            <p class="cs-sub">A production-style web scraping pipeline that scrapes 60 pages of AliExpress laptop
                 listings, validates and enriches the data with discount metrics and price bands, and appends only new
                 records to a PostgreSQL warehouse. Modular, idempotent at the load layer, observable, and ready to
                 rerun.</p>
             <div class="meta-row">
                 <span class="meta-pill acc">Live web scraping</span>
                 <span class="meta-pill">Selenium + BeautifulSoup</span>
-                <span class="meta-pill">10 pages per run</span>
+                <span class="meta-pill">60 pages per run</span>
                 <span class="meta-pill">PostgreSQL warehouse</span>
                 <span class="meta-pill">Append-only loads</span>
             </div>
@@ -1794,7 +1794,7 @@
                 <div class="pipe-node-cs">
                     <div class="pipe-step-num">Step 02</div>
                     <div class="pipe-step-name">Extract</div>
-                    <div class="pipe-step-detail">Scrape 10 pages, parse HTML, return DataFrame</div>
+                    <div class="pipe-step-detail">Scrape 60 pages, parse HTML, return DataFrame</div>
                     <div class="pipe-script">extract.py</div>
                 </div>
                 <div class="pipe-node-cs">
@@ -1824,7 +1824,7 @@
                 <br /><span class="cm"># What run_all.py executes:</span>
                 <br /><span class="cn">1.</span> <span class="ct">scraper.health_check()</span> <span class="cm">→ HTTP
                     request + real browser test</span>
-                <br /><span class="cn">2.</span> <span class="ct">extract.scrape()</span> <span class="cm">→ 10 pages,
+                <br /><span class="cn">2.</span> <span class="ct">extract.scrape()</span> <span class="cm">→ 60 pages,
                     returns DataFrame</span>
                 <br /><span class="cn">3.</span> <span class="ct">transform.clean(df)</span> <span class="cm">→ type
                     cast, dedupe, engineer features</span>
@@ -1873,8 +1873,8 @@
                         and the parsing logic is unit-testable without spinning up a browser.</p>
                 </div>
                 <div class="card">
-                    <h3>Pagination across 10 pages</h3>
-                    <p>The scraper walks through all 10 pages of laptop listings in a single run, with retry logic at
+                    <h3>Pagination across 60 pages</h3>
+                    <p>The scraper walks through all 60 pages of laptop listings in a single run, with retry logic at
                         each page transition. Failure on page 7 does not corrupt the data from pages 1 through 6.</p>
                 </div>
             </div>
@@ -2053,7 +2053,7 @@
             <h2>What this pipeline enables</h2>
             <div class="impact-grid">
                 <div class="impact-card">
-                    <div class="impact-num acc">10 pages</div>
+                    <div class="impact-num acc">60 pages</div>
                     <div class="impact-label">Scraped end-to-end in a single run with retry logic at every page
                         transition</div>
                 </div>
