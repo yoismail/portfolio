@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8" />
@@ -12,9 +12,7 @@
     <link rel="icon" href="svg/favicon.svg" type="image/svg+xml" />
     <link rel="alternate icon" href="svg/favicon.svg" />
 
-    <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
-    <meta name="theme-color" content="#fafaf8" media="(prefers-color-scheme: light)" />
-
+    <meta name="theme-color" content="#000000" />
     <!-- Open Graph -->
     <meta property="og:type" content="article" />
     <meta property="og:title" content="Engineering Principles | Yomi Ismail" />
@@ -55,7 +53,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Lora:ital,wght@0,400;0,500;1,400&family=Syne:wght@400;600;700;800&family=Inter:wght@400;500&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Geist:wght@400;500;600&family=Lora:ital,wght@0,400;0,500;1,400&family=Syne:wght@400;600;700;800&display=swap"
         rel="stylesheet" />
     <style>
         /* ── DARK TOKENS ──────────────────────────────────────── */
@@ -82,8 +80,8 @@
             --h2: #c8d0e0;
             --h3: #606880;
             --fd: 'Syne', sans-serif;
-            --fm: 'IBM Plex Mono', monospace;
-            --fb: 'Inter', sans-serif;
+            --fm: 'Geist Mono', 'IBM Plex Mono', monospace;
+            --fb: 'Geist', 'Inter', system-ui, sans-serif;
             --r: .75rem;
             --rsm: .375rem;
             --nav: 68px;
@@ -109,10 +107,11 @@
             font-family: var(--fb);
             background: var(--bg);
             color: var(--h2);
-            line-height: 1.65;
+            line-height: 1.6;
+            letter-spacing: -.005em;
             -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
             overflow-x: hidden;
-            transition: background .3s var(--ez), color .3s var(--ez);
         }
 
         /* ── NAV ──────────────────────────────────────────────── */
@@ -193,7 +192,7 @@
             align-items: center;
             gap: .15rem;
             flex: 1;
-            justify-content: center;
+            justify-content: flex-end;
             overflow-x: auto;
             scrollbar-width: none;
             -ms-overflow-style: none;
@@ -240,89 +239,6 @@
             }
         }
 
-        .nav-right {
-            display: flex;
-            align-items: center;
-            gap: .6rem;
-            flex-shrink: 0;
-        }
-
-        .theme-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: .35rem;
-            font-family: var(--fm);
-            font-size: .68rem;
-            padding: .32rem .8rem;
-            border-radius: 999px;
-            border: 1px solid var(--bdr);
-            background: var(--bg-surf);
-            color: var(--h3);
-            cursor: pointer;
-            transition: all .18s var(--ez);
-            white-space: nowrap;
-        }
-
-        .theme-btn:hover {
-            border-color: var(--acc);
-            color: var(--acc);
-            background: var(--acc-s);
-        }
-
-        @media(max-width:520px) {
-            .theme-btn span:not(.theme-icon) {
-                display: none;
-            }
-
-            .theme-btn {
-                padding: .4rem;
-            }
-        }
-
-        [data-theme="light"] nav {
-            background: rgba(255, 255, 255, .96);
-            border-bottom-color: rgba(0, 0, 0, .08);
-            box-shadow: 0 1px 0 rgba(0, 0, 0, .05), 0 4px 16px rgba(0, 0, 0, .04);
-        }
-
-        [data-theme="light"] .nav-brand .name {
-            color: #0f172a;
-        }
-
-        [data-theme="light"] .nav-brand .title {
-            color: #4f46e5;
-        }
-
-        [data-theme="light"] .nav-brand:hover .name {
-            color: #4f46e5;
-        }
-
-        [data-theme="light"] .nav-links a {
-            color: #64748b;
-        }
-
-        [data-theme="light"] .nav-links a:hover {
-            color: #0f172a;
-            background: rgba(79, 70, 229, .06);
-        }
-
-        [data-theme="light"] .nav-links a.active {
-            color: #4f46e5;
-            background: rgba(79, 70, 229, .08);
-        }
-
-        [data-theme="light"] .theme-btn {
-            background: #f8fafc;
-            border-color: rgba(0, 0, 0, .1);
-            color: #475569;
-        }
-
-        [data-theme="light"] .theme-btn:hover {
-            border-color: #4f46e5;
-            color: #4f46e5;
-            background: #eef2ff;
-        }
-
         /* ── LAYOUT ───────────────────────────────────────────── */
         .page {
             position: relative;
@@ -359,14 +275,6 @@
             text-decoration: none;
         }
 
-        [data-theme="light"] .back-link {
-            color: #64748b;
-        }
-
-        [data-theme="light"] .back-link:hover {
-            color: #4f46e5;
-        }
-
         .kicker {
             font-family: var(--fm);
             font-size: .66rem;
@@ -388,14 +296,6 @@
             flex-shrink: 0;
         }
 
-        [data-theme="light"] .kicker {
-            color: #4f46e5;
-        }
-
-        [data-theme="light"] .kicker::before {
-            background: #4f46e5;
-        }
-
         .hero-title {
             font-family: var(--fd);
             font-size: clamp(2.2rem, 5.5vw, 3.6rem);
@@ -406,20 +306,8 @@
             color: var(--h1);
         }
 
-        [data-theme="light"] .hero-title {
-            color: #0f172a;
-        }
-
         .hero-title .hi {
             background: var(--grad);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            color: transparent;
-        }
-
-        [data-theme="light"] .hero-title .hi {
-            background: linear-gradient(115deg, #4f46e5 0%, #7c3aed 45%, #0d9488 100%);
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -434,10 +322,6 @@
             margin-bottom: 2rem;
         }
 
-        [data-theme="light"] .hero-sub {
-            color: #334155;
-        }
-
         .hero-meta {
             font-family: var(--fm);
             font-size: .7rem;
@@ -445,10 +329,6 @@
             letter-spacing: .04em;
             padding-top: 1.5rem;
             border-top: 1px solid var(--bdr);
-        }
-
-        [data-theme="light"] .hero-meta {
-            color: #64748b;
         }
 
         /* ── PRINCIPLES LIST (editorial treatment) ────────────── */
@@ -475,10 +355,6 @@
 
         .principle:hover::before {
             background: var(--acc);
-        }
-
-        [data-theme="light"] .principle:hover::before {
-            background: #4f46e5;
         }
 
         .principle:last-child {
@@ -510,14 +386,6 @@
             background: var(--acc);
         }
 
-        [data-theme="light"] .principle-num {
-            color: #4f46e5;
-        }
-
-        [data-theme="light"] .principle-num::before {
-            background: #4f46e5;
-        }
-
         .principle-title {
             font-family: var(--fd);
             font-size: clamp(1.4rem, 2.8vw, 1.95rem);
@@ -526,10 +394,6 @@
             line-height: 1.2;
             margin-bottom: 1.4rem;
             color: var(--h1);
-        }
-
-        [data-theme="light"] .principle-title {
-            color: #0f172a;
         }
 
         /* serif body — the editorial move */
@@ -554,14 +418,6 @@
             font-weight: 500;
         }
 
-        [data-theme="light"] .principle-body {
-            color: #334155;
-        }
-
-        [data-theme="light"] .principle-body strong {
-            color: #0f172a;
-        }
-
         /* drop cap on first paragraph */
         .principle-body>p:first-child::first-letter {
             font-family: var(--fd);
@@ -576,14 +432,6 @@
             -webkit-text-fill-color: transparent;
             color: transparent;
             letter-spacing: -.04em;
-        }
-
-        [data-theme="light"] .principle-body>p:first-child::first-letter {
-            background: linear-gradient(115deg, #4f46e5, #7c3aed, #0d9488);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            color: transparent;
         }
 
         .tradeoff {
@@ -610,16 +458,6 @@
             text-transform: uppercase;
             display: block;
             margin-bottom: .35rem;
-        }
-
-        [data-theme="light"] .tradeoff {
-            border-left-color: #4f46e5;
-            background: rgba(79, 70, 229, .05);
-            color: #334155;
-        }
-
-        [data-theme="light"] .tradeoff strong {
-            color: #4f46e5;
         }
 
         /* footnote — applied in */
@@ -661,24 +499,6 @@
             text-decoration: none;
         }
 
-        [data-theme="light"] .applied-in {
-            color: #94a3b8;
-            border-top-color: rgba(0, 0, 0, .1);
-        }
-
-        [data-theme="light"] .applied-in::before {
-            color: #4f46e5;
-        }
-
-        [data-theme="light"] .applied-in a {
-            color: #475569;
-            border-color: rgba(0, 0, 0, .15);
-        }
-
-        [data-theme="light"] .applied-in a:hover {
-            color: #4f46e5;
-            border-color: #4f46e5;
-        }
 
         /* ── CTA ──────────────────────────────────────────────── */
         .cta-card {
@@ -707,16 +527,6 @@
             pointer-events: none;
         }
 
-        [data-theme="light"] .cta-card {
-            background: #fff;
-            border-color: rgba(0, 0, 0, .09);
-            box-shadow: 0 1px 3px rgba(0, 0, 0, .05);
-        }
-
-        [data-theme="light"] .cta-card::after {
-            background: radial-gradient(circle, rgba(79, 70, 229, .1), transparent 70%);
-        }
-
         .cta-card h3 {
             font-family: var(--fd);
             font-size: 1.2rem;
@@ -725,17 +535,9 @@
             color: var(--h1);
         }
 
-        [data-theme="light"] .cta-card h3 {
-            color: #0f172a;
-        }
-
         .cta-card p {
             font-size: .88rem;
             color: var(--h2);
-        }
-
-        [data-theme="light"] .cta-card p {
-            color: #334155;
         }
 
         .cta-actions {
@@ -766,14 +568,6 @@
             text-decoration: none;
         }
 
-        [data-theme="light"] .btn-primary {
-            background: #4f46e5;
-        }
-
-        [data-theme="light"] .btn-primary:hover {
-            box-shadow: 0 10px 28px rgba(79, 70, 229, .35);
-        }
-
         .btn-ghost {
             display: inline-flex;
             align-items: center;
@@ -796,18 +590,6 @@
             text-decoration: none;
         }
 
-        [data-theme="light"] .btn-ghost {
-            background: #fff;
-            border-color: rgba(0, 0, 0, .12);
-            color: #1e293b;
-        }
-
-        [data-theme="light"] .btn-ghost:hover {
-            border-color: #4f46e5;
-            color: #4f46e5;
-            background: #eef2ff;
-        }
-
         /* ── FOOTER ───────────────────────────────────────────── */
         footer {
             position: relative;
@@ -823,10 +605,6 @@
             text-align: center;
         }
 
-        [data-theme="light"] footer {
-            border-color: rgba(0, 0, 0, .07);
-        }
-
         .footer-brand {
             font-family: var(--fm);
             font-size: .68rem;
@@ -835,18 +613,71 @@
             text-transform: uppercase;
         }
 
-        [data-theme="light"] .footer-brand {
-            color: #94a3b8;
+        .footer-mark {
+            width: 28px;
+            height: 28px;
+            color: var(--acc);
+            margin-bottom: .65rem;
+            opacity: .55;
+            transition: opacity .3s var(--ez), transform .3s var(--ez);
+        }
+
+        .footer-mark path,
+        .footer-mark line {
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        footer:hover .footer-mark {
+            opacity: .9;
+            transform: translateY(-1px);
+        }
+
+        .footer-meta {
+            display: flex;
+            align-items: center;
+            gap: .55rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            font-family: var(--fm);
+            font-size: .66rem;
+            color: var(--h3);
+            margin-top: .1rem;
+        }
+
+        .footer-link {
+            display: inline-flex;
+            align-items: center;
+            gap: .35rem;
+            color: var(--h3);
+            text-decoration: none;
+            padding-bottom: 1px;
+            border-bottom: 1px solid transparent;
+            transition: color .15s, border-color .15s;
+        }
+
+        .footer-link:hover {
+            color: var(--acc);
+            border-bottom-color: var(--acc);
+            text-decoration: none;
+        }
+
+        .footer-sep {
+            opacity: .5;
+        }
+
+        .footer-updated {
+            opacity: .85;
         }
 
         .footer-note {
             font-size: .76rem;
             color: var(--h3);
             font-style: italic;
-        }
-
-        [data-theme="light"] .footer-note {
-            color: #94a3b8;
+            margin-top: .15rem;
         }
 
         /* ── BACK TO TOP ──────────────────────────────────────── */
@@ -881,19 +712,6 @@
             border-color: var(--acc);
             color: var(--acc);
             background: var(--acc-s);
-        }
-
-        [data-theme="light"] .to-top {
-            background: #fff;
-            border-color: rgba(0, 0, 0, .1);
-            color: #475569;
-            box-shadow: 0 4px 14px rgba(0, 0, 0, .08);
-        }
-
-        [data-theme="light"] .to-top:hover {
-            border-color: #4f46e5;
-            color: #4f46e5;
-            background: #eef2ff;
         }
 
         /* ── ANIMATIONS ───────────────────────────────────────── */
@@ -945,12 +763,7 @@
             <a href="index.html#cv">CV</a>
             <a href="index.html#contact">Contact</a>
         </div>
-        <div class="nav-right">
-            <button class="theme-btn" id="themeToggle" aria-label="Toggle theme">
-                <span class="theme-icon" id="themeIcon">☀️</span>
-                <span id="themeLabel">Light</span>
-            </button>
-        </div>
+
     </nav>
 
     <div class="page">
@@ -1153,8 +966,24 @@
     </div>
 
     <footer>
+        <svg class="footer-mark" viewBox="0 0 36 36" aria-hidden="true">
+            <path d="M 8 8 L 14 18 L 14 28 M 14 18 L 20 8" pathLength="1" />
+            <line x1="26" y1="14" x2="26" y2="28" pathLength="1" />
+            <circle cx="26" cy="9" r="1.4" fill="currentColor" />
+        </svg>
         <div class="footer-brand">Yomi Ismail · Data Engineer · <span id="year"></span></div>
-        <div class="footer-note">Built with intention.</div>
+        <div class="footer-meta">
+            <a href="https://github.com/yoismail" target="_blank" rel="noopener noreferrer" class="footer-link">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+                </svg>
+                View source
+            </a>
+            <span class="footer-sep">·</span>
+            <span class="footer-updated">Last updated <span id="lastUpdated">May 2026</span></span>
+        </div>
+        <div class="footer-note">Built in Suffolk, mostly on weekends and rainy evenings.</div>
     </footer>
 
     <button class="to-top" id="toTop" aria-label="Scroll to top">
@@ -1167,20 +996,6 @@
     <script>
         /* theme */
         (function () {
-            const root = document.documentElement;
-            const btn = document.getElementById('themeToggle');
-            const icon = document.getElementById('themeIcon');
-            const lbl = document.getElementById('themeLabel');
-            function apply(t) {
-                root.setAttribute('data-theme', t);
-                icon.textContent = t === 'dark' ? '☀️' : '🌙';
-                lbl.textContent = t === 'dark' ? 'Light' : 'Dark';
-            }
-            apply(localStorage.getItem('theme') || 'dark');
-            btn.addEventListener('click', () => {
-                const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-                apply(next); localStorage.setItem('theme', next);
-            });
             document.getElementById('year').textContent = new Date().getFullYear();
         })();
 
