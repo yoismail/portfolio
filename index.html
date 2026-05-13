@@ -71,10 +71,6 @@
 }
 </script>
 
-    <!-- Plausible Analytics — privacy-friendly, no cookies -->
-    <!-- TIP: replace YOUR-DOMAIN.com below with your real domain once deployed -->
-    <script defer data-domain="YOUR-DOMAIN.com" src="https://plausible.io/js/script.js"></script>
-
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -2743,7 +2739,7 @@
                     data-decimals="0">
                     <div class="num-hero-content">
                         <div class="num-hero-label">Headline impact</div>
-                        <div class="num-hero-big" data-counter-target>£0K</div>
+                        <div class="num-hero-big" data-counter-target>£10K</div>
                         <div class="num-hero-kicker">Quarterly saved</div>
                         <div class="num-hero-context">AWS S3 cost reduction at <strong>Amdari Inc.</strong> through
                             partitioning and query tuning. Achieved within the first quarter of joining.</div>
@@ -2764,7 +2760,7 @@
                     <div class="num-card num-card-sec" data-counter data-target="6" data-prefix="" data-suffix="+"
                         data-decimals="0">
                         <div class="num-sec-top">
-                            <div class="num-big" data-counter-target>0+</div>
+                            <div class="num-big" data-counter-target>6+</div>
                             <div class="num-sec-glyph">
                                 <!-- Horizontal timeline track with "now" marker at right end -->
                                 <svg width="36" height="36" viewBox="0 0 36 36" aria-hidden="true">
@@ -2781,7 +2777,7 @@
                     <div class="num-card num-card-sec" data-counter data-target="3" data-prefix="" data-suffix=""
                         data-decimals="0">
                         <div class="num-sec-top">
-                            <div class="num-big" data-counter-target>0</div>
+                            <div class="num-big" data-counter-target>3</div>
                             <div class="num-sec-glyph">
                                 <!-- Three vertical bars, ascending — mini bar chart -->
                                 <svg width="36" height="36" viewBox="0 0 36 36" aria-hidden="true">
@@ -2797,7 +2793,7 @@
                     <div class="num-card num-card-sec" data-counter data-target="99.9" data-prefix="" data-suffix="%"
                         data-decimals="1">
                         <div class="num-sec-top">
-                            <div class="num-big" data-counter-target>0%</div>
+                            <div class="num-big" data-counter-target>99.9%</div>
                             <div class="num-sec-glyph">
                                 <!-- Near-complete arc, small gap signalling 99.9% (not 100%) -->
                                 <svg width="36" height="36" viewBox="0 0 36 36" aria-hidden="true">
@@ -3031,7 +3027,7 @@
                         </svg>
                         LinkedIn
                     </a>
-                    <a href="https://github.com/yoismail/payflow_case_study" target="_blank" rel="noopener noreferrer"
+                    <a href="https://github.com/yoismail" target="_blank" rel="noopener noreferrer"
                         class="contact-link">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
                             <path
@@ -3130,6 +3126,8 @@
                     out.textContent = prefix + target.toFixed(decimals) + suffix;
                     return;
                 }
+                // reset to 0 so animation starts from zero (real target value is in the HTML for fallback)
+                out.textContent = prefix + (0).toFixed(decimals) + suffix;
                 const duration = 1400;
                 const start = performance.now();
                 function step(now) {
