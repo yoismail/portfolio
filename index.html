@@ -1092,15 +1092,36 @@
             text-decoration: none;
             display: inline-flex;
             align-items: center;
-            gap: .3rem;
+            gap: .35rem;
             margin-top: auto;
             align-self: flex-start;
-            transition: gap .18s var(--ez);
+            padding-bottom: 2px;
+            border-bottom: 1px solid transparent;
+            transition: gap .22s var(--ez), color .18s, border-color .18s, transform .18s var(--ez);
+        }
+
+        .card-link-arrow {
+            display: inline-block;
+            transition: transform .22s var(--ez);
         }
 
         .card-link:hover {
             gap: .55rem;
+            color: var(--h1);
+            border-bottom-color: var(--acc);
             text-decoration: none;
+        }
+
+        .card-link:hover .card-link-arrow {
+            transform: translateX(3px);
+        }
+
+        .card:hover .card-link {
+            border-bottom-color: var(--acc);
+        }
+
+        .card:hover .card-link-arrow {
+            transform: translateX(3px);
         }
 
         .scale-row {
@@ -2556,7 +2577,7 @@
                         <div class="arch-desc">Structured logs, timers</div>
                     </div>
                 </div>
-                <a href="payflow.html" class="card-link">View full case study →</a>
+                <a href="payflow.html" class="card-link">View full case study<span class="card-link-arrow">→</span></a>
             </div>
         </section>
 
@@ -2581,7 +2602,8 @@
                     <div class="tag-row"><span class="tag">Python</span><span class="tag">pandas</span><span
                             class="tag">PostgreSQL</span><span class="tag">SQLAlchemy</span><span class="tag">Kaggle
                             CLI</span></div>
-                    <a href="chocodelight.html" class="card-link">View case study →</a>
+                    <a href="chocodelight.html" class="card-link">View case study<span
+                            class="card-link-arrow">→</span></a>
                 </article>
                 <article class="card" id="aliexpress-project-card">
                     <h3>AliExpress Laptop ETL</h3>
@@ -2595,7 +2617,8 @@
                     <div class="tag-row"><span class="tag">Python</span><span class="tag">Selenium</span><span
                             class="tag">BeautifulSoup</span><span class="tag">pandas</span><span
                             class="tag">PostgreSQL</span></div>
-                    <a href="aliexpress.html" class="card-link">View case study →</a>
+                    <a href="aliexpress.html" class="card-link">View case study<span
+                            class="card-link-arrow">→</span></a>
                 </article>
             </div>
 
