@@ -486,6 +486,68 @@
             text-decoration: none;
         }
 
+        /* Cross-case-study quick switcher */
+        .cs-switcher {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: .4rem;
+            margin-bottom: 1.75rem;
+            padding: .55rem .7rem;
+            background: var(--bg-surf);
+            border: 1px solid var(--bdr);
+            border-radius: 999px;
+            font-family: var(--fm);
+            font-size: .66rem;
+            width: fit-content;
+            max-width: 100%;
+        }
+
+        .cs-switcher-label {
+            color: var(--h3);
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            padding: 0 .3rem 0 .4rem;
+        }
+
+        .cs-switcher-link {
+            padding: .32rem .75rem;
+            border-radius: 999px;
+            color: var(--h2);
+            text-decoration: none;
+            letter-spacing: .02em;
+            transition: color .18s, background .18s;
+            white-space: nowrap;
+        }
+
+        .cs-switcher-link:hover {
+            color: var(--acc);
+            background: var(--acc-s);
+            text-decoration: none;
+        }
+
+        .cs-switcher-link.current {
+            color: var(--acc);
+            background: var(--acc-s);
+            cursor: default;
+            pointer-events: none;
+        }
+
+        @media(max-width:520px) {
+            .cs-switcher {
+                font-size: .6rem;
+                padding: .45rem .55rem;
+            }
+
+            .cs-switcher-label {
+                display: none;
+            }
+
+            .cs-switcher-link {
+                padding: .28rem .6rem;
+            }
+        }
+
         .cs-title {
             font-family: var(--fd);
             font-size: clamp(2rem, 5vw, 3.4rem);
@@ -1780,6 +1842,12 @@
                 </svg>
                 Back to portfolio
             </a>
+            <nav class="cs-switcher" aria-label="Case study navigation">
+                <span class="cs-switcher-label">Case studies</span>
+                <a href="payflow.html" class="cs-switcher-link current" aria-current="page">PayFlow</a>
+                <a href="chocodelight.html" class="cs-switcher-link">ChocoDelight</a>
+                <a href="aliexpress.html" class="cs-switcher-link">AliExpress</a>
+            </nav>
             <div class="cs-meta">~6 min read · Updated May 2026</div>
             <div class="kicker">Case Study · End-to-End Data Engineering</div>
             <h1 class="cs-title">PayFlow — <span class="hi">ETL pipeline</span><br />&amp; data warehouse</h1>
@@ -2082,7 +2150,8 @@
                 <div class="card">
                     <h3>Config-driven</h3>
                     <p>All DB credentials and input paths managed via <strong>.env</strong> and
-                        <strong>db_config.py</strong>. No hardcoded values anywhere in the codebase.</p>
+                        <strong>db_config.py</strong>. No hardcoded values anywhere in the codebase.
+                    </p>
                 </div>
                 <div class="card">
                     <h3>Pre-load validation</h3>
