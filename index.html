@@ -260,147 +260,6 @@
             }
         }
 
-        /* ── NAV DROPDOWN (Projects → case studies) ───────────── */
-        .nav-dropdown {
-            position: relative;
-            flex-shrink: 0;
-        }
-
-        .nav-dropdown-trigger {
-            display: inline-flex;
-            align-items: center;
-            gap: .35rem;
-            font-family: inherit;
-            font-size: .78rem;
-            color: var(--h3);
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: .4rem .8rem;
-            border-radius: var(--rsm);
-            transition: color .18s, background .18s;
-            white-space: nowrap;
-            list-style: none;
-        }
-
-        .nav-dropdown-trigger::-webkit-details-marker {
-            display: none;
-        }
-
-        .nav-dropdown-trigger::marker {
-            display: none;
-            content: "";
-        }
-
-        .nav-dropdown-trigger:hover {
-            color: var(--h1);
-            background: var(--acc-s);
-        }
-
-        .nav-dropdown[open] .nav-dropdown-trigger {
-            color: var(--acc);
-            background: var(--acc-s);
-        }
-
-        .nav-chevron {
-            transition: transform .25s var(--ez);
-            opacity: .7;
-        }
-
-        .nav-dropdown[open] .nav-chevron {
-            transform: rotate(180deg);
-            opacity: 1;
-        }
-
-        .nav-dropdown-menu {
-            position: fixed;
-            top: 72px;
-            right: 1rem;
-            width: 300px;
-            max-width: calc(100vw - 2rem);
-            background: #15130f;
-            border: 1px solid var(--bdr);
-            border-radius: var(--r);
-            padding: .4rem;
-            box-shadow: 0 12px 36px rgba(0, 0, 0, .5);
-            z-index: 9999;
-        }
-
-        .nav-dropdown-item {
-            display: flex;
-            flex-direction: column;
-            gap: .15rem;
-            padding: .7rem .85rem;
-            border-radius: var(--rsm);
-            text-decoration: none;
-            color: var(--h1);
-            transition: background .15s, color .15s;
-        }
-
-        .nav-dropdown-item:hover {
-            background: var(--acc-s);
-        }
-
-        .nav-dropdown-name {
-            font-size: .85rem;
-            font-weight: 500;
-            color: var(--h1);
-        }
-
-        .nav-dropdown-item:hover .nav-dropdown-name {
-            color: var(--acc);
-        }
-
-        .nav-dropdown-meta {
-            font-family: var(--fm);
-            font-size: .65rem;
-            color: var(--h3);
-            letter-spacing: .02em;
-        }
-
-        .nav-dropdown-item-all {
-            flex-direction: row;
-            align-items: center;
-            justify-content: space-between;
-            margin-top: .25rem;
-            padding-top: .7rem;
-            border-top: 1px solid var(--bdr);
-            font-family: var(--fm);
-            font-size: .7rem;
-            color: var(--acc);
-            letter-spacing: .04em;
-            text-transform: uppercase;
-        }
-
-        .nav-dropdown-item-all:hover {
-            color: var(--h1);
-            background: var(--acc-s);
-        }
-
-        .nav-dropdown-item-all svg {
-            opacity: .7;
-            transition: transform .18s, opacity .18s;
-        }
-
-        .nav-dropdown-item-all:hover svg {
-            opacity: 1;
-            transform: translateX(2px);
-        }
-
-        @media(max-width:760px) {
-            .nav-dropdown-trigger {
-                font-size: .74rem;
-                padding: .35rem .65rem;
-            }
-
-            .nav-dropdown-menu {
-                right: 1rem;
-                left: 1rem;
-                min-width: auto;
-                max-width: none;
-            }
-        }
-
         /* ── LAYOUT ───────────────────────────────────────────── */
         .page {
             position: relative;
@@ -2583,37 +2442,7 @@
         </a>
         <div class="nav-links" id="navLinks">
             <a href="#featured-case-study">Case Study</a>
-            <details class="nav-dropdown" id="projectsDropdown">
-                <summary class="nav-dropdown-trigger">
-                    Projects
-                    <svg class="nav-chevron" width="10" height="10" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"
-                        aria-hidden="true">
-                        <polyline points="6 9 12 15 18 9" />
-                    </svg>
-                </summary>
-                <div class="nav-dropdown-menu" id="projects-menu" role="menu">
-                    <a href="payflow.html" role="menuitem" class="nav-dropdown-item">
-                        <span class="nav-dropdown-name">PayFlow</span>
-                        <span class="nav-dropdown-meta">ETL · Star schema warehouse</span>
-                    </a>
-                    <a href="chocodelight.html" role="menuitem" class="nav-dropdown-item">
-                        <span class="nav-dropdown-name">ChocoDelight</span>
-                        <span class="nav-dropdown-meta">3-schema layered platform</span>
-                    </a>
-                    <a href="aliexpress.html" role="menuitem" class="nav-dropdown-item">
-                        <span class="nav-dropdown-name">AliExpress ETL</span>
-                        <span class="nav-dropdown-meta">Live web scraping · 60 pages</span>
-                    </a>
-                    <a href="#projects" role="menuitem" class="nav-dropdown-item nav-dropdown-item-all">
-                        View all projects
-                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M5 12h14M12 5l7 7-7 7" />
-                        </svg>
-                    </a>
-                </div>
-            </details>
+            <a href="#projects">Projects</a>
             <a href="#experience">Experience</a>
             <a href="principles.html">Principles</a>
             <a href="#tech-stack">Stack</a>
@@ -3388,22 +3217,6 @@
             btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
         })();
 
-        /* Projects dropdown uses native <details> element — no JS needed for open/close.
-           This handler just closes the dropdown when a menu link is clicked, so the menu
-           disappears as you navigate away. */
-        (function () {
-            const dropdown = document.getElementById('projectsDropdown');
-            if (!dropdown) return;
-            const menu = dropdown.querySelector('.nav-dropdown-menu');
-            if (!menu) return;
-            menu.querySelectorAll('a').forEach(a => {
-                a.addEventListener('click', () => setTimeout(() => dropdown.removeAttribute('open'), 50));
-            });
-            // close when clicking outside the dropdown
-            document.addEventListener('click', e => {
-                if (!dropdown.contains(e.target)) dropdown.removeAttribute('open');
-            });
-        })();
     </script>
 
 </body>
