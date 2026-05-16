@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#08060a"/>
+      <stop offset="100%" stop-color="#1a0a18"/>
+    </linearGradient>
+    <linearGradient id="grad" x1="0" y1="0" x2="800" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#f43f5e"/>
+      <stop offset="50%" stop-color="#fb7185"/>
+      <stop offset="100%" stop-color="#a78bfa"/>
+    </linearGradient>
+    <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+      <path d="M 60 0 L 0 0 0 60" fill="none" stroke="rgba(244,63,94,0.07)" stroke-width="1"/>
+    </pattern>
+    <radialGradient id="glow" cx="30%" cy="35%" r="55%">
+      <stop offset="0%" stop-color="rgba(244,63,94,0.2)"/>
+      <stop offset="100%" stop-color="rgba(244,63,94,0)"/>
+    </radialGradient>
+    <radialGradient id="glow2" cx="85%" cy="65%" r="40%">
+      <stop offset="0%" stop-color="rgba(167,139,250,0.12)"/>
+      <stop offset="100%" stop-color="rgba(167,139,250,0)"/>
+    </radialGradient>
+  </defs>
+
+  <!-- background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+  <rect width="1200" height="630" fill="url(#glow2)"/>
+
+  <!-- top-left kicker badge -->
+  <g transform="translate(80, 80)">
+    <rect width="200" height="34" rx="17" fill="rgba(244,63,94,0.08)" stroke="rgba(244,63,94,0.3)"/>
+    <circle cx="20" cy="17" r="4" fill="#f43f5e">
+      <animate attributeName="opacity" values="1;0.4;1" dur="2s" repeatCount="indefinite"/>
+    </circle>
+    <text x="36" y="22" font-family="'IBM Plex Mono',monospace" font-size="11" fill="#fb7185" letter-spacing="2">CASE STUDY · 03</text>
+  </g>
+
+  <!-- main heading -->
+  <text x="80" y="240" font-family="'Syne','Inter',sans-serif" font-weight="800" font-size="92" fill="#f0f0f0" letter-spacing="-3.5">AliExpress ETL</text>
+  <text x="80" y="320" font-family="'Syne','Inter',sans-serif" font-weight="700" font-size="44" fill="url(#grad)" letter-spacing="-1.5">Live web scraping pipeline</text>
+  <text x="80" y="370" font-family="'Syne','Inter',sans-serif" font-weight="700" font-size="44" fill="url(#grad)" letter-spacing="-1.5">across 60 pages.</text>
+
+  <!-- subtitle -->
+  <text x="80" y="430" font-family="'IBM Plex Mono',monospace" font-size="16" fill="#8a7886" letter-spacing="0.5">Python · Selenium · BeautifulSoup · PostgreSQL</text>
+
+  <!-- bottom signature -->
+  <g transform="translate(80, 555)">
+    <text x="0" y="0" font-family="'Syne',sans-serif" font-weight="700" font-size="22" fill="#f0f0f0" letter-spacing="-0.5">Yomi Ismail</text>
+    <text x="0" y="26" font-family="'IBM Plex Mono',monospace" font-size="12" fill="#fb7185" letter-spacing="2">DATA ENGINEER · SUFFOLK, UK</text>
+  </g>
+
+  <!-- right-side: scraping flow — 60 pages → extract → DB -->
+  <g transform="translate(800, 220)">
+    <!-- Stack of pages (representing 60) -->
+    <g>
+      <rect x="0" y="20" width="92" height="120" rx="6" fill="rgba(244,63,94,0.06)" stroke="rgba(244,63,94,0.3)" stroke-width="1.5"/>
+      <rect x="6" y="14" width="92" height="120" rx="6" fill="rgba(244,63,94,0.1)" stroke="rgba(244,63,94,0.45)" stroke-width="1.5"/>
+      <rect x="12" y="8" width="92" height="120" rx="6" fill="rgba(244,63,94,0.14)" stroke="rgba(244,63,94,0.6)" stroke-width="1.5"/>
+      <rect x="18" y="2" width="92" height="120" rx="6" fill="rgba(244,63,94,0.2)" stroke="#f43f5e" stroke-width="2"/>
+      <!-- mini content lines on the top page -->
+      <line x1="32" y1="22" x2="100" y2="22" stroke="rgba(244,63,94,0.55)" stroke-width="2"/>
+      <line x1="32" y1="34" x2="92" y2="34" stroke="rgba(244,63,94,0.4)" stroke-width="2"/>
+      <line x1="32" y1="46" x2="96" y2="46" stroke="rgba(244,63,94,0.4)" stroke-width="2"/>
+      <line x1="32" y1="58" x2="80" y2="58" stroke="rgba(244,63,94,0.4)" stroke-width="2"/>
+      <!-- "60" badge -->
+      <circle cx="100" cy="100" r="20" fill="#f43f5e"/>
+      <text x="100" y="105" text-anchor="middle" font-family="'Syne',sans-serif" font-weight="800" font-size="14" fill="#08060a">60</text>
+    </g>
+
+    <!-- arrow → -->
+    <g transform="translate(150, 60)">
+      <line x1="0" y1="10" x2="48" y2="10" stroke="#fb7185" stroke-width="2"/>
+      <polyline points="40,3 48,10 40,17" fill="none" stroke="#fb7185" stroke-width="2"/>
+    </g>
+
+    <!-- DB cylinder -->
+    <g transform="translate(220, 35)">
+      <ellipse cx="40" cy="10" rx="40" ry="11" fill="rgba(244,63,94,0.18)" stroke="#f43f5e" stroke-width="2"/>
+      <path d="M 0 10 L 0 60 A 40 11 0 0 0 80 60 L 80 10" fill="rgba(244,63,94,0.1)" stroke="#f43f5e" stroke-width="2"/>
+      <ellipse cx="40" cy="35" rx="40" ry="11" fill="none" stroke="rgba(244,63,94,0.4)" stroke-width="1.5"/>
+      <ellipse cx="40" cy="60" rx="40" ry="11" fill="none" stroke="rgba(244,63,94,0.4)" stroke-width="1.5"/>
+      <text x="40" y="92" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="11" fill="#fb7185" letter-spacing="1">POSTGRES</text>
+    </g>
+  </g>
+
+  <!-- right-side label under flow -->
+  <text x="940" y="490" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="11" fill="#7a5566" letter-spacing="2">SCRAPE → ENRICH → APPEND-ONLY LOAD</text>
+
+  <!-- bottom border accent -->
+  <rect x="0" y="625" width="1200" height="5" fill="url(#grad)"/>
+</svg>

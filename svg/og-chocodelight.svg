@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0a0807"/>
+      <stop offset="100%" stop-color="#1a1108"/>
+    </linearGradient>
+    <linearGradient id="grad" x1="0" y1="0" x2="800" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="50%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#a78bfa"/>
+    </linearGradient>
+    <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+      <path d="M 60 0 L 0 0 0 60" fill="none" stroke="rgba(245,158,11,0.07)" stroke-width="1"/>
+    </pattern>
+    <radialGradient id="glow" cx="30%" cy="35%" r="55%">
+      <stop offset="0%" stop-color="rgba(251,191,36,0.18)"/>
+      <stop offset="100%" stop-color="rgba(251,191,36,0)"/>
+    </radialGradient>
+    <radialGradient id="glow2" cx="85%" cy="65%" r="40%">
+      <stop offset="0%" stop-color="rgba(167,139,250,0.12)"/>
+      <stop offset="100%" stop-color="rgba(167,139,250,0)"/>
+    </radialGradient>
+  </defs>
+
+  <!-- background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+  <rect width="1200" height="630" fill="url(#glow2)"/>
+
+  <!-- top-left kicker badge -->
+  <g transform="translate(80, 80)">
+    <rect width="200" height="34" rx="17" fill="rgba(245,158,11,0.08)" stroke="rgba(245,158,11,0.3)"/>
+    <circle cx="20" cy="17" r="4" fill="#fbbf24"/>
+    <text x="36" y="22" font-family="'IBM Plex Mono',monospace" font-size="11" fill="#fbbf24" letter-spacing="2">CASE STUDY · 02</text>
+  </g>
+
+  <!-- main heading -->
+  <text x="80" y="240" font-family="'Syne','Inter',sans-serif" font-weight="800" font-size="92" fill="#f0f0f0" letter-spacing="-3.5">ChocoDelight</text>
+  <text x="80" y="320" font-family="'Syne','Inter',sans-serif" font-weight="700" font-size="44" fill="url(#grad)" letter-spacing="-1.5">Three-schema layered</text>
+  <text x="80" y="370" font-family="'Syne','Inter',sans-serif" font-weight="700" font-size="44" fill="url(#grad)" letter-spacing="-1.5">data platform.</text>
+
+  <!-- subtitle -->
+  <text x="80" y="430" font-family="'IBM Plex Mono',monospace" font-size="16" fill="#8a8273" letter-spacing="0.5">Python · pandas · PostgreSQL · SQLAlchemy</text>
+
+  <!-- bottom signature -->
+  <g transform="translate(80, 555)">
+    <text x="0" y="0" font-family="'Syne',sans-serif" font-weight="700" font-size="22" fill="#f0f0f0" letter-spacing="-0.5">Yomi Ismail</text>
+    <text x="0" y="26" font-family="'IBM Plex Mono',monospace" font-size="12" fill="#fbbf24" letter-spacing="2">DATA ENGINEER · SUFFOLK, UK</text>
+  </g>
+
+  <!-- right-side: three stacked schema layers -->
+  <g transform="translate(800, 200)">
+    <!-- analytics layer (top, brightest) -->
+    <g>
+      <rect x="0" y="0" width="280" height="62" rx="8" fill="rgba(251,191,36,0.18)" stroke="#fbbf24" stroke-width="2"/>
+      <text x="20" y="28" font-family="'IBM Plex Mono',monospace" font-size="11" fill="#fbbf24" letter-spacing="2">LAYER 03</text>
+      <text x="20" y="50" font-family="'Syne',sans-serif" font-weight="600" font-size="17" fill="#f0f0f0">Analytics</text>
+      <!-- mini icons on right showing dim/fact tables -->
+      <rect x="200" y="20" width="22" height="14" rx="2" fill="rgba(251,191,36,0.4)"/>
+      <rect x="228" y="20" width="22" height="14" rx="2" fill="rgba(251,191,36,0.4)"/>
+      <rect x="200" y="38" width="22" height="14" rx="2" fill="rgba(251,191,36,0.55)"/>
+      <rect x="228" y="38" width="22" height="14" rx="2" fill="rgba(251,191,36,0.55)"/>
+    </g>
+
+    <!-- operational layer (middle) -->
+    <g transform="translate(0, 78)">
+      <rect x="0" y="0" width="280" height="62" rx="8" fill="rgba(245,158,11,0.12)" stroke="rgba(245,158,11,0.55)" stroke-width="2"/>
+      <text x="20" y="28" font-family="'IBM Plex Mono',monospace" font-size="11" fill="#f59e0b" letter-spacing="2">LAYER 02</text>
+      <text x="20" y="50" font-family="'Syne',sans-serif" font-weight="600" font-size="17" fill="#f0f0f0">Operational</text>
+      <rect x="200" y="20" width="22" height="14" rx="2" fill="rgba(245,158,11,0.35)"/>
+      <rect x="228" y="20" width="22" height="14" rx="2" fill="rgba(245,158,11,0.35)"/>
+      <rect x="200" y="38" width="22" height="14" rx="2" fill="rgba(245,158,11,0.35)"/>
+    </g>
+
+    <!-- raw layer (bottom, dimmest) -->
+    <g transform="translate(0, 156)">
+      <rect x="0" y="0" width="280" height="62" rx="8" fill="rgba(245,158,11,0.05)" stroke="rgba(245,158,11,0.3)" stroke-width="2"/>
+      <text x="20" y="28" font-family="'IBM Plex Mono',monospace" font-size="11" fill="rgba(245,158,11,0.7)" letter-spacing="2">LAYER 01</text>
+      <text x="20" y="50" font-family="'Syne',sans-serif" font-weight="600" font-size="17" fill="rgba(240,240,240,0.7)">Raw</text>
+      <rect x="200" y="20" width="22" height="14" rx="2" fill="rgba(245,158,11,0.18)"/>
+      <rect x="228" y="20" width="22" height="14" rx="2" fill="rgba(245,158,11,0.18)"/>
+    </g>
+
+    <!-- flow arrows between layers -->
+    <line x1="140" y1="62" x2="140" y2="78" stroke="rgba(251,191,36,0.5)" stroke-width="1.5"/>
+    <line x1="140" y1="140" x2="140" y2="156" stroke="rgba(251,191,36,0.5)" stroke-width="1.5"/>
+  </g>
+
+  <!-- right-side label under layers -->
+  <text x="940" y="490" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="11" fill="#6b5d44" letter-spacing="2">RAW → OPERATIONAL → ANALYTICS</text>
+
+  <!-- bottom border accent -->
+  <rect x="0" y="625" width="1200" height="5" fill="url(#grad)"/>
+</svg>
