@@ -1362,15 +1362,18 @@
 
         .impact-num {
             font-family: var(--fd);
-            font-size: 2.4rem;
+            font-size: clamp(1.6rem, 4vw, 2.4rem);
             font-weight: 800;
-            line-height: 1;
-            margin-bottom: .4rem;
+            line-height: 1.1;
+            margin-bottom: .55rem;
             background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             color: transparent;
             filter: drop-shadow(0 4px 16px currentColor);
+            word-break: break-word;
+            overflow-wrap: break-word;
+            letter-spacing: -.02em;
         }
 
         .impact-num.green {
