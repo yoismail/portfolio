@@ -852,10 +852,108 @@
                 padding: 2rem 0;
             }
         }
+
+        /* ── PRINCIPLES TOC (sticky sidebar) ───────────────────── */
+        .p-toc {
+            position: fixed;
+            top: calc(var(--nav) + 3rem);
+            left: 1.75rem;
+            width: 200px;
+            z-index: 50;
+            font-family: var(--fm);
+            display: none;
+        }
+
+        @media(min-width:1280px) {
+            .p-toc {
+                display: block;
+            }
+        }
+
+        .p-toc-label {
+            font-size: .58rem;
+            letter-spacing: .18em;
+            color: var(--h3);
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            padding-bottom: .55rem;
+            border-bottom: 1px solid var(--bdr);
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+        }
+
+        .p-toc-label::before {
+            content: '';
+            width: 14px;
+            height: 1.5px;
+            background: var(--acc);
+            border-radius: 1px;
+        }
+
+        .p-toc ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: .05rem;
+            padding: 0;
+            margin: 0;
+        }
+
+        .p-toc a {
+            display: flex;
+            gap: .55rem;
+            align-items: flex-start;
+            font-size: .72rem;
+            color: var(--h3);
+            text-decoration: none;
+            padding: .4rem 0 .4rem .65rem;
+            border-left: 1px solid var(--bdr);
+            transition: color .2s, border-color .2s, padding-left .2s var(--ez);
+            line-height: 1.4;
+        }
+
+        .p-toc a:hover {
+            color: var(--h2);
+            border-left-color: var(--h3);
+            padding-left: .85rem;
+            text-decoration: none;
+        }
+
+        .p-toc a.active {
+            color: var(--acc);
+            border-left-color: var(--acc);
+            border-left-width: 2px;
+            padding-left: .8rem;
+            font-weight: 500;
+        }
+
+        .p-toc-num {
+            font-size: .62rem;
+            color: var(--acc);
+            min-width: 18px;
+            flex-shrink: 0;
+            letter-spacing: .04em;
+            padding-top: .05rem;
+        }
     </style>
 </head>
 
 <body>
+
+    <aside class="p-toc" id="pToc" aria-label="Principles contents">
+        <div class="p-toc-label">Principles</div>
+        <ul>
+            <li><a href="#principle-01"><span class="p-toc-num">01</span><span>Schema is truth</span></a></li>
+            <li><a href="#principle-02"><span class="p-toc-num">02</span><span>Idempotency</span></a></li>
+            <li><a href="#principle-03"><span class="p-toc-num">03</span><span>Logs at 2am</span></a></li>
+            <li><a href="#principle-04"><span class="p-toc-num">04</span><span>Validate first</span></a></li>
+            <li><a href="#principle-05"><span class="p-toc-num">05</span><span>Config in env</span></a></li>
+            <li><a href="#principle-06"><span class="p-toc-num">06</span><span>Modular ETL</span></a></li>
+            <li><a href="#principle-07"><span class="p-toc-num">07</span><span>Features in<br />warehouse</span></a>
+            </li>
+        </ul>
+    </aside>
 
     <!-- NAV -->
     <nav>
@@ -896,7 +994,7 @@
         <!-- PRINCIPLES -->
         <section id="principles">
 
-            <div class="principle fade-up">
+            <div id="principle-01" class="principle fade-up">
                 <div class="principle-num">Principle 01</div>
                 <h2 class="principle-title">Schema is the source of truth, not Python.</h2>
                 <div class="principle-body">
@@ -919,7 +1017,7 @@
                 </div>
             </div>
 
-            <div class="principle fade-up">
+            <div id="principle-02" class="principle fade-up">
                 <div class="principle-num">Principle 02</div>
                 <h2 class="principle-title">Idempotency is a contract, not a feature.</h2>
                 <div class="principle-body">
@@ -943,7 +1041,7 @@
                 </div>
             </div>
 
-            <div class="principle fade-up">
+            <div id="principle-03" class="principle fade-up">
                 <div class="principle-num">Principle 03</div>
                 <h2 class="principle-title">Write logs assuming you will be debugging at 2am.</h2>
                 <div class="principle-body">
@@ -962,7 +1060,7 @@
                 </div>
             </div>
 
-            <div class="principle fade-up">
+            <div id="principle-04" class="principle fade-up">
                 <div class="principle-num">Principle 04</div>
                 <h2 class="principle-title">Validate before you load, not after.</h2>
                 <div class="principle-body">
@@ -987,7 +1085,7 @@
                 </div>
             </div>
 
-            <div class="principle fade-up">
+            <div id="principle-05" class="principle fade-up">
                 <div class="principle-num">Principle 05</div>
                 <h2 class="principle-title">Configuration belongs in environment variables, not in code.</h2>
                 <div class="principle-body">
@@ -1008,7 +1106,7 @@
                 </div>
             </div>
 
-            <div class="principle fade-up">
+            <div id="principle-06" class="principle fade-up">
                 <div class="principle-num">Principle 06</div>
                 <h2 class="principle-title">Modular ETL beats monolithic scripts, always.</h2>
                 <div class="principle-body">
@@ -1027,7 +1125,7 @@
                 </div>
             </div>
 
-            <div class="principle fade-up">
+            <div id="principle-07" class="principle fade-up">
                 <div class="principle-num">Principle 07</div>
                 <h2 class="principle-title">Engineer features in the warehouse, not in dashboards.</h2>
                 <div class="principle-body">
@@ -1235,6 +1333,30 @@
             }
             window.addEventListener('scroll', update, { passive: true });
             btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+        })();
+
+        /* Principles TOC scroll-spy — highlight active principle */
+        (function () {
+            const toc = document.getElementById('pToc');
+            if (!toc) return;
+            const principles = document.querySelectorAll('.principle[id]');
+            const links = toc.querySelectorAll('a');
+            const map = new Map();
+            links.forEach(a => {
+                const href = a.getAttribute('href');
+                if (href && href.startsWith('#')) map.set(href.slice(1), a);
+            });
+            const io = new IntersectionObserver(entries => {
+                entries.forEach(e => {
+                    const link = map.get(e.target.id);
+                    if (!link) return;
+                    if (e.isIntersecting) {
+                        links.forEach(l => l.classList.remove('active'));
+                        link.classList.add('active');
+                    }
+                });
+            }, { rootMargin: '-30% 0px -55% 0px', threshold: 0 });
+            principles.forEach(p => io.observe(p));
         })();
     </script>
 </body>
