@@ -1792,6 +1792,162 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* ── READ NEXT (related case studies) ─────────────────── */
+        .read-next {
+            margin-top: 2rem;
+            padding-top: 3.5rem;
+            border-top: 1px solid var(--bdr);
+        }
+
+        .read-next-eyebrow {
+            font-family: var(--fm);
+            font-size: .66rem;
+            letter-spacing: .22em;
+            text-transform: uppercase;
+            color: var(--h3);
+            margin-bottom: .5rem;
+            display: flex;
+            align-items: center;
+            gap: .6rem;
+        }
+
+        .read-next-eyebrow::before {
+            content: '';
+            width: 18px;
+            height: 1px;
+            background: var(--acc);
+        }
+
+        .read-next-h {
+            font-family: var(--fd);
+            font-size: clamp(1.4rem, 2.6vw, 1.75rem);
+            font-weight: 700;
+            letter-spacing: -.03em;
+            margin-bottom: 2rem;
+            color: var(--h1);
+        }
+
+        .read-next-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        @media(max-width:680px) {
+            .read-next-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .read-next-card {
+            display: flex;
+            flex-direction: column;
+            gap: .5rem;
+            padding: 1.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--bdr);
+            border-radius: var(--r);
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            transition: border-color .2s var(--ez), transform .2s var(--ez), box-shadow .2s var(--ez);
+        }
+
+        .read-next-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 0;
+            background: var(--acc);
+            transition: height .3s var(--ez);
+        }
+
+        .read-next-card:hover {
+            border-color: var(--bdr-hi);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, .25);
+            text-decoration: none;
+        }
+
+        .read-next-card:hover::before {
+            height: 100%;
+        }
+
+        .read-next-label {
+            font-family: var(--fm);
+            font-size: .6rem;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+            color: var(--acc);
+        }
+
+        .read-next-title {
+            font-family: var(--fd);
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--h1);
+            letter-spacing: -.02em;
+            line-height: 1.25;
+            margin-top: .1rem;
+        }
+
+        .read-next-desc {
+            font-size: .86rem;
+            color: var(--h2);
+            line-height: 1.55;
+            margin-bottom: .3rem;
+        }
+
+        .read-next-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .3rem;
+            margin-top: .2rem;
+            margin-bottom: .85rem;
+        }
+
+        .read-next-tag {
+            font-family: var(--fm);
+            font-size: .62rem;
+            padding: .18rem .5rem;
+            border: 1px solid var(--bdr);
+            border-radius: var(--rsm);
+            background: var(--bg-surf);
+            color: var(--h3);
+            letter-spacing: .04em;
+        }
+
+        .read-next-cta {
+            font-family: var(--fm);
+            font-size: .74rem;
+            color: var(--acc);
+            display: inline-flex;
+            align-items: center;
+            gap: .4rem;
+            margin-top: auto;
+            padding-bottom: 2px;
+            border-bottom: 1px solid transparent;
+            transition: gap .22s var(--ez), color .18s var(--ez), border-color .18s var(--ez);
+            align-self: flex-start;
+        }
+
+        .read-next-card:hover .read-next-cta {
+            gap: .65rem;
+            color: var(--h1);
+            border-bottom-color: var(--acc);
+        }
+
+        .read-next-cta-arrow {
+            display: inline-block;
+            transition: transform .22s var(--ez);
+        }
+
+        .read-next-card:hover .read-next-cta-arrow {
+            transform: translateX(4px);
+        }
     </style>
 </head>
 
@@ -1809,6 +1965,7 @@
             <li><a href="#decisions"><span class="cs-toc-num">05</span><span>Decisions</span></a></li>
             <li><a href="#impact"><span class="cs-toc-num">06</span><span>Impact</span></a></li>
             <li><a href="#tech"><span class="cs-toc-num">07</span><span>Tech Stack</span></a></li>
+            <li><a href="#read-next"><span class="cs-toc-num">08</span><span>Other case<br />studies</span></a></li>
         </ul>
     </aside>
 
@@ -1825,6 +1982,7 @@
             <a href="#schema">Schema</a>
             <a href="#decisions">Decisions</a>
             <a href="#impact">Impact</a>
+            <a href="#read-next">Other case studies</a>
             <a href="principles.html">Principles</a>
             <a href="index.html">← Portfolio</a>
         </div>
@@ -2300,6 +2458,38 @@
                         Get in touch
                     </a>
                 </div>
+            </div>
+        </section>
+
+        <!-- READ NEXT — other case studies -->
+        <section id="read-next" class="read-next" aria-label="Other case studies">
+            <div class="read-next-eyebrow">Read next</div>
+            <h2 class="read-next-h">Other case studies</h2>
+            <div class="read-next-grid">
+                <a href="chocodelight.html" class="read-next-card">
+                    <div class="read-next-label">Case study · Layered platform</div>
+                    <div class="read-next-title">ChocoDelight Data Platform</div>
+                    <p class="read-next-desc">Three-schema PostgreSQL warehouse on chocolate sales data, with raw,
+                        operational, and analytics layers and a full dimensional model.</p>
+                    <div class="read-next-tags">
+                        <span class="read-next-tag">Python</span>
+                        <span class="read-next-tag">PostgreSQL</span>
+                        <span class="read-next-tag">SQLAlchemy</span>
+                    </div>
+                    <span class="read-next-cta">Read the case study<span class="read-next-cta-arrow">→</span></span>
+                </a>
+                <a href="aliexpress.html" class="read-next-card">
+                    <div class="read-next-label">Case study · Live web scraping</div>
+                    <div class="read-next-title">AliExpress Laptop ETL</div>
+                    <p class="read-next-desc">A live scraping pipeline that walks 60 pages of AliExpress laptop
+                        listings, enriches with discount metrics, and appends only new rows to PostgreSQL.</p>
+                    <div class="read-next-tags">
+                        <span class="read-next-tag">Selenium</span>
+                        <span class="read-next-tag">BeautifulSoup</span>
+                        <span class="read-next-tag">PostgreSQL</span>
+                    </div>
+                    <span class="read-next-cta">Read the case study<span class="read-next-cta-arrow">→</span></span>
+                </a>
             </div>
         </section>
 
