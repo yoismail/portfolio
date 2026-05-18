@@ -1,38 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8" />
-    <title>FibbieBanks Case Study | Yomi Ismail</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <meta name="description"
-        content="FibbieBanks: A 1M-row PySpark ETL pipeline for synthetic banking transactions, with a validated star schema warehouse, deterministic SHA-256 surrogate keys, and PostgreSQL as the analytics destination." />
+<meta charset="UTF-8"/>
+<title>FibbieBanks Case Study | Yomi Ismail</title>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="description" content="FibbieBanks: A 1M-row PySpark ETL pipeline for synthetic banking transactions, with a validated star schema warehouse, deterministic SHA-256 surrogate keys, and PostgreSQL as the analytics destination."/>
 
-    <!-- Favicon -->
-    <link rel="icon" href="svg/favicon.svg" type="image/svg+xml" />
-    <link rel="alternate icon" href="svg/favicon.svg" />
+<!-- Favicon -->
+<link rel="icon" href="svg/favicon.svg" type="image/svg+xml"/>
+<link rel="alternate icon" href="svg/favicon.svg"/>
 
-    <meta name="theme-color" content="#000000" />
-    <!-- Open Graph -->
-    <meta property="og:type" content="article" />
-    <meta property="og:title" content="FibbieBanks | 1M-Row PySpark ETL & Star Schema Warehouse" />
-    <meta property="og:description"
-        content="A distributed ETL pipeline processing 1 million synthetic banking transactions into a validated PostgreSQL star schema with deterministic surrogate keys and idempotent loads. By Yomi Ismail, Data Engineer." />
-    <meta property="og:image" content="og-fibbiebanks.svg" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="FibbieBanks PySpark ETL pipeline case study by Yomi Ismail" />
-    <meta property="og:locale" content="en_GB" />
+<meta name="theme-color" content="#000000"/>
+<!-- Open Graph -->
+<meta property="og:type" content="article"/>
+<meta property="og:title" content="FibbieBanks | 1M-Row PySpark ETL & Star Schema Warehouse"/>
+<meta property="og:description" content="A distributed ETL pipeline processing 1 million synthetic banking transactions into a validated PostgreSQL star schema with deterministic surrogate keys and idempotent loads. By Yomi Ismail, Data Engineer."/>
+<meta property="og:image" content="og-fibbiebanks.svg"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta property="og:image:alt" content="FibbieBanks PySpark ETL pipeline case study by Yomi Ismail"/>
+<meta property="og:locale" content="en_GB"/>
 
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="FibbieBanks Case Study | Yomi Ismail" />
-    <meta name="twitter:description"
-        content="1M-row PySpark ETL pipeline with a validated PostgreSQL star schema warehouse and deterministic surrogate keys." />
-    <meta name="twitter:image" content="og-fibbiebanks.svg" />
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="FibbieBanks Case Study | Yomi Ismail"/>
+<meta name="twitter:description" content="1M-row PySpark ETL pipeline with a validated PostgreSQL star schema warehouse and deterministic surrogate keys."/>
+<meta name="twitter:image" content="og-fibbiebanks.svg"/>
 
-    <!-- Schema.org structured data -->
-    <script type="application/ld+json">
+<!-- Schema.org structured data -->
+<script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": ["TechArticle", "CreativeWork"],
@@ -82,1796 +78,995 @@
 }
 </script>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Geist:wght@400;500;600&family=Syne:wght@400;600;700;800&display=swap"
-        rel="stylesheet" />
-    <style>
-        /* ── DARK TOKENS ──────────────────────────────────────── */
-        :root {
-            --bg: #050402;
-            --bg-surf: #100d09;
-            --bg-card: #15130f;
-            --bg-card2: #1c1914;
-            --bdr: rgba(255, 255, 255, .07);
-            --bdr-hi: rgba(16, 185, 129, .5);
-
-            --h1: #f3eee5;
-            --h2: #c9c2b3;
-            --h3: #62594c;
-
-            --acc: #10b981;
-            --acc-s: rgba(16, 185, 129, .1);
-            --acc-2: #34d399;
-            --green: #34d399;
-            --teal: #2dd4bf;
-            --amber: #f59e0b;
-
-            --r: 1rem;
-            --rsm: .55rem;
-            --nav: 68px;
-            --fs: "Syne", "Inter", sans-serif;
-            --fd: "Syne", "Inter", sans-serif;
-            --fm: "Geist Mono", "JetBrains Mono", monospace;
-            --fb: "Geist", "Inter", sans-serif;
-            --ez: cubic-bezier(.22, 1, .36, 1);
-        }
-
-        *,
-        *::before,
-        *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        html {
-            scroll-behavior: smooth;
-            scroll-padding-top: 88px;
-        }
-
-        body {
-            font-family: var(--fb);
-            background: var(--bg);
-            color: var(--h2);
-            line-height: 1.6;
-            letter-spacing: -.005em;
-            -webkit-font-smoothing: antialiased;
-            text-rendering: optimizeLegibility;
-            overflow-x: hidden;
-        }
-
-        ::selection {
-            background: var(--acc-s);
-            color: var(--h1);
-        }
-
-        a {
-            color: var(--acc);
-            text-decoration: none;
-            transition: color .18s var(--ez);
-        }
-
-        a:hover {
-            color: var(--acc-2);
-            text-decoration: underline;
-            text-underline-offset: 3px;
-        }
-
-        /* ── NAV ──────────────────────────────────────────────── */
-        nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: var(--nav);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 clamp(1rem, 4vw, 2.5rem);
-            background: rgba(6, 7, 8, .78);
-            backdrop-filter: blur(18px) saturate(180%);
-            -webkit-backdrop-filter: blur(18px) saturate(180%);
-            border-bottom: 1px solid var(--bdr);
-            z-index: 200;
-            gap: 1rem;
-        }
-
-        .nav-brand {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            text-decoration: none;
-            white-space: nowrap;
-            flex-shrink: 0;
-            line-height: 1.1;
-            gap: .1rem;
-        }
-
-        .nav-brand .name {
-            font-family: var(--fd);
-            font-weight: 700;
-            font-size: .95rem;
-            color: var(--h1);
-            letter-spacing: -.02em;
-        }
-
-        .nav-brand .title {
-            font-family: var(--fm);
-            font-size: .6rem;
-            color: var(--acc);
-            letter-spacing: .14em;
-            text-transform: uppercase;
-        }
-
-        .nav-brand:hover {
-            text-decoration: none;
-        }
-
-        @media(max-width:600px) {
-            .nav-brand .name {
-                font-size: .85rem;
-            }
-
-            .nav-brand .title {
-                font-size: .55rem;
-                letter-spacing: .1em;
-            }
-        }
-
-        @media(max-width:420px) {
-            .nav-brand .title {
-                display: none;
-            }
-
-            .nav-brand .name {
-                font-size: .82rem;
-            }
-        }
-
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: .15rem;
-            flex: 1;
-            justify-content: flex-end;
-            overflow-x: auto;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        .nav-links::-webkit-scrollbar {
-            display: none;
-        }
-
-        .nav-links a {
-            font-size: .78rem;
-            color: var(--h3);
-            padding: .4rem .8rem;
-            border-radius: var(--rsm);
-            transition: color .18s, background .18s;
-            position: relative;
-            flex-shrink: 0;
-            white-space: nowrap;
-        }
-
-        .nav-links a:hover {
-            color: var(--h1);
-            background: var(--acc-s);
-            text-decoration: none;
-        }
-
-        @media(max-width:900px) {
-            .nav-links {
-                justify-content: flex-start;
-            }
-        }
-
-        .nav-links a.active {
-            color: var(--acc);
-            background: var(--acc-s);
-        }
-
-        /* ── PAGE WRAPPER ─────────────────────────────────────── */
-        .page {
-            max-width: 960px;
-            margin: 0 auto;
-            padding: calc(var(--nav) + 3rem) 1.5rem 5rem;
-        }
-
-        /* ── CASE STUDY HERO ──────────────────────────────────── */
-        .cs-hero {
-            padding-bottom: 2.5rem;
-            border-bottom: 1px solid var(--bdr);
-            margin-bottom: 3rem;
-        }
-
-        .cs-meta {
-            font-family: var(--fm);
-            font-size: .66rem;
-            color: var(--h3);
-            letter-spacing: .22em;
-            text-transform: uppercase;
-            display: flex;
-            align-items: center;
-            gap: .6rem;
-            margin-bottom: 1rem;
-        }
-
-        .cs-meta::before {
-            content: '';
-            width: 18px;
-            height: 1px;
-            background: var(--acc);
-        }
-
-        .back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: .4rem;
-            font-family: var(--fm);
-            font-size: .7rem;
-            color: var(--h3);
-            text-decoration: none;
-            margin-bottom: 1.5rem;
-            transition: color .18s, gap .2s var(--ez);
-        }
-
-        .back-link:hover {
-            color: var(--acc);
-            gap: .6rem;
-            text-decoration: none;
-        }
-
-        /* Cross-case-study quick switcher */
-        .cs-switcher {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: .4rem;
-            margin-bottom: 1.75rem;
-            padding: .55rem .7rem;
-            background: var(--bg-surf);
-            border: 1px solid var(--bdr);
-            border-radius: 999px;
-            font-family: var(--fm);
-            font-size: .66rem;
-            width: fit-content;
-            max-width: 100%;
-        }
-
-        .cs-switcher-label {
-            color: var(--h3);
-            letter-spacing: .14em;
-            text-transform: uppercase;
-            padding: 0 .3rem 0 .4rem;
-        }
-
-        .cs-switcher-link {
-            padding: .32rem .75rem;
-            border-radius: 999px;
-            color: var(--h2);
-            text-decoration: none;
-            letter-spacing: .02em;
-            transition: color .18s, background .18s;
-            white-space: nowrap;
-        }
-
-        .cs-switcher-link:hover {
-            color: var(--acc);
-            background: var(--acc-s);
-            text-decoration: none;
-        }
-
-        .cs-switcher-link.current {
-            color: var(--acc);
-            background: var(--acc-s);
-            cursor: default;
-            pointer-events: none;
-        }
-
-        @media(max-width:520px) {
-            .cs-switcher {
-                font-size: .6rem;
-                padding: .45rem .55rem;
-            }
-
-            .cs-switcher-label {
-                display: none;
-            }
-
-            .cs-switcher-link {
-                padding: .28rem .6rem;
-            }
-        }
-
-        .cs-title {
-            font-family: var(--fd);
-            font-size: clamp(2rem, 5vw, 3.4rem);
-            font-weight: 800;
-            letter-spacing: -.04em;
-            line-height: 1.05;
-            margin-bottom: 1.1rem;
-            color: var(--h1);
-        }
-
-        .cs-title .acc {
-            color: var(--acc);
-        }
-
-        .cs-title .hi {
-            background: linear-gradient(115deg, #10b981 0%, #34d399 50%, #2dd4bf 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            color: transparent;
-        }
-
-        .cs-lede {
-            font-size: 1rem;
-            line-height: 1.75;
-            color: var(--h2);
-            max-width: 680px;
-            margin-bottom: 2rem;
-        }
-
-        /* hero kicker — small accent eyebrow above title */
-        .kicker {
-            font-family: var(--fm);
-            font-size: .66rem;
-            letter-spacing: .2em;
-            text-transform: uppercase;
-            color: var(--acc);
-            margin-bottom: .6rem;
-            display: flex;
-            align-items: center;
-            gap: .5rem;
-        }
-
-        .kicker::before {
-            content: '';
-            width: 16px;
-            height: 1.5px;
-            background: var(--acc);
-            border-radius: 1px;
-            flex-shrink: 0;
-        }
-
-        /* meta-row — subtle pill labels below subtitle */
-        .meta-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: .5rem;
-            margin-bottom: 2rem;
-        }
-
-        .meta-pill {
-            font-family: var(--fm);
-            font-size: .7rem;
-            padding: .32rem .85rem;
-            border-radius: 999px;
-            border: 1px solid var(--bdr);
-            background: var(--bg-surf);
-            color: var(--h3);
-            letter-spacing: .04em;
-        }
-
-        .meta-pill.acc {
-            border-color: rgba(16, 185, 129, .4);
-            color: var(--acc);
-            background: var(--acc-s);
-        }
-
-        /* stat-strip — horizontal row of hero stat cells */
-        .stat-strip {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 1px;
-            background: var(--bdr);
-            border: 1px solid var(--bdr);
-            border-radius: var(--r);
-            overflow: hidden;
-            position: relative;
-            z-index: 1;
-            margin-bottom: 2rem;
-        }
-
-        .stat-strip::before {
-            content: '';
-            position: absolute;
-            inset: -40px;
-            background: radial-gradient(ellipse at 30% 50%, rgba(16, 185, 129, .18), transparent 60%),
-                radial-gradient(ellipse at 80% 50%, rgba(45, 212, 191, .12), transparent 60%);
-            pointer-events: none;
-            z-index: -1;
-            filter: blur(20px);
-        }
-
-        .stat-cell {
-            background: var(--bg-card);
-            padding: 1.25rem 1.4rem;
-            transition: background .18s;
-        }
-
-        .stat-cell:hover {
-            background: var(--bg-card2);
-        }
-
-        .stat-num {
-            font-family: var(--fd);
-            font-size: 1.8rem;
-            font-weight: 800;
-            color: var(--h1);
-            line-height: 1;
-            margin-bottom: .3rem;
-        }
-
-        .stat-label {
-            font-family: var(--fm);
-            font-size: .62rem;
-            letter-spacing: .08em;
-            text-transform: uppercase;
-            color: var(--h3);
-        }
-
-        .cs-pills {
-            display: flex;
-            flex-wrap: wrap;
-            gap: .45rem;
-            margin-bottom: 2rem;
-        }
-
-        .cs-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: .4rem;
-            padding: .4rem .85rem;
-            background: var(--bg-surf);
-            border: 1px solid var(--bdr);
-            border-radius: 999px;
-            font-family: var(--fm);
-            font-size: .66rem;
-            color: var(--h2);
-            letter-spacing: .04em;
-        }
-
-        .cs-pill.acc {
-            background: var(--acc-s);
-            border-color: rgba(16, 185, 129, .32);
-            color: var(--acc);
-        }
-
-        .cs-pill svg {
-            opacity: .85;
-        }
-
-        .cs-cta-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: .6rem;
-        }
-
-        .btn-primary,
-        .btn-ghost {
-            display: inline-flex;
-            align-items: center;
-            gap: .5rem;
-            padding: .7rem 1.15rem;
-            border-radius: var(--rsm);
-            font-family: var(--fm);
-            font-size: .74rem;
-            letter-spacing: .04em;
-            transition: all .2s var(--ez);
-            text-decoration: none;
-        }
-
-        .btn-primary {
-            background: var(--acc);
-            color: #fff;
-            font-weight: 600;
-        }
-
-        .btn-primary:hover {
-            background: var(--acc-2);
-            transform: translateY(-1px);
-            text-decoration: none;
-            color: #fff;
-            box-shadow: 0 8px 24px rgba(16, 185, 129, .3);
-        }
-
-        .btn-ghost {
-            background: transparent;
-            color: var(--h2);
-            border: 1px solid var(--bdr);
-        }
-
-        .btn-ghost:hover {
-            background: var(--bg-surf);
-            color: var(--h1);
-            border-color: var(--bdr-hi);
-            text-decoration: none;
-        }
-
-        /* ── STICKY SIDE TOC (desktop only) ───────────────────── */
-        .cs-toc {
-            position: fixed;
-            top: calc(var(--nav) + 3rem);
-            left: 1.75rem;
-            width: 170px;
-            z-index: 50;
-            font-family: var(--fm);
-            display: none;
-            opacity: 0;
-            transform: translateX(-8px);
-            transition: opacity .4s var(--ez), transform .4s var(--ez);
-        }
-
-        @media(min-width:1400px) {
-            .cs-toc {
-                display: block;
-            }
-        }
-
-        .cs-toc.show {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        .cs-toc-label {
-            font-size: .58rem;
-            letter-spacing: .18em;
-            color: var(--h3);
-            text-transform: uppercase;
-            margin-bottom: 1rem;
-            padding-bottom: .55rem;
-            border-bottom: 1px solid var(--bdr);
-            display: flex;
-            align-items: center;
-            gap: .5rem;
-        }
-
-        .cs-toc-label::before {
-            content: '';
-            width: 14px;
-            height: 1.5px;
-            background: var(--acc);
-            border-radius: 1px;
-        }
-
-        .cs-toc ul {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: .05rem;
-        }
-
-        .cs-toc a {
-            display: flex;
-            gap: .55rem;
-            align-items: flex-start;
-            font-size: .72rem;
-            color: var(--h3);
-            text-decoration: none;
-            padding: .4rem 0 .4rem .65rem;
-            border-left: 1px solid var(--bdr);
-            transition: color .2s, border-color .2s, padding-left .2s var(--ez);
-            line-height: 1.4;
-        }
-
-        .cs-toc a:hover {
-            color: var(--h2);
-            border-left-color: var(--h3);
-            padding-left: .85rem;
-            text-decoration: none;
-        }
-
-        .cs-toc a.active {
-            color: var(--acc);
-            border-left-color: var(--acc);
-            border-left-width: 2px;
-            padding-left: .8rem;
-            font-weight: 500;
-        }
-
-        .cs-toc-num {
-            font-size: .62rem;
-            color: var(--acc);
-            min-width: 18px;
-            flex-shrink: 0;
-            letter-spacing: .04em;
-            padding-top: .05rem;
-        }
-
-        /* ── SECTION COMMON ───────────────────────────────────── */
-        section {
-            margin-bottom: 4rem;
-            scroll-margin-top: 90px;
-        }
-
-        .sec-alt {
-            background: var(--bg-surf);
-            margin-left: calc(-1 * 1.5rem);
-            margin-right: calc(-1 * 1.5rem);
-            padding: 3.5rem 1.5rem;
-            border-radius: var(--r);
-        }
-
-        .sec-kicker {
-            font-family: var(--fm);
-            font-size: .62rem;
-            color: var(--acc);
-            letter-spacing: .22em;
-            text-transform: uppercase;
-            display: flex;
-            align-items: center;
-            gap: .55rem;
-            margin-bottom: .85rem;
-        }
-
-        .sec-kicker::before {
-            content: '';
-            width: 18px;
-            height: 1px;
-            background: var(--acc);
-        }
-
-        .sec-num {
-            font-family: var(--fm);
-            font-size: .62rem;
-            color: var(--h3);
-            letter-spacing: .05em;
-            margin-right: .2rem;
-        }
-
-        .sec-h {
-            font-family: var(--fd);
-            font-size: clamp(1.75rem, 3.2vw, 2.4rem);
-            font-weight: 700;
-            letter-spacing: -.03em;
-            line-height: 1.15;
-            margin-bottom: 1.5rem;
-            color: var(--h1);
-        }
-
-        .sec-h .acc {
-            color: var(--acc);
-        }
-
-        .sec-p {
-            font-size: 1rem;
-            line-height: 1.7;
-            margin-bottom: 1rem;
-            color: var(--h2);
-        }
-
-        .sec-p.lede {
-            font-size: 1.08rem;
-            color: var(--h2);
-        }
-
-        .sec-p strong {
-            color: var(--h1);
-            font-weight: 600;
-        }
-
-        /* ── CARDS / GRID PATTERNS ────────────────────────────── */
-        .grid-2 {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-
-        @media(max-width:680px) {
-            .grid-2 {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .grid-3 {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-
-        @media(max-width:680px) {
-            .grid-3 {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .grid-4 {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-
-        @media(max-width:900px) {
-            .grid-4 {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        .card {
-            padding: 1.4rem 1.5rem;
-            background: var(--bg-card);
-            border: 1px solid var(--bdr);
-            border-radius: var(--r);
-            transition: border-color .2s, transform .2s var(--ez);
-        }
-
-        .card:hover {
-            border-color: var(--bdr-hi);
-            transform: translateY(-2px);
-        }
-
-        .card-eyebrow {
-            font-family: var(--fm);
-            font-size: .6rem;
-            color: var(--acc);
-            letter-spacing: .18em;
-            text-transform: uppercase;
-            margin-bottom: .6rem;
-        }
-
-        .card-title {
-            font-family: var(--fd);
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--h1);
-            letter-spacing: -.01em;
-            margin-bottom: .4rem;
-        }
-
-        .card-desc {
-            font-size: .86rem;
-            color: var(--h2);
-            line-height: 1.55;
-        }
-
-        .card code {
-            font-family: var(--fm);
-            font-size: .78em;
-            background: var(--bg-surf);
-            color: var(--acc-2);
-            padding: .05em .35em;
-            border-radius: .3em;
-        }
-
-        /* ── IMPACT NUMBERS ───────────────────────────────────── */
-        .impact-num {
-            font-family: var(--fd);
-            font-size: clamp(1.6rem, 4vw, 2.4rem);
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: .55rem;
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            color: transparent;
-            filter: drop-shadow(0 4px 16px currentColor);
-            word-break: break-word;
-            overflow-wrap: break-word;
-            letter-spacing: -.02em;
-        }
-
-        .impact-num.acc {
-            background-image: linear-gradient(135deg, #10b981, #34d399);
-            color: #10b981;
-        }
-
-        .impact-num.green {
-            background-image: linear-gradient(135deg, #10b981, #34d399);
-            color: #10b981;
-        }
-
-        .impact-num.teal {
-            background-image: linear-gradient(135deg, #22d3ee, #2dd4bf);
-            color: #22d3ee;
-        }
-
-        .impact-num.amber {
-            background-image: linear-gradient(135deg, #fbbf24, #f59e0b);
-            color: #fbbf24;
-        }
-
-        .impact-card {
-            padding: 1.5rem 1.4rem;
-            background: var(--bg-card);
-            border: 1px solid var(--bdr);
-            border-radius: var(--r);
-            transition: transform .25s var(--ez), border-color .25s;
-        }
-
-        .impact-card:hover {
-            transform: translateY(-3px);
-            border-color: var(--bdr-hi);
-        }
-
-        .impact-label {
-            font-family: var(--fm);
-            font-size: .78rem;
-            color: var(--h1);
-            font-weight: 500;
-            line-height: 1.4;
-        }
-
-        .impact-desc {
-            font-size: .78rem;
-            color: var(--h3);
-            line-height: 1.5;
-            margin-top: .4rem;
-        }
-
-        /* ── CODE BLOCKS ──────────────────────────────────────── */
-        .code-block {
-            background: #020812;
-            border: 1px solid var(--bdr);
-            border-radius: var(--r);
-            padding: 1.25rem 1.4rem;
-            margin: 1.25rem 0;
-            font-family: var(--fm);
-            font-size: .78rem;
-            line-height: 1.65;
-            color: var(--h2);
-            overflow-x: auto;
-            position: relative;
-        }
-
-        .code-block-label {
-            position: absolute;
-            top: .8rem;
-            right: 1rem;
-            font-family: var(--fm);
-            font-size: .58rem;
-            color: var(--h3);
-            letter-spacing: .18em;
-            text-transform: uppercase;
-        }
-
-        .code-block pre {
-            margin: 0;
-            font-family: inherit;
-            color: inherit;
-        }
-
-        .code-block .comment {
-            color: #5d6b85;
-            font-style: italic;
-        }
-
-        .code-block .keyword {
-            color: #c084fc;
-        }
-
-        .code-block .string {
-            color: #86efac;
-        }
-
-        .code-block .fn {
-            color: #34d399;
-        }
-
-        .code-block .num {
-            color: #fbbf24;
-        }
-
-        .code-block .self {
-            color: #f87171;
-        }
-
-        /* ── INLINE CODE ──────────────────────────────────────── */
-        code {
-            font-family: var(--fm);
-            font-size: .84em;
-            background: var(--bg-surf);
-            color: var(--acc-2);
-            padding: .1em .4em;
-            border-radius: .3em;
-            border: 1px solid var(--bdr);
-        }
-
-        /* ── CALLOUT BOXES ────────────────────────────────────── */
-        .callout {
-            margin: 1.5rem 0;
-            padding: 1.2rem 1.4rem;
-            background: var(--acc-s);
-            border-left: 3px solid var(--acc);
-            border-radius: .6rem;
-        }
-
-        .callout-label {
-            font-family: var(--fm);
-            font-size: .6rem;
-            color: var(--acc);
-            letter-spacing: .2em;
-            text-transform: uppercase;
-            margin-bottom: .45rem;
-        }
-
-        .callout-text {
-            font-size: .95rem;
-            line-height: 1.6;
-            color: var(--h2);
-        }
-
-        .callout-text strong {
-            color: var(--h1);
-        }
-
-        /* ── DECISION CARDS ───────────────────────────────────── */
-        .decision-card {
-            padding: 1.6rem 1.6rem;
-            background: var(--bg-card);
-            border: 1px solid var(--bdr);
-            border-radius: var(--r);
-            margin-bottom: 1rem;
-            position: relative;
-            transition: border-color .2s;
-        }
-
-        .decision-card:hover {
-            border-color: var(--bdr-hi);
-        }
-
-        .decision-num {
-            position: absolute;
-            top: 1.3rem;
-            right: 1.4rem;
-            font-family: var(--fd);
-            font-size: clamp(1.6rem, 4.5vw, 2.6rem);
-            font-weight: 800;
-            color: var(--acc);
-            opacity: .18;
-            line-height: 1;
-            letter-spacing: -.03em;
-            pointer-events: none;
-        }
-
-        .decision-q {
-            font-family: var(--fd);
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--h1);
-            letter-spacing: -.02em;
-            margin-bottom: .7rem;
-            padding-right: clamp(2rem, 10vw, 3.5rem);
-        }
-
-        .decision-a {
-            font-size: .93rem;
-            line-height: 1.65;
-            color: var(--h2);
-        }
-
-        .decision-a strong {
-            color: var(--h1);
-        }
-
-        @media(max-width:560px) {
-            .decision-card {
-                padding: 1.3rem 1.3rem;
-            }
-
-            .decision-num {
-                position: static;
-                display: block;
-                font-size: 1.5rem;
-                margin-bottom: .5rem;
-                opacity: .4;
-                line-height: 1;
-            }
-
-            .decision-q {
-                padding-right: 0;
-                font-size: 1rem;
-            }
-        }
-
-        /* ── ARCHITECTURE FLOW VISUAL ─────────────────────────── */
-        .flow {
-            display: flex;
-            flex-direction: column;
-            gap: .4rem;
-            margin: 1.5rem 0;
-            padding: 1.5rem 1.2rem;
-            background: var(--bg-card);
-            border: 1px solid var(--bdr);
-            border-radius: var(--r);
-        }
-
-        .flow-stage {
-            display: flex;
-            align-items: center;
-            gap: .9rem;
-            padding: .85rem 1rem;
-            background: var(--bg-surf);
-            border: 1px solid var(--bdr);
-            border-radius: .65rem;
-            transition: border-color .2s, transform .2s var(--ez);
-        }
-
-        .flow-stage:hover {
-            border-color: var(--bdr-hi);
-            transform: translateX(3px);
-        }
-
-        .flow-step {
-            font-family: var(--fm);
-            font-size: .62rem;
-            color: var(--acc);
-            letter-spacing: .15em;
-            min-width: 34px;
-            flex-shrink: 0;
-        }
-
-        .flow-name {
-            font-family: var(--fd);
-            font-size: .95rem;
-            font-weight: 600;
-            color: var(--h1);
-            letter-spacing: -.01em;
-            flex-shrink: 0;
-        }
-
-        .flow-detail {
-            font-size: .78rem;
-            color: var(--h3);
-            line-height: 1.4;
-            margin-left: auto;
-            text-align: right;
-            font-family: var(--fm);
-            letter-spacing: .02em;
-        }
-
-        .flow-arrow {
-            align-self: center;
-            color: var(--h3);
-            font-size: .95rem;
-            margin: -.2rem 0;
-        }
-
-        @media(max-width:520px) {
-            .flow-stage {
-                flex-wrap: wrap;
-            }
-
-            .flow-detail {
-                margin-left: 0;
-                text-align: left;
-                width: 100%;
-            }
-        }
-
-        /* ── SCHEMA TABLE ─────────────────────────────────────── */
-        .schema-table {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: .7rem;
-            margin: 1.25rem 0 1rem;
-        }
-
-        @media(max-width:680px) {
-            .schema-table {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .schema-card {
-            padding: 1.1rem 1.2rem;
-            background: var(--bg-card);
-            border: 1px solid var(--bdr);
-            border-radius: .7rem;
-            transition: border-color .2s;
-        }
-
-        .schema-card:hover {
-            border-color: var(--bdr-hi);
-        }
-
-        .schema-card.fact {
-            border-color: rgba(16, 185, 129, .32);
-            background: linear-gradient(135deg, var(--bg-card), rgba(16, 185, 129, .04));
-        }
-
-        .schema-card-name {
-            font-family: var(--fm);
-            font-size: .78rem;
-            color: var(--acc);
-            letter-spacing: .04em;
-            margin-bottom: .55rem;
-            font-weight: 500;
-        }
-
-        .schema-card.fact .schema-card-name {
-            color: var(--acc-2);
-            font-weight: 600;
-        }
-
-        .schema-card-cols {
-            font-family: var(--fm);
-            font-size: .72rem;
-            color: var(--h3);
-            line-height: 1.6;
-        }
-
-        .schema-card-cols .pk {
-            color: var(--acc);
-        }
-
-        .schema-card-cols .fk {
-            color: var(--amber);
-        }
-
-        /* ── TECH STACK ───────────────────────────────────────── */
-        .tech-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: .65rem;
-            margin-top: 1.25rem;
-        }
-
-        .tech-item {
-            padding: .85rem 1rem;
-            background: var(--bg-card);
-            border: 1px solid var(--bdr);
-            border-radius: .6rem;
-            font-family: var(--fm);
-            font-size: .78rem;
-            color: var(--h2);
-            letter-spacing: .02em;
-            display: flex;
-            flex-direction: column;
-            gap: .25rem;
-            transition: border-color .2s, transform .2s var(--ez);
-        }
-
-        .tech-item:hover {
-            border-color: var(--bdr-hi);
-            transform: translateY(-1px);
-        }
-
-        .tech-name {
-            color: var(--h1);
-            font-weight: 500;
-        }
-
-        .tech-role {
-            color: var(--h3);
-            font-size: .66rem;
-            letter-spacing: .04em;
-        }
-
-        /* ── READ NEXT (related case studies) ─────────────────── */
-        .read-next {
-            margin-top: 2rem;
-            padding-top: 3.5rem;
-            border-top: 1px solid var(--bdr);
-        }
-
-        .read-next-eyebrow {
-            font-family: var(--fm);
-            font-size: .66rem;
-            letter-spacing: .22em;
-            text-transform: uppercase;
-            color: var(--h3);
-            margin-bottom: .5rem;
-            display: flex;
-            align-items: center;
-            gap: .6rem;
-        }
-
-        .read-next-eyebrow::before {
-            content: '';
-            width: 18px;
-            height: 1px;
-            background: var(--acc);
-        }
-
-        .read-next-h {
-            font-family: var(--fd);
-            font-size: clamp(1.4rem, 2.6vw, 1.75rem);
-            font-weight: 700;
-            letter-spacing: -.03em;
-            margin-bottom: 2rem;
-            color: var(--h1);
-        }
-
-        .read-next-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-        }
-
-        @media(max-width:680px) {
-            .read-next-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .read-next-card {
-            display: flex;
-            flex-direction: column;
-            gap: .5rem;
-            padding: 1.5rem;
-            background: var(--bg-card);
-            border: 1px solid var(--bdr);
-            border-radius: var(--r);
-            text-decoration: none;
-            position: relative;
-            overflow: hidden;
-            transition: border-color .2s var(--ez), transform .2s var(--ez), box-shadow .2s var(--ez);
-        }
-
-        .read-next-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 3px;
-            height: 0;
-            background: var(--acc);
-            transition: height .3s var(--ez);
-        }
-
-        .read-next-card:hover {
-            border-color: var(--bdr-hi);
-            transform: translateY(-3px);
-            box-shadow: 0 12px 32px rgba(0, 0, 0, .25);
-            text-decoration: none;
-        }
-
-        .read-next-card:hover::before {
-            height: 100%;
-        }
-
-        .read-next-label {
-            font-family: var(--fm);
-            font-size: .6rem;
-            letter-spacing: .16em;
-            text-transform: uppercase;
-            color: var(--acc);
-        }
-
-        .read-next-title {
-            font-family: var(--fd);
-            font-size: 1.15rem;
-            font-weight: 600;
-            color: var(--h1);
-            letter-spacing: -.02em;
-            line-height: 1.25;
-            margin-top: .1rem;
-        }
-
-        .read-next-desc {
-            font-size: .86rem;
-            color: var(--h2);
-            line-height: 1.55;
-            margin-bottom: .3rem;
-        }
-
-        .read-next-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: .3rem;
-            margin-top: .2rem;
-            margin-bottom: .85rem;
-        }
-
-        .read-next-tag {
-            font-family: var(--fm);
-            font-size: .62rem;
-            padding: .18rem .5rem;
-            border: 1px solid var(--bdr);
-            border-radius: var(--rsm);
-            background: var(--bg-surf);
-            color: var(--h3);
-            letter-spacing: .04em;
-        }
-
-        .read-next-cta {
-            font-family: var(--fm);
-            font-size: .74rem;
-            color: var(--acc);
-            display: inline-flex;
-            align-items: center;
-            gap: .4rem;
-            margin-top: auto;
-            padding-bottom: 2px;
-            border-bottom: 1px solid transparent;
-            transition: gap .22s var(--ez), color .18s var(--ez), border-color .18s var(--ez);
-            align-self: flex-start;
-        }
-
-        .read-next-card:hover .read-next-cta {
-            gap: .65rem;
-            color: var(--h1);
-            border-bottom-color: var(--acc);
-        }
-
-        .read-next-cta-arrow {
-            display: inline-block;
-            transition: transform .22s var(--ez);
-        }
-
-        .read-next-card:hover .read-next-cta-arrow {
-            transform: translateX(4px);
-        }
-
-        /* ── FADE-UP ──────────────────────────────────────────── */
-        .fade-up {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity .7s var(--ez), transform .7s var(--ez);
-        }
-
-        .fade-up.in {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        @media(prefers-reduced-motion:reduce) {
-            .fade-up {
-                opacity: 1;
-                transform: none;
-            }
-        }
-
-        /* ── FOOTER ───────────────────────────────────────────── */
-        footer {
-            position: relative;
-            z-index: 1;
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 3.5rem clamp(1rem, 4vw, 2.5rem) 1.5rem;
-            border-top: 1px solid var(--bdr);
-        }
-
-        /* Top zone — site map + brand */
-        .footer-top {
-            display: grid;
-            grid-template-columns: 1.4fr 1fr 1fr 1fr;
-            gap: 2.5rem 2rem;
-            margin-bottom: 3rem;
-        }
-
-        @media(max-width:760px) {
-            .footer-top {
-                grid-template-columns: 1fr 1fr;
-                gap: 2.25rem 1.5rem;
-            }
-        }
-
-        @media(max-width:480px) {
-            .footer-top {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-        }
-
-        /* Brand block (first column) */
-        .footer-brand-block {
-            display: flex;
-            flex-direction: column;
-            gap: .85rem;
-        }
-
-        .footer-mark {
-            width: 32px;
-            height: 32px;
-            color: var(--acc);
-            opacity: .7;
-            transition: opacity .3s var(--ez), transform .3s var(--ez);
-        }
-
-        .footer-mark path,
-        .footer-mark line {
-            fill: none;
-            stroke: currentColor;
-            stroke-width: 2;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-        }
-
-        footer:hover .footer-mark {
-            opacity: 1;
-            transform: translateY(-1px);
-        }
-
-        .footer-name {
-            font-family: var(--fd);
-            font-size: 1.05rem;
-            font-weight: 700;
-            letter-spacing: -.02em;
-            color: var(--h1);
-            line-height: 1.2;
-        }
-
-        .footer-tagline {
-            font-family: var(--fm);
-            font-size: .66rem;
-            letter-spacing: .12em;
-            text-transform: uppercase;
-            color: var(--h3);
-            margin-top: .15rem;
-        }
-
-        /* Column groups */
-        .footer-col {
-            display: flex;
-            flex-direction: column;
-            gap: .85rem;
-        }
-
-        .footer-col-label {
-            font-family: var(--fm);
-            font-size: .6rem;
-            letter-spacing: .18em;
-            text-transform: uppercase;
-            color: var(--h3);
-            padding-bottom: .55rem;
-            border-bottom: 1px solid var(--bdr);
-            display: flex;
-            align-items: center;
-            gap: .5rem;
-        }
-
-        .footer-col-label::before {
-            content: '';
-            width: 14px;
-            height: 1px;
-            background: var(--acc);
-            border-radius: 1px;
-        }
-
-        .footer-col ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            gap: .6rem;
-        }
-
-        .footer-link {
-            display: inline-flex;
-            align-items: center;
-            gap: .5rem;
-            font-size: .82rem;
-            color: var(--h2);
-            text-decoration: none;
-            padding-bottom: 1px;
-            border-bottom: 1px solid transparent;
-            transition: color .18s var(--ez), border-color .18s var(--ez), gap .18s var(--ez), transform .18s var(--ez);
-            width: fit-content;
-        }
-
-        .footer-link svg {
-            flex-shrink: 0;
-            color: var(--h3);
-            transition: color .18s var(--ez);
-        }
-
-        .footer-link:hover {
-            color: var(--h1);
-            border-bottom-color: var(--acc);
-            gap: .6rem;
-            text-decoration: none;
-        }
-
-        .footer-link:hover svg {
-            color: var(--acc);
-        }
-
-        .footer-link-meta {
-            font-family: var(--fm);
-            font-size: .66rem;
-            color: var(--h3);
-            letter-spacing: .04em;
-            margin-top: .15rem;
-            display: flex;
-            align-items: center;
-            gap: .45rem;
-        }
-
-        .footer-link-meta::before {
-            content: '';
-            width: 5px;
-            height: 5px;
-            border-radius: 50%;
-            background: var(--acc);
-            opacity: .6;
-        }
-
-        /* Bottom zone — copyright + human note */
-        .footer-bottom {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: .75rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid var(--bdr);
-        }
-
-        .footer-copy {
-            font-family: var(--fm);
-            font-size: .66rem;
-            color: var(--h3);
-            letter-spacing: .06em;
-        }
-
-        .footer-note {
-            font-size: .76rem;
-            color: var(--h3);
-            font-style: italic;
-            margin: 0;
-        }
-
-        @media(max-width:560px) {
-            .footer-bottom {
-                flex-direction: column;
-                align-items: flex-start;
-                text-align: left;
-            }
-        }
-
-        /* ── BACK TO TOP ──────────────────────────────────────── */
-        .to-top {
-            position: fixed;
-            bottom: 1.5rem;
-            right: 1.5rem;
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            background: var(--acc);
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            border: none;
-            opacity: 0;
-            transform: translateY(20px);
-            pointer-events: none;
-            transition: all .25s var(--ez);
-            box-shadow: 0 8px 24px rgba(16, 185, 129, .32);
-            z-index: 200;
-        }
-
-        .to-top.show {
-            opacity: 1;
-            transform: translateY(0);
-            pointer-events: auto;
-        }
-
-        .to-top:hover {
-            transform: translateY(-3px);
-            background: var(--acc-2);
-        }
-    </style>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Geist:wght@400;500;600&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+
+/* ── DARK TOKENS ──────────────────────────────────────── */
+:root{
+  --bg:      #050402;
+  --bg-surf: #100d09;
+  --bg-card: #15130f;
+  --bg-card2:#1c1914;
+  --bdr:     rgba(255,255,255,.07);
+  --bdr-hi:  rgba(16,185,129,.5);
+
+  --h1:      #f3eee5;
+  --h2:      #c9c2b3;
+  --h3:      #62594c;
+
+  --acc:     #10b981;
+  --acc-s:   rgba(16,185,129,.1);
+  --acc-2:   #34d399;
+  --green:   #34d399;
+  --teal:    #2dd4bf;
+  --amber:   #f59e0b;
+
+  --r:       1rem;
+  --rsm:     .55rem;
+  --nav:     68px;
+  --fs:      "Syne","Inter",sans-serif;
+  --fd:      "Syne","Inter",sans-serif;
+  --fm:      "Geist Mono","JetBrains Mono",monospace;
+  --fb:      "Geist","Inter",sans-serif;
+  --ez:      cubic-bezier(.22,1,.36,1);
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;scroll-padding-top:88px;}
+body{font-family:var(--fb);background:var(--bg);color:var(--h2);line-height:1.6;letter-spacing:-.005em;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden;}
+
+::selection{background:var(--acc-s);color:var(--h1);}
+
+a{color:var(--acc);text-decoration:none;transition:color .18s var(--ez);}
+a:hover{color:var(--acc-2);text-decoration:underline;text-underline-offset:3px;}
+
+/* ── NAV ──────────────────────────────────────────────── */
+nav{
+  position:fixed;top:0;left:0;right:0;height:var(--nav);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 clamp(1rem,4vw,2.5rem);
+  background:rgba(6,7,8,.78);
+  backdrop-filter:blur(18px) saturate(180%);-webkit-backdrop-filter:blur(18px) saturate(180%);
+  border-bottom:1px solid var(--bdr);
+  z-index:200;
+  gap:1rem;
+}
+.nav-brand{
+  display:flex;flex-direction:column;justify-content:center;
+  text-decoration:none;white-space:nowrap;flex-shrink:0;
+  line-height:1.1;gap:.1rem;
+}
+.nav-brand .name{font-family:var(--fd);font-weight:700;font-size:.95rem;color:var(--h1);letter-spacing:-.02em;}
+.nav-brand .title{font-family:var(--fm);font-size:.6rem;color:var(--acc);letter-spacing:.14em;text-transform:uppercase;}
+.nav-brand:hover{text-decoration:none;}
+@media(max-width:600px){
+  .nav-brand .name{font-size:.85rem;}
+  .nav-brand .title{font-size:.55rem;letter-spacing:.1em;}
+}
+@media(max-width:420px){
+  .nav-brand .title{display:none;}
+  .nav-brand .name{font-size:.82rem;}
+}
+.nav-links{
+  display:flex;align-items:center;gap:.15rem;
+  flex:1;justify-content:flex-end;
+  overflow-x:auto;
+  scrollbar-width:none;
+  -ms-overflow-style:none;
+  -webkit-overflow-scrolling:touch;
+}
+.nav-links::-webkit-scrollbar{display:none;}
+.nav-links a{
+  font-size:.78rem;color:var(--h3);
+  padding:.4rem .8rem;border-radius:var(--rsm);
+  transition:color .18s,background .18s;
+  position:relative;flex-shrink:0;white-space:nowrap;
+}
+.nav-links a:hover{color:var(--h1);background:var(--acc-s);text-decoration:none;}
+@media(max-width:900px){.nav-links{justify-content:flex-start;}}
+.nav-links a.active{color:var(--acc);background:var(--acc-s);}
+
+/* ── PAGE WRAPPER ─────────────────────────────────────── */
+.page{
+  max-width:960px;
+  margin:0 auto;
+  padding:calc(var(--nav) + 3rem) 1.5rem 5rem;
+}
+
+/* ── CASE STUDY HERO ──────────────────────────────────── */
+.cs-hero{
+  padding-bottom:2.5rem;
+  border-bottom:1px solid var(--bdr);
+  margin-bottom:3rem;
+}
+
+.cs-meta{
+  font-family:var(--fm);font-size:.66rem;
+  color:var(--h3);letter-spacing:.22em;text-transform:uppercase;
+  display:flex;align-items:center;gap:.6rem;
+  margin-bottom:1rem;
+}
+.cs-meta::before{
+  content:'';width:18px;height:1px;background:var(--acc);
+}
+
+.back-link{
+  display:inline-flex;align-items:center;gap:.4rem;
+  font-family:var(--fm);font-size:.7rem;
+  color:var(--h3);text-decoration:none;
+  margin-bottom:1.5rem;
+  transition:color .18s,gap .2s var(--ez);
+}
+.back-link:hover{color:var(--acc);gap:.6rem;text-decoration:none;}
+
+/* Cross-case-study quick switcher */
+.cs-switcher{
+  display:flex;flex-wrap:wrap;align-items:center;gap:.4rem;
+  margin-bottom:1.75rem;padding:.55rem .7rem;
+  background:var(--bg-surf);border:1px solid var(--bdr);
+  border-radius:999px;
+  font-family:var(--fm);font-size:.66rem;
+  width:fit-content;max-width:100%;
+}
+.cs-switcher-label{
+  color:var(--h3);letter-spacing:.14em;text-transform:uppercase;
+  padding:0 .3rem 0 .4rem;
+}
+.cs-switcher-link{
+  padding:.32rem .75rem;border-radius:999px;
+  color:var(--h2);text-decoration:none;
+  letter-spacing:.02em;
+  transition:color .18s,background .18s;
+  white-space:nowrap;
+}
+.cs-switcher-link:hover{
+  color:var(--acc);background:var(--acc-s);text-decoration:none;
+}
+.cs-switcher-link.current{
+  color:var(--acc);background:var(--acc-s);
+  cursor:default;pointer-events:none;
+}
+@media(max-width:520px){
+  .cs-switcher{font-size:.6rem;padding:.45rem .55rem;}
+  .cs-switcher-label{display:none;}
+  .cs-switcher-link{padding:.28rem .6rem;}
+}
+
+.cs-title{
+  font-family:var(--fd);
+  font-size:clamp(2rem,5vw,3.4rem);
+  font-weight:800;letter-spacing:-.04em;
+  line-height:1.05;margin-bottom:1.1rem;
+  color:var(--h1);
+}
+.cs-title .acc{color:var(--acc);}
+.cs-title .hi{
+  background:linear-gradient(115deg,#10b981 0%,#34d399 50%,#2dd4bf 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+  color:transparent;
+}
+
+.cs-lede{
+  font-size:1rem;line-height:1.75;
+  color:var(--h2);max-width:680px;margin-bottom:2rem;
+}
+
+/* hero kicker — small accent eyebrow above title */
+.kicker{
+  font-family:var(--fm);font-size:.66rem;
+  letter-spacing:.2em;text-transform:uppercase;
+  color:var(--acc);margin-bottom:.6rem;
+  display:flex;align-items:center;gap:.5rem;
+}
+.kicker::before{
+  content:'';width:16px;height:1.5px;
+  background:var(--acc);border-radius:1px;flex-shrink:0;
+}
+
+/* meta-row — subtle pill labels below subtitle */
+.meta-row{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:2rem;}
+.meta-pill{
+  font-family:var(--fm);font-size:.7rem;
+  padding:.32rem .85rem;border-radius:999px;
+  border:1px solid var(--bdr);background:var(--bg-surf);
+  color:var(--h3);letter-spacing:.04em;
+}
+.meta-pill.acc{
+  border-color:rgba(16,185,129,.4);
+  color:var(--acc);background:var(--acc-s);
+}
+
+/* stat-strip — horizontal row of hero stat cells */
+.stat-strip{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+  gap:1px;background:var(--bdr);border:1px solid var(--bdr);border-radius:var(--r);
+  overflow:hidden;position:relative;z-index:1;margin-bottom:2rem;
+}
+.stat-strip::before{
+  content:'';position:absolute;inset:-40px;
+  background:radial-gradient(ellipse at 30% 50%,rgba(16,185,129,.18),transparent 60%),
+             radial-gradient(ellipse at 80% 50%,rgba(45,212,191,.12),transparent 60%);
+  pointer-events:none;z-index:-1;filter:blur(20px);
+}
+.stat-cell{
+  background:var(--bg-card);
+  padding:1.25rem 1.4rem;
+  transition:background .18s;
+}
+.stat-cell:hover{background:var(--bg-card2);}
+.stat-num{
+  font-family:var(--fd);font-size:1.8rem;font-weight:800;
+  color:var(--h1);line-height:1;margin-bottom:.3rem;
+}
+.stat-label{
+  font-family:var(--fm);font-size:.62rem;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--h3);
+}
+
+.cs-pills{display:flex;flex-wrap:wrap;gap:.45rem;margin-bottom:2rem;}
+.cs-pill{
+  display:inline-flex;align-items:center;gap:.4rem;
+  padding:.4rem .85rem;
+  background:var(--bg-surf);border:1px solid var(--bdr);
+  border-radius:999px;
+  font-family:var(--fm);font-size:.66rem;color:var(--h2);
+  letter-spacing:.04em;
+}
+.cs-pill.acc{
+  background:var(--acc-s);border-color:rgba(16,185,129,.32);color:var(--acc);
+}
+.cs-pill svg{opacity:.85;}
+
+.cs-cta-row{display:flex;flex-wrap:wrap;gap:.6rem;}
+.btn-primary,.btn-ghost{
+  display:inline-flex;align-items:center;gap:.5rem;
+  padding:.7rem 1.15rem;border-radius:var(--rsm);
+  font-family:var(--fm);font-size:.74rem;letter-spacing:.04em;
+  transition:all .2s var(--ez);
+  text-decoration:none;
+}
+.btn-primary{background:var(--acc);color:#fff;font-weight:600;}
+.btn-primary:hover{background:var(--acc-2);transform:translateY(-1px);text-decoration:none;color:#fff;box-shadow:0 8px 24px rgba(16,185,129,.3);}
+.btn-ghost{background:transparent;color:var(--h2);border:1px solid var(--bdr);}
+.btn-ghost:hover{background:var(--bg-surf);color:var(--h1);border-color:var(--bdr-hi);text-decoration:none;}
+
+/* ── STICKY SIDE TOC (desktop only) ───────────────────── */
+.cs-toc{
+  position:fixed;
+  top:calc(var(--nav) + 3rem);
+  left:1.75rem;
+  width:170px;z-index:50;
+  font-family:var(--fm);
+  display:none;
+  opacity:0;transform:translateX(-8px);
+  transition:opacity .4s var(--ez),transform .4s var(--ez);
+}
+@media(min-width:1400px){.cs-toc{display:block;}}
+.cs-toc.show{opacity:1;transform:translateX(0);}
+
+.cs-toc-label{
+  font-size:.58rem;letter-spacing:.18em;
+  color:var(--h3);text-transform:uppercase;
+  margin-bottom:1rem;padding-bottom:.55rem;
+  border-bottom:1px solid var(--bdr);
+  display:flex;align-items:center;gap:.5rem;
+}
+.cs-toc-label::before{
+  content:'';width:14px;height:1.5px;background:var(--acc);border-radius:1px;
+}
+.cs-toc ul{list-style:none;display:flex;flex-direction:column;gap:.05rem;}
+.cs-toc a{
+  display:flex;gap:.55rem;align-items:flex-start;
+  font-size:.72rem;color:var(--h3);
+  text-decoration:none;padding:.4rem 0 .4rem .65rem;
+  border-left:1px solid var(--bdr);
+  transition:color .2s,border-color .2s,padding-left .2s var(--ez);
+  line-height:1.4;
+}
+.cs-toc a:hover{
+  color:var(--h2);
+  border-left-color:var(--h3);
+  padding-left:.85rem;
+  text-decoration:none;
+}
+.cs-toc a.active{
+  color:var(--acc);
+  border-left-color:var(--acc);
+  border-left-width:2px;
+  padding-left:.8rem;
+  font-weight:500;
+}
+.cs-toc-num{font-size:.62rem;color:var(--acc);min-width:18px;flex-shrink:0;letter-spacing:.04em;padding-top:.05rem;}
+
+/* ── SECTION COMMON ───────────────────────────────────── */
+section{margin-bottom:4rem;scroll-margin-top:90px;}
+.sec-alt{
+  background:var(--bg-surf);
+  margin-left:calc(-1 * 1.5rem);
+  margin-right:calc(-1 * 1.5rem);
+  padding:3.5rem 1.5rem;
+  border-radius:var(--r);
+}
+.sec-kicker{
+  font-family:var(--fm);font-size:.62rem;
+  color:var(--acc);letter-spacing:.22em;text-transform:uppercase;
+  display:flex;align-items:center;gap:.55rem;
+  margin-bottom:.85rem;
+}
+.sec-kicker::before{
+  content:'';width:18px;height:1px;background:var(--acc);
+}
+.sec-num{
+  font-family:var(--fm);font-size:.62rem;color:var(--h3);
+  letter-spacing:.05em;margin-right:.2rem;
+}
+.sec-h{
+  font-family:var(--fd);font-size:clamp(1.75rem,3.2vw,2.4rem);
+  font-weight:700;letter-spacing:-.03em;
+  line-height:1.15;margin-bottom:1.5rem;color:var(--h1);
+}
+.sec-h .acc{color:var(--acc);}
+.sec-p{font-size:1rem;line-height:1.7;margin-bottom:1rem;color:var(--h2);}
+.sec-p.lede{font-size:1.08rem;color:var(--h2);}
+.sec-p strong{color:var(--h1);font-weight:600;}
+
+/* ── CARDS / GRID PATTERNS ────────────────────────────── */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1.5rem;}
+@media(max-width:680px){.grid-2{grid-template-columns:1fr;}}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1.5rem;}
+@media(max-width:680px){.grid-3{grid-template-columns:1fr;}}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:1.5rem;}
+@media(max-width:900px){.grid-4{grid-template-columns:repeat(2,1fr);}}
+
+.card{
+  padding:1.4rem 1.5rem;
+  background:var(--bg-card);
+  border:1px solid var(--bdr);
+  border-radius:var(--r);
+  transition:border-color .2s,transform .2s var(--ez);
+}
+.card:hover{border-color:var(--bdr-hi);transform:translateY(-2px);}
+.card-eyebrow{
+  font-family:var(--fm);font-size:.6rem;
+  color:var(--acc);letter-spacing:.18em;text-transform:uppercase;
+  margin-bottom:.6rem;
+}
+.card-title{
+  font-family:var(--fd);font-size:1rem;font-weight:600;
+  color:var(--h1);letter-spacing:-.01em;margin-bottom:.4rem;
+}
+.card-desc{font-size:.86rem;color:var(--h2);line-height:1.55;}
+.card code{
+  font-family:var(--fm);font-size:.78em;
+  background:var(--bg-surf);color:var(--acc-2);
+  padding:.05em .35em;border-radius:.3em;
+}
+
+/* ── IMPACT NUMBERS ───────────────────────────────────── */
+.impact-num{
+  font-family:var(--fd);
+  font-size:clamp(1.6rem,4vw,2.4rem);
+  font-weight:800;
+  line-height:1.1;margin-bottom:.55rem;
+  background-clip:text;-webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;color:transparent;
+  filter:drop-shadow(0 4px 16px currentColor);
+  word-break:break-word;overflow-wrap:break-word;
+  letter-spacing:-.02em;
+}
+.impact-num.acc{background-image:linear-gradient(135deg,#10b981,#34d399);color:#10b981;}
+.impact-num.green{background-image:linear-gradient(135deg,#10b981,#34d399);color:#10b981;}
+.impact-num.teal{background-image:linear-gradient(135deg,#22d3ee,#2dd4bf);color:#22d3ee;}
+.impact-num.amber{background-image:linear-gradient(135deg,#fbbf24,#f59e0b);color:#fbbf24;}
+
+.impact-card{
+  padding:1.5rem 1.4rem;
+  background:var(--bg-card);
+  border:1px solid var(--bdr);
+  border-radius:var(--r);
+  transition:transform .25s var(--ez),border-color .25s;
+}
+.impact-card:hover{transform:translateY(-3px);border-color:var(--bdr-hi);}
+.impact-label{
+  font-family:var(--fm);font-size:.78rem;
+  color:var(--h1);font-weight:500;line-height:1.4;
+}
+.impact-desc{
+  font-size:.78rem;color:var(--h3);line-height:1.5;
+  margin-top:.4rem;
+}
+
+/* ── CODE BLOCKS ──────────────────────────────────────── */
+.code-block{
+  background:#020812;
+  border:1px solid var(--bdr);
+  border-radius:var(--r);
+  padding:1.25rem 1.4rem;
+  margin:1.25rem 0;
+  font-family:var(--fm);font-size:.78rem;
+  line-height:1.65;color:var(--h2);
+  position:relative;
+  width:100%;max-width:100%;
+  overflow:hidden;
+}
+.code-block pre{
+  margin:0;font-family:inherit;color:inherit;display:block;
+  overflow-x:auto;
+  white-space:pre;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:thin;
+  scrollbar-color:rgba(255,255,255,.15) transparent;
+}
+.code-block pre::-webkit-scrollbar{height:6px;}
+.code-block pre::-webkit-scrollbar-track{background:transparent;}
+.code-block pre::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);border-radius:3px;}
+.code-block pre::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,.25);}
+.code-block::after{
+  content:'';position:absolute;top:0;right:0;bottom:0;width:24px;
+  background:linear-gradient(to right, transparent, #020812);
+  pointer-events:none;border-radius:0 var(--r) var(--r) 0;
+}
+.code-block-label{
+  display:block;
+  font-family:var(--fm);font-size:.58rem;
+  color:var(--h3);letter-spacing:.18em;text-transform:uppercase;
+  margin-bottom:.85rem;
+  padding-bottom:.6rem;
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.code-block .comment{color:#5d6b85;font-style:italic;}
+.code-block .keyword{color:#c084fc;}
+.code-block .string{color:#86efac;}
+.code-block .fn{color:#34d399;}
+.code-block .num{color:#fbbf24;}
+.code-block .self{color:#f87171;}
+
+/* ── INLINE CODE ──────────────────────────────────────── */
+code{
+  font-family:var(--fm);font-size:.84em;
+  background:var(--bg-surf);color:var(--acc-2);
+  padding:.1em .4em;border-radius:.3em;
+  border:1px solid var(--bdr);
+}
+
+/* ── CALLOUT BOXES ────────────────────────────────────── */
+.callout{
+  margin:1.5rem 0;padding:1.2rem 1.4rem;
+  background:var(--acc-s);
+  border-left:3px solid var(--acc);
+  border-radius:.6rem;
+}
+.callout-label{
+  font-family:var(--fm);font-size:.6rem;
+  color:var(--acc);letter-spacing:.2em;text-transform:uppercase;
+  margin-bottom:.45rem;
+}
+.callout-text{font-size:.95rem;line-height:1.6;color:var(--h2);}
+.callout-text strong{color:var(--h1);}
+
+/* ── DECISION CARDS ───────────────────────────────────── */
+.decision-card{
+  padding:1.6rem 1.6rem;
+  background:var(--bg-card);
+  border:1px solid var(--bdr);
+  border-radius:var(--r);
+  margin-bottom:1rem;
+  position:relative;
+  transition:border-color .2s;
+}
+.decision-card:hover{border-color:var(--bdr-hi);}
+.decision-num{
+  position:absolute;top:1.3rem;right:1.4rem;
+  font-family:var(--fd);
+  font-size:clamp(1.6rem,4.5vw,2.6rem);
+  font-weight:800;
+  color:var(--acc);opacity:.18;line-height:1;letter-spacing:-.03em;
+  pointer-events:none;
+}
+.decision-q{
+  font-family:var(--fd);font-size:1.1rem;font-weight:600;
+  color:var(--h1);letter-spacing:-.02em;
+  margin-bottom:.7rem;
+  padding-right:clamp(2rem,10vw,3.5rem);
+}
+.decision-a{font-size:.93rem;line-height:1.65;color:var(--h2);}
+.decision-a strong{color:var(--h1);}
+@media(max-width:560px){
+  .decision-card{padding:1.3rem 1.3rem;}
+  .decision-num{
+    position:static;
+    display:block;
+    font-size:1.5rem;
+    margin-bottom:.5rem;
+    opacity:.4;
+    line-height:1;
+  }
+  .decision-q{padding-right:0;font-size:1rem;}
+}
+
+/* ── ARCHITECTURE FLOW VISUAL ─────────────────────────── */
+.flow{
+  display:flex;flex-direction:column;gap:.4rem;
+  margin:1.5rem 0;padding:1.5rem 1.2rem;
+  background:var(--bg-card);
+  border:1px solid var(--bdr);border-radius:var(--r);
+}
+.flow-stage{
+  display:flex;align-items:center;gap:.9rem;
+  padding:.85rem 1rem;
+  background:var(--bg-surf);
+  border:1px solid var(--bdr);
+  border-radius:.65rem;
+  transition:border-color .2s,transform .2s var(--ez);
+}
+.flow-stage:hover{border-color:var(--bdr-hi);transform:translateX(3px);}
+.flow-step{
+  font-family:var(--fm);font-size:.62rem;
+  color:var(--acc);letter-spacing:.15em;
+  min-width:34px;flex-shrink:0;
+}
+.flow-name{
+  font-family:var(--fd);font-size:.95rem;font-weight:600;
+  color:var(--h1);letter-spacing:-.01em;flex-shrink:0;
+}
+.flow-detail{
+  font-size:.78rem;color:var(--h3);
+  line-height:1.4;
+  margin-left:auto;text-align:right;
+  font-family:var(--fm);letter-spacing:.02em;
+}
+.flow-arrow{
+  align-self:center;color:var(--h3);font-size:.95rem;
+  margin:-.2rem 0;
+}
+@media(max-width:520px){
+  .flow-stage{flex-wrap:wrap;}
+  .flow-detail{margin-left:0;text-align:left;width:100%;}
+}
+
+/* ── SCHEMA TABLE ─────────────────────────────────────── */
+.schema-table{
+  display:grid;grid-template-columns:1fr 1fr;gap:.7rem;
+  margin:1.25rem 0 1rem;
+}
+@media(max-width:680px){.schema-table{grid-template-columns:1fr;}}
+.schema-card{
+  padding:1.1rem 1.2rem;
+  background:var(--bg-card);
+  border:1px solid var(--bdr);
+  border-radius:.7rem;
+  transition:border-color .2s;
+}
+.schema-card:hover{border-color:var(--bdr-hi);}
+.schema-card.fact{border-color:rgba(16,185,129,.32);background:linear-gradient(135deg,var(--bg-card),rgba(16,185,129,.04));}
+.schema-card-name{
+  font-family:var(--fm);font-size:.78rem;
+  color:var(--acc);letter-spacing:.04em;
+  margin-bottom:.55rem;font-weight:500;
+}
+.schema-card.fact .schema-card-name{color:var(--acc-2);font-weight:600;}
+.schema-card-cols{font-family:var(--fm);font-size:.72rem;color:var(--h3);line-height:1.6;}
+.schema-card-cols .pk{color:var(--acc);}
+.schema-card-cols .fk{color:var(--amber);}
+
+/* ── TECH STACK ───────────────────────────────────────── */
+.tech-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+  gap:.65rem;margin-top:1.25rem;
+}
+.tech-item{
+  padding:.85rem 1rem;
+  background:var(--bg-card);
+  border:1px solid var(--bdr);
+  border-radius:.6rem;
+  font-family:var(--fm);font-size:.78rem;
+  color:var(--h2);letter-spacing:.02em;
+  display:flex;flex-direction:column;gap:.25rem;
+  transition:border-color .2s,transform .2s var(--ez);
+}
+.tech-item:hover{border-color:var(--bdr-hi);transform:translateY(-1px);}
+.tech-name{color:var(--h1);font-weight:500;}
+.tech-role{color:var(--h3);font-size:.66rem;letter-spacing:.04em;}
+
+/* ── READ NEXT (related case studies) ─────────────────── */
+.read-next{
+  margin-top:2rem;padding-top:3.5rem;
+  border-top:1px solid var(--bdr);
+}
+.read-next-eyebrow{
+  font-family:var(--fm);font-size:.66rem;
+  letter-spacing:.22em;text-transform:uppercase;
+  color:var(--h3);margin-bottom:.5rem;
+  display:flex;align-items:center;gap:.6rem;
+}
+.read-next-eyebrow::before{
+  content:'';width:18px;height:1px;background:var(--acc);
+}
+.read-next-h{
+  font-family:var(--fd);font-size:clamp(1.4rem,2.6vw,1.75rem);
+  font-weight:700;letter-spacing:-.03em;
+  margin-bottom:2rem;color:var(--h1);
+}
+.read-next-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:1rem;
+}
+@media(max-width:680px){.read-next-grid{grid-template-columns:1fr;}}
+.read-next-card{
+  display:flex;flex-direction:column;gap:.5rem;
+  padding:1.5rem;
+  background:var(--bg-card);
+  border:1px solid var(--bdr);
+  border-radius:var(--r);
+  text-decoration:none;
+  position:relative;overflow:hidden;
+  transition:border-color .2s var(--ez),transform .2s var(--ez),box-shadow .2s var(--ez);
+}
+.read-next-card::before{
+  content:'';position:absolute;top:0;left:0;
+  width:3px;height:0;background:var(--acc);
+  transition:height .3s var(--ez);
+}
+.read-next-card:hover{
+  border-color:var(--bdr-hi);
+  transform:translateY(-3px);
+  box-shadow:0 12px 32px rgba(0,0,0,.25);
+  text-decoration:none;
+}
+.read-next-card:hover::before{height:100%;}
+.read-next-label{
+  font-family:var(--fm);font-size:.6rem;
+  letter-spacing:.16em;text-transform:uppercase;
+  color:var(--acc);
+}
+.read-next-title{
+  font-family:var(--fd);font-size:1.15rem;font-weight:600;
+  color:var(--h1);letter-spacing:-.02em;
+  line-height:1.25;margin-top:.1rem;
+}
+.read-next-desc{
+  font-size:.86rem;color:var(--h2);
+  line-height:1.55;margin-bottom:.3rem;
+}
+.read-next-tags{
+  display:flex;flex-wrap:wrap;gap:.3rem;
+  margin-top:.2rem;margin-bottom:.85rem;
+}
+.read-next-tag{
+  font-family:var(--fm);font-size:.62rem;
+  padding:.18rem .5rem;
+  border:1px solid var(--bdr);border-radius:var(--rsm);
+  background:var(--bg-surf);color:var(--h3);
+  letter-spacing:.04em;
+}
+.read-next-cta{
+  font-family:var(--fm);font-size:.74rem;
+  color:var(--acc);
+  display:inline-flex;align-items:center;gap:.4rem;
+  margin-top:auto;
+  padding-bottom:2px;
+  border-bottom:1px solid transparent;
+  transition:gap .22s var(--ez),color .18s var(--ez),border-color .18s var(--ez);
+  align-self:flex-start;
+}
+.read-next-card:hover .read-next-cta{
+  gap:.65rem;color:var(--h1);
+  border-bottom-color:var(--acc);
+}
+.read-next-cta-arrow{display:inline-block;transition:transform .22s var(--ez);}
+.read-next-card:hover .read-next-cta-arrow{transform:translateX(4px);}
+
+/* ── FADE-UP ──────────────────────────────────────────── */
+.fade-up{opacity:0;transform:translateY(20px);transition:opacity .7s var(--ez),transform .7s var(--ez);}
+.fade-up.in{opacity:1;transform:translateY(0);}
+@media(prefers-reduced-motion:reduce){.fade-up{opacity:1;transform:none;}}
+
+/* ── FOOTER ───────────────────────────────────────────── */
+footer{
+  position:relative;z-index:1;
+  max-width:1100px;margin:0 auto;
+  padding:3.5rem clamp(1rem,4vw,2.5rem) 1.5rem;
+  border-top:1px solid var(--bdr);
+}
+
+/* Top zone — site map + brand */
+.footer-top{
+  display:grid;
+  grid-template-columns:1.4fr 1fr 1fr 1fr;
+  gap:2.5rem 2rem;
+  margin-bottom:3rem;
+}
+@media(max-width:760px){
+  .footer-top{grid-template-columns:1fr 1fr;gap:2.25rem 1.5rem;}
+}
+@media(max-width:480px){
+  .footer-top{grid-template-columns:1fr;gap:2rem;}
+}
+
+/* Brand block (first column) */
+.footer-brand-block{display:flex;flex-direction:column;gap:.85rem;}
+.footer-mark{
+  width:32px;height:32px;
+  color:var(--acc);opacity:.7;
+  transition:opacity .3s var(--ez),transform .3s var(--ez);
+}
+.footer-mark path,.footer-mark line{
+  fill:none;
+  stroke:currentColor;
+  stroke-width:2;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+footer:hover .footer-mark{opacity:1;transform:translateY(-1px);}
+
+.footer-name{
+  font-family:var(--fd);
+  font-size:1.05rem;font-weight:700;letter-spacing:-.02em;
+  color:var(--h1);
+  line-height:1.2;
+}
+.footer-tagline{
+  font-family:var(--fm);
+  font-size:.66rem;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--h3);
+  margin-top:.15rem;
+}
+
+/* Column groups */
+.footer-col{display:flex;flex-direction:column;gap:.85rem;}
+.footer-col-label{
+  font-family:var(--fm);
+  font-size:.6rem;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--h3);
+  padding-bottom:.55rem;
+  border-bottom:1px solid var(--bdr);
+  display:flex;align-items:center;gap:.5rem;
+}
+.footer-col-label::before{
+  content:'';width:14px;height:1px;background:var(--acc);border-radius:1px;
+}
+
+.footer-col ul{
+  list-style:none;padding:0;margin:0;
+  display:flex;flex-direction:column;gap:.6rem;
+}
+.footer-link{
+  display:inline-flex;align-items:center;gap:.5rem;
+  font-size:.82rem;
+  color:var(--h2);text-decoration:none;
+  padding-bottom:1px;border-bottom:1px solid transparent;
+  transition:color .18s var(--ez),border-color .18s var(--ez),gap .18s var(--ez),transform .18s var(--ez);
+  width:fit-content;
+}
+.footer-link svg{
+  flex-shrink:0;
+  color:var(--h3);
+  transition:color .18s var(--ez);
+}
+.footer-link:hover{
+  color:var(--h1);
+  border-bottom-color:var(--acc);
+  gap:.6rem;
+  text-decoration:none;
+}
+.footer-link:hover svg{color:var(--acc);}
+
+.footer-link-meta{
+  font-family:var(--fm);font-size:.66rem;
+  color:var(--h3);letter-spacing:.04em;
+  margin-top:.15rem;display:flex;align-items:center;gap:.45rem;
+}
+.footer-link-meta::before{
+  content:'';width:5px;height:5px;border-radius:50%;background:var(--acc);opacity:.6;
+}
+
+/* Bottom zone — copyright + human note */
+.footer-bottom{
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem;
+  padding-top:1.5rem;
+  border-top:1px solid var(--bdr);
+}
+.footer-copy{
+  font-family:var(--fm);font-size:.66rem;
+  color:var(--h3);letter-spacing:.06em;
+}
+.footer-note{
+  font-size:.76rem;color:var(--h3);font-style:italic;
+  margin:0;
+}
+@media(max-width:560px){
+  .footer-bottom{flex-direction:column;align-items:flex-start;text-align:left;}
+}
+
+/* ── BACK TO TOP ──────────────────────────────────────── */
+.to-top{
+  position:fixed;bottom:1.5rem;right:1.5rem;
+  width:42px;height:42px;border-radius:50%;
+  background:var(--acc);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;border:none;
+  opacity:0;transform:translateY(20px);pointer-events:none;
+  transition:all .25s var(--ez);
+  box-shadow:0 8px 24px rgba(16,185,129,.32);
+  z-index:200;
+}
+.to-top.show{opacity:1;transform:translateY(0);pointer-events:auto;}
+.to-top:hover{transform:translateY(-3px);background:var(--acc-2);}
+
+</style>
 </head>
-
 <body>
 
-    <!-- NAV -->
-    <nav>
-        <a class="nav-brand" href="index.html">
-            <span class="name">Yomi Ismail</span>
-            <span class="title">Data Engineer</span>
-        </a>
-        <div class="nav-links">
-            <a href="#cs-hero">Overview</a>
-            <a href="#problem">Problem</a>
-            <a href="#architecture">Architecture</a>
-            <a href="#schema">Schema</a>
-            <a href="#decisions">Decisions</a>
-            <a href="#impact">Impact</a>
-            <a href="#read-next">Other case studies</a>
-            <a href="principles.html">Principles</a>
-            <a href="index.html">← Portfolio</a>
-        </div>
-    </nav>
+<!-- NAV -->
+<nav>
+  <a class="nav-brand" href="index.html">
+    <span class="name">Yomi Ismail</span>
+    <span class="title">Data Engineer</span>
+  </a>
+  <div class="nav-links">
+    <a href="#cs-hero">Overview</a>
+    <a href="#problem">Problem</a>
+    <a href="#architecture">Architecture</a>
+    <a href="#schema">Schema</a>
+    <a href="#decisions">Decisions</a>
+    <a href="#impact">Impact</a>
+    <a href="#read-next">Other case studies</a>
+    <a href="principles.html">Principles</a>
+    <a href="index.html">← Portfolio</a>
+  </div>
+</nav>
 
-    <!-- STICKY TOC -->
-    <aside class="cs-toc" id="csToc" aria-label="Case study contents">
-        <div class="cs-toc-label">Contents</div>
-        <ul>
-            <li><a href="#cs-hero"><span class="cs-toc-num">00</span><span>Overview</span></a></li>
-            <li><a href="#problem"><span class="cs-toc-num">01</span><span>The Problem</span></a></li>
-            <li><a href="#architecture"><span class="cs-toc-num">02</span><span>Architecture</span></a></li>
-            <li><a href="#schema"><span class="cs-toc-num">03</span><span>Schema Design</span></a></li>
-            <li><a href="#engineering"><span class="cs-toc-num">04</span><span>Engineering</span></a></li>
-            <li><a href="#decisions"><span class="cs-toc-num">05</span><span>Decisions</span></a></li>
-            <li><a href="#impact"><span class="cs-toc-num">06</span><span>Impact</span></a></li>
-            <li><a href="#tech"><span class="cs-toc-num">07</span><span>Tech Stack</span></a></li>
-            <li><a href="#read-next"><span class="cs-toc-num">08</span><span>Other case<br />studies</span></a></li>
-        </ul>
-    </aside>
+<!-- STICKY TOC -->
+<aside class="cs-toc" id="csToc" aria-label="Case study contents">
+  <div class="cs-toc-label">Contents</div>
+  <ul>
+    <li><a href="#cs-hero"><span class="cs-toc-num">00</span><span>Overview</span></a></li>
+    <li><a href="#problem"><span class="cs-toc-num">01</span><span>The Problem</span></a></li>
+    <li><a href="#architecture"><span class="cs-toc-num">02</span><span>Architecture</span></a></li>
+    <li><a href="#schema"><span class="cs-toc-num">03</span><span>Schema Design</span></a></li>
+    <li><a href="#engineering"><span class="cs-toc-num">04</span><span>Engineering</span></a></li>
+    <li><a href="#decisions"><span class="cs-toc-num">05</span><span>Decisions</span></a></li>
+    <li><a href="#impact"><span class="cs-toc-num">06</span><span>Impact</span></a></li>
+    <li><a href="#tech"><span class="cs-toc-num">07</span><span>Tech Stack</span></a></li>
+    <li><a href="#read-next"><span class="cs-toc-num">08</span><span>Other case<br/>studies</span></a></li>
+  </ul>
+</aside>
 
-    <div class="page">
+<div class="page">
 
-        <!-- ───── HERO ───── -->
-        <section id="cs-hero" class="cs-hero">
-            <a href="index.html" class="back-link">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M19 12H5M12 19l-7-7 7-7" />
-                </svg>
-                Back to portfolio
-            </a>
-            <div class="cs-switcher" role="navigation" aria-label="Case study navigation">
-                <span class="cs-switcher-label">Case studies</span>
-                <a href="fibbiebanks.html" class="cs-switcher-link current" aria-current="page">FibbieBanks</a>
-                <a href="payflow.html" class="cs-switcher-link">PayFlow</a>
-                <a href="chocodelight.html" class="cs-switcher-link">ChocoDelight</a>
-                <a href="aliexpress.html" class="cs-switcher-link">AliExpress</a>
-            </div>
-            <div class="cs-meta">~8 min read · Updated May 2026</div>
-            <div class="kicker">Case Study · Featured · Distributed ETL</div>
+  <!-- ───── HERO ───── -->
+  <section id="cs-hero" class="cs-hero">
+    <a href="index.html" class="back-link">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      Back to portfolio
+    </a>
+    <div class="cs-switcher" role="navigation" aria-label="Case study navigation">
+      <span class="cs-switcher-label">Case studies</span>
+      <a href="fibbiebanks.html" class="cs-switcher-link current" aria-current="page">FibbieBanks</a>
+      <a href="payflow.html" class="cs-switcher-link">PayFlow</a>
+      <a href="chocodelight.html" class="cs-switcher-link">ChocoDelight</a>
+      <a href="aliexpress.html" class="cs-switcher-link">AliExpress</a>
+    </div>
+    <div class="cs-meta">~8 min read · Updated May 2026</div>
+    <div class="kicker">Case Study · Featured · Distributed ETL</div>
 
-            <h1 class="cs-title">FibbieBanks — <span class="hi">PySpark ETL pipeline</span><br />&amp; star schema
-                warehouse</h1>
+    <h1 class="cs-title">FibbieBanks — <span class="hi">PySpark ETL pipeline</span><br/>&amp; star schema warehouse</h1>
 
-            <p class="cs-lede">
-                A 1M-row PySpark pipeline for synthetic banking transactions, with a validated star schema warehouse,
-                deterministic SHA-256 surrogate keys, and PostgreSQL as the analytics destination. End-to-end in ~25
-                minutes on a single local Spark instance. Re-run safely in ~9 minutes with zero duplicate rows.
-            </p>
+    <p class="cs-lede">
+      A 1M-row PySpark pipeline for synthetic banking transactions, with a validated star schema warehouse, deterministic SHA-256 surrogate keys, and PostgreSQL as the analytics destination. End-to-end in ~25 minutes on a single local Spark instance. Re-run safely in ~9 minutes with zero duplicate rows.
+    </p>
 
-            <div class="meta-row">
-                <span class="meta-pill acc">Featured case study</span>
-                <span class="meta-pill">Synthetic banking data</span>
-                <span class="meta-pill">PySpark 3.5</span>
-                <span class="meta-pill">1M rows · 23 columns</span>
-                <span class="meta-pill">PostgreSQL star schema</span>
-            </div>
+    <div class="meta-row">
+      <span class="meta-pill acc">Featured case study</span>
+      <span class="meta-pill">Synthetic banking data</span>
+      <span class="meta-pill">PySpark 3.5</span>
+      <span class="meta-pill">1M rows · 23 columns</span>
+      <span class="meta-pill">PostgreSQL star schema</span>
+    </div>
 
-            <div class="stat-strip">
-                <div class="stat-cell">
-                    <div class="stat-num">1M</div>
-                    <div class="stat-label">rows processed</div>
-                </div>
-                <div class="stat-cell">
-                    <div class="stat-num">5</div>
-                    <div class="stat-label">ETL stages</div>
-                </div>
-                <div class="stat-cell">
-                    <div class="stat-num">4</div>
-                    <div class="stat-label">dimension tables</div>
-                </div>
-                <div class="stat-cell">
-                    <div class="stat-num">1</div>
-                    <div class="stat-label">fact table</div>
-                </div>
-                <div class="stat-cell">
-                    <div class="stat-num">~9m</div>
-                    <div class="stat-label">idempotent rerun</div>
-                </div>
-                <div class="stat-cell">
-                    <div class="stat-num">0</div>
-                    <div class="stat-label">dupes on rerun</div>
-                </div>
-            </div>
+    <div class="stat-strip">
+      <div class="stat-cell"><div class="stat-num">1M</div><div class="stat-label">rows processed</div></div>
+      <div class="stat-cell"><div class="stat-num">5</div><div class="stat-label">ETL stages</div></div>
+      <div class="stat-cell"><div class="stat-num">4</div><div class="stat-label">dimension tables</div></div>
+      <div class="stat-cell"><div class="stat-num">1</div><div class="stat-label">fact table</div></div>
+      <div class="stat-cell"><div class="stat-num">~9m</div><div class="stat-label">idempotent rerun</div></div>
+      <div class="stat-cell"><div class="stat-num">0</div><div class="stat-label">dupes on rerun</div></div>
+    </div>
 
-            <div class="cs-cta-row">
-                <a href="https://github.com/yoismail/fibbie_banks" class="btn-primary" target="_blank" rel="noopener">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                        <path
-                            d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58v-2.06c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.21.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.5.99.11-.77.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.31-.54-1.53.11-3.19 0 0 1.01-.32 3.3 1.23.96-.27 1.98-.4 3-.41 1.02 0 2.04.14 3 .41 2.29-1.55 3.3-1.23 3.3-1.23.65 1.66.24 2.88.12 3.19.77.84 1.24 1.91 1.24 3.22 0 4.61-2.8 5.62-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.69.83.58A12 12 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
-                    </svg>
-                    View on GitHub
-                </a>
-                <a href="#problem" class="btn-ghost">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
-                        stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M12 5v14M5 12l7 7 7-7" />
-                    </svg>
-                    Read the story
-                </a>
-            </div>
-        </section>
+    <div class="cs-cta-row">
+      <a href="https://github.com/yoismail/fibbie_banks" class="btn-primary" target="_blank" rel="noopener">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58v-2.06c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.21.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.5.99.11-.77.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.31-.54-1.53.11-3.19 0 0 1.01-.32 3.3 1.23.96-.27 1.98-.4 3-.41 1.02 0 2.04.14 3 .41 2.29-1.55 3.3-1.23 3.3-1.23.65 1.66.24 2.88.12 3.19.77.84 1.24 1.91 1.24 3.22 0 4.61-2.8 5.62-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.69.83.58A12 12 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        View on GitHub
+      </a>
+      <a href="#problem" class="btn-ghost">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+        Read the story
+      </a>
+    </div>
+  </section>
 
-        <!-- ───── 01 · THE PROBLEM ───── -->
-        <section id="problem" class="fade-up sec-alt">
-            <div class="sec-kicker"><span class="sec-num">01</span> The Problem</div>
-            <h2 class="sec-h">Banking analytics needs a warehouse, not a CSV.</h2>
+  <!-- ───── 01 · THE PROBLEM ───── -->
+  <section id="problem" class="fade-up sec-alt">
+    <div class="sec-kicker"><span class="sec-num">01</span> The Problem</div>
+    <h2 class="sec-h">Banking analytics needs a warehouse, not a CSV.</h2>
 
-            <p class="sec-p lede">
-                A 1-million-row banking dataset arrives as a single flat CSV with 23 columns. Customer demographics,
-                transaction details, employee metadata, financial identifiers, audit timestamps — all flattened
-                together. For an analyst, this is unusable: you can't <code>SUM(amount)</code> across customers without
-                scanning the whole file, you can't ask "show me weekend transactions in Q3" without parsing dates
-                row-by-row, and you can't trust the numbers because ~10% of rows have NULLs scattered across every
-                column.
-            </p>
+    <p class="sec-p lede">
+      A 1-million-row banking dataset arrives as a single flat CSV with 23 columns. Customer demographics, transaction details, employee metadata, financial identifiers, audit timestamps — all flattened together. For an analyst, this is unusable: you can't <code>SUM(amount)</code> across customers without scanning the whole file, you can't ask "show me weekend transactions in Q3" without parsing dates row-by-row, and you can't trust the numbers because ~10% of rows have NULLs scattered across every column.
+    </p>
 
-            <p class="sec-p">
-                The job was to turn this raw CSV into a <strong>dimensional warehouse</strong> — a Kimball-style star
-                schema where dimensions are conformed, facts are tightly typed, and analytical queries run in seconds
-                against a Postgres instance any BI tool can connect to. Beyond the modelling, the pipeline had to be
-                <strong>safely re-runnable</strong>: if someone re-runs it tomorrow on the same source data, the
-                warehouse must not double, must not drift, must not silently corrupt itself.
-            </p>
+    <p class="sec-p">
+      The job was to turn this raw CSV into a <strong>dimensional warehouse</strong> — a Kimball-style star schema where dimensions are conformed, facts are tightly typed, and analytical queries run in seconds against a Postgres instance any BI tool can connect to. Beyond the modelling, the pipeline had to be <strong>safely re-runnable</strong>: if someone re-runs it tomorrow on the same source data, the warehouse must not double, must not drift, must not silently corrupt itself.
+    </p>
 
-            <div class="callout">
-                <div class="callout-label">Design constraint</div>
-                <div class="callout-text">
-                    <strong>Idempotency was non-negotiable.</strong> A pipeline that "kind of worked once" is worse than
-                    one that loudly failed — because nobody investigates a green log. Every architectural decision in
-                    this project flows from that constraint.
-                </div>
-            </div>
-        </section>
+    <div class="callout">
+      <div class="callout-label">Design constraint</div>
+      <div class="callout-text">
+        <strong>Idempotency was non-negotiable.</strong> A pipeline that "kind of worked once" is worse than one that loudly failed — because nobody investigates a green log. Every architectural decision in this project flows from that constraint.
+      </div>
+    </div>
+  </section>
 
-        <!-- ───── 02 · ARCHITECTURE ───── -->
-        <section id="architecture" class="fade-up">
-            <div class="sec-kicker"><span class="sec-num">02</span> Architecture</div>
-            <h2 class="sec-h">Five stages, each one its own module.</h2>
+  <!-- ───── 02 · ARCHITECTURE ───── -->
+  <section id="architecture" class="fade-up">
+    <div class="sec-kicker"><span class="sec-num">02</span> Architecture</div>
+    <h2 class="sec-h">Five stages, each one its own module.</h2>
 
-            <p class="sec-p">
-                The pipeline is composed of five Python modules under an <code>etl/</code> package. Each stage is
-                independently runnable for debugging (<code>python -m etl.clean</code>,
-                <code>python -m etl.transform</code>, etc.), and each can be imported by the next via a clean
-                <code>main()</code> entry point that returns its outputs plus the shared Spark session.
-            </p>
+    <p class="sec-p">
+      The pipeline is composed of five Python modules under an <code>etl/</code> package. Each stage is independently runnable for debugging (<code>python -m etl.clean</code>, <code>python -m etl.transform</code>, etc.), and each can be imported by the next via a clean <code>main()</code> entry point that returns its outputs plus the shared Spark session.
+    </p>
 
-            <div class="flow">
-                <div class="flow-stage">
-                    <div class="flow-step">01</div>
-                    <div class="flow-name">Extract</div>
-                    <div class="flow-detail">PySpark CSV reader · schema inference · 14g driver/executor</div>
-                </div>
-                <div class="flow-arrow">▼</div>
-                <div class="flow-stage">
-                    <div class="flow-step">02</div>
-                    <div class="flow-name">Explore</div>
-                    <div class="flow-detail">profile rows · null counts · distinct cardinality</div>
-                </div>
-                <div class="flow-arrow">▼</div>
-                <div class="flow-stage">
-                    <div class="flow-step">03</div>
-                    <div class="flow-name">Clean</div>
-                    <div class="flow-detail">snake_case · type-aware fillna · DECIMAL cast · dedupe</div>
-                </div>
-                <div class="flow-arrow">▼</div>
-                <div class="flow-stage">
-                    <div class="flow-step">04</div>
-                    <div class="flow-name">Transform</div>
-                    <div class="flow-detail">4 dims + 1 fact · SHA-256 surrogate keys · validate every stage</div>
-                </div>
-                <div class="flow-arrow">▼</div>
-                <div class="flow-stage">
-                    <div class="flow-step">05</div>
-                    <div class="flow-name">Load</div>
-                    <div class="flow-detail">JDBC temp + LEFT JOIN merge · transactional commits</div>
-                </div>
-            </div>
+    <div class="flow">
+      <div class="flow-stage">
+        <div class="flow-step">01</div>
+        <div class="flow-name">Extract</div>
+        <div class="flow-detail">PySpark CSV reader · schema inference · 14g driver/executor</div>
+      </div>
+      <div class="flow-arrow">▼</div>
+      <div class="flow-stage">
+        <div class="flow-step">02</div>
+        <div class="flow-name">Explore</div>
+        <div class="flow-detail">profile rows · null counts · distinct cardinality</div>
+      </div>
+      <div class="flow-arrow">▼</div>
+      <div class="flow-stage">
+        <div class="flow-step">03</div>
+        <div class="flow-name">Clean</div>
+        <div class="flow-detail">snake_case · type-aware fillna · DECIMAL cast · dedupe</div>
+      </div>
+      <div class="flow-arrow">▼</div>
+      <div class="flow-stage">
+        <div class="flow-step">04</div>
+        <div class="flow-name">Transform</div>
+        <div class="flow-detail">4 dims + 1 fact · SHA-256 surrogate keys · validate every stage</div>
+      </div>
+      <div class="flow-arrow">▼</div>
+      <div class="flow-stage">
+        <div class="flow-step">05</div>
+        <div class="flow-name">Load</div>
+        <div class="flow-detail">JDBC temp + LEFT JOIN merge · transactional commits</div>
+      </div>
+    </div>
 
-            <p class="sec-p">
-                The <code>explore</code> module is its own step rather than a notebook afterthought. Knowing your data
-                is a first-class engineering concern: profiling row counts, null distributions, and distinct values
-                catches problems before they propagate downstream. Most pipelines bury this in commented-out notebook
-                cells. Here it has a dedicated module with its own <code>section()</code> banners in the log output.
-            </p>
+    <p class="sec-p">
+      The <code>explore</code> module is its own step rather than a notebook afterthought. Knowing your data is a first-class engineering concern: profiling row counts, null distributions, and distinct values catches problems before they propagate downstream. Most pipelines bury this in commented-out notebook cells. Here it has a dedicated module with its own <code>section()</code> banners in the log output.
+    </p>
 
-            <h3 class="sec-h" style="font-size:1.25rem;margin-top:2rem;margin-bottom:1rem;">Composable, not monolithic
-            </h3>
+    <h3 class="sec-h" style="font-size:1.25rem;margin-top:2rem;margin-bottom:1rem;">Composable, not monolithic</h3>
 
-            <p class="sec-p">
-                Each module imports the previous one's <code>main()</code> function and chains forward. Running
-                <code>python -m etl.load</code> walks the entire pipeline — extract → clean → transform → load — because
-                each stage's <code>main()</code> calls into the previous one. This means every stage is independently
-                testable and every intermediate output is available without re-reading the source CSV.
-            </p>
+    <p class="sec-p">
+      Each module imports the previous one's <code>main()</code> function and chains forward. Running <code>python -m etl.load</code> walks the entire pipeline — extract → clean → transform → load — because each stage's <code>main()</code> calls into the previous one. This means every stage is independently testable and every intermediate output is available without re-reading the source CSV.
+    </p>
 
-            <div class="code-block">
-                <span class="code-block-label">etl/transform.py · main()</span>
-                <pre><span class="keyword">def</span> <span class="fn">main</span>():
+    <div class="code-block">
+      <span class="code-block-label">etl/transform.py · main()</span>
+<pre><span class="keyword">def</span> <span class="fn">main</span>():
     df_cleaned, spark = <span class="fn">clean_main</span>()
 
     <span class="comment"># Build the date dimension first — others depend on it</span>
@@ -1892,98 +1087,79 @@
         <span class="string">"dim_employee"</span>: dim_emp,
         <span class="string">"fact_transactions"</span>: fact
     }, spark</pre>
-            </div>
-        </section>
+    </div>
+  </section>
 
-        <!-- ───── 03 · SCHEMA DESIGN ───── -->
-        <section id="schema" class="fade-up sec-alt">
-            <div class="sec-kicker"><span class="sec-num">03</span> Schema Design</div>
-            <h2 class="sec-h">A Kimball star: <span class="acc">4 dimensions, 1 fact</span>.</h2>
+  <!-- ───── 03 · SCHEMA DESIGN ───── -->
+  <section id="schema" class="fade-up sec-alt">
+    <div class="sec-kicker"><span class="sec-num">03</span> Schema Design</div>
+    <h2 class="sec-h">A Kimball star: <span class="acc">4 dimensions, 1 fact</span>.</h2>
 
-            <p class="sec-p lede">
-                The warehouse is a textbook star schema. One central fact (<code>fact_transactions</code>) connects to
-                four conformed dimensions via foreign keys. Every analytical query joins through the fact; every
-                dimension is independently sliceable.
-            </p>
+    <p class="sec-p lede">
+      The warehouse is a textbook star schema. One central fact (<code>fact_transactions</code>) connects to four conformed dimensions via foreign keys. Every analytical query joins through the fact; every dimension is independently sliceable.
+    </p>
 
-            <div class="schema-table">
-                <div class="schema-card">
-                    <div class="schema-card-name">dim_date</div>
-                    <div class="schema-card-cols">
-                        <span class="pk">date_key (PK)</span> · full_date · year · month · month_name · quarter ·
-                        day_of_month · day_name · is_weekend
-                    </div>
-                </div>
-                <div class="schema-card">
-                    <div class="schema-card-name">dim_customer</div>
-                    <div class="schema-card-cols">
-                        <span class="pk">customer_id (PK)</span> · customer_name · customer_address · customer_city ·
-                        customer_state · customer_country · email · phone_number
-                    </div>
-                </div>
-                <div class="schema-card">
-                    <div class="schema-card-name">dim_transaction</div>
-                    <div class="schema-card-cols">
-                        <span class="pk">transaction_id (PK)</span> · transaction_date · <span class="fk">date_key
-                            (FK)</span> · transaction_type · amount NUMERIC(18,2)
-                    </div>
-                </div>
-                <div class="schema-card">
-                    <div class="schema-card-name">dim_employee</div>
-                    <div class="schema-card-cols">
-                        <span class="pk">employee_id (PK)</span> · company · job_title · gender · marital_status
-                    </div>
-                </div>
-                <div class="schema-card fact" style="grid-column:1/-1;">
-                    <div class="schema-card-name">fact_transactions</div>
-                    <div class="schema-card-cols">
-                        <span class="pk">transaction_id (PK)</span> · <span class="fk">customer_id (FK)</span> · <span
-                            class="fk">employee_id (FK)</span> · <span class="fk">date_key (FK)</span> ·
-                        credit_card_number · iban · currency_code · random_number · category · "group" · is_active ·
-                        last_updated · description
-                    </div>
-                </div>
-            </div>
+    <div class="schema-table">
+      <div class="schema-card">
+        <div class="schema-card-name">dim_date</div>
+        <div class="schema-card-cols">
+          <span class="pk">date_key (PK)</span> · full_date · year · month · month_name · quarter · day_of_month · day_name · is_weekend
+        </div>
+      </div>
+      <div class="schema-card">
+        <div class="schema-card-name">dim_customer</div>
+        <div class="schema-card-cols">
+          <span class="pk">customer_id (PK)</span> · customer_name · customer_address · customer_city · customer_state · customer_country · email · phone_number
+        </div>
+      </div>
+      <div class="schema-card">
+        <div class="schema-card-name">dim_transaction</div>
+        <div class="schema-card-cols">
+          <span class="pk">transaction_id (PK)</span> · transaction_date · <span class="fk">date_key (FK)</span> · transaction_type · amount NUMERIC(18,2)
+        </div>
+      </div>
+      <div class="schema-card">
+        <div class="schema-card-name">dim_employee</div>
+        <div class="schema-card-cols">
+          <span class="pk">employee_id (PK)</span> · company · job_title · gender · marital_status
+        </div>
+      </div>
+      <div class="schema-card fact" style="grid-column:1/-1;">
+        <div class="schema-card-name">fact_transactions</div>
+        <div class="schema-card-cols">
+          <span class="pk">transaction_id (PK)</span> · <span class="fk">customer_id (FK)</span> · <span class="fk">employee_id (FK)</span> · <span class="fk">date_key (FK)</span> · credit_card_number · iban · currency_code · random_number · category · "group" · is_active · last_updated · description
+        </div>
+      </div>
+    </div>
 
-            <h3 class="sec-h" style="font-size:1.25rem;margin-top:2.5rem;margin-bottom:1rem;">Two key patterns</h3>
+    <h3 class="sec-h" style="font-size:1.25rem;margin-top:2.5rem;margin-bottom:1rem;">Two key patterns</h3>
 
-            <div class="grid-2">
-                <div class="card">
-                    <div class="card-eyebrow">Pattern · Date dim</div>
-                    <div class="card-title">YYYYMMDD integer key</div>
-                    <div class="card-desc">
-                        <code>date_key</code> is an INT in <code>YYYYMMDD</code> format (the Kimball convention). Small,
-                        naturally sortable, human-readable. Date dimensions are tiny — one row per date — so a 4-byte
-                        INT beats a 64-char hash on every dimension that matters (storage, joins, debuggability).
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-eyebrow">Pattern · Other dims</div>
-                    <div class="card-title">SHA-256 hash surrogate keys</div>
-                    <div class="card-desc">
-                        Customer, transaction, and employee dimensions get a deterministic <code>VARCHAR(64)</code>
-                        surrogate key derived from <code>sha2(concat_ws('|', ...natural_keys), 256)</code>. Same row in
-                        → same key out, every run. This is what makes the LEFT JOIN merge in <code>load.py</code>
-                        actually idempotent.
-                    </div>
-                </div>
-            </div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-eyebrow">Pattern · Date dim</div>
+        <div class="card-title">YYYYMMDD integer key</div>
+        <div class="card-desc">
+          <code>date_key</code> is an INT in <code>YYYYMMDD</code> format (the Kimball convention). Small, naturally sortable, human-readable. Date dimensions are tiny — one row per date — so a 4-byte INT beats a 64-char hash on every dimension that matters (storage, joins, debuggability).
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-eyebrow">Pattern · Other dims</div>
+        <div class="card-title">SHA-256 hash surrogate keys</div>
+        <div class="card-desc">
+          Customer, transaction, and employee dimensions get a deterministic <code>VARCHAR(64)</code> surrogate key derived from <code>sha2(concat_ws('|', ...natural_keys), 256)</code>. Same row in → same key out, every run. This is what makes the LEFT JOIN merge in <code>load.py</code> actually idempotent.
+        </div>
+      </div>
+    </div>
 
-            <h3 class="sec-h" style="font-size:1.25rem;margin-top:2.5rem;margin-bottom:1rem;">Degenerate dimensions stay
-                in the fact</h3>
+    <h3 class="sec-h" style="font-size:1.25rem;margin-top:2.5rem;margin-bottom:1rem;">Degenerate dimensions stay in the fact</h3>
 
-            <p class="sec-p">
-                Eight of the source columns (<code>credit_card_number</code>, <code>iban</code>,
-                <code>currency_code</code>, <code>random_number</code>, <code>category</code>, <code>group</code>,
-                <code>is_active</code>, <code>description</code>) don't get their own dim tables. They're either
-                one-to-one with transactions (no analytical benefit to splitting) or pure metadata. Following Kimball's
-                "degenerate dimension" principle, they live as attributes directly on the fact row. A pure star, not a
-                snowflake — easier to query, smaller storage, fewer joins.
-            </p>
+    <p class="sec-p">
+      Eight of the source columns (<code>credit_card_number</code>, <code>iban</code>, <code>currency_code</code>, <code>random_number</code>, <code>category</code>, <code>group</code>, <code>is_active</code>, <code>description</code>) don't get their own dim tables. They're either one-to-one with transactions (no analytical benefit to splitting) or pure metadata. Following Kimball's "degenerate dimension" principle, they live as attributes directly on the fact row. A pure star, not a snowflake — easier to query, smaller storage, fewer joins.
+    </p>
 
-            <div class="code-block">
-                <span class="code-block-label">sql/create_tables.sql · excerpt</span>
-                <pre><span class="keyword">CREATE TABLE</span> analytics.fact_transactions (
+    <div class="code-block">
+      <span class="code-block-label">sql/create_tables.sql · excerpt</span>
+<pre><span class="keyword">CREATE TABLE</span> analytics.fact_transactions (
     transaction_id   VARCHAR(64) <span class="keyword">PRIMARY KEY</span>
                      <span class="keyword">REFERENCES</span> analytics.dim_transaction(transaction_id),
     customer_id      VARCHAR(64) <span class="keyword">NOT NULL</span>
@@ -2004,72 +1180,56 @@
     last_updated       TIMESTAMP,
     description        TEXT
 );</pre>
-            </div>
-        </section>
+    </div>
+  </section>
 
-        <!-- ───── 04 · ENGINEERING ───── -->
-        <section id="engineering" class="fade-up">
-            <div class="sec-kicker"><span class="sec-num">04</span> Engineering</div>
-            <h2 class="sec-h">Validation at every stage. Type discipline end-to-end.</h2>
+  <!-- ───── 04 · ENGINEERING ───── -->
+  <section id="engineering" class="fade-up">
+    <div class="sec-kicker"><span class="sec-num">04</span> Engineering</div>
+    <h2 class="sec-h">Validation at every stage. Type discipline end-to-end.</h2>
 
-            <p class="sec-p lede">
-                A warehouse is only as trustworthy as the discipline that built it. Three engineering patterns run
-                through every stage of FibbieBanks.
-            </p>
+    <p class="sec-p lede">
+      A warehouse is only as trustworthy as the discipline that built it. Three engineering patterns run through every stage of FibbieBanks.
+    </p>
 
-            <h3 class="sec-h" style="font-size:1.2rem;margin-top:2rem;margin-bottom:.85rem;">1. Schema validation as a
-                contract</h3>
+    <h3 class="sec-h" style="font-size:1.2rem;margin-top:2rem;margin-bottom:.85rem;">1. Schema validation as a contract</h3>
 
-            <p class="sec-p">
-                Every transformation in <code>transform.py</code> calls <code>validate_schema()</code> before and after
-                it runs. If a column is missing, the pipeline halts with a <code>ValueError</code> listing exactly which
-                columns weren't found. This means a schema drift in the source CSV gets caught at the start of
-                transform, not three stages later when something tries to load NULLs into a NOT NULL column.
-            </p>
+    <p class="sec-p">
+      Every transformation in <code>transform.py</code> calls <code>validate_schema()</code> before and after it runs. If a column is missing, the pipeline halts with a <code>ValueError</code> listing exactly which columns weren't found. This means a schema drift in the source CSV gets caught at the start of transform, not three stages later when something tries to load NULLs into a NOT NULL column.
+    </p>
 
-            <div class="code-block">
-                <span class="code-block-label">etl/transform.py</span>
-                <pre><span class="keyword">def</span> <span class="fn">validate_schema</span>(df, expected_columns: list[<span class="keyword">str</span>]) -> <span class="keyword">None</span>:
+    <div class="code-block">
+      <span class="code-block-label">etl/transform.py</span>
+<pre><span class="keyword">def</span> <span class="fn">validate_schema</span>(df, expected_columns: list[<span class="keyword">str</span>]) -> <span class="keyword">None</span>:
     missing_cols = [c <span class="keyword">for</span> c <span class="keyword">in</span> expected_columns <span class="keyword">if</span> c <span class="keyword">not in</span> df.columns]
     <span class="keyword">if</span> missing_cols:
         logging.<span class="fn">error</span>(<span class="string">f"Missing columns: {missing_cols}"</span>)
         <span class="keyword">raise</span> ValueError(<span class="string">f"Missing required columns: {missing_cols}"</span>)
     logging.<span class="fn">info</span>(<span class="string">"✅ Schema validation passed."</span>)</pre>
-            </div>
+    </div>
 
-            <h3 class="sec-h" style="font-size:1.2rem;margin-top:2rem;margin-bottom:.85rem;">2. Money stays money</h3>
+    <h3 class="sec-h" style="font-size:1.2rem;margin-top:2rem;margin-bottom:.85rem;">2. Money stays money</h3>
 
-            <p class="sec-p">
-                The source CSV's <code>amount</code> column arrives as a string ("$1,250.50" formatting in places). In
-                <code>clean.py</code> it's stripped of non-numeric characters via regex and cast to Spark's
-                <code>DecimalType(18,2)</code>. This type flows through every subsequent stage unchanged and lands in
-                PostgreSQL as <code>NUMERIC(18,2)</code>. The cast logs how many rows became NULL during the conversion
-                — silent data corruption is impossible.
-            </p>
+    <p class="sec-p">
+      The source CSV's <code>amount</code> column arrives as a string ("$1,250.50" formatting in places). In <code>clean.py</code> it's stripped of non-numeric characters via regex and cast to Spark's <code>DecimalType(18,2)</code>. This type flows through every subsequent stage unchanged and lands in PostgreSQL as <code>NUMERIC(18,2)</code>. The cast logs how many rows became NULL during the conversion — silent data corruption is impossible.
+    </p>
 
-            <div class="callout">
-                <div class="callout-label">Why DECIMAL, not FLOAT or VARCHAR</div>
-                <div class="callout-text">
-                    Floats lose precision at scale (<code>0.1 + 0.2 != 0.3</code>). Strings prevent aggregation.
-                    <strong>DECIMAL preserves exactness AND enables <code>SUM(amount)</code> directly in SQL</strong>
-                    without casts. Money is too important to leave to type inference.
-                </div>
-            </div>
+    <div class="callout">
+      <div class="callout-label">Why DECIMAL, not FLOAT or VARCHAR</div>
+      <div class="callout-text">
+        Floats lose precision at scale (<code>0.1 + 0.2 != 0.3</code>). Strings prevent aggregation. <strong>DECIMAL preserves exactness AND enables <code>SUM(amount)</code> directly in SQL</strong> without casts. Money is too important to leave to type inference.
+      </div>
+    </div>
 
-            <h3 class="sec-h" style="font-size:1.2rem;margin-top:2rem;margin-bottom:.85rem;">3. Observability built in
-            </h3>
+    <h3 class="sec-h" style="font-size:1.2rem;margin-top:2rem;margin-bottom:.85rem;">3. Observability built in</h3>
 
-            <p class="sec-p">
-                A custom <code>logger.py</code> module provides a <code>@timed</code> decorator that wraps every
-                pipeline stage with execution timing, and a <code>section()</code> utility that prints visual banners
-                between stages. Every cleaning operation logs before/after row counts. Every load operation logs how
-                many rows were appended (or that none were, on idempotent re-runs). The whole story of any run is in a
-                single <code>pipeline.log</code> file.
-            </p>
+    <p class="sec-p">
+      A custom <code>logger.py</code> module provides a <code>@timed</code> decorator that wraps every pipeline stage with execution timing, and a <code>section()</code> utility that prints visual banners between stages. Every cleaning operation logs before/after row counts. Every load operation logs how many rows were appended (or that none were, on idempotent re-runs). The whole story of any run is in a single <code>pipeline.log</code> file.
+    </p>
 
-            <div class="code-block">
-                <span class="code-block-label">pipeline.log · sample output</span>
-                <pre>2026-05-17 15:47:30 INFO 🔷 Creating dim_date table
+    <div class="code-block">
+      <span class="code-block-label">pipeline.log · sample output</span>
+<pre>2026-05-17 15:47:30 INFO 🔷 Creating dim_date table
 2026-05-17 15:47:31 INFO ✅ dim_date table created.
 2026-05-17 15:47:31 INFO 🔷 Creating dim_transaction table
 2026-05-17 15:47:31 INFO ✅ Schema validation passed.
@@ -2082,503 +1242,393 @@
 2026-05-17 15:50:26 INFO ℹ️ <span class="self">No new rows to insert</span> — analytics.dim_employee is already up to date
 2026-05-17 15:54:26 INFO ℹ️ <span class="self">No new rows to insert</span> — analytics.fact_transactions is already up to date
 2026-05-17 15:54:27 INFO 🎉 ALL TABLES LOADED SUCCESSFULLY — ONLY NEW DATA APPENDED</pre>
-            </div>
+    </div>
 
-            <p class="sec-p" style="margin-top:1rem;">
-                That sequence of "No new rows to insert" lines — one per table — is the visible proof that idempotency
-                is working. The deterministic hash keys mean the same source data produces the same surrogate keys, and
-                the LEFT JOIN merge correctly identifies that nothing is actually new.
-            </p>
-        </section>
+    <p class="sec-p" style="margin-top:1rem;">
+      That sequence of "No new rows to insert" lines — one per table — is the visible proof that idempotency is working. The deterministic hash keys mean the same source data produces the same surrogate keys, and the LEFT JOIN merge correctly identifies that nothing is actually new.
+    </p>
+  </section>
 
-        <!-- ───── 05 · DECISIONS ───── -->
-        <section id="decisions" class="fade-up sec-alt">
-            <div class="sec-kicker"><span class="sec-num">05</span> Decisions</div>
-            <h2 class="sec-h">The choices behind the design.</h2>
+  <!-- ───── 05 · DECISIONS ───── -->
+  <section id="decisions" class="fade-up sec-alt">
+    <div class="sec-kicker"><span class="sec-num">05</span> Decisions</div>
+    <h2 class="sec-h">The choices behind the design.</h2>
 
-            <p class="sec-p lede">
-                Six engineering decisions that shaped FibbieBanks, with the reasoning behind each.
-            </p>
+    <p class="sec-p lede">
+      Six engineering decisions that shaped FibbieBanks, with the reasoning behind each.
+    </p>
 
-            <div class="decision-card">
-                <div class="decision-num">01</div>
-                <div class="decision-q">Why SHA-256 surrogate keys, not <code>monotonically_increasing_id()</code>?
-                </div>
-                <div class="decision-a">
-                    Spark's built-in monotonic ID is <strong>not deterministic across runs</strong> — it depends on
-                    partition layout. The same input row produces different IDs each time the pipeline runs. That breaks
-                    the LEFT JOIN merge in <code>load.py</code> entirely: every row looks "new" because its surrogate
-                    key doesn't match what's in the target table. Switching to
-                    <code>sha2(concat_ws('|', ...natural_keys), 256)</code> makes the surrogate key a deterministic
-                    function of the row's content. Same row in, same key out, every time. This is what makes the
-                    warehouse idempotent.
-                </div>
-            </div>
+    <div class="decision-card">
+      <div class="decision-num">01</div>
+      <div class="decision-q">Why SHA-256 surrogate keys, not <code>monotonically_increasing_id()</code>?</div>
+      <div class="decision-a">
+        Spark's built-in monotonic ID is <strong>not deterministic across runs</strong> — it depends on partition layout. The same input row produces different IDs each time the pipeline runs. That breaks the LEFT JOIN merge in <code>load.py</code> entirely: every row looks "new" because its surrogate key doesn't match what's in the target table. Switching to <code>sha2(concat_ws('|', ...natural_keys), 256)</code> makes the surrogate key a deterministic function of the row's content. Same row in, same key out, every time. This is what makes the warehouse idempotent.
+      </div>
+    </div>
 
-            <div class="decision-card">
-                <div class="decision-num">02</div>
-                <div class="decision-q">Why DECIMAL(18,2) for amount, not FLOAT?</div>
-                <div class="decision-a">
-                    Floating-point numbers lose precision at scale — <code>0.1 + 0.2</code> doesn't equal
-                    <code>0.3</code> in IEEE 754. For money, that's unacceptable. <strong>DECIMAL preserves
-                        exactness</strong> and still enables <code>SUM</code>, <code>AVG</code>, and other aggregations
-                    directly in SQL without casts. The same type flows from Spark's <code>DecimalType(18,2)</code>
-                    through to Postgres's <code>NUMERIC(18,2)</code>. Money stays money through the entire pipeline.
-                </div>
-            </div>
+    <div class="decision-card">
+      <div class="decision-num">02</div>
+      <div class="decision-q">Why DECIMAL(18,2) for amount, not FLOAT?</div>
+      <div class="decision-a">
+        Floating-point numbers lose precision at scale — <code>0.1 + 0.2</code> doesn't equal <code>0.3</code> in IEEE 754. For money, that's unacceptable. <strong>DECIMAL preserves exactness</strong> and still enables <code>SUM</code>, <code>AVG</code>, and other aggregations directly in SQL without casts. The same type flows from Spark's <code>DecimalType(18,2)</code> through to Postgres's <code>NUMERIC(18,2)</code>. Money stays money through the entire pipeline.
+      </div>
+    </div>
 
-            <div class="decision-card">
-                <div class="decision-num">03</div>
-                <div class="decision-q">Why VARCHAR(64) for surrogate keys?</div>
-                <div class="decision-a">
-                    SHA-256 in hex form is always exactly 64 characters. <code>VARCHAR(64)</code> documents this
-                    contract to anyone reading the schema and constrains the column to its real shape. <code>TEXT</code>
-                    would technically work but tells future readers nothing about the column's purpose. The tradeoff is
-                    real: 64-char surrogate keys are larger than BIGINT and slightly slower to join. But warehouse
-                    correctness on re-runs is worth far more than the micro-perf delta.
-                </div>
-            </div>
+    <div class="decision-card">
+      <div class="decision-num">03</div>
+      <div class="decision-q">Why VARCHAR(64) for surrogate keys?</div>
+      <div class="decision-a">
+        SHA-256 in hex form is always exactly 64 characters. <code>VARCHAR(64)</code> documents this contract to anyone reading the schema and constrains the column to its real shape. <code>TEXT</code> would technically work but tells future readers nothing about the column's purpose. The tradeoff is real: 64-char surrogate keys are larger than BIGINT and slightly slower to join. But warehouse correctness on re-runs is worth far more than the micro-perf delta.
+      </div>
+    </div>
 
-            <div class="decision-card">
-                <div class="decision-num">04</div>
-                <div class="decision-q">Why is DDL owned by SQL, not auto-created by Spark?</div>
-                <div class="decision-a">
-                    Spark's JDBC writer can auto-create tables, but it auto-infers types (often suboptimally) and
-                    <strong>discards PRIMARY KEYs, FOREIGN KEYs, and indexes entirely</strong>. By owning the schema in
-                    <code>create_tables.sql</code>, the warehouse gets full control over types, constraints, and
-                    read-performance indexes. The ETL becomes a pure data-movement layer with no DDL concerns mixed in.
-                    The pipeline hard-fails if the schema isn't there, with a clear error pointing the operator at the
-                    SQL file.
-                </div>
-            </div>
+    <div class="decision-card">
+      <div class="decision-num">04</div>
+      <div class="decision-q">Why is DDL owned by SQL, not auto-created by Spark?</div>
+      <div class="decision-a">
+        Spark's JDBC writer can auto-create tables, but it auto-infers types (often suboptimally) and <strong>discards PRIMARY KEYs, FOREIGN KEYs, and indexes entirely</strong>. By owning the schema in <code>create_tables.sql</code>, the warehouse gets full control over types, constraints, and read-performance indexes. The ETL becomes a pure data-movement layer with no DDL concerns mixed in. The pipeline hard-fails if the schema isn't there, with a clear error pointing the operator at the SQL file.
+      </div>
+    </div>
 
-            <div class="decision-card">
-                <div class="decision-num">05</div>
-                <div class="decision-q">Why a separate <code>explore.py</code> stage?</div>
-                <div class="decision-a">
-                    Knowing your data is a first-class engineering concern, not an afterthought. Profiling row counts,
-                    null distributions, and distinct values catches problems before they propagate downstream. Most
-                    pipelines bury this in commented-out notebook cells. Here it's a dedicated module with its own log
-                    banners — runnable standalone via <code>python -m etl.explore</code> whenever the source dataset
-                    changes.
-                </div>
-            </div>
+    <div class="decision-card">
+      <div class="decision-num">05</div>
+      <div class="decision-q">Why a separate <code>explore.py</code> stage?</div>
+      <div class="decision-a">
+        Knowing your data is a first-class engineering concern, not an afterthought. Profiling row counts, null distributions, and distinct values catches problems before they propagate downstream. Most pipelines bury this in commented-out notebook cells. Here it's a dedicated module with its own log banners — runnable standalone via <code>python -m etl.explore</code> whenever the source dataset changes.
+      </div>
+    </div>
 
-            <div class="decision-card">
-                <div class="decision-num">06</div>
-                <div class="decision-q">Why fail hard rather than auto-recover?</div>
-                <div class="decision-a">
-                    The pipeline raises <code>SystemExit(1)</code> on critical errors — missing env vars, missing target
-                    tables, JDBC write failures. <strong>Silent recovery is the enemy of observability.</strong> A
-                    pipeline that "kind of worked" is worse than one that loudly didn't, because nobody investigates a
-                    green log. Loud failure means real correctness, not optimistic correctness.
-                </div>
-            </div>
-        </section>
+    <div class="decision-card">
+      <div class="decision-num">06</div>
+      <div class="decision-q">Why fail hard rather than auto-recover?</div>
+      <div class="decision-a">
+        The pipeline raises <code>SystemExit(1)</code> on critical errors — missing env vars, missing target tables, JDBC write failures. <strong>Silent recovery is the enemy of observability.</strong> A pipeline that "kind of worked" is worse than one that loudly didn't, because nobody investigates a green log. Loud failure means real correctness, not optimistic correctness.
+      </div>
+    </div>
+  </section>
 
-        <!-- ───── 06 · IMPACT ───── -->
-        <section id="impact" class="fade-up">
-            <div class="sec-kicker"><span class="sec-num">06</span> Impact</div>
-            <h2 class="sec-h">What this pipeline produces.</h2>
+  <!-- ───── 06 · IMPACT ───── -->
+  <section id="impact" class="fade-up">
+    <div class="sec-kicker"><span class="sec-num">06</span> Impact</div>
+    <h2 class="sec-h">What this pipeline produces.</h2>
 
-            <p class="sec-p lede">
-                Measurable outcomes from end-to-end runs on the 1M-row source dataset.
-            </p>
+    <p class="sec-p lede">
+      Measurable outcomes from end-to-end runs on the 1M-row source dataset.
+    </p>
 
-            <div class="grid-4">
-                <div class="impact-card">
-                    <div class="impact-num acc">1M</div>
-                    <div class="impact-label">rows processed</div>
-                    <div class="impact-desc">Synthetic banking transactions, 23 columns wide, processed end-to-end on a
-                        single local Spark instance</div>
-                </div>
-                <div class="impact-card">
-                    <div class="impact-num teal">5 tbls</div>
-                    <div class="impact-label">star schema</div>
-                    <div class="impact-desc">4 conformed dimensions plus 1 fact table, with FK referential integrity and
-                        7 read-optimised indexes</div>
-                </div>
-                <div class="impact-card">
-                    <div class="impact-num green">~9 min</div>
-                    <div class="impact-label">idempotent re-run</div>
-                    <div class="impact-desc">Re-running on unchanged data takes 64% less than a first load — LEFT JOIN
-                        merge short-circuits when nothing's new</div>
-                </div>
-                <div class="impact-card">
-                    <div class="impact-num amber">0 dupes</div>
-                    <div class="impact-label">on re-run</div>
-                    <div class="impact-desc">All five tables correctly identified as already-loaded. The
-                        deterministic-hash-key contract holds across runs</div>
-                </div>
-            </div>
+    <div class="grid-4">
+      <div class="impact-card">
+        <div class="impact-num acc">1M</div>
+        <div class="impact-label">rows processed</div>
+        <div class="impact-desc">Synthetic banking transactions, 23 columns wide, processed end-to-end on a single local Spark instance</div>
+      </div>
+      <div class="impact-card">
+        <div class="impact-num teal">5 tbls</div>
+        <div class="impact-label">star schema</div>
+        <div class="impact-desc">4 conformed dimensions plus 1 fact table, with FK referential integrity and 7 read-optimised indexes</div>
+      </div>
+      <div class="impact-card">
+        <div class="impact-num green">~9 min</div>
+        <div class="impact-label">idempotent re-run</div>
+        <div class="impact-desc">Re-running on unchanged data takes 64% less than a first load — LEFT JOIN merge short-circuits when nothing's new</div>
+      </div>
+      <div class="impact-card">
+        <div class="impact-num amber">0 dupes</div>
+        <div class="impact-label">on re-run</div>
+        <div class="impact-desc">All five tables correctly identified as already-loaded. The deterministic-hash-key contract holds across runs</div>
+      </div>
+    </div>
 
-            <div class="callout" style="margin-top:2rem;">
-                <div class="callout-label">The real story</div>
-                <div class="callout-text">
-                    The 64% time reduction on re-runs isn't a magic optimisation — it's <strong>the idempotency contract
-                        paying dividends</strong>. When the LEFT JOIN sees zero new keys, Postgres skips the insert
-                    entirely. The warehouse is safe to re-run on schedule, after a backfill, or after a partial failure.
-                    None of those scenarios silently corrupt the data.
-                </div>
-            </div>
-        </section>
+    <div class="callout" style="margin-top:2rem;">
+      <div class="callout-label">The real story</div>
+      <div class="callout-text">
+        The 64% time reduction on re-runs isn't a magic optimisation — it's <strong>the idempotency contract paying dividends</strong>. When the LEFT JOIN sees zero new keys, Postgres skips the insert entirely. The warehouse is safe to re-run on schedule, after a backfill, or after a partial failure. None of those scenarios silently corrupt the data.
+      </div>
+    </div>
+  </section>
 
-        <!-- ───── 07 · TECH STACK ───── -->
-        <section id="tech" class="fade-up sec-alt">
-            <div class="sec-kicker"><span class="sec-num">07</span> Tech Stack</div>
-            <h2 class="sec-h">The tools, and what each one does here.</h2>
+  <!-- ───── 07 · TECH STACK ───── -->
+  <section id="tech" class="fade-up sec-alt">
+    <div class="sec-kicker"><span class="sec-num">07</span> Tech Stack</div>
+    <h2 class="sec-h">The tools, and what each one does here.</h2>
 
-            <div class="tech-grid">
-                <div class="tech-item">
-                    <span class="tech-name">PySpark 3.5</span>
-                    <span class="tech-role">Distributed transform engine</span>
-                </div>
-                <div class="tech-item">
-                    <span class="tech-name">PostgreSQL 14</span>
-                    <span class="tech-role">Analytics warehouse</span>
-                </div>
-                <div class="tech-item">
-                    <span class="tech-name">SQLAlchemy</span>
-                    <span class="tech-role">DB engine + transactional merges</span>
-                </div>
-                <div class="tech-item">
-                    <span class="tech-name">psycopg2</span>
-                    <span class="tech-role">Postgres driver</span>
-                </div>
-                <div class="tech-item">
-                    <span class="tech-name">PostgreSQL JDBC</span>
-                    <span class="tech-role">Spark → Postgres bulk writes</span>
-                </div>
-                <div class="tech-item">
-                    <span class="tech-name">python-dotenv</span>
-                    <span class="tech-role">Env-var config loader</span>
-                </div>
-                <div class="tech-item">
-                    <span class="tech-name">Custom logger</span>
-                    <span class="tech-role">@timed decorator + section banners</span>
-                </div>
-                <div class="tech-item">
-                    <span class="tech-name">SHA-256</span>
-                    <span class="tech-role">Deterministic surrogate keys</span>
-                </div>
-                <div class="tech-item">
-                    <span class="tech-name">Kryo Serializer</span>
-                    <span class="tech-role">Spark serialisation tuning</span>
-                </div>
-            </div>
+    <div class="tech-grid">
+      <div class="tech-item">
+        <span class="tech-name">PySpark 3.5</span>
+        <span class="tech-role">Distributed transform engine</span>
+      </div>
+      <div class="tech-item">
+        <span class="tech-name">PostgreSQL 14</span>
+        <span class="tech-role">Analytics warehouse</span>
+      </div>
+      <div class="tech-item">
+        <span class="tech-name">SQLAlchemy</span>
+        <span class="tech-role">DB engine + transactional merges</span>
+      </div>
+      <div class="tech-item">
+        <span class="tech-name">psycopg2</span>
+        <span class="tech-role">Postgres driver</span>
+      </div>
+      <div class="tech-item">
+        <span class="tech-name">PostgreSQL JDBC</span>
+        <span class="tech-role">Spark → Postgres bulk writes</span>
+      </div>
+      <div class="tech-item">
+        <span class="tech-name">python-dotenv</span>
+        <span class="tech-role">Env-var config loader</span>
+      </div>
+      <div class="tech-item">
+        <span class="tech-name">Custom logger</span>
+        <span class="tech-role">@timed decorator + section banners</span>
+      </div>
+      <div class="tech-item">
+        <span class="tech-name">SHA-256</span>
+        <span class="tech-role">Deterministic surrogate keys</span>
+      </div>
+      <div class="tech-item">
+        <span class="tech-name">Kryo Serializer</span>
+        <span class="tech-role">Spark serialisation tuning</span>
+      </div>
+    </div>
 
-            <h3 class="sec-h" style="font-size:1.2rem;margin-top:2.5rem;margin-bottom:.85rem;">If I were scaling this up
-            </h3>
+    <h3 class="sec-h" style="font-size:1.2rem;margin-top:2.5rem;margin-bottom:.85rem;">If I were scaling this up</h3>
 
-            <p class="sec-p">
-                For production at higher volumes, the natural evolutions would be: <strong>managed Spark</strong>
-                (Databricks/EMR/Dataproc) to parallelise the transform across executors; <strong>parallelised JDBC
-                    writes</strong> via Spark's <code>numPartitions</code> + <code>partitionColumn</code>;
-                <strong>dbt</strong> on top of the warehouse for analyst-authored transformations and tested SQL models;
-                <strong>Airflow or Prefect orchestration</strong> for scheduled runs with retry and alerting;
-                <strong>SCD Type 2 on dim_customer</strong> with <code>valid_from</code> / <code>valid_to</code> columns
-                to track attribute changes over time; and <strong>migration tooling</strong> (Alembic, Flyway) for
-                evolving the DDL safely instead of <code>DROP + CREATE</code>.
-            </p>
-        </section>
+    <p class="sec-p">
+      For production at higher volumes, the natural evolutions would be: <strong>managed Spark</strong> (Databricks/EMR/Dataproc) to parallelise the transform across executors; <strong>parallelised JDBC writes</strong> via Spark's <code>numPartitions</code> + <code>partitionColumn</code>; <strong>dbt</strong> on top of the warehouse for analyst-authored transformations and tested SQL models; <strong>Airflow or Prefect orchestration</strong> for scheduled runs with retry and alerting; <strong>SCD Type 2 on dim_customer</strong> with <code>valid_from</code> / <code>valid_to</code> columns to track attribute changes over time; and <strong>migration tooling</strong> (Alembic, Flyway) for evolving the DDL safely instead of <code>DROP + CREATE</code>.
+    </p>
+  </section>
 
-        <!-- ───── CONTACT CTA ───── -->
-        <section class="fade-up" style="margin-top:5rem;margin-bottom:0;">
-            <div
-                style="padding:2.5rem 2rem;background:var(--bg-card);border:1px solid var(--bdr);border-radius:var(--r);text-align:center;">
-                <div class="sec-kicker" style="justify-content:center;margin-bottom:1rem;">Let's talk</div>
-                <h2 class="sec-h" style="text-align:center;font-size:clamp(1.4rem,2.8vw,1.9rem);margin-bottom:1rem;">
-                    Need a data engineer who ships disciplined warehouses?</h2>
-                <p class="sec-p" style="max-width:580px;margin:0 auto 1.75rem;font-size:.98rem;">
-                    I'm currently looking for Data Engineer / Analytics Engineer roles. UK-based, open to remote or
-                    hybrid.
-                </p>
-                <div class="cs-cta-row" style="justify-content:center;">
-                    <a href="https://github.com/yoismail/fibbie_banks" class="btn-primary" target="_blank"
-                        rel="noopener">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                            <path
-                                d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58v-2.06c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.21.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.5.99.11-.77.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.31-.54-1.53.11-3.19 0 0 1.01-.32 3.3 1.23.96-.27 1.98-.4 3-.41 1.02 0 2.04.14 3 .41 2.29-1.55 3.3-1.23 3.3-1.23.65 1.66.24 2.88.12 3.19.77.84 1.24 1.91 1.24 3.22 0 4.61-2.8 5.62-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.69.83.58A12 12 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
-                        </svg>
-                        View this project on GitHub
-                    </a>
-                    <a href="index.html#contact" class="btn-ghost">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                            <rect width="20" height="16" x="2" y="4" rx="2" />
-                            <path d="M2 7l10 7 10-7" />
-                        </svg>
-                        Get in touch
-                    </a>
-                </div>
-            </div>
-        </section>
+  <!-- ───── CONTACT CTA ───── -->
+  <section class="fade-up" style="margin-top:5rem;margin-bottom:0;">
+    <div style="padding:2.5rem 2rem;background:var(--bg-card);border:1px solid var(--bdr);border-radius:var(--r);text-align:center;">
+      <div class="sec-kicker" style="justify-content:center;margin-bottom:1rem;">Let's talk</div>
+      <h2 class="sec-h" style="text-align:center;font-size:clamp(1.4rem,2.8vw,1.9rem);margin-bottom:1rem;">Need a data engineer who ships disciplined warehouses?</h2>
+      <p class="sec-p" style="max-width:580px;margin:0 auto 1.75rem;font-size:.98rem;">
+        I'm currently looking for Data Engineer / Analytics Engineer roles. UK-based, open to remote or hybrid.
+      </p>
+      <div class="cs-cta-row" style="justify-content:center;">
+        <a href="https://github.com/yoismail/fibbie_banks" class="btn-primary" target="_blank" rel="noopener">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58v-2.06c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.21.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.5.99.11-.77.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.31-.54-1.53.11-3.19 0 0 1.01-.32 3.3 1.23.96-.27 1.98-.4 3-.41 1.02 0 2.04.14 3 .41 2.29-1.55 3.3-1.23 3.3-1.23.65 1.66.24 2.88.12 3.19.77.84 1.24 1.91 1.24 3.22 0 4.61-2.8 5.62-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.69.83.58A12 12 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          View this project on GitHub
+        </a>
+        <a href="index.html#contact" class="btn-ghost">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="M2 7l10 7 10-7"/></svg>
+          Get in touch
+        </a>
+      </div>
+    </div>
+  </section>
 
-        <!-- ───── READ NEXT ───── -->
-        <section id="read-next" class="read-next" aria-label="Other case studies">
-            <div class="read-next-eyebrow">Read next</div>
-            <h2 class="read-next-h">Other case studies</h2>
-            <div class="read-next-grid">
-                <a href="payflow.html" class="read-next-card">
-                    <div class="read-next-label">Case study · End-to-end ETL</div>
-                    <div class="read-next-title">PayFlow — ETL & Warehouse</div>
-                    <p class="read-next-desc">A production-style ETL pipeline that loads 9 raw Brazilian e-commerce CSVs
-                        into a full PostgreSQL star schema, with idempotent loads and structured logging.</p>
-                    <div class="read-next-tags">
-                        <span class="read-next-tag">Python</span>
-                        <span class="read-next-tag">PostgreSQL</span>
-                        <span class="read-next-tag">SQLAlchemy</span>
-                    </div>
-                    <span class="read-next-cta">Read the case study<span class="read-next-cta-arrow">→</span></span>
-                </a>
-                <a href="chocodelight.html" class="read-next-card">
-                    <div class="read-next-label">Case study · Layered platform</div>
-                    <div class="read-next-title">ChocoDelight Data Platform</div>
-                    <p class="read-next-desc">Three-schema PostgreSQL warehouse on chocolate sales data, with raw,
-                        operational, and analytics layers and a full dimensional model.</p>
-                    <div class="read-next-tags">
-                        <span class="read-next-tag">Python</span>
-                        <span class="read-next-tag">PostgreSQL</span>
-                        <span class="read-next-tag">SQLAlchemy</span>
-                    </div>
-                    <span class="read-next-cta">Read the case study<span class="read-next-cta-arrow">→</span></span>
-                </a>
-            </div>
-        </section>
-
-    </div><!-- /page -->
-
-    <!-- FOOTER -->
-    <footer>
-        <div class="footer-top">
-
-            <!-- BRAND BLOCK -->
-            <div class="footer-brand-block">
-                <svg class="footer-mark" viewBox="0 0 36 36" aria-hidden="true">
-                    <path d="M 8 8 L 14 18 L 14 28 M 14 18 L 20 8" pathLength="1" />
-                    <line x1="26" y1="14" x2="26" y2="28" pathLength="1" />
-                    <circle cx="26" cy="9" r="1.4" fill="currentColor" />
-                </svg>
-                <div>
-                    <div class="footer-name">Yomi Ismail</div>
-                    <div class="footer-tagline">Data Engineer · Suffolk, UK</div>
-                </div>
-            </div>
-
-            <!-- WORK -->
-            <div class="footer-col">
-                <div class="footer-col-label">Work</div>
-                <ul>
-                    <li><a href="fibbiebanks.html" class="footer-link">
-                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
-                                <path d="M14 2v6h6" />
-                            </svg>
-                            FibbieBanks
-                        </a></li>
-                    <li><a href="payflow.html" class="footer-link">
-                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
-                                <path d="M14 2v6h6" />
-                            </svg>
-                            PayFlow
-                        </a></li>
-                    <li><a href="chocodelight.html" class="footer-link">
-                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
-                                <path d="M14 2v6h6" />
-                            </svg>
-                            ChocoDelight
-                        </a></li>
-                    <li><a href="aliexpress.html" class="footer-link">
-                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
-                                <path d="M14 2v6h6" />
-                            </svg>
-                            AliExpress ETL
-                        </a></li>
-                    <li><a href="principles.html" class="footer-link">
-                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
-                                <path d="M14 2v6h6" />
-                            </svg>
-                            Engineering Principles
-                        </a></li>
-                </ul>
-            </div>
-
-            <!-- EXPLORE -->
-            <div class="footer-col">
-                <div class="footer-col-label">Explore</div>
-                <ul>
-                    <li><a href="index.html" class="footer-link">
-                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M3 12l9-9 9 9" />
-                                <path d="M5 10v10h14V10" />
-                            </svg>
-                            Portfolio home
-                        </a></li>
-                    <li><a href="index.html#experience" class="footer-link">
-                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <rect x="2" y="7" width="20" height="14" rx="2" />
-                                <path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2" />
-                            </svg>
-                            Experience
-                        </a></li>
-                    <li><a href="index.html#stack" class="footer-link">
-                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <polygon points="12 2 2 7 12 12 22 7 12 2" />
-                                <polyline points="2 17 12 22 22 17" />
-                                <polyline points="2 12 12 17 22 12" />
-                            </svg>
-                            Stack
-                        </a></li>
-                    <li><a href="index.html#contact" class="footer-link">
-                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path
-                                    d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z" />
-                            </svg>
-                            Get in touch
-                        </a></li>
-                </ul>
-            </div>
-
-            <!-- CONNECT -->
-            <div class="footer-col">
-                <div class="footer-col-label">Connect</div>
-                <ul>
-                    <li><a href="https://www.linkedin.com/in/yomi-ismail" target="_blank" rel="noopener noreferrer"
-                            class="footer-link">
-                            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
-                                <path
-                                    d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-                            </svg>
-                            LinkedIn
-                        </a></li>
-                    <li><a href="https://github.com/yoismail" target="_blank" rel="noopener noreferrer"
-                            class="footer-link">
-                            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
-                                <path
-                                    d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
-                            </svg>
-                            GitHub
-                        </a></li>
-                    <li><a href="mailto:ismailyomi@gmail.com" class="footer-link">
-                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <rect width="20" height="16" x="2" y="4" rx="2" />
-                                <path d="M2 7l10 7 10-7" />
-                            </svg>
-                            Email
-                        </a></li>
-                </ul>
-            </div>
-
-        </div><!-- /footer-top -->
-
-        <div class="footer-bottom">
-            <div class="footer-copy">© <span id="year"></span> Yomi Ismail · All rights reserved</div>
-            <div class="footer-note">Built in Suffolk, mostly on weekends and rainy evenings.</div>
+  <!-- ───── READ NEXT ───── -->
+  <section id="read-next" class="read-next" aria-label="Other case studies">
+    <div class="read-next-eyebrow">Read next</div>
+    <h2 class="read-next-h">Other case studies</h2>
+    <div class="read-next-grid">
+      <a href="payflow.html" class="read-next-card">
+        <div class="read-next-label">Case study · End-to-end ETL</div>
+        <div class="read-next-title">PayFlow — ETL & Warehouse</div>
+        <p class="read-next-desc">A production-style ETL pipeline that loads 9 raw Brazilian e-commerce CSVs into a full PostgreSQL star schema, with idempotent loads and structured logging.</p>
+        <div class="read-next-tags">
+          <span class="read-next-tag">Python</span>
+          <span class="read-next-tag">PostgreSQL</span>
+          <span class="read-next-tag">SQLAlchemy</span>
         </div>
-    </footer>
+        <span class="read-next-cta">Read the case study<span class="read-next-cta-arrow">→</span></span>
+      </a>
+      <a href="chocodelight.html" class="read-next-card">
+        <div class="read-next-label">Case study · Layered platform</div>
+        <div class="read-next-title">ChocoDelight Data Platform</div>
+        <p class="read-next-desc">Three-schema PostgreSQL warehouse on chocolate sales data, with raw, operational, and analytics layers and a full dimensional model.</p>
+        <div class="read-next-tags">
+          <span class="read-next-tag">Python</span>
+          <span class="read-next-tag">PostgreSQL</span>
+          <span class="read-next-tag">SQLAlchemy</span>
+        </div>
+        <span class="read-next-cta">Read the case study<span class="read-next-cta-arrow">→</span></span>
+      </a>
+    </div>
+  </section>
 
-    <!-- BACK TO TOP -->
-    <button class="to-top" id="toTop" aria-label="Back to top">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
-            stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="18 15 12 9 6 15" />
-        </svg>
-    </button>
+</div><!-- /page -->
 
-    <script>
-        /* fade-up on scroll */
-        (function () {
-            const io = new IntersectionObserver(entries => {
-                entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
-            }, { rootMargin: '0px 0px -80px 0px', threshold: .1 });
-            document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
-        })();
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
 
-        /* dynamic year in footer copyright */
-        (function () {
-            const y = document.getElementById('year');
-            if (y) y.textContent = new Date().getFullYear();
-        })();
+    <!-- BRAND BLOCK -->
+    <div class="footer-brand-block">
+      <svg class="footer-mark" viewBox="0 0 36 36" aria-hidden="true">
+        <path d="M 8 8 L 14 18 L 14 28 M 14 18 L 20 8" pathLength="1"/>
+        <line x1="26" y1="14" x2="26" y2="28" pathLength="1"/>
+        <circle cx="26" cy="9" r="1.4" fill="currentColor"/>
+      </svg>
+      <div>
+        <div class="footer-name">Yomi Ismail</div>
+        <div class="footer-tagline">Data Engineer · Suffolk, UK</div>
+      </div>
+    </div>
 
-        /* back to top */
-        (function () {
-            const btn = document.getElementById('toTop');
-            if (!btn) return;
-            function update() {
-                if (window.scrollY > 500) btn.classList.add('show');
-                else btn.classList.remove('show');
-            }
-            window.addEventListener('scroll', update, { passive: true });
-            btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-        })();
+    <!-- WORK -->
+    <div class="footer-col">
+      <div class="footer-col-label">Work</div>
+      <ul>
+        <li><a href="fibbiebanks.html" class="footer-link">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/></svg>
+          FibbieBanks
+        </a></li>
+        <li><a href="payflow.html" class="footer-link">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/></svg>
+          PayFlow
+        </a></li>
+        <li><a href="chocodelight.html" class="footer-link">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/></svg>
+          ChocoDelight
+        </a></li>
+        <li><a href="aliexpress.html" class="footer-link">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/></svg>
+          AliExpress ETL
+        </a></li>
+        <li><a href="principles.html" class="footer-link">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/></svg>
+          Engineering Principles
+        </a></li>
+      </ul>
+    </div>
 
-        /* sticky TOC sync */
-        (function () {
-            const toc = document.getElementById('csToc');
-            if (!toc) return;
-            const tocLinks = toc.querySelectorAll('a');
-            const tocMap = new Map();
-            tocLinks.forEach(a => {
-                const id = a.getAttribute('href').slice(1);
-                tocMap.set(id, a);
-            });
-            function update() {
-                if (window.scrollY > 400) toc.classList.add('show');
-                else toc.classList.remove('show');
-            }
-            window.addEventListener('scroll', update, { passive: true });
-            update();
-            const sections = document.querySelectorAll('section[id]');
-            const io = new IntersectionObserver(entries => {
-                entries.forEach(e => {
-                    const link = tocMap.get(e.target.id);
-                    if (!link) return;
-                    if (e.isIntersecting) {
-                        tocLinks.forEach(l => l.classList.remove('active'));
-                        link.classList.add('active');
-                    }
-                });
-            }, { rootMargin: '-30% 0px -55% 0px', threshold: 0 });
-            sections.forEach(s => io.observe(s));
-        })();
+    <!-- EXPLORE -->
+    <div class="footer-col">
+      <div class="footer-col-label">Explore</div>
+      <ul>
+        <li><a href="index.html" class="footer-link">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l9-9 9 9"/><path d="M5 10v10h14V10"/></svg>
+          Portfolio home
+        </a></li>
+        <li><a href="index.html#experience" class="footer-link">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>
+          Experience
+        </a></li>
+        <li><a href="index.html#stack" class="footer-link">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+          Stack
+        </a></li>
+        <li><a href="index.html#contact" class="footer-link">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
+          Get in touch
+        </a></li>
+      </ul>
+    </div>
 
-        /* top nav active state sync */
-        (function () {
-            const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
-            if (!navLinks.length) return;
-            const navMap = new Map();
-            navLinks.forEach(a => {
-                const id = a.getAttribute('href').slice(1);
-                navMap.set(id, a);
-            });
-            const sections = document.querySelectorAll('section[id]');
-            const io = new IntersectionObserver(entries => {
-                entries.forEach(e => {
-                    const link = navMap.get(e.target.id);
-                    if (!link) return;
-                    if (e.isIntersecting) {
-                        navLinks.forEach(l => l.classList.remove('active'));
-                        link.classList.add('active');
-                    }
-                });
-            }, { rootMargin: '-30% 0px -55% 0px', threshold: 0 });
-            sections.forEach(s => io.observe(s));
-        })();
-    </script>
+    <!-- CONNECT -->
+    <div class="footer-col">
+      <div class="footer-col-label">Connect</div>
+      <ul>
+        <li><a href="https://www.linkedin.com/in/yomi-ismail" target="_blank" rel="noopener noreferrer" class="footer-link">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          LinkedIn
+        </a></li>
+        <li><a href="https://github.com/yoismail" target="_blank" rel="noopener noreferrer" class="footer-link">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+          GitHub
+        </a></li>
+        <li><a href="mailto:ismailyomi@gmail.com" class="footer-link">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="M2 7l10 7 10-7"/></svg>
+          Email
+        </a></li>
+      </ul>
+    </div>
+
+  </div><!-- /footer-top -->
+
+  <div class="footer-bottom">
+    <div class="footer-copy">© <span id="year"></span> Yomi Ismail · All rights reserved</div>
+    <div class="footer-note">Built in Suffolk, mostly on weekends and rainy evenings.</div>
+  </div>
+</footer>
+
+<!-- BACK TO TOP -->
+<button class="to-top" id="toTop" aria-label="Back to top">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
+
+<script>
+/* fade-up on scroll */
+(function(){
+  const io=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+  },{rootMargin:'0px 0px -80px 0px',threshold:.1});
+  document.querySelectorAll('.fade-up').forEach(el=>io.observe(el));
+})();
+
+/* dynamic year in footer copyright */
+(function(){
+  const y=document.getElementById('year');
+  if(y)y.textContent=new Date().getFullYear();
+})();
+
+/* back to top */
+(function(){
+  const btn=document.getElementById('toTop');
+  if(!btn)return;
+  function update(){
+    if(window.scrollY>500)btn.classList.add('show');
+    else btn.classList.remove('show');
+  }
+  window.addEventListener('scroll',update,{passive:true});
+  btn.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+})();
+
+/* sticky TOC sync */
+(function(){
+  const toc=document.getElementById('csToc');
+  if(!toc)return;
+  const tocLinks=toc.querySelectorAll('a');
+  const tocMap=new Map();
+  tocLinks.forEach(a=>{
+    const id=a.getAttribute('href').slice(1);
+    tocMap.set(id,a);
+  });
+  function update(){
+    if(window.scrollY>400)toc.classList.add('show');
+    else toc.classList.remove('show');
+  }
+  window.addEventListener('scroll',update,{passive:true});
+  update();
+  const sections=document.querySelectorAll('section[id]');
+  const io=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      const link=tocMap.get(e.target.id);
+      if(!link)return;
+      if(e.isIntersecting){
+        tocLinks.forEach(l=>l.classList.remove('active'));
+        link.classList.add('active');
+      }
+    });
+  },{rootMargin:'-30% 0px -55% 0px',threshold:0});
+  sections.forEach(s=>io.observe(s));
+})();
+
+/* top nav active state sync */
+(function(){
+  const navLinks=document.querySelectorAll('.nav-links a[href^="#"]');
+  if(!navLinks.length)return;
+  const navMap=new Map();
+  navLinks.forEach(a=>{
+    const id=a.getAttribute('href').slice(1);
+    navMap.set(id,a);
+  });
+  const sections=document.querySelectorAll('section[id]');
+  const io=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      const link=navMap.get(e.target.id);
+      if(!link)return;
+      if(e.isIntersecting){
+        navLinks.forEach(l=>l.classList.remove('active'));
+        link.classList.add('active');
+      }
+    });
+  },{rootMargin:'-30% 0px -55% 0px',threshold:0});
+  sections.forEach(s=>io.observe(s));
+})();
+</script>
 </body>
-
 </html>
