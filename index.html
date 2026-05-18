@@ -934,6 +934,22 @@
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         }
 
+        .grid-3 {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        @media(max-width:960px) {
+            .grid-3 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media(max-width:620px) {
+            .grid-3 {
+                grid-template-columns: 1fr;
+            }
+        }
+
         .card {
             background: var(--bg-card);
             border: 1px solid var(--bdr);
@@ -2516,6 +2532,7 @@
             <div class="hero-stack fade-up" aria-label="Core technologies">
                 <span class="hero-stack-label">Core stack</span>
                 <span class="hero-stack-pill">Python</span>
+                <span class="hero-stack-pill">PySpark</span>
                 <span class="hero-stack-pill">SQL</span>
                 <span class="hero-stack-pill">Airflow</span>
                 <span class="hero-stack-pill">PostgreSQL</span>
@@ -2523,12 +2540,12 @@
                 <span class="hero-stack-pill">Power BI</span>
             </div>
             <div class="hero-actions fade-up">
-                <a href="payflow.html" class="btn-primary">
+                <a href="fibbiebanks.html" class="btn-primary">
                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
                         stroke-linecap="round" stroke-linejoin="round">
                         <path d="M7 17L17 7M17 7H7M17 7v10" />
                     </svg>
-                    View flagship case study
+                    View featured case study
                 </a>
                 <a href="cv/Copy%20of%20Yomi%20Ismail%20CV%20-%20DE.docx.pdf" class="btn-ghost" download>
                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
@@ -2555,41 +2572,44 @@
         <section id="featured-case-study" class="fade-up sec-alt">
             <span class="sec-num">01</span>
             <div class="kicker">Featured</div>
-            <h2>Flagship case study</h2>
+            <h2>Featured case study</h2>
             <div class="feature-card">
-                <h3>PayFlow — End-to-End ETL &amp; Data Warehouse</h3>
-                <div class="feature-sub">Brazilian E-Commerce (Olist) · Python · SQL · PostgreSQL · SQLAlchemy</div>
-                <p class="feature-desc">A production-style ETL and data warehouse that ingests 9 raw Kaggle CSVs,
-                    validates and cleans through a multi-layer pipeline, and loads a full star schema into a PostgreSQL
-                    analytics schema, with idempotent loads, structured logging, and a single-command orchestrator.</p>
+                <h3>FibbieBanks — 1M-Row PySpark ETL &amp; Star Schema Warehouse</h3>
+                <div class="feature-sub">Synthetic banking transactions · PySpark · PostgreSQL · SQLAlchemy</div>
+                <p class="feature-desc">A distributed ETL pipeline that processes 1 million synthetic banking
+                    transactions through five disciplined stages (extract, explore, clean, transform, load) into a
+                    validated PostgreSQL star schema. Deterministic SHA-256 surrogate keys, type-aware cleaning that
+                    flows DECIMAL through to the warehouse, validation at every transform stage, and idempotent re-runs
+                    that never duplicate a row.</p>
                 <div class="arch">
                     <div class="arch-step">
                         <div class="arch-num">01</div>
                         <div class="arch-name">Extract</div>
-                        <div class="arch-desc">Download, unzip &amp; validate</div>
+                        <div class="arch-desc">PySpark CSV reader, 14g executor</div>
                     </div>
                     <div class="arch-step">
                         <div class="arch-num">02</div>
-                        <div class="arch-name">Stage</div>
-                        <div class="arch-desc">Clean, standardise, load</div>
+                        <div class="arch-name">Explore</div>
+                        <div class="arch-desc">Profile nulls &amp; cardinality</div>
                     </div>
                     <div class="arch-step">
                         <div class="arch-num">03</div>
-                        <div class="arch-name">Transform</div>
-                        <div class="arch-desc">Build star schema via SQL</div>
+                        <div class="arch-name">Clean</div>
+                        <div class="arch-desc">Type-aware fillna, DECIMAL cast</div>
                     </div>
                     <div class="arch-step">
                         <div class="arch-num">04</div>
-                        <div class="arch-name">Load</div>
-                        <div class="arch-desc">Upsert, idempotent</div>
+                        <div class="arch-name">Transform</div>
+                        <div class="arch-desc">4 dims + 1 fact, SHA-256 keys</div>
                     </div>
                     <div class="arch-step">
                         <div class="arch-num">05</div>
-                        <div class="arch-name">Observe</div>
-                        <div class="arch-desc">Structured logs, timers</div>
+                        <div class="arch-name">Load</div>
+                        <div class="arch-desc">JDBC merge, idempotent</div>
                     </div>
                 </div>
-                <a href="payflow.html" class="card-link">View full case study<span class="card-link-arrow">→</span></a>
+                <a href="fibbiebanks.html" class="card-link">View full case study<span
+                        class="card-link-arrow">→</span></a>
             </div>
         </section>
 
@@ -2598,10 +2618,24 @@
             <span class="sec-num">02</span>
             <div class="kicker">Projects</div>
             <h2>Selected projects</h2>
-            <p class="section-intro">Three flagship case studies covering different architectural patterns: a
-                star-schema warehouse on real e-commerce data, a layered three-schema analytics platform, and a live web
+            <p class="section-intro">Three more case studies covering different architectural patterns: an end-to-end
+                ETL warehouse on Brazilian e-commerce data, a layered three-schema analytics platform, and a live web
                 scraping pipeline.</p>
-            <div class="card-grid grid-2">
+            <div class="card-grid grid-3">
+                <article class="card">
+                    <h3>PayFlow — ETL &amp; Warehouse</h3>
+                    <div class="card-sub">9 source CSVs · star schema · idempotent loads</div>
+                    <p>A production-style ETL pipeline that ingests 9 raw Brazilian e-commerce CSVs, validates and
+                        cleans through a multi-layer pipeline, and loads a full star schema into PostgreSQL. Idempotent
+                        loads, structured logging, and a single-command orchestrator.</p>
+                    <div class="scale-row"><span><span class="sdot"></span>9 source CSVs</span><span><span
+                                class="sdot"></span>Star schema</span><span><span class="sdot"></span>Idempotent</span>
+                    </div>
+                    <div class="tag-row"><span class="tag">Python</span><span class="tag">pandas</span><span
+                            class="tag">PostgreSQL</span><span class="tag">SQLAlchemy</span><span class="tag">SQL</span>
+                    </div>
+                    <a href="payflow.html" class="card-link">View case study<span class="card-link-arrow">→</span></a>
+                </article>
                 <article class="card">
                     <h3>ChocoDelight Data Platform</h3>
                     <div class="card-sub">Layered architecture · 3 schemas · feature engineering</div>
@@ -2889,6 +2923,8 @@
                         <span class="stag proven">SQL</span>
                         <span class="stag proven">PostgreSQL</span>
                         <span class="stag proven">Apache Airflow</span>
+                        <span class="stag proven">Apache Spark</span>
+                        <span class="stag proven">PySpark</span>
                         <span class="stag proven">SQLAlchemy</span>
                         <span class="stag proven">pandas</span>
                         <span class="stag proven">Power BI</span>
@@ -2910,7 +2946,6 @@
                         <span class="stag growing">Google BigQuery</span>
                         <span class="stag growing">GCP</span>
                         <span class="stag growing">Azure</span>
-                        <span class="stag growing">Apache Spark</span>
                         <span class="stag growing">Apache Kafka</span>
                         <span class="stag growing">Hadoop</span>
                         <span class="stag growing">dbt</span>
@@ -3065,6 +3100,12 @@
             <div class="footer-col">
                 <div class="footer-col-label">Work</div>
                 <ul>
+                    <li><a href="fibbiebanks.html" class="footer-link"><svg width="13" height="13" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+                                <path d="M14 2v6h6" />
+                            </svg>FibbieBanks</a></li>
                     <li><a href="payflow.html" class="footer-link"><svg width="13" height="13" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round">

@@ -862,12 +862,20 @@
             z-index: 50;
             font-family: var(--fm);
             display: none;
+            opacity: 0;
+            transform: translateX(-8px);
+            transition: opacity .4s var(--ez), transform .4s var(--ez);
         }
 
         @media(min-width:1280px) {
             .p-toc {
                 display: block;
             }
+        }
+
+        .p-toc.show {
+            opacity: 1;
+            transform: translateX(0);
         }
 
         .p-toc-label {
@@ -1012,6 +1020,7 @@
                 </div>
                 <div class="applied-in">
                     Applied in
+                    <a href="fibbiebanks.html#schema">FibbieBanks · DDL-Owned Schema</a>
                     <a href="payflow.html#schema">PayFlow · Schema Design</a>
                     <a href="chocodelight.html#schema">ChocoDelight · Schema Design</a>
                 </div>
@@ -1036,6 +1045,7 @@
                 </div>
                 <div class="applied-in">
                     Applied in
+                    <a href="fibbiebanks.html#decisions">FibbieBanks · Deterministic Surrogate Keys</a>
                     <a href="payflow.html#decisions">PayFlow · Decisions</a>
                     <a href="chocodelight.html#decisions">ChocoDelight · Decisions</a>
                 </div>
@@ -1054,6 +1064,7 @@
                 </div>
                 <div class="applied-in">
                     Applied in
+                    <a href="fibbiebanks.html#engineering">FibbieBanks · Custom Logger</a>
                     <a href="payflow.html#approach">PayFlow · Engineering Approach</a>
                     <a href="chocodelight.html#tech">ChocoDelight · Tech Stack</a>
                     <a href="aliexpress.html#tech">AliExpress · Tech Stack</a>
@@ -1079,6 +1090,7 @@
                 </div>
                 <div class="applied-in">
                     Applied in
+                    <a href="fibbiebanks.html#engineering">FibbieBanks · Schema Validation</a>
                     <a href="payflow.html#approach">PayFlow · Pre-load Validation</a>
                     <a href="chocodelight.html#decisions">ChocoDelight · FK Validation</a>
                     <a href="aliexpress.html#scraping">AliExpress · Health Check</a>
@@ -1100,6 +1112,7 @@
                 </div>
                 <div class="applied-in">
                     Applied in
+                    <a href="fibbiebanks.html#decisions">FibbieBanks · Env-Var Config</a>
                     <a href="payflow.html#approach">PayFlow · Config-driven</a>
                     <a href="chocodelight.html#tech">ChocoDelight · Tech Stack</a>
                     <a href="aliexpress.html#tech">AliExpress · Tech Stack</a>
@@ -1119,6 +1132,7 @@
                 </div>
                 <div class="applied-in">
                     Applied in
+                    <a href="fibbiebanks.html#architecture">FibbieBanks · 5-Module Pipeline</a>
                     <a href="payflow.html#architecture">PayFlow · Architecture</a>
                     <a href="chocodelight.html#architecture">ChocoDelight · Architecture</a>
                     <a href="aliexpress.html#architecture">AliExpress · Architecture</a>
@@ -1144,6 +1158,7 @@
                 </div>
                 <div class="applied-in">
                     Applied in
+                    <a href="fibbiebanks.html#schema">FibbieBanks · Date Dimension Attributes</a>
                     <a href="chocodelight.html#features">ChocoDelight · Feature Engineering</a>
                 </div>
             </div>
@@ -1153,11 +1168,15 @@
         <!-- CTA -->
         <div class="cta-card">
             <div>
-                <h3>See how these show up in practice.</h3>
-                <p>All three case studies on this site demonstrate these principles applied to real pipelines.</p>
+                <h3>See how these principles show up in real pipelines.</h3>
+                <p>All four case studies on this site demonstrate these principles applied to production code, with the
+                    featured FibbieBanks project showing every one of the seven in action.</p>
             </div>
             <div class="cta-actions">
-                <a href="payflow.html" class="btn-primary">
+                <a href="fibbiebanks.html" class="btn-primary">
+                    View FibbieBanks
+                </a>
+                <a href="payflow.html" class="btn-ghost">
                     View PayFlow
                 </a>
                 <a href="chocodelight.html" class="btn-ghost">
@@ -1191,6 +1210,14 @@
             <div class="footer-col">
                 <div class="footer-col-label">Work</div>
                 <ul>
+                    <li><a href="fibbiebanks.html" class="footer-link">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+                                <path d="M14 2v6h6" />
+                            </svg>
+                            FibbieBanks
+                        </a></li>
                     <li><a href="payflow.html" class="footer-link">
                             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1335,7 +1362,7 @@
             btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
         })();
 
-        /* Principles TOC scroll-spy — highlight active principle */
+        /* Principles TOC scroll-spy — highlight active principle + show/hide */
         (function () {
             const toc = document.getElementById('pToc');
             if (!toc) return;
@@ -1346,6 +1373,7 @@
                 const href = a.getAttribute('href');
                 if (href && href.startsWith('#')) map.set(href.slice(1), a);
             });
+            // active state via IntersectionObserver
             const io = new IntersectionObserver(entries => {
                 entries.forEach(e => {
                     const link = map.get(e.target.id);
@@ -1357,6 +1385,18 @@
                 });
             }, { rootMargin: '-30% 0px -55% 0px', threshold: 0 });
             principles.forEach(p => io.observe(p));
+            // show after scrolling past hero, hide when entering footer
+            const footer = document.querySelector('footer');
+            function update() {
+                const y = window.scrollY;
+                const footerTop = footer ? footer.getBoundingClientRect().top + y : Infinity;
+                const viewportBottom = y + window.innerHeight;
+                if (y > 400 && viewportBottom < footerTop + 50) toc.classList.add('show');
+                else toc.classList.remove('show');
+            }
+            window.addEventListener('scroll', update, { passive: true });
+            window.addEventListener('resize', update, { passive: true });
+            update();
         })();
     </script>
 </body>
