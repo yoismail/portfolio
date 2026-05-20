@@ -1769,9 +1769,11 @@
             <div class="cs-meta">~7 min read · Updated May 2026</div>
             <div class="kicker">Case Study · Layered Data Platform</div>
             <h1 class="cs-title">ChocoDelight <span class="hi">Data Platform</span><br />&amp; analytics warehouse</h1>
-            <p class="cs-sub">A layered data platform that turns a flat, messy chocolate sales dataset into a structured
-                PostgreSQL warehouse. Three schemas (raw, operational, analytics), modular ETL with feature engineering,
-                and a single-command orchestrator that runs the entire pipeline end to end.</p>
+            <p class="cs-sub">A production-grade ETL and Data Warehouse pipeline I designed and built to turn a flat,
+                messy chocolate sales dataset into a structured PostgreSQL warehouse. Three schemas (raw, operational,
+                analytics), modular ETL with feature engineering, surrogate keys, foreign-key validation, and a
+                single-command orchestrator. Built to be <strong>reliable, reproducible, maintainable, analytics-ready,
+                    and observable</strong> — not just to transform CSVs.</p>
             <div class="meta-row">
                 <span class="meta-pill acc">Layered architecture</span>
                 <span class="meta-pill">Kaggle source dataset</span>
@@ -2092,6 +2094,16 @@
                     <div class="decision-cell">Before loading fact_sales, the transform stage validates that every
                         customer_key, product_key, store_key, and calendar_key exists in its respective dimension.
                         Catches referential integrity issues before they reach the warehouse.</div>
+                </div>
+                <div class="decision-row">
+                    <div class="decision-cell">Production-grade logging</div>
+                    <div class="decision-cell">The logging system is a deliberate engineering layer, not an
+                        afterthought. Cross-platform UTF-8 detection (Windows Terminal, VS Code, PowerShell 7+,
+                        macOS/Linux) decides whether the console can render emojis; dual handlers route colorized output
+                        to the terminal and clean UTF-8 to a rotating file (no ANSI codes in logs); a
+                        <code>section()</code> helper visually separates ETL stages; a <code>timed()</code> decorator
+                        logs how long each stage takes; SQLAlchemy engine noise is suppressed. Result: observability
+                        that holds up at 2am, not just on the demo screen.</div>
                 </div>
             </div>
         </section>
