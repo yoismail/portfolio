@@ -1821,18 +1821,17 @@
 
             <p class="sec-p lede">
                 A 1-million-row banking dataset arrives as a single flat CSV with 23 columns. Customer demographics,
-                transaction details, employee metadata, financial identifiers, audit timestamps — all flattened
-                together. For an analyst, this is unusable: you can't <code>SUM(amount)</code> across customers without
-                scanning the whole file, you can't ask "show me weekend transactions in Q3" without parsing dates
-                row-by-row, and you can't trust the numbers because ~10% of rows have NULLs scattered across every
-                column.
+                transaction details, employee metadata, financial identifiers, audit timestamps, all flattened together.
+                For an analyst, this is unusable: you can't <code>SUM(amount)</code> across customers without scanning
+                the whole file, you can't ask "show me weekend transactions in Q3" without parsing dates row-by-row, and
+                you can't trust the numbers because ~10% of rows have NULLs scattered across every column.
             </p>
 
             <p class="sec-p">
-                The job was to turn this raw CSV into a <strong>dimensional warehouse</strong> — a Kimball-style star
+                The job was to turn this raw CSV into a <strong>dimensional warehouse</strong>: a Kimball-style star
                 schema where dimensions are conformed, facts are tightly typed, and analytical queries run in seconds
                 against a Postgres instance any BI tool can connect to. Beyond the modelling, the pipeline had to be
-                <strong>safely re-runnable</strong>: if someone re-runs it tomorrow on the same source data, the
+                <strong>safely re-runnable</strong>. If someone re-runs it tomorrow on the same source data, the
                 warehouse must not double, must not drift, must not silently corrupt itself.
             </p>
 
@@ -1840,8 +1839,8 @@
                 <div class="callout-label">Design constraint</div>
                 <div class="callout-text">
                     <strong>Idempotency was non-negotiable.</strong> A pipeline that "kind of worked once" is worse than
-                    one that loudly failed — because nobody investigates a green log. Every architectural decision in
-                    this project flows from that constraint.
+                    one that loudly failed. Nobody investigates a green log. Every architectural decision in this
+                    project flows from that constraint.
                 </div>
             </div>
         </section>
@@ -1902,7 +1901,7 @@
 
             <p class="sec-p">
                 Each module imports the previous one's <code>main()</code> function and chains forward. Running
-                <code>python -m etl.load</code> walks the entire pipeline — extract → clean → transform → load — because
+                <code>python -m etl.load</code> walks the entire pipeline: extract → clean → transform → load, because
                 each stage's <code>main()</code> calls into the previous one. This means every stage is independently
                 testable and every intermediate output is available without re-reading the source CSV.
             </p>
@@ -1991,8 +1990,8 @@
                     <div class="card-title">YYYYMMDD integer key</div>
                     <div class="card-desc">
                         <code>date_key</code> is an INT in <code>YYYYMMDD</code> format (the Kimball convention). Small,
-                        naturally sortable, human-readable. Date dimensions are tiny — one row per date — so a 4-byte
-                        INT beats a 64-char hash on every dimension that matters (storage, joins, debuggability).
+                        naturally sortable, human-readable. Date dimensions are tiny (one row per date), so a 4-byte INT
+                        beats a 64-char hash on every dimension that matters: storage, joins, debuggability.
                     </div>
                 </div>
                 <div class="card">
@@ -2016,7 +2015,7 @@
                 <code>is_active</code>, <code>description</code>) don't get their own dim tables. They're either
                 one-to-one with transactions (no analytical benefit to splitting) or pure metadata. Following Kimball's
                 "degenerate dimension" principle, they live as attributes directly on the fact row. A pure star, not a
-                snowflake — easier to query, smaller storage, fewer joins.
+                snowflake. Easier to query, smaller storage, fewer joins.
             </p>
 
             <div class="code-block">
@@ -2078,11 +2077,11 @@
             <h3 class="sec-h" style="font-size:1.2rem;margin-top:2rem;margin-bottom:.85rem;">2. Money stays money</h3>
 
             <p class="sec-p">
-                The source CSV's <code>amount</code> column arrives as a string ("$1,250.50" formatting in places). In
-                <code>clean.py</code> it's stripped of non-numeric characters via regex and cast to Spark's
+                The source CSV's <code>amount</code> column arrives as a string (with "$1,250.50" formatting in places).
+                In <code>clean.py</code> it's stripped of non-numeric characters via regex and cast to Spark's
                 <code>DecimalType(18,2)</code>. This type flows through every subsequent stage unchanged and lands in
-                PostgreSQL as <code>NUMERIC(18,2)</code>. The cast logs how many rows became NULL during the conversion
-                — silent data corruption is impossible.
+                PostgreSQL as <code>NUMERIC(18,2)</code>. The cast logs how many rows became NULL during the conversion.
+                Silent data corruption is impossible.
             </p>
 
             <div class="callout">
@@ -2123,9 +2122,9 @@
             </div>
 
             <p class="sec-p" style="margin-top:1rem;">
-                That sequence of "No new rows to insert" lines — one per table — is the visible proof that idempotency
-                is working. The deterministic hash keys mean the same source data produces the same surrogate keys, and
-                the LEFT JOIN merge correctly identifies that nothing is actually new.
+                That sequence of "No new rows to insert" lines (one per table) is the visible proof that idempotency is
+                working. The deterministic hash keys mean the same source data produces the same surrogate keys, and the
+                LEFT JOIN merge correctly identifies that nothing is actually new.
             </p>
         </section>
 
@@ -2143,7 +2142,7 @@
                 <div class="decision-q">Why SHA-256 surrogate keys, not <code>monotonically_increasing_id()</code>?
                 </div>
                 <div class="decision-a">
-                    Spark's built-in monotonic ID is <strong>not deterministic across runs</strong> — it depends on
+                    Spark's built-in monotonic ID is <strong>not deterministic across runs</strong>. It depends on
                     partition layout. The same input row produces different IDs each time the pipeline runs. That breaks
                     the LEFT JOIN merge in <code>load.py</code> entirely: every row looks "new" because its surrogate
                     key doesn't match what's in the target table. Switching to
@@ -2157,7 +2156,7 @@
                 <div class="decision-num">02</div>
                 <div class="decision-q">Why DECIMAL(18,2) for amount, not FLOAT?</div>
                 <div class="decision-a">
-                    Floating-point numbers lose precision at scale — <code>0.1 + 0.2</code> doesn't equal
+                    Floating-point numbers lose precision at scale: <code>0.1 + 0.2</code> doesn't equal
                     <code>0.3</code> in IEEE 754. For money, that's unacceptable. <strong>DECIMAL preserves
                         exactness</strong> and still enables <code>SUM</code>, <code>AVG</code>, and other aggregations
                     directly in SQL without casts. The same type flows from Spark's <code>DecimalType(18,2)</code>
@@ -2197,7 +2196,7 @@
                     Knowing your data is a first-class engineering concern, not an afterthought. Profiling row counts,
                     null distributions, and distinct values catches problems before they propagate downstream. Most
                     pipelines bury this in commented-out notebook cells. Here it's a dedicated module with its own log
-                    banners — runnable standalone via <code>python -m etl.explore</code> whenever the source dataset
+                    banners, runnable standalone via <code>python -m etl.explore</code> whenever the source dataset
                     changes.
                 </div>
             </div>
@@ -2206,7 +2205,7 @@
                 <div class="decision-num">06</div>
                 <div class="decision-q">Why fail hard rather than auto-recover?</div>
                 <div class="decision-a">
-                    The pipeline raises <code>SystemExit(1)</code> on critical errors — missing env vars, missing target
+                    The pipeline raises <code>SystemExit(1)</code> on critical errors: missing env vars, missing target
                     tables, JDBC write failures. <strong>Silent recovery is the enemy of observability.</strong> A
                     pipeline that "kind of worked" is worse than one that loudly didn't, because nobody investigates a
                     green log. Loud failure means real correctness, not optimistic correctness.
@@ -2239,7 +2238,7 @@
                 <div class="impact-card">
                     <div class="impact-num green">~9 min</div>
                     <div class="impact-label">idempotent re-run</div>
-                    <div class="impact-desc">Re-running on unchanged data takes 64% less than a first load — LEFT JOIN
+                    <div class="impact-desc">Re-running on unchanged data takes 64% less than a first load. LEFT JOIN
                         merge short-circuits when nothing's new</div>
                 </div>
                 <div class="impact-card">
@@ -2253,7 +2252,7 @@
             <div class="callout" style="margin-top:2rem;">
                 <div class="callout-label">The real story</div>
                 <div class="callout-text">
-                    The 64% time reduction on re-runs isn't a magic optimisation — it's <strong>the idempotency contract
+                    The 64% time reduction on re-runs isn't a magic optimisation, it's <strong>the idempotency contract
                         paying dividends</strong>. When the LEFT JOIN sees zero new keys, Postgres skips the insert
                     entirely. The warehouse is safe to re-run on schedule, after a backfill, or after a partial failure.
                     None of those scenarios silently corrupt the data.
