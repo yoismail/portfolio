@@ -1776,22 +1776,23 @@
                     and observable</strong>. Not just to transform CSVs.</p>
             <div class="meta-row">
                 <span class="meta-pill acc">Layered architecture</span>
+                <span class="meta-pill">1M sales rows</span>
                 <span class="meta-pill">Kaggle source dataset</span>
                 <span class="meta-pill">3-schema design</span>
-                <span class="meta-pill">Dimensional model</span>
-                <span class="meta-pill">PostgreSQL</span>
+                <span class="meta-pill">Star schema + FK constraints</span>
+                <span class="meta-pill">PostgreSQL 14+</span>
             </div>
             <div class="stat-strip">
+                <div class="stat-cell">
+                    <div class="stat-num">1M</div>
+                    <div class="stat-label">sales rows processed</div>
+                </div>
                 <div class="stat-cell">
                     <div class="stat-num">3</div>
                     <div class="stat-label">schema layers</div>
                 </div>
                 <div class="stat-cell">
                     <div class="stat-num">5</div>
-                    <div class="stat-label">source CSVs</div>
-                </div>
-                <div class="stat-cell">
-                    <div class="stat-num">4</div>
                     <div class="stat-label">dimension tables</div>
                 </div>
                 <div class="stat-cell">
@@ -1799,12 +1800,12 @@
                     <div class="stat-label">fact table</div>
                 </div>
                 <div class="stat-cell">
-                    <div class="stat-num">10+</div>
-                    <div class="stat-label">engineered features</div>
+                    <div class="stat-num">5</div>
+                    <div class="stat-label">FK validations</div>
                 </div>
                 <div class="stat-cell">
-                    <div class="stat-num">1</div>
-                    <div class="stat-label">command to run</div>
+                    <div class="stat-num">~7m</div>
+                    <div class="stat-label">end-to-end runtime</div>
                 </div>
             </div>
             <div class="cta-actions" style="margin-top:2rem;">
@@ -1960,6 +1961,7 @@
                         <span class="schema-pill orch">operationals.cleaned_products</span>
                         <span class="schema-pill orch">operationals.cleaned_sales</span>
                         <span class="schema-pill orch">operationals.cleaned_stores</span>
+                        <span class="schema-pill orch">operationals.cleaned_regions</span>
                     </div>
                 </div>
                 <div class="schema-group">
@@ -1969,22 +1971,26 @@
                         <span class="schema-pill dim">analytics.dim_customers</span>
                         <span class="schema-pill dim">analytics.dim_products</span>
                         <span class="schema-pill dim">analytics.dim_stores</span>
+                        <span class="schema-pill dim">analytics.dim_regions</span>
                         <span class="schema-pill fact">analytics.fact_sales</span>
                     </div>
                 </div>
             </div>
 
             <div class="code-block">
-                <span class="cm">-- Star schema lineage</span>
+                <span class="cm">-- Star schema lineage (mostly star, one intentional snowflake)</span>
                 <br />
                 <br /><span class="cs">dim_calendar</span> <span class="cn">─┐</span>
-                <br /><span class="cs">dim_customers</span> <span class="cn">─┼──&gt;</span> <span
+                <br /><span class="cs">dim_customers</span> <span class="cn">─┤</span>
+                <br /><span class="cs">dim_products</span> <span class="cn">─┼──&gt;</span> <span
                     class="cv">fact_sales</span>
-                <br /><span class="cs">dim_products</span> <span class="cn">─┤</span>
-                <br /><span class="cs">dim_stores</span> <span class="cn">─┘</span>
+                <br /><span class="cs">dim_stores</span> <span class="cn">─┤</span> <span class="cn">│</span>
+                <br /><span class="cs">dim_regions</span> <span class="cn">─┘</span> <span class="cn">│</span>
+                <br /> <span class="cn">↑ direct region_key FK</span>
+                <br /> <span class="cn"> for "revenue by region" queries</span>
                 <br />
-                <br /><span class="cm">-- Foreign keys validated before fact load</span>
-                <br /><span class="cm">-- Indexes on natural keys, foreign keys, and analytical filter columns</span>
+                <br /><span class="cm">-- Five FK validations run in transform.py before fact load</span>
+                <br /><span class="cm">-- DB enforces FK RESTRICT + 7 CHECK constraints + 13 indexes</span>
             </div>
         </section>
 
@@ -2026,10 +2032,10 @@
                 <div class="card">
                     <h3>Stores</h3>
                     <ul>
-                        <li>Country-to-region mapping</li>
+                        <li>Country-to-region mapping (6 continental regions)</li>
                         <li><strong>Region tier</strong> classification by market</li>
-                        <li>Standardised location fields for joins</li>
-                        <li>Surrogate <strong>store_key</strong> for the dim table</li>
+                        <li>Region <strong>promoted to its own dim</strong> during transform</li>
+                        <li>Surrogate <strong>store_key</strong> + <strong>region_key</strong> FK</li>
                     </ul>
                 </div>
                 <div class="card">
@@ -2072,10 +2078,13 @@
                         large datasets, but ideal for project-scale reproducibility and CI testing.</div>
                 </div>
                 <div class="decision-row">
-                    <div class="decision-cell">Surrogate keys</div>
-                    <div class="decision-cell">Every dim table uses a surrogate integer key (customer_key, product_key,
-                        etc.) rather than the natural string ID. Decouples the warehouse from upstream source
-                        identifiers and supports slowly changing dimensions if needed later.</div>
+                    <div class="decision-cell">Positional surrogate keys</div>
+                    <div class="decision-cell">Every dim gets its surrogate key from
+                        <code>df.sort_values(natural_id).reset_index(drop=True).index + 1</code>. Deterministic for the
+                        same input, simple, fast. Trade-off: keys shift if new rows are added, so this only works
+                        because the warehouse is rebuilt from scratch every run (wipe-and-load). For a warehouse that
+                        merged data over time, content-based hashing (e.g. SHA-256 of natural keys) would be the right
+                        call instead.</div>
                 </div>
                 <div class="decision-row">
                     <div class="decision-cell">Feature engineering in cleaning</div>
@@ -2091,9 +2100,31 @@
                 </div>
                 <div class="decision-row">
                     <div class="decision-cell">FK validation before fact load</div>
-                    <div class="decision-cell">Before loading fact_sales, the transform stage validates that every
-                        customer_key, product_key, store_key, and calendar_key exists in its respective dimension.
-                        Catches referential integrity issues before they reach the warehouse.</div>
+                    <div class="decision-cell">Before loading fact_sales, the transform stage runs five separate
+                        <code>validate_foreign_keys()</code> checks: <code>sales→customers</code>,
+                        <code>sales→products</code>, <code>sales→stores</code>, <code>sales→regions</code>,
+                        <code>sales→calendar</code>. If any fails, the pipeline halts with <code>sys.exit(1)</code> and
+                        a structured error. Catches referential integrity issues before they reach the warehouse.</div>
+                </div>
+                <div class="decision-row">
+                    <div class="decision-cell">DB constraints, not just types</div>
+                    <div class="decision-cell">The analytics schema (<code>sql/analytics_schema.sql</code>) defines
+                        <strong>five <code>FOREIGN KEY ... ON DELETE RESTRICT</code> constraints</strong>, <strong>seven
+                            <code>CHECK</code> constraints</strong> (age ≥ 0, quantity ≥ 0, order_date ≤ CURRENT_DATE,
+                        prices ≥ 0), <strong>UNIQUE indexes</strong> on every natural ID, and <strong>13
+                            indexes</strong> across the fact and dims. PostgreSQL enforces the integrity, not Python.
+                        Try to delete a dimension row that's still referenced by a fact and Postgres refuses. The
+                        warehouse defends itself.</div>
+                </div>
+                <div class="decision-row">
+                    <div class="decision-cell">Region denormalised for query speed</div>
+                    <div class="decision-cell">The schema is mostly a pure star, with one intentional snowflake:
+                        <code>fact_sales</code> has a direct <code>region_key</code> FK to <code>dim_regions</code>, AND
+                        <code>dim_stores</code> also has a <code>region_key</code> FK to the same dim. The most common
+                        analytical query against this warehouse is "revenue by region", and the direct fact-to-region
+                        path saves an extra join. The full normalised path via <code>dim_stores</code> is still there
+                        for queries that need other store attributes. Documented snowflake, not accidental snowflake.
+                    </div>
                 </div>
                 <div class="decision-row">
                     <div class="decision-cell">Production-grade logging</div>
