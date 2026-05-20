@@ -693,7 +693,7 @@
 
     .stat-cell {
       background: var(--bg-card);
-      padding: 1.25rem 1.4rem;
+      padding: 1.5rem 1.5rem;
       transition: background .18s;
     }
 
@@ -703,7 +703,7 @@
 
     .stat-num {
       font-family: var(--fd);
-      font-size: 1.8rem;
+      font-size: clamp(1.3rem, 2.2vw, 1.55rem);
       font-weight: 800;
       color: var(--h1);
       line-height: 1;
@@ -804,7 +804,7 @@
     /* ── PIPELINE VISUAL ──────────────────────────────────── */
     .pipeline-visual {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
       gap: 1px;
       background: var(--bdr);
       border: 1px solid var(--bdr);
