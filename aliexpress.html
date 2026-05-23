@@ -18,7 +18,7 @@
   <meta property="og:title" content="AliExpress Laptop ETL Pipeline | Yomi Ismail" />
   <meta property="og:description"
     content="A production-grade web scraping and ETL pipeline. Selenium + BeautifulSoup + PostgreSQL, with feature engineering and live source health checks." />
-  <meta property="og:image" content="svg/og-aliexpress.svg" />
+  <meta property="og:image" content="og-aliexpress.svg" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta property="og:image:alt" content="AliExpress Laptop ETL Pipeline case study by Yomi Ismail" />
@@ -29,7 +29,7 @@
   <meta name="twitter:title" content="AliExpress Case Study | Yomi Ismail" />
   <meta name="twitter:description"
     content="Web scraping pipeline with Selenium, BeautifulSoup, PostgreSQL, and production-grade logging." />
-  <meta name="twitter:image" content="svg/og-aliexpress.svg" />
+  <meta name="twitter:image" content="og-aliexpress.svg" />
 
   <!-- Schema.org -->
   <script type="application/ld+json">
@@ -41,7 +41,7 @@
   "url": "https://yoismail.github.io/portfolio/aliexpress.html",
   "datePublished": "2026-04-01",
   "dateModified": "2026-05-15",
-  "image": "https://yoismail.github.io/portfolio/svg/og-aliexpress.svg",
+  "image": "https://yoismail.github.io/portfolio/og-aliexpress.svg",
   "inLanguage": "en-GB",
   "author": {
     "@type": "Person",
@@ -123,6 +123,142 @@
       --nav: 68px;
       --ez: cubic-bezier(.16, 1, .3, 1);
     }
+
+    /* ── LIGHT MODE ─────────────────────────────────────────
+   Activated via <html data-theme="light"> (explicit toggle)
+   or prefers-color-scheme:light when no override is set. */
+    :root[data-theme="light"] {
+      --bg: #faf7f1;
+      --bg-nav: rgba(250, 247, 241, .85);
+      --bg-alt: #f3ede1;
+      --bg-surf: #f5f0e6;
+      --bg-card: #ffffff;
+      --bg-card2: #f8f4ec;
+      --bdr: rgba(26, 20, 8, .08);
+      --bdr-hi: rgba(190, 18, 60, .45);
+      --acc: #be123c;
+      --acc-s: rgba(190, 18, 60, .08);
+      --acc-g: rgba(190, 18, 60, .2);
+      --acc-2: #e11d48;
+      --amber: #d97706;
+      --amber-s: rgba(217, 119, 6, .09);
+      --green: #10b981;
+      --green-s: rgba(16, 185, 129, .09);
+      --teal: #0d9488;
+      --teal-s: rgba(13, 148, 136, .09);
+      --red: #dc2626;
+      --grad: linear-gradient(115deg, #be123c 0%, #e11d48 35%, #0d9488 100%);
+      --h1: #1a1408;
+      --h2: #3d3528;
+      --h3: #7a6e5a;
+    }
+
+    @media(prefers-color-scheme:light) {
+      :root:not(.theme-locked) {
+        --bg: #faf7f1;
+        --bg-nav: rgba(250, 247, 241, .85);
+        --bg-alt: #f3ede1;
+        --bg-surf: #f5f0e6;
+        --bg-card: #ffffff;
+        --bg-card2: #f8f4ec;
+        --bdr: rgba(26, 20, 8, .08);
+        --bdr-hi: rgba(190, 18, 60, .45);
+        --acc: #be123c;
+        --acc-s: rgba(190, 18, 60, .08);
+        --acc-g: rgba(190, 18, 60, .2);
+        --acc-2: #e11d48;
+        --amber: #d97706;
+        --amber-s: rgba(217, 119, 6, .09);
+        --green: #10b981;
+        --green-s: rgba(16, 185, 129, .09);
+        --teal: #0d9488;
+        --teal-s: rgba(13, 148, 136, .09);
+        --red: #dc2626;
+        --grad: linear-gradient(115deg, #be123c 0%, #e11d48 35%, #0d9488 100%);
+        --h1: #1a1408;
+        --h2: #3d3528;
+        --h3: #7a6e5a;
+      }
+    }
+
+    html {
+      transition: background-color .3s var(--ez, cubic-bezier(.16, 1, .3, 1)), color .3s var(--ez, cubic-bezier(.16, 1, .3, 1));
+    }
+
+    body {
+      transition: background-color .3s var(--ez, cubic-bezier(.16, 1, .3, 1)), color .3s var(--ez, cubic-bezier(.16, 1, .3, 1));
+    }
+
+    /* ── THEME TOGGLE (pill with sun/moon icons) ─────────── */
+    .theme-toggle {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      background: var(--bg-surf);
+      border: 1px solid var(--bdr);
+      border-radius: 999px;
+      padding: .2rem;
+      gap: 0;
+      cursor: pointer;
+      transition: background .2s, border-color .2s;
+      height: 32px;
+    }
+
+    .theme-toggle:hover {
+      border-color: var(--bdr-hi);
+    }
+
+    .theme-toggle button {
+      background: transparent;
+      border: 0;
+      width: 26px;
+      height: 26px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--h3);
+      transition: color .2s, background .2s;
+      padding: 0;
+    }
+
+    .theme-toggle button:hover {
+      color: var(--h1);
+    }
+
+    .theme-toggle button.active {
+      background: var(--bg-card);
+      color: var(--acc);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, .15);
+    }
+
+    :root[data-theme="light"] .theme-toggle button.active,
+    :root:not(.theme-locked) .theme-toggle button.active {
+      box-shadow: 0 1px 2px rgba(26, 20, 8, .08);
+    }
+
+    .theme-toggle svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    @media(max-width:480px) {
+      .theme-toggle {
+        height: 30px;
+      }
+
+      .theme-toggle button {
+        width: 24px;
+        height: 24px;
+      }
+
+      .theme-toggle svg {
+        width: 13px;
+        height: 13px;
+      }
+    }
+
 
     /* ── RESET ────────────────────────────────────────────── */
     *,
@@ -1739,6 +1875,19 @@
       transform: translateX(4px);
     }
   </style>
+  <script>
+    // Apply theme as early as possible to avoid flash-of-wrong-theme.
+    // Order of precedence: localStorage override > prefers-color-scheme.
+    (function () {
+      try {
+        var saved = localStorage.getItem('theme');
+        if (saved === 'light' || saved === 'dark') {
+          document.documentElement.setAttribute('data-theme', saved);
+          document.documentElement.classList.add('theme-locked');
+        }
+      } catch (e) { }
+    })();
+  </script>
 </head>
 
 <body>
@@ -1777,7 +1926,22 @@
       <a href="principles.html">Principles</a>
       <a href="index.html">← Portfolio</a>
     </div>
-
+    <div class="theme-toggle" role="group" aria-label="Theme">
+      <button type="button" data-theme-set="light" aria-label="Light theme" title="Light theme">
+        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="4" />
+          <path
+            d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+        </svg>
+      </button>
+      <button type="button" data-theme-set="dark" aria-label="Dark theme" title="Dark theme">
+        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+        </svg>
+      </button>
+    </div>
   </nav>
 
   <div class="page">
@@ -2488,6 +2652,39 @@
   </button>
 
   <script>
+    /* theme toggle */
+    (function () {
+      var html = document.documentElement;
+      var buttons = document.querySelectorAll('.theme-toggle button[data-theme-set]');
+      if (!buttons.length) return;
+      function currentTheme() {
+        var explicit = html.getAttribute('data-theme');
+        if (explicit) return explicit;
+        return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      }
+      function syncActive() {
+        var t = currentTheme();
+        buttons.forEach(function (b) {
+          b.classList.toggle('active', b.getAttribute('data-theme-set') === t);
+        });
+      }
+      buttons.forEach(function (b) {
+        b.addEventListener('click', function () {
+          var next = b.getAttribute('data-theme-set');
+          html.setAttribute('data-theme', next);
+          html.classList.add('theme-locked');
+          try { localStorage.setItem('theme', next); } catch (e) { }
+          syncActive();
+        });
+      });
+      try {
+        window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', function () {
+          if (!html.classList.contains('theme-locked')) syncActive();
+        });
+      } catch (e) { }
+      syncActive();
+    })();
+
     /* theme */
     (function () {
       document.getElementById('year').textContent = new Date().getFullYear();
