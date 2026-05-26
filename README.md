@@ -40,7 +40,7 @@ This portfolio reflects how I approach problems as a Data Engineer:
 
 ## 🚀 Featured Work
 
-### 🏦 FibbieBanks — 1M-Row PySpark ETL & Star Schema Warehouse
+### 🏦 FibbieBanks: 1M-Row PySpark ETL & Star Schema Warehouse
 
 A distributed ETL pipeline processing 1 million synthetic banking transactions through five disciplined stages into a validated PostgreSQL star schema:
 
@@ -56,7 +56,7 @@ A distributed ETL pipeline processing 1 million synthetic banking transactions t
 
 ---
 
-### 💳 PayFlow — End-to-End ETL & Data Warehouse
+### 💳 PayFlow: End-to-End ETL & Data Warehouse
 
 A production-style ETL pipeline built to simulate a fintech transaction system using real Brazilian e-commerce data:
 
@@ -70,7 +70,7 @@ A production-style ETL pipeline built to simulate a fintech transaction system u
 
 ---
 
-### 🍫 ChocoDelight — Layered Data Platform
+### 🍫 ChocoDelight: Layered Data Platform
 
 A three-schema PostgreSQL warehouse on chocolate sales data, with raw, operational, and analytics layers and a full dimensional model.
 
@@ -79,7 +79,7 @@ A three-schema PostgreSQL warehouse on chocolate sales data, with raw, operation
 
 ---
 
-### 🛒 AliExpress Laptop ETL — Live Web Scraping Pipeline
+### 🛒 AliExpress Laptop ETL: Live Web Scraping Pipeline
 
 A production-style scraping pipeline that walks 60 pages of AliExpress laptop listings, enriches with discount metrics and price bands, and appends only new records to PostgreSQL.
 
@@ -184,4 +184,4 @@ The seven engineering principles that guide my work:
 
 This portfolio is continuously evolving as I build **real-world, production-grade data engineering solutions**.
 
-If you're hiring for Data Engineering, Analytics, or Technical Operations roles — this repository reflects the level of thinking and execution I bring.
+If you're hiring for Data Engineering, Analytics, or Technical Operations roles, this repository reflects the level of thinking and execution I bring.
