@@ -30,9 +30,11 @@ The goal is not just to display projects, but to demonstrate:
 This portfolio reflects how I approach problems as a Data Engineer:
 
 * 🔄 End-to-end ETL pipeline design (Extract → Transform → Load)
+* 🌊 Medallion architecture (Bronze → Silver → Gold) for raw-to-research data flows
+* ⚡ Asynchronous, high-concurrency API ingestion with retry and rate-limit discipline
 * 🏗️ Scalable data architecture and schema optimization
 * 📊 Analytics-ready data modeling (fact & dimension tables)
-* ⚙️ Distributed processing with PySpark on 1M+ row datasets
+* ⚙️ Distributed processing with PySpark on millions of rows
 * 🔁 Idempotent re-runs and deterministic surrogate keys
 * 📈 Translating data into business decisions
 
@@ -53,6 +55,21 @@ A distributed ETL pipeline processing 1 million synthetic banking transactions t
 
 👉 [View project on GitHub](https://github.com/yoismail/fibbie_banks)
 👉 [Read the full case study](https://yoismail.github.io/portfolio/fibbiebanks.html)
+
+---
+
+### 🔬 XTD Research Labs: Async Ingestion & PySpark Medallion Pipeline
+
+A three-stage data engineering pipeline built for a UK grid decarbonization research scenario, processing three years of regional carbon intensity data from a live government API:
+
+* Designed asynchronous `aiohttp` ingestion with semaphore-bounded concurrency and exponential-backoff retry, pulling 1,095 days of regional data from the UK Carbon Intensity API in under 12 minutes with zero rate-limit hits
+* Built a medallion architecture (Bronze raw JSON → Silver Parquet → Gold CSV) with three distinct idempotency models, one per layer, matched to each layer's rebuild cost
+* Used PySpark to explode deeply nested JSON and pivot 9 fuel types into typed columns: 53,594 raw records expand to 8.7M intermediate rows, then collapse to 945,092 silver records
+* Aggregated to 19,728 daily research metrics and loaded to PostgreSQL via a two-stage dedup-merge with composite-key idempotency
+* Recovered 32 transient HTTP 500 errors via retry logic during the actual run, with zero permanent failures and one empty-payload edge case caught and skipped
+
+👉 [View project on GitHub](https://github.com/yoismail/xtd_research_labs_case_study)
+👉 [Read the full case study](https://yoismail.github.io/portfolio/xtd_research_labs.html)
 
 ---
 
@@ -98,17 +115,21 @@ A production-style scraping pipeline that walks 60 pages of AliExpress laptop li
 ### Data Engineering
 
 * Python (pandas, SQLAlchemy, psycopg2, python-dotenv)
-* PostgreSQL (star schema, FK referential integrity, indexes)
+* Asynchronous Python (aiohttp, asyncio) for high-concurrency ingestion
+* PostgreSQL (star schema, FK referential integrity, composite keys, indexes)
 * SQL (DDL, complex joins, window functions, CTEs)
 * ETL Pipelines (modular, idempotent, transactional)
 * Dimensional Modeling (Kimball star schema, surrogate keys, conformed dimensions)
+* Medallion Architecture (Bronze, Silver, Gold layered data lakes)
 
 ### Data Engineering Patterns
 
 * Deterministic SHA-256 surrogate keys
-* Idempotent loads via temp-table + LEFT JOIN merge
+* Idempotent loads via temp-table + LEFT JOIN merge and two-stage dedup-merge
+* Layered idempotency (file-existence, tracker-file, wipe-and-rebuild)
+* Asynchronous ingestion with semaphore-bounded concurrency and backoff retry
 * Schema validation at every transformation stage
-* Type-aware cleaning (DECIMAL preservation for money)
+* Type-aware cleaning (DECIMAL preservation for money and metrics)
 * Custom observability (timed decorators, structured logs)
 * Environment-driven configuration (no hard-coded credentials)
 
@@ -138,7 +159,7 @@ A production-style scraping pipeline that walks 60 pages of AliExpress laptop li
 * Responsive and mobile-optimized layout
 * Smooth scrolling and interaction design
 * Clean, recruiter-focused UI
-* Structured project showcase with 4 in-depth case studies
+* Structured project showcase with 5 in-depth case studies
 * 7 engineering principles backed by working code references
 * Performance-optimized frontend (no frameworks, pure HTML/CSS/JS)
 
