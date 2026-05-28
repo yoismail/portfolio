@@ -1,0 +1,2972 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>XTD Research Labs Case Study | Yomi Ismail</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="description"
+        content="XTD Research Labs: An async aiohttp ingestion + PySpark medallion (Bronze/Silver/Gold) pipeline I built to process three years of UK regional carbon intensity data into a PostgreSQL research warehouse with composite-key idempotency." />
+
+    <!-- Favicon -->
+    <link rel="icon" href="svg/favicon.svg" type="image/svg+xml" />
+    <link rel="alternate icon" href="svg/favicon.svg" />
+
+    <meta name="theme-color" content="#000000" />
+    <!-- Open Graph -->
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="XTD Research Labs | Async + PySpark Medallion Pipeline" />
+    <meta property="og:description"
+        content="A three-stage data engineering pipeline I designed for a UK grid decarbonization research scenario: async API ingestion, PySpark medallion transforms, and a hand-authored PostgreSQL warehouse. By Yomi Ismail, Data Engineer." />
+    <meta property="og:image" content="og-xtd.svg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="XTD Research Labs PySpark medallion pipeline case study by Yomi Ismail" />
+    <meta property="og:locale" content="en_GB" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="XTD Research Labs Case Study | Yomi Ismail" />
+    <meta name="twitter:description"
+        content="Async aiohttp ingestion + PySpark medallion pipeline for three years of UK regional carbon intensity data, landing in a PostgreSQL research warehouse." />
+    <meta name="twitter:image" content="og-xtd.svg" />
+
+    <!-- Schema.org structured data -->
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": ["TechArticle", "CreativeWork"],
+  "name": "XTD Research Labs: Async + PySpark Medallion Pipeline",
+  "headline": "Asynchronous aiohttp ingestion and PySpark medallion pipeline processing 1,095 days of UK regional carbon intensity data into a PostgreSQL research warehouse",
+  "url": "https://yoismail.github.io/portfolio/xtd_research_labs.html",
+  "datePublished": "2026-05-28",
+  "dateModified": "2026-05-28",
+  "image": "https://yoismail.github.io/portfolio/og-xtd.svg",
+  "inLanguage": "en-GB",
+  "author": {
+    "@type": "Person",
+    "name": "Yomi Ismail",
+    "jobTitle": "Data Engineer",
+    "url": "https://yoismail.github.io/portfolio/",
+    "sameAs": [
+      "https://www.linkedin.com/in/yomi-ismail",
+      "https://github.com/yoismail"
+    ]
+  },
+  "publisher": {
+    "@type": "Person",
+    "name": "Yomi Ismail",
+    "url": "https://yoismail.github.io/portfolio/"
+  },
+  "about": [
+    "Asynchronous Python",
+    "aiohttp",
+    "PySpark",
+    "Medallion Architecture",
+    "Bronze Silver Gold",
+    "PostgreSQL",
+    "Idempotent Loads",
+    "Carbon Intensity API",
+    "Time-Series Data Engineering"
+  ],
+  "codeRepository": "https://github.com/yoismail/xtd_research_labs_case_study",
+  "programmingLanguage": ["Python", "SQL"],
+  "keywords": [
+    "aiohttp", "async", "PySpark", "Medallion", "Bronze Silver Gold",
+    "PostgreSQL", "Idempotent Loads", "Composite Primary Key",
+    "Carbon Intensity", "Time Series", "Data Lake", "Data Warehouse"
+  ],
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "Yomi Ismail — Portfolio",
+    "url": "https://yoismail.github.io/portfolio/"
+  }
+}
+</script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Geist:wght@400;500;600&family=Syne:wght@400;600;700;800&display=swap"
+        rel="stylesheet" />
+    <style>
+        /* ── DARK TOKENS ──────────────────────────────────────── */
+        :root {
+            --bg: #050402;
+            --bg-surf: #100d09;
+            --bg-card: #15130f;
+            --bg-card2: #1c1914;
+            --bdr: rgba(255, 255, 255, .07);
+            --bdr-hi: rgba(16, 185, 129, .5);
+
+            --h1: #f3eee5;
+            --h2: #c9c2b3;
+            --h3: #62594c;
+
+            --acc: #10b981;
+            --acc-s: rgba(16, 185, 129, .1);
+            --acc-2: #34d399;
+            --green: #34d399;
+            --teal: #2dd4bf;
+            --amber: #f59e0b;
+
+            --r: 1rem;
+            --rsm: .55rem;
+            --nav: 68px;
+            --fs: "Syne", "Inter", sans-serif;
+            --fd: "Syne", "Inter", sans-serif;
+            --fm: "Geist Mono", "JetBrains Mono", monospace;
+            --fb: "Geist", "Inter", sans-serif;
+            --ez: cubic-bezier(.22, 1, .36, 1);
+        }
+
+        /* ── LIGHT MODE ─────────────────────────────────────────
+   Activated via <html data-theme="light"> (explicit toggle)
+   or prefers-color-scheme:light when no override is set. */
+        :root[data-theme="light"] {
+            --bg: #faf7f1;
+            --bg-surf: #f5f0e6;
+            --bg-card: #ffffff;
+            --bg-card2: #f8f4ec;
+            --bdr: rgba(26, 20, 8, .08);
+            --bdr-hi: rgba(5, 150, 105, .45);
+            --acc: #059669;
+            --acc-s: rgba(5, 150, 105, .08);
+            --acc-2: #10b981;
+            --amber: #d97706;
+            --green: #10b981;
+            --teal: #0d9488;
+            --h1: #1a1408;
+            --h2: #3d3528;
+            --h3: #7a6e5a;
+        }
+
+        @media(prefers-color-scheme:light) {
+            :root:not(.theme-locked) {
+                --bg: #faf7f1;
+                --bg-surf: #f5f0e6;
+                --bg-card: #ffffff;
+                --bg-card2: #f8f4ec;
+                --bdr: rgba(26, 20, 8, .08);
+                --bdr-hi: rgba(5, 150, 105, .45);
+                --acc: #059669;
+                --acc-s: rgba(5, 150, 105, .08);
+                --acc-2: #10b981;
+                --amber: #d97706;
+                --green: #10b981;
+                --teal: #0d9488;
+                --h1: #1a1408;
+                --h2: #3d3528;
+                --h3: #7a6e5a;
+            }
+        }
+
+        html {
+            transition: background-color .3s var(--ez, cubic-bezier(.16, 1, .3, 1)), color .3s var(--ez, cubic-bezier(.16, 1, .3, 1));
+        }
+
+        body {
+            transition: background-color .3s var(--ez, cubic-bezier(.16, 1, .3, 1)), color .3s var(--ez, cubic-bezier(.16, 1, .3, 1));
+        }
+
+        /* ── THEME TOGGLE (pill with sun/moon icons) ─────────── */
+        .theme-toggle {
+            flex-shrink: 0;
+            display: inline-flex;
+            align-items: center;
+            background: var(--bg-surf);
+            border: 1px solid var(--bdr);
+            border-radius: 999px;
+            padding: .2rem;
+            gap: 0;
+            cursor: pointer;
+            transition: background .2s, border-color .2s;
+            height: 32px;
+        }
+
+        .theme-toggle:hover {
+            border-color: var(--bdr-hi);
+        }
+
+        .theme-toggle button {
+            background: transparent;
+            border: 0;
+            width: 26px;
+            height: 26px;
+            border-radius: 999px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--h3);
+            transition: color .2s, background .2s;
+            padding: 0;
+        }
+
+        .theme-toggle button:hover {
+            color: var(--h1);
+        }
+
+        .theme-toggle button.active {
+            background: var(--bg-card);
+            color: var(--acc);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, .15);
+        }
+
+        :root[data-theme="light"] .theme-toggle button.active,
+        :root:not(.theme-locked) .theme-toggle button.active {
+            box-shadow: 0 1px 2px rgba(26, 20, 8, .08);
+        }
+
+        .theme-toggle svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        @media(max-width:480px) {
+            .theme-toggle {
+                height: 30px;
+            }
+
+            .theme-toggle button {
+                width: 24px;
+                height: 24px;
+            }
+
+            .theme-toggle svg {
+                width: 13px;
+                height: 13px;
+            }
+        }
+
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 88px;
+        }
+
+        body {
+            font-family: var(--fb);
+            background: var(--bg);
+            color: var(--h2);
+            line-height: 1.6;
+            letter-spacing: -.005em;
+            -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
+            overflow-x: hidden;
+        }
+
+        ::selection {
+            background: var(--acc-s);
+            color: var(--h1);
+        }
+
+        a {
+            color: var(--acc);
+            text-decoration: none;
+            transition: color .18s var(--ez);
+        }
+
+        a:hover {
+            color: var(--acc-2);
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+        /* ── NAV ──────────────────────────────────────────────── */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 200;
+            height: var(--nav);
+            background: var(--bg-nav);
+            backdrop-filter: blur(18px) saturate(180%);
+            -webkit-backdrop-filter: blur(18px) saturate(180%);
+            border-bottom: 1px solid var(--bdr);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 clamp(1rem, 4vw, 2.5rem);
+            transition: background .3s, border-color .3s;
+            gap: 1rem;
+        }
+
+        .nav-brand {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-decoration: none;
+            white-space: nowrap;
+            flex-shrink: 0;
+            line-height: 1.1;
+            gap: .1rem;
+        }
+
+        .nav-brand .name {
+            font-family: var(--fd);
+            font-size: .95rem;
+            font-weight: 700;
+            letter-spacing: -.02em;
+            color: var(--h1);
+            transition: color .2s;
+        }
+
+        .nav-brand .title {
+            font-family: var(--fm);
+            font-size: .6rem;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: var(--acc);
+        }
+
+        .nav-brand:hover .name {
+            color: var(--acc);
+        }
+
+        @media(max-width:600px) {
+            .nav-brand .name {
+                font-size: .85rem;
+            }
+
+            .nav-brand .title {
+                font-size: .55rem;
+                letter-spacing: .1em;
+            }
+        }
+
+        @media(max-width:420px) {
+            .nav-brand .title {
+                display: none;
+            }
+
+            .nav-brand .name {
+                font-size: .82rem;
+            }
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: .15rem;
+            flex: 1;
+            justify-content: flex-end;
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            -webkit-overflow-scrolling: touch;
+            scroll-behavior: smooth;
+            mask-image: linear-gradient(to right, transparent, #000 1.5rem, #000 calc(100% - 1.5rem), transparent);
+            -webkit-mask-image: linear-gradient(to right, transparent, #000 1.5rem, #000 calc(100% - 1.5rem), transparent);
+        }
+
+        .nav-links::-webkit-scrollbar {
+            display: none;
+        }
+
+        .nav-links a {
+            font-size: .78rem;
+            color: var(--h3);
+            text-decoration: none;
+            padding: .4rem .8rem;
+            border-radius: var(--rsm);
+            transition: color .18s, background .18s;
+            position: relative;
+            flex-shrink: 0;
+            white-space: nowrap;
+        }
+
+        .nav-links a:hover {
+            color: var(--h1);
+            background: var(--acc-s);
+        }
+
+        @media(max-width:900px) {
+            .nav-links {
+                justify-content: flex-start;
+            }
+        }
+
+        .nav-links a.active {
+            color: var(--acc);
+            background: var(--acc-s);
+        }
+
+        @media(max-width:760px) {
+            .nav-links {
+                justify-content: flex-start;
+            }
+
+            .nav-links a {
+                font-size: .74rem;
+                padding: .35rem .65rem;
+            }
+        }
+
+        @media(max-width:420px) {
+            .nav-brand .title {
+                display: none;
+            }
+
+            .nav-brand .name {
+                font-size: .82rem;
+            }
+        }
+
+        /* ── PAGE WRAPPER ─────────────────────────────────────── */
+        .page {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: calc(var(--nav) + 3rem) 1.5rem 5rem;
+        }
+
+        /* ── CASE STUDY HERO ──────────────────────────────────── */
+        .cs-hero {
+            padding-bottom: 2.5rem;
+            border-bottom: 1px solid var(--bdr);
+            margin-bottom: 3rem;
+        }
+
+        .cs-meta {
+            font-family: var(--fm);
+            font-size: .66rem;
+            color: var(--h3);
+            letter-spacing: .22em;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: .6rem;
+            margin-bottom: 1rem;
+        }
+
+        .cs-meta::before {
+            content: '';
+            width: 18px;
+            height: 1px;
+            background: var(--acc);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: .4rem;
+            font-family: var(--fm);
+            font-size: .7rem;
+            color: var(--h3);
+            text-decoration: none;
+            margin-bottom: 1.5rem;
+            transition: color .18s, gap .2s var(--ez);
+        }
+
+        .back-link:hover {
+            color: var(--acc);
+            gap: .6rem;
+            text-decoration: none;
+        }
+
+        /* Cross-case-study quick switcher */
+        .cs-switcher {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: .4rem;
+            margin-bottom: 1.75rem;
+            padding: .55rem .7rem;
+            background: var(--bg-surf);
+            border: 1px solid var(--bdr);
+            border-radius: 999px;
+            font-family: var(--fm);
+            font-size: .66rem;
+            width: fit-content;
+            max-width: 100%;
+        }
+
+        .cs-switcher-label {
+            color: var(--h3);
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            padding: 0 .3rem 0 .4rem;
+        }
+
+        .cs-switcher-link {
+            padding: .32rem .75rem;
+            border-radius: 999px;
+            color: var(--h2);
+            text-decoration: none;
+            letter-spacing: .02em;
+            transition: color .18s, background .18s;
+            white-space: nowrap;
+        }
+
+        .cs-switcher-link:hover {
+            color: var(--acc);
+            background: var(--acc-s);
+            text-decoration: none;
+        }
+
+        .cs-switcher-link.current {
+            color: var(--acc);
+            background: var(--acc-s);
+            cursor: default;
+            pointer-events: none;
+        }
+
+        @media(max-width:520px) {
+            .cs-switcher {
+                font-size: .6rem;
+                padding: .45rem .55rem;
+            }
+
+            .cs-switcher-label {
+                display: none;
+            }
+
+            .cs-switcher-link {
+                padding: .28rem .6rem;
+            }
+        }
+
+        .cs-title {
+            font-family: var(--fd);
+            font-size: clamp(2rem, 5vw, 3.4rem);
+            font-weight: 800;
+            letter-spacing: -.04em;
+            line-height: 1.05;
+            margin-bottom: 1.1rem;
+            color: var(--h1);
+        }
+
+        .cs-title .acc {
+            color: var(--acc);
+        }
+
+        .cs-title .hi {
+            background: linear-gradient(115deg, #10b981 0%, #34d399 50%, #2dd4bf 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+        }
+
+        .cs-lede {
+            font-size: 1rem;
+            line-height: 1.75;
+            color: var(--h2);
+            max-width: 680px;
+            margin-bottom: 2rem;
+        }
+
+        /* hero kicker — small accent eyebrow above title */
+        .kicker {
+            font-family: var(--fm);
+            font-size: .66rem;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--acc);
+            margin-bottom: .6rem;
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+        }
+
+        .kicker::before {
+            content: '';
+            width: 16px;
+            height: 1.5px;
+            background: var(--acc);
+            border-radius: 1px;
+            flex-shrink: 0;
+        }
+
+        /* meta-row — subtle pill labels below subtitle */
+        .meta-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .5rem;
+            margin-bottom: 2rem;
+        }
+
+        .meta-pill {
+            font-family: var(--fm);
+            font-size: .7rem;
+            padding: .32rem .85rem;
+            border-radius: 999px;
+            border: 1px solid var(--bdr);
+            background: var(--bg-surf);
+            color: var(--h3);
+            letter-spacing: .04em;
+        }
+
+        .meta-pill.acc {
+            border-color: rgba(16, 185, 129, .4);
+            color: var(--acc);
+            background: var(--acc-s);
+        }
+
+        /* stat-strip — horizontal row of hero stat cells */
+        .stat-strip {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1px;
+            background: var(--bdr);
+            border: 1px solid var(--bdr);
+            border-radius: var(--r);
+            overflow: hidden;
+            position: relative;
+            z-index: 1;
+            margin-bottom: 2rem;
+        }
+
+        .stat-strip::before {
+            content: '';
+            position: absolute;
+            inset: -40px;
+            background: radial-gradient(ellipse at 30% 50%, rgba(16, 185, 129, .18), transparent 60%),
+                radial-gradient(ellipse at 80% 50%, rgba(45, 212, 191, .12), transparent 60%);
+            pointer-events: none;
+            z-index: -1;
+            filter: blur(20px);
+        }
+
+        .stat-cell {
+            background: var(--bg-card);
+            padding: 1.5rem 1.5rem;
+            transition: background .18s;
+        }
+
+        .stat-cell:hover {
+            background: var(--bg-card2);
+        }
+
+        .stat-num {
+            font-family: var(--fd);
+            font-size: clamp(1.3rem, 2.2vw, 1.55rem);
+            font-weight: 800;
+            color: var(--h1);
+            line-height: 1;
+            margin-bottom: .3rem;
+        }
+
+        .stat-label {
+            font-family: var(--fm);
+            font-size: .62rem;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            color: var(--h3);
+        }
+
+        .cs-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .45rem;
+            margin-bottom: 2rem;
+        }
+
+        .cs-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: .4rem;
+            padding: .4rem .85rem;
+            background: var(--bg-surf);
+            border: 1px solid var(--bdr);
+            border-radius: 999px;
+            font-family: var(--fm);
+            font-size: .66rem;
+            color: var(--h2);
+            letter-spacing: .04em;
+        }
+
+        .cs-pill.acc {
+            background: var(--acc-s);
+            border-color: rgba(16, 185, 129, .32);
+            color: var(--acc);
+        }
+
+        .cs-pill svg {
+            opacity: .85;
+        }
+
+        .cs-cta-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .6rem;
+        }
+
+        .btn-primary,
+        .btn-ghost {
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem;
+            padding: .7rem 1.15rem;
+            border-radius: var(--rsm);
+            font-family: var(--fm);
+            font-size: .74rem;
+            letter-spacing: .04em;
+            transition: all .2s var(--ez);
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--acc);
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .btn-primary:hover {
+            background: var(--acc-2);
+            transform: translateY(-1px);
+            text-decoration: none;
+            color: #fff;
+            box-shadow: 0 8px 24px rgba(16, 185, 129, .3);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--h2);
+            border: 1px solid var(--bdr);
+        }
+
+        .btn-ghost:hover {
+            background: var(--bg-surf);
+            color: var(--h1);
+            border-color: var(--bdr-hi);
+            text-decoration: none;
+        }
+
+        /* ── STICKY SIDE TOC (desktop only) ───────────────────── */
+        .cs-toc {
+            position: fixed;
+            top: calc(var(--nav) + 3rem);
+            left: 1.75rem;
+            width: 170px;
+            z-index: 50;
+            font-family: var(--fm);
+            display: none;
+            opacity: 0;
+            transform: translateX(-8px);
+            transition: opacity .4s var(--ez), transform .4s var(--ez);
+        }
+
+        @media(min-width:1400px) {
+            .cs-toc {
+                display: block;
+            }
+        }
+
+        .cs-toc.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .cs-toc-label {
+            font-size: .58rem;
+            letter-spacing: .18em;
+            color: var(--h3);
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            padding-bottom: .55rem;
+            border-bottom: 1px solid var(--bdr);
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+        }
+
+        .cs-toc-label::before {
+            content: '';
+            width: 14px;
+            height: 1.5px;
+            background: var(--acc);
+            border-radius: 1px;
+        }
+
+        .cs-toc ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: .05rem;
+        }
+
+        .cs-toc a {
+            display: flex;
+            gap: .55rem;
+            align-items: flex-start;
+            font-size: .72rem;
+            color: var(--h3);
+            text-decoration: none;
+            padding: .4rem 0 .4rem .65rem;
+            border-left: 1px solid var(--bdr);
+            transition: color .2s, border-color .2s, padding-left .2s var(--ez);
+            line-height: 1.4;
+        }
+
+        .cs-toc a:hover {
+            color: var(--h2);
+            border-left-color: var(--h3);
+            padding-left: .85rem;
+            text-decoration: none;
+        }
+
+        .cs-toc a.active {
+            color: var(--acc);
+            border-left-color: var(--acc);
+            border-left-width: 2px;
+            padding-left: .8rem;
+            font-weight: 500;
+        }
+
+        .cs-toc-num {
+            font-size: .62rem;
+            color: var(--acc);
+            min-width: 18px;
+            flex-shrink: 0;
+            letter-spacing: .04em;
+            padding-top: .05rem;
+        }
+
+        /* ── SECTION COMMON ───────────────────────────────────── */
+        section {
+            margin-bottom: 4rem;
+            scroll-margin-top: 90px;
+        }
+
+        .sec-alt {
+            background: var(--bg-surf);
+            margin-left: calc(-1 * 1.5rem);
+            margin-right: calc(-1 * 1.5rem);
+            padding: 3.5rem 1.5rem;
+            border-radius: var(--r);
+        }
+
+        .sec-kicker {
+            font-family: var(--fm);
+            font-size: .62rem;
+            color: var(--acc);
+            letter-spacing: .22em;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: .55rem;
+            margin-bottom: .85rem;
+        }
+
+        .sec-kicker::before {
+            content: '';
+            width: 18px;
+            height: 1px;
+            background: var(--acc);
+        }
+
+        .sec-num {
+            font-family: var(--fm);
+            font-size: .62rem;
+            color: var(--h3);
+            letter-spacing: .05em;
+            margin-right: .2rem;
+        }
+
+        .sec-h {
+            font-family: var(--fd);
+            font-size: clamp(1.75rem, 3.2vw, 2.4rem);
+            font-weight: 700;
+            letter-spacing: -.03em;
+            line-height: 1.15;
+            margin-bottom: 1.5rem;
+            color: var(--h1);
+        }
+
+        .sec-h .acc {
+            color: var(--acc);
+        }
+
+        .sec-p {
+            font-size: 1rem;
+            line-height: 1.7;
+            margin-bottom: 1rem;
+            color: var(--h2);
+        }
+
+        .sec-p.lede {
+            font-size: 1.08rem;
+            color: var(--h2);
+        }
+
+        .sec-p strong {
+            color: var(--h1);
+            font-weight: 600;
+        }
+
+        /* ── CARDS / GRID PATTERNS ────────────────────────────── */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        @media(max-width:680px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        @media(max-width:680px) {
+            .grid-3 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        @media(max-width:900px) {
+            .grid-4 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .card {
+            padding: 1.4rem 1.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--bdr);
+            border-radius: var(--r);
+            transition: border-color .2s, transform .2s var(--ez);
+        }
+
+        .card:hover {
+            border-color: var(--bdr-hi);
+            transform: translateY(-2px);
+        }
+
+        .card-eyebrow {
+            font-family: var(--fm);
+            font-size: .6rem;
+            color: var(--acc);
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            margin-bottom: .6rem;
+        }
+
+        .card-title {
+            font-family: var(--fd);
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--h1);
+            letter-spacing: -.01em;
+            margin-bottom: .4rem;
+        }
+
+        .card-desc {
+            font-size: .86rem;
+            color: var(--h2);
+            line-height: 1.55;
+        }
+
+        .card code {
+            font-family: var(--fm);
+            font-size: .78em;
+            background: var(--bg-surf);
+            color: var(--acc-2);
+            padding: .05em .35em;
+            border-radius: .3em;
+        }
+
+        /* ── IMPACT NUMBERS ───────────────────────────────────── */
+        .impact-num {
+            font-family: var(--fd);
+            font-size: clamp(1.6rem, 4vw, 2.4rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: .55rem;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            filter: drop-shadow(0 4px 16px currentColor);
+            word-break: break-word;
+            overflow-wrap: break-word;
+            letter-spacing: -.02em;
+        }
+
+        .impact-num.acc {
+            background-image: linear-gradient(135deg, #10b981, #34d399);
+            color: #10b981;
+        }
+
+        .impact-num.green {
+            background-image: linear-gradient(135deg, #10b981, #34d399);
+            color: #10b981;
+        }
+
+        .impact-num.teal {
+            background-image: linear-gradient(135deg, #22d3ee, #2dd4bf);
+            color: #22d3ee;
+        }
+
+        .impact-num.amber {
+            background-image: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: #fbbf24;
+        }
+
+        .impact-card {
+            padding: 1.5rem 1.4rem;
+            background: var(--bg-card);
+            border: 1px solid var(--bdr);
+            border-radius: var(--r);
+            transition: transform .25s var(--ez), border-color .25s;
+        }
+
+        .impact-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--bdr-hi);
+        }
+
+        .impact-label {
+            font-family: var(--fm);
+            font-size: .78rem;
+            color: var(--h1);
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        .impact-desc {
+            font-size: .78rem;
+            color: var(--h3);
+            line-height: 1.5;
+            margin-top: .4rem;
+        }
+
+        /* ── CODE BLOCKS ──────────────────────────────────────── */
+        .code-block {
+            background: #020812;
+            border: 1px solid var(--bdr);
+            border-radius: var(--r);
+            padding: 1.25rem 1.4rem;
+            margin: 1.25rem 0;
+            font-family: var(--fm);
+            font-size: .78rem;
+            line-height: 1.65;
+            color: var(--h2);
+            position: relative;
+            width: 100%;
+            max-width: 100%;
+            overflow: hidden;
+        }
+
+        .code-block pre {
+            margin: 0;
+            font-family: inherit;
+            color: inherit;
+            display: block;
+            overflow-x: auto;
+            white-space: pre;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255, 255, 255, .15) transparent;
+        }
+
+        .code-block pre::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .code-block pre::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .code-block pre::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, .15);
+            border-radius: 3px;
+        }
+
+        .code-block pre::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, .25);
+        }
+
+        .code-block::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 24px;
+            background: linear-gradient(to right, transparent, #020812);
+            pointer-events: none;
+            border-radius: 0 var(--r) var(--r) 0;
+        }
+
+        .code-block-label {
+            display: block;
+            font-family: var(--fm);
+            font-size: .58rem;
+            color: var(--h3);
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            margin-bottom: .85rem;
+            padding-bottom: .6rem;
+            border-bottom: 1px solid rgba(255, 255, 255, .06);
+        }
+
+        .code-block .comment {
+            color: #5d6b85;
+            font-style: italic;
+        }
+
+        .code-block .keyword {
+            color: #c084fc;
+        }
+
+        .code-block .string {
+            color: #86efac;
+        }
+
+        .code-block .fn {
+            color: #34d399;
+        }
+
+        .code-block .num {
+            color: #fbbf24;
+        }
+
+        .code-block .self {
+            color: #f87171;
+        }
+
+        /* ── INLINE CODE ──────────────────────────────────────── */
+        code {
+            font-family: var(--fm);
+            font-size: .84em;
+            background: var(--bg-surf);
+            color: var(--acc-2);
+            padding: .1em .4em;
+            border-radius: .3em;
+            border: 1px solid var(--bdr);
+            word-break: break-word;
+            overflow-wrap: anywhere;
+        }
+
+        /* ── CALLOUT BOXES ────────────────────────────────────── */
+        .callout {
+            margin: 1.5rem 0;
+            padding: 1.2rem 1.4rem;
+            background: var(--acc-s);
+            border-left: 3px solid var(--acc);
+            border-radius: .6rem;
+        }
+
+        .callout-label {
+            font-family: var(--fm);
+            font-size: .6rem;
+            color: var(--acc);
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            margin-bottom: .45rem;
+        }
+
+        .callout-text {
+            font-size: .95rem;
+            line-height: 1.6;
+            color: var(--h2);
+        }
+
+        .callout-text strong {
+            color: var(--h1);
+        }
+
+        /* ── DECISION CARDS ───────────────────────────────────── */
+        .decision-card {
+            padding: 1.6rem 1.6rem;
+            background: var(--bg-card);
+            border: 1px solid var(--bdr);
+            border-radius: var(--r);
+            margin-bottom: 1rem;
+            position: relative;
+            transition: border-color .2s;
+        }
+
+        .decision-card:hover {
+            border-color: var(--bdr-hi);
+        }
+
+        .decision-num {
+            position: absolute;
+            top: 1.3rem;
+            right: 1.4rem;
+            font-family: var(--fd);
+            font-size: clamp(1.6rem, 4.5vw, 2.6rem);
+            font-weight: 800;
+            color: var(--acc);
+            opacity: .18;
+            line-height: 1;
+            letter-spacing: -.03em;
+            pointer-events: none;
+        }
+
+        .decision-q {
+            font-family: var(--fd);
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--h1);
+            letter-spacing: -.02em;
+            margin-bottom: .7rem;
+            padding-right: clamp(2rem, 10vw, 3.5rem);
+        }
+
+        .decision-a {
+            font-size: .93rem;
+            line-height: 1.65;
+            color: var(--h2);
+        }
+
+        .decision-a strong {
+            color: var(--h1);
+        }
+
+        @media(max-width:560px) {
+            .decision-card {
+                padding: 1.3rem 1.3rem;
+            }
+
+            .decision-num {
+                position: static;
+                display: block;
+                font-size: 1.5rem;
+                margin-bottom: .5rem;
+                opacity: .4;
+                line-height: 1;
+            }
+
+            .decision-q {
+                padding-right: 0;
+                font-size: 1rem;
+            }
+        }
+
+        /* ── ARCHITECTURE FLOW VISUAL ─────────────────────────── */
+        .flow {
+            display: flex;
+            flex-direction: column;
+            gap: .4rem;
+            margin: 1.5rem 0;
+            padding: 1.5rem 1.2rem;
+            background: var(--bg-card);
+            border: 1px solid var(--bdr);
+            border-radius: var(--r);
+        }
+
+        .flow-stage {
+            display: flex;
+            align-items: center;
+            gap: .9rem;
+            padding: .85rem 1rem;
+            background: var(--bg-surf);
+            border: 1px solid var(--bdr);
+            border-radius: .65rem;
+            transition: border-color .2s, transform .2s var(--ez);
+        }
+
+        .flow-stage:hover {
+            border-color: var(--bdr-hi);
+            transform: translateX(3px);
+        }
+
+        .flow-step {
+            font-family: var(--fm);
+            font-size: .62rem;
+            color: var(--acc);
+            letter-spacing: .15em;
+            min-width: 34px;
+            flex-shrink: 0;
+        }
+
+        .flow-name {
+            font-family: var(--fd);
+            font-size: .95rem;
+            font-weight: 600;
+            color: var(--h1);
+            letter-spacing: -.01em;
+            flex-shrink: 0;
+        }
+
+        .flow-detail {
+            font-size: .78rem;
+            color: var(--h3);
+            line-height: 1.4;
+            margin-left: auto;
+            text-align: right;
+            font-family: var(--fm);
+            letter-spacing: .02em;
+        }
+
+        .flow-arrow {
+            align-self: center;
+            color: var(--h3);
+            font-size: .95rem;
+            margin: -.2rem 0;
+        }
+
+        @media(max-width:520px) {
+            .flow-stage {
+                flex-wrap: wrap;
+            }
+
+            .flow-detail {
+                margin-left: 0;
+                text-align: left;
+                width: 100%;
+            }
+        }
+
+        /* ── SCHEMA TABLE ─────────────────────────────────────── */
+        .schema-table {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: .7rem;
+            margin: 1.25rem 0 1rem;
+        }
+
+        @media(max-width:680px) {
+            .schema-table {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .schema-card {
+            padding: 1.1rem 1.2rem;
+            background: var(--bg-card);
+            border: 1px solid var(--bdr);
+            border-radius: .7rem;
+            transition: border-color .2s;
+        }
+
+        .schema-card:hover {
+            border-color: var(--bdr-hi);
+        }
+
+        .schema-card.fact {
+            border-color: rgba(16, 185, 129, .32);
+            background: linear-gradient(135deg, var(--bg-card), rgba(16, 185, 129, .04));
+        }
+
+        .schema-card-name {
+            font-family: var(--fm);
+            font-size: .78rem;
+            color: var(--acc);
+            letter-spacing: .04em;
+            margin-bottom: .55rem;
+            font-weight: 500;
+        }
+
+        .schema-card.fact .schema-card-name {
+            color: var(--acc-2);
+            font-weight: 600;
+        }
+
+        .schema-card-cols {
+            font-family: var(--fm);
+            font-size: .72rem;
+            color: var(--h3);
+            line-height: 1.6;
+        }
+
+        .schema-card-cols .pk {
+            color: var(--acc);
+        }
+
+        .schema-card-cols .fk {
+            color: var(--amber);
+        }
+
+        /* ── TECH STACK ───────────────────────────────────────── */
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: .65rem;
+            margin-top: 1.25rem;
+        }
+
+        .tech-item {
+            padding: .85rem 1rem;
+            background: var(--bg-card);
+            border: 1px solid var(--bdr);
+            border-radius: .6rem;
+            font-family: var(--fm);
+            font-size: .78rem;
+            color: var(--h2);
+            letter-spacing: .02em;
+            display: flex;
+            flex-direction: column;
+            gap: .25rem;
+            transition: border-color .2s, transform .2s var(--ez);
+        }
+
+        .tech-item:hover {
+            border-color: var(--bdr-hi);
+            transform: translateY(-1px);
+        }
+
+        .tech-name {
+            color: var(--h1);
+            font-weight: 500;
+        }
+
+        .tech-role {
+            color: var(--h3);
+            font-size: .66rem;
+            letter-spacing: .04em;
+        }
+
+        /* ── READ NEXT (related case studies) ─────────────────── */
+        .read-next {
+            margin-top: 2rem;
+            padding-top: 3.5rem;
+            border-top: 1px solid var(--bdr);
+        }
+
+        .read-next-eyebrow {
+            font-family: var(--fm);
+            font-size: .66rem;
+            letter-spacing: .22em;
+            text-transform: uppercase;
+            color: var(--h3);
+            margin-bottom: .5rem;
+            display: flex;
+            align-items: center;
+            gap: .6rem;
+        }
+
+        .read-next-eyebrow::before {
+            content: '';
+            width: 18px;
+            height: 1px;
+            background: var(--acc);
+        }
+
+        .read-next-h {
+            font-family: var(--fd);
+            font-size: clamp(1.4rem, 2.6vw, 1.75rem);
+            font-weight: 700;
+            letter-spacing: -.03em;
+            margin-bottom: 2rem;
+            color: var(--h1);
+        }
+
+        .read-next-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        @media(max-width:680px) {
+            .read-next-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .read-next-card {
+            display: flex;
+            flex-direction: column;
+            gap: .5rem;
+            padding: 1.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--bdr);
+            border-radius: var(--r);
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            transition: border-color .2s var(--ez), transform .2s var(--ez), box-shadow .2s var(--ez);
+        }
+
+        .read-next-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 0;
+            background: var(--acc);
+            transition: height .3s var(--ez);
+        }
+
+        .read-next-card:hover {
+            border-color: var(--bdr-hi);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, .25);
+            text-decoration: none;
+        }
+
+        .read-next-card:hover::before {
+            height: 100%;
+        }
+
+        .read-next-label {
+            font-family: var(--fm);
+            font-size: .6rem;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+            color: var(--acc);
+        }
+
+        .read-next-title {
+            font-family: var(--fd);
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--h1);
+            letter-spacing: -.02em;
+            line-height: 1.25;
+            margin-top: .1rem;
+        }
+
+        .read-next-desc {
+            font-size: .86rem;
+            color: var(--h2);
+            line-height: 1.55;
+            margin-bottom: .3rem;
+        }
+
+        .read-next-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .3rem;
+            margin-top: .2rem;
+            margin-bottom: .85rem;
+        }
+
+        .read-next-tag {
+            font-family: var(--fm);
+            font-size: .62rem;
+            padding: .18rem .5rem;
+            border: 1px solid var(--bdr);
+            border-radius: var(--rsm);
+            background: var(--bg-surf);
+            color: var(--h3);
+            letter-spacing: .04em;
+        }
+
+        .read-next-cta {
+            font-family: var(--fm);
+            font-size: .74rem;
+            color: var(--acc);
+            display: inline-flex;
+            align-items: center;
+            gap: .4rem;
+            margin-top: auto;
+            padding-bottom: 2px;
+            border-bottom: 1px solid transparent;
+            transition: gap .22s var(--ez), color .18s var(--ez), border-color .18s var(--ez);
+            align-self: flex-start;
+        }
+
+        .read-next-card:hover .read-next-cta {
+            gap: .65rem;
+            color: var(--h1);
+            border-bottom-color: var(--acc);
+        }
+
+        .read-next-cta-arrow {
+            display: inline-block;
+            transition: transform .22s var(--ez);
+        }
+
+        .read-next-card:hover .read-next-cta-arrow {
+            transform: translateX(4px);
+        }
+
+        /* ── FADE-UP ──────────────────────────────────────────── */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity .45s var(--ez), transform .45s var(--ez);
+        }
+
+        .fade-up.in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+            .fade-up {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        /* ── FOOTER ───────────────────────────────────────────── */
+        footer {
+            position: relative;
+            z-index: 1;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 3.5rem clamp(1rem, 4vw, 2.5rem) 1.5rem;
+            border-top: 1px solid var(--bdr);
+        }
+
+        /* Top zone — site map + brand */
+        .footer-top {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr 1fr 1fr;
+            gap: 2.5rem 2rem;
+            margin-bottom: 3rem;
+        }
+
+        @media(max-width:760px) {
+            .footer-top {
+                grid-template-columns: 1fr 1fr;
+                gap: 2.25rem 1.5rem;
+            }
+        }
+
+        @media(max-width:480px) {
+            .footer-top {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+
+        /* Brand block (first column) */
+        .footer-brand-block {
+            display: flex;
+            flex-direction: column;
+            gap: .85rem;
+        }
+
+        .footer-mark {
+            width: 32px;
+            height: 32px;
+            color: var(--acc);
+            opacity: .7;
+            transition: opacity .3s var(--ez), transform .3s var(--ez);
+        }
+
+        .footer-mark path,
+        .footer-mark line {
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        footer:hover .footer-mark {
+            opacity: 1;
+            transform: translateY(-1px);
+        }
+
+        .footer-name {
+            font-family: var(--fd);
+            font-size: 1.05rem;
+            font-weight: 700;
+            letter-spacing: -.02em;
+            color: var(--h1);
+            line-height: 1.2;
+        }
+
+        .footer-tagline {
+            font-family: var(--fm);
+            font-size: .66rem;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: var(--h3);
+            margin-top: .15rem;
+        }
+
+        /* Column groups */
+        .footer-col {
+            display: flex;
+            flex-direction: column;
+            gap: .85rem;
+        }
+
+        .footer-col-label {
+            font-family: var(--fm);
+            font-size: .6rem;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            color: var(--h3);
+            padding-bottom: .55rem;
+            border-bottom: 1px solid var(--bdr);
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+        }
+
+        .footer-col-label::before {
+            content: '';
+            width: 14px;
+            height: 1px;
+            background: var(--acc);
+            border-radius: 1px;
+        }
+
+        .footer-col ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: .6rem;
+        }
+
+        .footer-link {
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem;
+            font-size: .82rem;
+            color: var(--h2);
+            text-decoration: none;
+            padding-bottom: 1px;
+            border-bottom: 1px solid transparent;
+            transition: color .18s var(--ez), border-color .18s var(--ez), gap .18s var(--ez), transform .18s var(--ez);
+            width: fit-content;
+        }
+
+        .footer-link svg {
+            flex-shrink: 0;
+            color: var(--h3);
+            transition: color .18s var(--ez);
+        }
+
+        .footer-link:hover {
+            color: var(--h1);
+            border-bottom-color: var(--acc);
+            gap: .6rem;
+            text-decoration: none;
+        }
+
+        .footer-link:hover svg {
+            color: var(--acc);
+        }
+
+        .footer-link-meta {
+            font-family: var(--fm);
+            font-size: .66rem;
+            color: var(--h3);
+            letter-spacing: .04em;
+            margin-top: .15rem;
+            display: flex;
+            align-items: center;
+            gap: .45rem;
+        }
+
+        .footer-link-meta::before {
+            content: '';
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--acc);
+            opacity: .6;
+        }
+
+        /* Bottom zone — copyright + human note */
+        .footer-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: .75rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--bdr);
+        }
+
+        .footer-copy {
+            font-family: var(--fm);
+            font-size: .66rem;
+            color: var(--h3);
+            letter-spacing: .06em;
+        }
+
+        .footer-note {
+            font-size: .76rem;
+            color: var(--h3);
+            font-style: italic;
+            margin: 0;
+        }
+
+        @media(max-width:560px) {
+            .footer-bottom {
+                flex-direction: column;
+                align-items: flex-start;
+                text-align: left;
+            }
+        }
+
+        /* ── BACK TO TOP ──────────────────────────────────────── */
+        .to-top {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: var(--acc);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: none;
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+            transition: all .25s var(--ez);
+            box-shadow: 0 8px 24px rgba(16, 185, 129, .32);
+            z-index: 200;
+        }
+
+        .to-top.show {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .to-top:hover {
+            transform: translateY(-3px);
+            background: var(--acc-2);
+        }
+    </style>
+    <script>
+        // Apply theme as early as possible to avoid flash-of-wrong-theme.
+        (function () {
+            try {
+                var saved = localStorage.getItem('theme');
+                if (saved === 'light' || saved === 'dark') {
+                    document.documentElement.setAttribute('data-theme', saved);
+                    document.documentElement.classList.add('theme-locked');
+                }
+            } catch (e) { }
+        })();
+    </script>
+</head>
+
+<body>
+
+    <!-- NAV -->
+    <nav>
+        <a class="nav-brand" href="index.html">
+            <span class="name">Yomi Ismail</span>
+            <span class="title">Data Engineer</span>
+        </a>
+        <div class="nav-links">
+            <a href="#cs-hero">Overview</a>
+            <a href="#problem">Problem</a>
+            <a href="#architecture">Architecture</a>
+            <a href="#schema">Schema</a>
+            <a href="#decisions">Decisions</a>
+            <a href="#impact">Impact</a>
+            <a href="#read-next">Other case studies</a>
+            <a href="principles.html">Principles</a>
+            <a href="index.html">← Portfolio</a>
+        </div>
+        <div class="theme-toggle" role="group" aria-label="Theme">
+            <button type="button" data-theme-set="light" aria-label="Light theme" title="Light theme">
+                <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="4" />
+                    <path
+                        d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+                </svg>
+            </button>
+            <button type="button" data-theme-set="dark" aria-label="Dark theme" title="Dark theme">
+                <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- STICKY TOC -->
+    <aside class="cs-toc" id="csToc" aria-label="Case study contents">
+        <div class="cs-toc-label">Contents</div>
+        <ul>
+            <li><a href="#cs-hero"><span class="cs-toc-num">00</span><span>Overview</span></a></li>
+            <li><a href="#problem"><span class="cs-toc-num">01</span><span>The Problem</span></a></li>
+            <li><a href="#architecture"><span class="cs-toc-num">02</span><span>Architecture</span></a></li>
+            <li><a href="#schema"><span class="cs-toc-num">03</span><span>Schema Design</span></a></li>
+            <li><a href="#engineering"><span class="cs-toc-num">04</span><span>Engineering</span></a></li>
+            <li><a href="#decisions"><span class="cs-toc-num">05</span><span>Decisions</span></a></li>
+            <li><a href="#impact"><span class="cs-toc-num">06</span><span>Impact</span></a></li>
+            <li><a href="#tech"><span class="cs-toc-num">07</span><span>Tech Stack</span></a></li>
+            <li><a href="#read-next"><span class="cs-toc-num">08</span><span>Other case<br />studies</span></a></li>
+        </ul>
+    </aside>
+
+    <div class="page">
+
+        <!-- ───── HERO ───── -->
+        <section id="cs-hero" class="cs-hero">
+            <a href="index.html" class="back-link">
+                <svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 12H5M12 19l-7-7 7-7" />
+                </svg>
+                Back to portfolio
+            </a>
+            <div class="cs-switcher" role="navigation" aria-label="Case study navigation">
+                <span class="cs-switcher-label">Case studies</span>
+                <a href="fibbiebanks.html" class="cs-switcher-link">FibbieBanks</a>
+                <a href="xtd_research_labs.html" class="cs-switcher-link current" aria-current="page">XTD Research
+                    Labs</a>
+                <a href="payflow.html" class="cs-switcher-link">PayFlow</a>
+                <a href="chocodelight.html" class="cs-switcher-link">ChocoDelight</a>
+                <a href="aliexpress.html" class="cs-switcher-link">AliExpress</a>
+            </div>
+            <div class="cs-meta">~10 min read · Updated May 2026</div>
+            <div class="kicker">Case Study · Featured · Async + Medallion</div>
+
+            <h1 class="cs-title">XTD Research Labs: <span class="hi">Async ingestion</span><br />and PySpark medallion
+                pipeline</h1>
+
+            <p class="cs-lede">
+                A three-stage data engineering pipeline I built for a UK grid decarbonization research scenario. Async
+                aiohttp pulls 1,095 days of regional carbon intensity from a live government API into a Bronze data
+                lake. PySpark explodes deeply nested JSON, pivots fuel types into typed columns, and aggregates to daily
+                research metrics across Silver and Gold layers. A two-stage dedup-merge load lands the result in
+                PostgreSQL with composite-key idempotency.
+            </p>
+
+            <div class="meta-row">
+                <span class="meta-pill acc">Featured case study</span>
+                <span class="meta-pill">Live UK Carbon Intensity API</span>
+                <span class="meta-pill">aiohttp async ingestion</span>
+                <span class="meta-pill">PySpark 4.1.1 medallion</span>
+                <span class="meta-pill">PostgreSQL 14+</span>
+                <span class="meta-pill">Bronze · Silver · Gold</span>
+            </div>
+
+            <div class="stat-strip">
+                <div class="stat-cell">
+                    <div class="stat-num">1,095</div>
+                    <div class="stat-label">days ingested</div>
+                </div>
+                <div class="stat-cell">
+                    <div class="stat-num">8.7M</div>
+                    <div class="stat-label">intermediate rows</div>
+                </div>
+                <div class="stat-cell">
+                    <div class="stat-num">945K</div>
+                    <div class="stat-label">silver records</div>
+                </div>
+                <div class="stat-cell">
+                    <div class="stat-num">19.7K</div>
+                    <div class="stat-label">gold daily rows</div>
+                </div>
+                <div class="stat-cell">
+                    <div class="stat-num">32</div>
+                    <div class="stat-label">500s retried &amp; recovered</div>
+                </div>
+                <div class="stat-cell">
+                    <div class="stat-num">0</div>
+                    <div class="stat-label">rate-limit hits</div>
+                </div>
+            </div>
+
+            <div class="cs-cta-row">
+                <a href="https://github.com/yoismail/xtd_research_labs_case_study" class="btn-primary" target="_blank"
+                    rel="noopener">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path
+                            d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58v-2.06c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.21.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.5.99.11-.77.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.31-.54-1.53.11-3.19 0 0 1.01-.32 3.3 1.23.96-.27 1.98-.4 3-.41 1.02 0 2.04.14 3 .41 2.29-1.55 3.3-1.23 3.3-1.23.65 1.66.24 2.88.12 3.19.77.84 1.24 1.91 1.24 3.22 0 4.61-2.8 5.62-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.69.83.58A12 12 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
+                    </svg>
+                    View on GitHub
+                </a>
+                <a href="#problem" class="btn-ghost">
+                    <svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 5v14M5 12l7 7 7-7" />
+                    </svg>
+                    Read the story
+                </a>
+            </div>
+        </section>
+
+        <!-- ───── 01 · THE PROBLEM ───── -->
+        <section id="problem" class="fade-up sec-alt">
+            <div class="sec-kicker"><span class="sec-num">01</span> The Problem</div>
+            <h2 class="sec-h">A research lab can't backfill three years of grid data.</h2>
+
+            <p class="sec-p lede">
+                XTD Research Labs is a fictional scientific institution studying the environmental footprint of UK
+                electricity generation. Their analysts and policy researchers depend on regional carbon intensity data
+                to build longitudinal climate models, with their current focus covering 2022 to 2024. The existing
+                pipeline was an in-memory Python script designed for 30-minute interval pulls. It worked for one day at
+                a time, and became the binding constraint on every research initiative that needed more than a few days
+                of history.
+            </p>
+
+            <p class="sec-p">
+                The brief identified three specific engineering constraints. <strong>Scale incompatibility</strong>: the
+                in-memory pipeline could not process 1,000+ days of concurrent regional data, and multi-year backfills
+                timed out. <strong>Network latency</strong>: synchronous API requests against the Carbon Intensity API
+                triggered rate-limiting when fetching multi-year datasets. <strong>No schema preservation</strong>:
+                without a layered architecture, raw responses were discarded after transformation, so re-running
+                analysis with new research parameters meant re-fetching from the source API every time.
+            </p>
+
+            <p class="sec-p">
+                I was engaged as the data engineer responsible for transitioning XTD from this single-day model to a
+                <strong>distributed big data architecture</strong> capable of handling the full 2022 to 2024 research
+                window. The deliverable had to do three things: ingest thousands of days of API data without hammering
+                the upstream provider, transform deeply nested JSON at scale, and archive raw data immutably so
+                reprocessing never required re-hitting the API.
+            </p>
+
+            <div class="callout">
+                <div class="callout-label">Design constraint</div>
+                <div class="callout-text">
+                    <strong>The Carbon Intensity API is a live, public, government-maintained service.</strong> Every
+                    Bronze rebuild hits production. Rate-limit discipline, retry semantics, and bronze immutability
+                    aren't optimisations. They're prerequisites for being a polite consumer of a free public API.
+                </div>
+            </div>
+        </section>
+
+        <!-- ───── 02 · ARCHITECTURE ───── -->
+        <section id="architecture" class="fade-up">
+            <div class="sec-kicker"><span class="sec-num">02</span> Architecture</div>
+            <h2 class="sec-h">Three layers, three idempotency models.</h2>
+
+            <p class="sec-p">
+                The pipeline follows a <strong>medallion architecture</strong>: Bronze (raw API JSONs), Silver (cleaned
+                PySpark Parquet), Gold (daily aggregated CSV). Three Python modules under an <code>etl/</code> package,
+                each runnable independently. There is no <code>run_all.py</code> orchestrator: each stage has a
+                meaningfully different runtime profile (Bronze is API-bound, Silver/Gold is CPU-heavy under PySpark,
+                Load is DB-bound), so decoupling them makes debugging, partial reruns, and external orchestration
+                cleaner.
+            </p>
+
+            <div class="flow">
+                <div class="flow-stage">
+                    <div class="flow-step">🥉</div>
+                    <div class="flow-name">Bronze</div>
+                    <div class="flow-detail">async aiohttp · semaphore(5) · retry w/ backoff · file-existence
+                        idempotency</div>
+                </div>
+                <div class="flow-arrow">▼</div>
+                <div class="flow-stage">
+                    <div class="flow-step">🥈</div>
+                    <div class="flow-name">Silver</div>
+                    <div class="flow-detail">PySpark · explode regions+mix · pivot 9 fuels · tracker-file idempotency ·
+                        Parquet append</div>
+                </div>
+                <div class="flow-arrow">▼</div>
+                <div class="flow-stage">
+                    <div class="flow-step">🥇</div>
+                    <div class="flow-name">Gold</div>
+                    <div class="flow-detail">daily aggregation · region × date groupBy · wipe-and-rebuild · CSV
+                        overwrite</div>
+                </div>
+                <div class="flow-arrow">▼</div>
+                <div class="flow-stage">
+                    <div class="flow-step">📦</div>
+                    <div class="flow-name">Load</div>
+                    <div class="flow-detail">two-stage dedup-merge · pandas merge w/ indicator · composite-PK enforced
+                    </div>
+                </div>
+            </div>
+
+            <p class="sec-p">
+                <strong>Each layer uses a different idempotency model because the cost of rebuilding it is
+                    different.</strong> Bronze costs ~12 minutes and 1,000+ live API calls. Silver costs ~5 minutes of
+                Spark. Gold costs ~3 seconds. A unified "wipe everything and rebuild" model would force every run to
+                re-hit the API. A unified "incremental everything" model would make Gold queries return stale data.
+                Different mechanisms, each appropriate to its layer.
+            </p>
+
+            <h3 class="sec-h" style="font-size:1.25rem;margin-top:2rem;margin-bottom:1rem;">Async ingestion with layered
+                rate-limit defense</h3>
+
+            <p class="sec-p">
+                The Bronze layer uses <code>aiohttp</code> with two independent rate-limit boundaries.
+                <code>asyncio.Semaphore(5)</code> bounds <strong>logical task concurrency</strong>.
+                <code>aiohttp.TCPConnector(limit=5)</code> bounds <strong>physical socket count</strong>. Either alone
+                would mostly work; layered, they make a 429 essentially impossible at this scale. In the actual run,
+                1,095 API calls produced exactly zero rate-limit errors.
+            </p>
+
+            <div class="code-block">
+                <span class="code-block-label">etl/extract.py · concurrency + retry</span>
+                <pre>semaphore = asyncio.Semaphore(5)  <span class="comment"># bounds in-flight task count</span>
+
+<span class="keyword">async def</span> <span class="fn">fetch_carbon_data</span>(session, target_date):
+    file_path = os.path.join(BRONZE_DIR, <span class="string">f"{target_date}.json"</span>)
+    <span class="keyword">if</span> os.path.exists(file_path):
+        <span class="keyword">return</span> <span class="keyword">None</span>  <span class="comment"># idempotent: skip if already saved</span>
+
+    <span class="keyword">async with</span> semaphore:
+        <span class="keyword">for</span> attempt <span class="keyword">in</span> range(3):
+            <span class="keyword">try</span>:
+                <span class="keyword">async with</span> session.get(url, timeout=20) <span class="keyword">as</span> response:
+                    <span class="keyword">if</span> response.status == 200:
+                        data = <span class="keyword">await</span> response.json()
+                        <span class="comment"># defensive: API sometimes returns 200 with empty payload</span>
+                        <span class="keyword">if</span> <span class="string">'data'</span> <span class="keyword">in</span> data <span class="keyword">and</span> data[<span class="string">'data'</span>]:
+                            save_bronze(data, file_path)
+                    <span class="keyword">elif</span> response.status == 429:
+                        <span class="keyword">await</span> asyncio.sleep(5 * (attempt + 1))  <span class="comment"># 5s, 10s, 15s</span>
+            <span class="keyword">except</span> (aiohttp.ClientError, asyncio.TimeoutError):
+                <span class="keyword">await</span> asyncio.sleep(2 * (attempt + 1))</pre>
+            </div>
+
+            <p class="sec-p">
+                The empty-payload check (<code>if 'data' in data and data['data']</code>) is the kind of defensive code
+                that only exists because the author has been burned. The Carbon Intensity API occasionally returns
+                <code>200 OK</code> with an empty array. Naive code would write the empty response and call it success.
+                This logs a warning and refuses to write a corrupt file. In the actual run, it caught date
+                <code>2023-10-22</code>, which is why Bronze contains 1,095 days not 1,096.
+            </p>
+        </section>
+
+        <!-- ───── 03 · SCHEMA DESIGN ───── -->
+        <section id="schema" class="fade-up sec-alt">
+            <div class="sec-kicker"><span class="sec-num">03</span> Schema Design</div>
+            <h2 class="sec-h">A flat fact table with <span class="acc">composite primary key</span>.</h2>
+
+            <p class="sec-p lede">
+                The warehouse is a single-table data mart, not a star schema. The grain is <strong>one row per region
+                    per day</strong>, which is exactly how XTD's research analysts consume the data: time-series queries
+                sliced by region and date range. With ~19.7K total rows in the analytics table, normalization would cost
+                more than it would buy.
+            </p>
+
+            <div class="schema-table">
+                <div class="schema-card fact" style="grid-column:1/-1;">
+                    <div class="schema-card-name">carbon_data.carbon_intensity_daily</div>
+                    <div class="schema-card-cols">
+                        <span class="pk">regionid + date_recorded (composite PK)</span> · shortname (NOT NULL) · dno
+                        (NOT NULL) · intensity_avg DECIMAL(10,2) · index_mode · fuel_biomass · fuel_coal · fuel_gas ·
+                        fuel_hydro · fuel_imports · fuel_nuclear · fuel_other · fuel_solar · fuel_wind (all
+                        DECIMAL(10,2))
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="sec-h" style="font-size:1.25rem;margin-top:2.5rem;margin-bottom:1rem;">Three key decisions</h3>
+
+            <div class="grid-2">
+                <div class="card">
+                    <div class="card-eyebrow">Decision · Primary key</div>
+                    <div class="card-title">Composite PK on (regionid, date_recorded)</div>
+                    <div class="card-desc">
+                        The natural key for the data is one row per region per day. The composite PK enforces this at
+                        the database level <em>and</em> matches the keys the Python loader dedupes against. Same key,
+                        two enforcement points. PostgreSQL won't accept a duplicate even if the application logic ever
+                        drifts.
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-eyebrow">Decision · Precision</div>
+                    <div class="card-title">DECIMAL(10,2) on every numeric column</div>
+                    <div class="card-desc">
+                        Carbon intensity is reported in gCO2/kWh and fuel mix in percentages. Both demand exactness when
+                        analysts compute means, sums, or rolling averages. DECIMAL preserves precision through
+                        aggregation. FLOAT loses it (<code>0.1 + 0.2 != 0.3</code>). Same principle as money in fintech,
+                        applied to research-grade environmental data.
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="sec-h" style="font-size:1.25rem;margin-top:2.5rem;margin-bottom:1rem;">Schema owned by SQL, not
+                pandas</h3>
+
+            <p class="sec-p">
+                DDL lives in <code>sql/create_table.sql</code>, hand-authored, versioned in git. The Python loader
+                doesn't get to define the schema by inference. This is the same discipline as FibbieBanks's
+                <code>create_tables.sql</code>: types, constraints, and NOT NULL declarations belong to SQL, not to
+                whatever pandas decides on the first <code>to_sql(if_exists="append")</code> call. The dedup-merge in
+                <code>load.py</code> mirrors the composite PK exactly, so two layers of defense protect the same
+                invariant.
+            </p>
+
+            <div class="code-block">
+                <span class="code-block-label">sql/create_table.sql</span>
+                <pre><span class="keyword">CREATE SCHEMA IF NOT EXISTS</span> carbon_data;
+
+<span class="keyword">DROP TABLE IF EXISTS</span> carbon_data.carbon_intensity_daily;
+
+<span class="keyword">CREATE TABLE IF NOT EXISTS</span> carbon_data.carbon_intensity_daily (
+    regionid         INT          <span class="keyword">NOT NULL</span>,
+    date_recorded    DATE         <span class="keyword">NOT NULL</span>,
+    shortname        VARCHAR(100) <span class="keyword">NOT NULL</span>,
+    dno              VARCHAR(100) <span class="keyword">NOT NULL</span>,
+    intensity_avg    DECIMAL(10,2),
+    index_mode       VARCHAR(50),
+    fuel_biomass     DECIMAL(10,2),
+    fuel_coal        DECIMAL(10,2),
+    fuel_gas         DECIMAL(10,2),
+    fuel_hydro       DECIMAL(10,2),
+    fuel_imports     DECIMAL(10,2),
+    fuel_nuclear     DECIMAL(10,2),
+    fuel_other       DECIMAL(10,2),
+    fuel_solar       DECIMAL(10,2),
+    fuel_wind        DECIMAL(10,2),
+    <span class="keyword">PRIMARY KEY</span> (regionid, date_recorded)
+);</pre>
+            </div>
+
+            <p class="sec-p">
+                <strong>Honest gap worth flagging:</strong> there are no secondary indexes beyond the PK and no FK to a
+                <code>dim_region</code> table. With 19,728 total rows and queries that almost always filter by
+                <code>regionid</code> or <code>date_recorded</code> (both covered by the PK index), additional indexes
+                would be premature. A future iteration with billions of rows or new query patterns might add a
+                standalone <code>date_recorded</code> index for time-range scans, but for this scale it would be
+                optimization theater.
+            </p>
+        </section>
+
+        <!-- ───── 04 · ENGINEERING ───── -->
+        <section id="engineering" class="fade-up">
+            <div class="sec-kicker"><span class="sec-num">04</span> Engineering</div>
+            <h2 class="sec-h">Flatten nested JSON. Append-only Silver. Dedup-merge Load.</h2>
+
+            <p class="sec-p lede">
+                Three engineering patterns carry most of the technical weight in this pipeline. They map directly to the
+                three layers of the medallion.
+            </p>
+
+            <h3 class="sec-h" style="font-size:1.2rem;margin-top:2rem;margin-bottom:.85rem;">1. Double-explode-and-pivot
+                for deeply nested JSON</h3>
+
+            <p class="sec-p">
+                The Carbon Intensity API response is two arrays deep: each day has <code>regions[]</code>, each region
+                has <code>generationmix[]</code>. To get one tabular row per (region, timestamp, fuel) requires
+                exploding both arrays, then pivoting fuel types from rows into columns. PySpark's <code>F.explode</code>
+                and <code>.pivot()</code> handle this at scale where pandas would struggle. <strong>53,594 raw JSON
+                    records expand to 8,682,228 intermediate rows after the double explode, then collapse to 945,092
+                    silver records after the pivot.</strong>
+            </p>
+
+            <div class="code-block">
+                <span class="code-block-label">etl/transform.py · the explode+pivot core</span>
+                <pre><span class="keyword">def</span> <span class="fn">transform_bronze_to_silver</span>(raw_df):
+    <span class="comment"># Level 1 explode: regions[] array</span>
+    exploded_df = raw_df.select(
+        F.col(<span class="string">"from"</span>).alias(<span class="string">"timestamp"</span>),
+        F.explode(F.col(<span class="string">"regions"</span>)).alias(<span class="string">"region"</span>)
+    )
+
+    <span class="comment"># Level 2 explode: generationmix[] array within each region</span>
+    silver_df = exploded_df.select(
+        F.col(<span class="string">"timestamp"</span>),
+        F.col(<span class="string">"region.regionid"</span>).alias(<span class="string">"regionid"</span>),
+        F.col(<span class="string">"region.shortname"</span>).alias(<span class="string">"shortname"</span>),
+        F.col(<span class="string">"region.dnoregion"</span>).alias(<span class="string">"dno"</span>),
+        F.col(<span class="string">"region.intensity.forecast"</span>).alias(<span class="string">"intensity"</span>),
+        F.col(<span class="string">"region.intensity.index"</span>).alias(<span class="string">"index"</span>),
+        F.explode(F.col(<span class="string">"region.generationmix"</span>)).alias(<span class="string">"mix"</span>)
+    )
+
+    <span class="comment"># Pivot: fuel types as columns, percentages as values</span>
+    silver_df_pivoted = silver_df.groupBy(
+        <span class="string">"regionid"</span>, <span class="string">"shortname"</span>, <span class="string">"dno"</span>,
+        <span class="string">"timestamp"</span>, <span class="string">"intensity"</span>, <span class="string">"index"</span>
+    ).pivot(<span class="string">"mix.fuel"</span>).agg(F.first(<span class="string">"mix.perc"</span>))
+
+    <span class="keyword">return</span> silver_df_pivoted  <span class="comment"># 9 fuel columns: biomass, coal, gas, ...</span></pre>
+            </div>
+
+            <h3 class="sec-h" style="font-size:1.2rem;margin-top:2rem;margin-bottom:.85rem;">2. Incremental Silver via a
+                processed-files tracker</h3>
+
+            <p class="sec-p">
+                The Silver layer is incremental, not full-rebuild. A plain text file
+                (<code>data/silver/_processed_files.txt</code>) records which Bronze JSON files have already been folded
+                in. On each run, the transform compares the current Bronze directory against the tracker, processes only
+                files not yet listed, appends to the Silver Parquet directory, and marks them processed. <strong>Simple,
+                    debuggable, no state in the database.</strong> At larger scales a checkpoint table would be more
+                robust; for ~1,000 files this is honest engineering.
+            </p>
+
+            <div class="callout">
+                <div class="callout-label">Honest gap worth flagging</div>
+                <div class="callout-text">
+                    The tracker is updated <em>before</em> the Spark append confirms success. If Spark crashes
+                    mid-write, the file gets marked as processed but its data isn't in Silver. A transactional version
+                    (write-then-mark) would close this gap. Listed in the README's "Future Iterations" section as a real
+                    tightening opportunity.
+                </div>
+            </div>
+
+            <h3 class="sec-h" style="font-size:1.2rem;margin-top:2rem;margin-bottom:.85rem;">3. Two-stage dedup-merge on
+                load</h3>
+
+            <p class="sec-p">
+                The loader does deduplication twice. Stage one removes duplicates within the input files via
+                <code>drop_duplicates(subset=["regionid", "date_recorded"])</code>. Stage two pulls existing keys from
+                PostgreSQL and runs a <code>merge(how="left", indicator=True)</code> against them, keeping only rows
+                where the indicator says <code>left_only</code>. Same composite key as the PostgreSQL PRIMARY KEY.
+                <strong>Re-runs insert zero rows.</strong>
+            </p>
+
+            <div class="code-block">
+                <span class="code-block-label">etl/load.py · two-stage dedup-merge</span>
+                <pre>unique_cols = [<span class="string">"regionid"</span>, <span class="string">"date_recorded"</span>]
+
+<span class="comment"># STAGE 1: Dedup within the input files</span>
+before_file = len(df)
+df = df.drop_duplicates(subset=unique_cols, keep=<span class="string">"first"</span>)
+logging.<span class="fn">info</span>(<span class="string">f"Removed {before_file - len(df)} duplicate rows FROM INPUT FILES"</span>)
+
+<span class="comment"># STAGE 2: Diff against what's already in the database</span>
+existing = pd.read_sql(<span class="string">"SELECT regionid, date_recorded FROM ..."</span>, engine)
+df = df.merge(existing, on=unique_cols, how=<span class="string">"left"</span>, indicator=<span class="keyword">True</span>)
+df = df[df[<span class="string">"_merge"</span>] == <span class="string">"left_only"</span>].drop(columns=[<span class="string">"_merge"</span>])
+
+df.to_sql(table_name, engine, schema=<span class="string">"carbon_data"</span>,
+          if_exists=<span class="string">"append"</span>, index=<span class="keyword">False</span>, chunksize=20000)</pre>
+            </div>
+
+            <p class="sec-p" style="margin-top:1rem;">
+                Why pandas merge instead of PostgreSQL's <code>ON CONFLICT DO NOTHING</code>? The merge gives explicit
+                logging on both axes: "removed X rows from input files" and "skipped Y rows already in database." When
+                something goes wrong, the log tells the operator exactly which side the duplicate came from. Trades one
+                PostgreSQL optimization for observability that helps debug an idempotent load.
+            </p>
+
+            <h3 class="sec-h" style="font-size:1.2rem;margin-top:2rem;margin-bottom:.85rem;">Observability via custom
+                logger</h3>
+
+            <p class="sec-p">
+                A custom <code>logger.py</code> module (shared across multiple projects in this portfolio) provides a
+                <code>@timed</code> decorator that wraps every pipeline stage with execution timing, cross-platform
+                UTF-8 detection for emoji-safe console output, a dual-handler setup with colorized console and rotating
+                file logs, and SQLAlchemy noise suppression. Every retry, every empty payload, every dedup result is in
+                <code>pipeline.log</code>.
+            </p>
+
+            <div class="code-block">
+                <span class="code-block-label">pipeline.log · actual May 2026 run</span>
+                <pre>2026-05-27 19:38:10 INFO 🔷 Counting Extracted JSON Files
+2026-05-27 19:38:10 INFO Total JSON files: <span class="num">1095</span>
+2026-05-27 19:38:10 INFO ⏱️ Step completed in <span class="num">11m 43s</span>
+
+2026-05-27 19:43:08 INFO 📥 Loaded <span class="num">53594</span> new records from Bronze.
+2026-05-27 19:43:46 INFO 📥 Exploded generation mix for <span class="num">8682228</span> records.
+2026-05-27 19:44:54 INFO 📥 Pivoted generation mix for <span class="num">945092</span> records.
+2026-05-27 19:46:46 INFO 📦 Full Silver dataset ready — <span class="num">945092</span> total records.
+2026-05-27 19:46:48 INFO ✅ Gold layer ready — <span class="num">19728</span> daily records.
+2026-05-27 19:47:13 INFO ✅ FULL PIPELINE COMPLETED
+2026-05-27 19:47:13 INFO ⏱️ Step completed in <span class="num">5m 32s</span>
+
+2026-05-27 19:49:01 INFO ✅ Removed 0 duplicate rows FROM INPUT FILES
+2026-05-27 19:49:01 INFO ✅ Skipped 0 rows ALREADY IN DATABASE
+2026-05-27 19:49:07 INFO ✅ SUCCESS: <span class="num">19728</span> NEW rows loaded
+2026-05-27 19:49:29 INFO ✅ Skipped <span class="num">19728</span> rows ALREADY IN DATABASE
+2026-05-27 19:49:29 INFO ℹ️ <span class="self">All rows already exist — table up to date</span></pre>
+            </div>
+
+            <p class="sec-p" style="margin-top:1rem;">
+                The final two lines are the visible proof that the dedup-merge actually works. First load: 19,728 rows
+                in. Second load on the same data: 19,728 rows recognized as already present, zero inserted.
+            </p>
+        </section>
+
+        <!-- ───── 05 · DECISIONS ───── -->
+        <section id="decisions" class="fade-up sec-alt">
+            <div class="sec-kicker"><span class="sec-num">05</span> Decisions</div>
+            <h2 class="sec-h">The choices behind the design.</h2>
+
+            <p class="sec-p lede">
+                Seven engineering decisions that shaped this pipeline, with the reasoning behind each.
+            </p>
+
+            <div class="decision-card">
+                <div class="decision-num">01</div>
+                <div class="decision-q">Why async aiohttp instead of synchronous requests?</div>
+                <div class="decision-a">
+                    Synchronous requests would have taken 4 to 6x longer than the actual 11m 43s. Each daily API call
+                    takes 0.2 to 2 seconds depending on the server's load. At 1,096 sequential calls, that's 30 to 50
+                    minutes minimum. Async with <code>asyncio.Semaphore(5)</code> collapses this to under 12 minutes
+                    <strong>and</strong> never trips rate limits because the semaphore caps in-flight concurrency. The
+                    right tool for I/O-bound work is async I/O.
+                </div>
+            </div>
+
+            <div class="decision-card">
+                <div class="decision-num">02</div>
+                <div class="decision-q">Why two layers of rate-limit defense (semaphore <em>and</em> TCP connector)?
+                </div>
+                <div class="decision-a">
+                    <code>asyncio.Semaphore(5)</code> bounds <strong>logical task concurrency</strong>: how many
+                    <code>fetch_carbon_data()</code> coroutines are running at once.
+                    <code>aiohttp.TCPConnector(limit=5)</code> bounds <strong>physical socket count</strong>: how many
+                    TCP connections are open to the server. Either alone would work most of the time. Layered, they make
+                    a 429 essentially impossible at this scale. In the actual May 2026 run, 1,095 successful requests
+                    produced zero rate-limit errors.
+                </div>
+            </div>
+
+            <div class="decision-card">
+                <div class="decision-num">03</div>
+                <div class="decision-q">Why three different idempotency models across the three layers?</div>
+                <div class="decision-a">
+                    The cost of rebuilding each layer is different. Bronze costs 12 minutes and 1,000+ live API calls.
+                    Silver costs 5 minutes of Spark. Gold costs 3 seconds. So Bronze uses <strong>file-existence
+                        checks</strong> (cheap to check, expensive to rebuild). Silver uses a <strong>tracker
+                        file</strong> of processed Bronze files (allows incremental Silver growth). Gold uses
+                    <strong>wipe-and-rebuild</strong> (cheap, guarantees freshness). A unified "wipe everything" model
+                    would force every run to re-hit the API. A unified "incremental everything" model would make Gold
+                    queries return stale data. Different mechanisms, each appropriate to its layer.
+                </div>
+            </div>
+
+            <div class="decision-card">
+                <div class="decision-num">04</div>
+                <div class="decision-q">Why pandas dedup-merge instead of <code>ON CONFLICT DO NOTHING</code>?</div>
+                <div class="decision-a">
+                    PostgreSQL's <code>ON CONFLICT (regionid, date_recorded) DO NOTHING</code> would be the conventional
+                    choice. Two-stage pandas dedup-merge wins on <strong>observability</strong>: the log explicitly says
+                    "removed X rows from input files" and "skipped Y rows already in database." When a duplicate
+                    appears, the operator can see which side it came from. Trades one PostgreSQL optimization for
+                    observability that helps debug an idempotent load. Real production engineering is about
+                    debuggability, not raw throughput.
+                </div>
+            </div>
+
+            <div class="decision-card">
+                <div class="decision-num">05</div>
+                <div class="decision-q">Why composite PK on <code>(regionid, date_recorded)</code>?</div>
+                <div class="decision-a">
+                    Natural keys for the data. There is exactly one row per (region, day) in the analytics warehouse,
+                    which is the grain analysts query at. The PK enforces this at the database level <em>and</em>
+                    matches the same key the Python loader dedupes against. Two enforcement points for the same
+                    invariant. PostgreSQL won't accept a duplicate even if the application logic ever drifts.
+                    <strong>Defense in depth on the integrity constraint that matters most.</strong>
+                </div>
+            </div>
+
+            <div class="decision-card">
+                <div class="decision-num">06</div>
+                <div class="decision-q">Why DECIMAL(10,2) on fuel mix percentages instead of FLOAT?</div>
+                <div class="decision-a">
+                    Same reasoning as money in fintech, applied to research-grade environmental data. Floats lose
+                    precision (<code>0.1 + 0.2 != 0.3</code>). Fuel mix data is consumed by analysts who compute means,
+                    sums, and rolling averages. DECIMAL preserves exactness through aggregation. Carbon intensity
+                    (gCO2/kWh) and fuel mix (%) both demand exactness for policy-grade research. The schema commits to
+                    two-decimal precision; the transform layer rounds to two decimals with
+                    <code>F.round(F.mean(...), 2)</code>. Same contract, two layers.
+                </div>
+            </div>
+
+            <div class="decision-card">
+                <div class="decision-num">07</div>
+                <div class="decision-q">Why no <code>run_all.py</code> orchestrator?</div>
+                <div class="decision-a">
+                    Each layer has a meaningfully different runtime profile: Bronze is API-bound, Transform is CPU-bound
+                    and JVM-heavy, Load is DB-bound. Running them as separate commands means a failed extract doesn't
+                    roll back a working transform, transforms can be re-run against existing Bronze for debugging
+                    without re-hitting the API, and external orchestrators (cron, Airflow, Prefect) can wire stages with
+                    their own retry policies. <strong>For production deployment, an external scheduler is the right
+                        place for orchestration.</strong> For development, three explicit commands is honest about
+                    what's happening at each stage.
+                </div>
+            </div>
+        </section>
+
+        <!-- ───── 06 · IMPACT ───── -->
+        <section id="impact" class="fade-up">
+            <div class="sec-kicker"><span class="sec-num">06</span> Impact</div>
+            <h2 class="sec-h">What this pipeline produces.</h2>
+
+            <p class="sec-p lede">
+                Real numbers from the actual May 2026 pipeline run, not estimates.
+            </p>
+
+            <div class="grid-4">
+                <div class="impact-card">
+                    <div class="impact-num acc">1,095</div>
+                    <div class="impact-label">days ingested</div>
+                    <div class="impact-desc">Three full years of UK regional carbon intensity data from a live
+                        government API. One day (2023-10-22) returned an empty payload and was correctly skipped.</div>
+                </div>
+                <div class="impact-card">
+                    <div class="impact-num teal">945K</div>
+                    <div class="impact-label">silver records</div>
+                    <div class="impact-desc">53,594 raw JSON records exploded to 8.7M intermediate rows, then collapsed
+                        back to 945,092 silver records after fuel-type pivoting.</div>
+                </div>
+                <div class="impact-card">
+                    <div class="impact-num green">32 / 32</div>
+                    <div class="impact-label">500s recovered</div>
+                    <div class="impact-desc">Transient HTTP 500 errors from the upstream API. All 32 retried
+                        successfully via exponential backoff. Zero permanent failures, zero rate-limit hits.</div>
+                </div>
+                <div class="impact-card">
+                    <div class="impact-num amber">0 dupes</div>
+                    <div class="impact-label">on re-run</div>
+                    <div class="impact-desc">Second load on identical data: 19,728 rows recognised as already present in
+                        PostgreSQL, zero inserted. Dedup-merge working as designed.</div>
+                </div>
+            </div>
+
+            <h3 class="sec-h" style="font-size:1.2rem;margin-top:2.5rem;margin-bottom:1rem;">End-to-end runtime
+                breakdown</h3>
+
+            <div class="decision-row">
+                <div class="decision-cell">Extract · async API ingestion</div>
+                <div class="decision-cell"><strong>11m 43s</strong> cold · <strong>4 seconds</strong> warm
+                    (file-existence idempotency)</div>
+            </div>
+            <div class="decision-row">
+                <div class="decision-cell">Transform · Spark startup</div>
+                <div class="decision-cell">~1m 50s (JVM cold-start cost is real and honest)</div>
+            </div>
+            <div class="decision-row">
+                <div class="decision-cell">Transform · Silver + Gold</div>
+                <div class="decision-cell"><strong>5m 32s</strong> for full rebuild · seconds if no new Bronze files
+                </div>
+            </div>
+            <div class="decision-row">
+                <div class="decision-cell">Load · dedup-merge to PostgreSQL</div>
+                <div class="decision-cell"><strong>8 seconds</strong> first load · <strong>2 seconds</strong> idempotent
+                    re-run (zero inserts)</div>
+            </div>
+            <div class="decision-row">
+                <div class="decision-cell"><strong>End-to-end (cold)</strong></div>
+                <div class="decision-cell"><strong>~19 minutes</strong> on a single laptop</div>
+            </div>
+
+            <div class="callout" style="margin-top:2rem;">
+                <div class="callout-label">The real story</div>
+                <div class="callout-text">
+                    The 32 retry recoveries aren't a hypothetical. They're <strong>32 days of research data that would
+                        have been lost</strong> in a naive implementation that didn't retry on transient 500s. The
+                    empty-payload defense caught 1 more. <strong>Real engineering pays for itself the first time
+                        something goes wrong in production.</strong>
+                </div>
+            </div>
+        </section>
+
+        <!-- ───── 07 · TECH STACK ───── -->
+        <section id="tech" class="fade-up sec-alt">
+            <div class="sec-kicker"><span class="sec-num">07</span> Tech Stack</div>
+            <h2 class="sec-h">The tools, and what each one does here.</h2>
+
+            <div class="tech-grid">
+                <div class="tech-item">
+                    <span class="tech-name">aiohttp</span>
+                    <span class="tech-role">Async HTTP client · semaphore-bounded concurrency</span>
+                </div>
+                <div class="tech-item">
+                    <span class="tech-name">asyncio</span>
+                    <span class="tech-role">Concurrency primitives · semaphore, gather</span>
+                </div>
+                <div class="tech-item">
+                    <span class="tech-name">PySpark 4.1.1</span>
+                    <span class="tech-role">Distributed transform engine · explode + pivot</span>
+                </div>
+                <div class="tech-item">
+                    <span class="tech-name">PostgreSQL 14+</span>
+                    <span class="tech-role">Research warehouse · composite PK</span>
+                </div>
+                <div class="tech-item">
+                    <span class="tech-name">pandas</span>
+                    <span class="tech-role">CSV consolidation + dedup-merge logic</span>
+                </div>
+                <div class="tech-item">
+                    <span class="tech-name">SQLAlchemy</span>
+                    <span class="tech-role">DB engine · pool_pre_ping + pool_recycle</span>
+                </div>
+                <div class="tech-item">
+                    <span class="tech-name">psycopg2-binary</span>
+                    <span class="tech-role">PostgreSQL driver</span>
+                </div>
+                <div class="tech-item">
+                    <span class="tech-name">PostgreSQL JDBC</span>
+                    <span class="tech-role">Spark JAR for cross-engine writes</span>
+                </div>
+                <div class="tech-item">
+                    <span class="tech-name">python-dotenv</span>
+                    <span class="tech-role">Env-var loader · fail-fast at import</span>
+                </div>
+                <div class="tech-item">
+                    <span class="tech-name">Kryo Serializer</span>
+                    <span class="tech-role">Spark serialisation tuning</span>
+                </div>
+                <div class="tech-item">
+                    <span class="tech-name">Custom logger</span>
+                    <span class="tech-role">@timed decorator + UTF-8 detection</span>
+                </div>
+                <div class="tech-item">
+                    <span class="tech-name">UK Carbon Intensity API</span>
+                    <span class="tech-role">Live public data source · National Grid ESO</span>
+                </div>
+            </div>
+
+            <h3 class="sec-h" style="font-size:1.2rem;margin-top:2.5rem;margin-bottom:.85rem;">If I were scaling this up
+            </h3>
+
+            <p class="sec-p">
+                For production at higher volumes, the natural evolutions would be: <strong>cross-platform Spark
+                    paths</strong> via env vars so the same code runs on macOS, Linux, and Windows (currently hardcoded
+                to <code>C:/hadoop</code> and <code>C:/spark/jars/...</code>); <strong>transactional Silver
+                    tracker</strong> so the processed-files marker only updates after a successful Spark write;
+                <strong>a thin run_all.py orchestrator</strong> for non-interactive runs with halt-on-failure semantics;
+                <strong>secondary indexes</strong> on the fact table for time-range queries that don't filter by
+                regionid; <strong>a dim_region lookup table</strong> with FK from the fact to normalise the small
+                repeated string columns; <strong>managed Spark</strong> (Databricks, EMR, Dataproc) to parallelise the
+                transform; and <strong>dbt models</strong> on top of the warehouse for analyst-authored transformations
+                with tested SQL.
+            </p>
+        </section>
+
+        <!-- ───── CONTACT CTA ───── -->
+        <section class="fade-up" style="margin-top:5rem;margin-bottom:0;">
+            <div
+                style="padding:2.5rem 2rem;background:var(--bg-card);border:1px solid var(--bdr);border-radius:var(--r);text-align:center;">
+                <div class="sec-kicker" style="justify-content:center;margin-bottom:1rem;">Let's talk</div>
+                <h2 class="sec-h" style="text-align:center;font-size:clamp(1.4rem,2.8vw,1.9rem);margin-bottom:1rem;">
+                    Need a data engineer who ships disciplined warehouses?</h2>
+                <p class="sec-p" style="max-width:580px;margin:0 auto 1.75rem;font-size:.98rem;">
+                    I'm currently looking for Data Engineer / Analytics Engineer roles. UK-based, open to remote or
+                    hybrid.
+                </p>
+                <div class="cs-cta-row" style="justify-content:center;">
+                    <a href="https://github.com/yoismail/xtd_research_labs_case_study" class="btn-primary"
+                        target="_blank" rel="noopener">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path
+                                d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58v-2.06c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.21.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.5.99.11-.77.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.31-.54-1.53.11-3.19 0 0 1.01-.32 3.3 1.23.96-.27 1.98-.4 3-.41 1.02 0 2.04.14 3 .41 2.29-1.55 3.3-1.23 3.3-1.23.65 1.66.24 2.88.12 3.19.77.84 1.24 1.91 1.24 3.22 0 4.61-2.8 5.62-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.69.83.58A12 12 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
+                        </svg>
+                        View this project on GitHub
+                    </a>
+                    <a href="index.html#contact" class="btn-ghost">
+                        <svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect width="20" height="16" x="2" y="4" rx="2" />
+                            <path d="M2 7l10 7 10-7" />
+                        </svg>
+                        Get in touch
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ───── READ NEXT ───── -->
+        <section id="read-next" class="read-next" aria-label="Other case studies">
+            <div class="read-next-eyebrow">Read next</div>
+            <h2 class="read-next-h">Other case studies</h2>
+            <div class="read-next-grid">
+                <a href="fibbiebanks.html" class="read-next-card">
+                    <div class="read-next-label">Case study · Featured · PySpark + Star Schema</div>
+                    <div class="read-next-title">FibbieBanks · 1M-Row PySpark ETL</div>
+                    <p class="read-next-desc">A distributed PySpark ETL pipeline processing 1 million synthetic banking
+                        transactions into a validated PostgreSQL star schema with deterministic SHA-256 surrogate keys
+                        and idempotent re-runs.</p>
+                    <div class="read-next-tags">
+                        <span class="read-next-tag">PySpark</span>
+                        <span class="read-next-tag">Star schema</span>
+                        <span class="read-next-tag">PostgreSQL</span>
+                    </div>
+                    <span class="read-next-cta">Read the case study<span class="read-next-cta-arrow">→</span></span>
+                </a>
+                <a href="chocodelight.html" class="read-next-card">
+                    <div class="read-next-label">Case study · Layered platform</div>
+                    <div class="read-next-title">ChocoDelight Data Platform</div>
+                    <p class="read-next-desc">Three-schema PostgreSQL warehouse on chocolate sales data, with raw,
+                        operational, and analytics layers and a full dimensional model.</p>
+                    <div class="read-next-tags">
+                        <span class="read-next-tag">Python</span>
+                        <span class="read-next-tag">PostgreSQL</span>
+                        <span class="read-next-tag">SQLAlchemy</span>
+                    </div>
+                    <span class="read-next-cta">Read the case study<span class="read-next-cta-arrow">→</span></span>
+                </a>
+            </div>
+        </section>
+
+    </div><!-- /page -->
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-top">
+
+            <!-- BRAND BLOCK -->
+            <div class="footer-brand-block">
+                <svg class="footer-mark" viewBox="0 0 36 36" aria-hidden="true">
+                    <path d="M 8 8 L 14 18 L 14 28 M 14 18 L 20 8" pathLength="1" />
+                    <line x1="26" y1="14" x2="26" y2="28" pathLength="1" />
+                    <circle cx="26" cy="9" r="1.4" fill="currentColor" />
+                </svg>
+                <div>
+                    <div class="footer-name">Yomi Ismail</div>
+                    <div class="footer-tagline">Data Engineer · Suffolk, UK</div>
+                </div>
+            </div>
+
+            <!-- WORK -->
+            <div class="footer-col">
+                <div class="footer-col-label">Work</div>
+                <ul>
+                    <li><a href="fibbiebanks.html" class="footer-link">
+                            <svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+                                <path d="M14 2v6h6" />
+                            </svg>
+                            FibbieBanks
+                        </a></li>
+                    <li><a href="xtd_research_labs.html" class="footer-link">
+                            <svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+                                <path d="M14 2v6h6" />
+                            </svg>
+                            XTD Research Labs
+                        </a></li>
+                    <li><a href="payflow.html" class="footer-link">
+                            <svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+                                <path d="M14 2v6h6" />
+                            </svg>
+                            PayFlow
+                        </a></li>
+                    <li><a href="chocodelight.html" class="footer-link">
+                            <svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+                                <path d="M14 2v6h6" />
+                            </svg>
+                            ChocoDelight
+                        </a></li>
+                    <li><a href="aliexpress.html" class="footer-link">
+                            <svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+                                <path d="M14 2v6h6" />
+                            </svg>
+                            AliExpress ETL
+                        </a></li>
+                    <li><a href="principles.html" class="footer-link">
+                            <svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+                                <path d="M14 2v6h6" />
+                            </svg>
+                            Engineering Principles
+                        </a></li>
+                </ul>
+            </div>
+
+            <!-- EXPLORE -->
+            <div class="footer-col">
+                <div class="footer-col-label">Explore</div>
+                <ul>
+                    <li><a href="index.html" class="footer-link">
+                            <svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M3 12l9-9 9 9" />
+                                <path d="M5 10v10h14V10" />
+                            </svg>
+                            Portfolio home
+                        </a></li>
+                    <li><a href="index.html#experience" class="footer-link">
+                            <svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="7" width="20" height="14" rx="2" />
+                                <path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2" />
+                            </svg>
+                            Experience
+                        </a></li>
+                    <li><a href="index.html#stack" class="footer-link">
+                            <svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polygon points="12 2 2 7 12 12 22 7 12 2" />
+                                <polyline points="2 17 12 22 22 17" />
+                                <polyline points="2 12 12 17 22 12" />
+                            </svg>
+                            Stack
+                        </a></li>
+                    <li><a href="index.html#contact" class="footer-link">
+                            <svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path
+                                    d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z" />
+                            </svg>
+                            Get in touch
+                        </a></li>
+                </ul>
+            </div>
+
+            <!-- CONNECT -->
+            <div class="footer-col">
+                <div class="footer-col-label">Connect</div>
+                <ul>
+                    <li><a href="https://www.linkedin.com/in/yomi-ismail" target="_blank" rel="noopener noreferrer"
+                            class="footer-link">
+                            <svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                            </svg>
+                            LinkedIn
+                        </a></li>
+                    <li><a href="https://github.com/yoismail" target="_blank" rel="noopener noreferrer"
+                            class="footer-link">
+                            <svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+                            </svg>
+                            GitHub
+                        </a></li>
+                    <li><a href="mailto:ismailyomi@gmail.com" class="footer-link">
+                            <svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect width="20" height="16" x="2" y="4" rx="2" />
+                                <path d="M2 7l10 7 10-7" />
+                            </svg>
+                            Email
+                        </a></li>
+                </ul>
+            </div>
+
+        </div><!-- /footer-top -->
+
+        <div class="footer-bottom">
+            <div class="footer-copy">© <span id="year"></span> Yomi Ismail · All rights reserved</div>
+            <div class="footer-note">Built in Suffolk, mostly on weekends and rainy evenings.</div>
+        </div>
+    </footer>
+
+    <!-- BACK TO TOP -->
+    <button class="to-top" id="toTop" aria-label="Back to top">
+        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="18 15 12 9 6 15" />
+        </svg>
+    </button>
+
+    <script>
+        /* theme toggle */
+        (function () {
+            var html = document.documentElement;
+            var buttons = document.querySelectorAll('.theme-toggle button[data-theme-set]');
+            if (!buttons.length) return;
+            function currentTheme() {
+                var explicit = html.getAttribute('data-theme');
+                if (explicit) return explicit;
+                return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+            }
+            function syncActive() {
+                var t = currentTheme();
+                buttons.forEach(function (b) {
+                    b.classList.toggle('active', b.getAttribute('data-theme-set') === t);
+                });
+            }
+            buttons.forEach(function (b) {
+                b.addEventListener('click', function () {
+                    var next = b.getAttribute('data-theme-set');
+                    html.setAttribute('data-theme', next);
+                    html.classList.add('theme-locked');
+                    try { localStorage.setItem('theme', next); } catch (e) { }
+                    syncActive();
+                });
+            });
+            try {
+                window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', function () {
+                    if (!html.classList.contains('theme-locked')) syncActive();
+                });
+            } catch (e) { }
+            syncActive();
+        })();
+
+        /* fade-up on scroll */
+        (function () {
+            const io = new IntersectionObserver(entries => {
+                entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+            }, { rootMargin: '0px 0px 12% 0px', threshold: 0 });
+            document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
+        })();
+
+        /* dynamic year in footer copyright */
+        (function () {
+            const y = document.getElementById('year');
+            if (y) y.textContent = new Date().getFullYear();
+        })();
+
+        /* back to top */
+        (function () {
+            const btn = document.getElementById('toTop');
+            if (!btn) return;
+            function update() {
+                if (window.scrollY > 500) btn.classList.add('show');
+                else btn.classList.remove('show');
+            }
+            window.addEventListener('scroll', update, { passive: true });
+            btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+        })();
+
+        /* sticky TOC sync */
+        (function () {
+            const toc = document.getElementById('csToc');
+            if (!toc) return;
+            const tocLinks = toc.querySelectorAll('a');
+            const tocMap = new Map();
+            tocLinks.forEach(a => {
+                const id = a.getAttribute('href').slice(1);
+                tocMap.set(id, a);
+            });
+            function update() {
+                if (window.scrollY > 400) toc.classList.add('show');
+                else toc.classList.remove('show');
+            }
+            window.addEventListener('scroll', update, { passive: true });
+            update();
+            const sections = document.querySelectorAll('section[id]');
+            const io = new IntersectionObserver(entries => {
+                entries.forEach(e => {
+                    const link = tocMap.get(e.target.id);
+                    if (!link) return;
+                    if (e.isIntersecting) {
+                        tocLinks.forEach(l => l.classList.remove('active'));
+                        link.classList.add('active');
+                    }
+                });
+            }, { rootMargin: '-30% 0px -55% 0px', threshold: 0 });
+            sections.forEach(s => io.observe(s));
+        })();
+
+        /* top nav active state sync */
+        (function () {
+            const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+            if (!navLinks.length) return;
+            const navMap = new Map();
+            navLinks.forEach(a => {
+                const id = a.getAttribute('href').slice(1);
+                navMap.set(id, a);
+            });
+            const sections = document.querySelectorAll('section[id]');
+            const io = new IntersectionObserver(entries => {
+                entries.forEach(e => {
+                    const link = navMap.get(e.target.id);
+                    if (!link) return;
+                    if (e.isIntersecting) {
+                        navLinks.forEach(l => l.classList.remove('active'));
+                        link.classList.add('active');
+                    }
+                });
+            }, { rootMargin: '-30% 0px -55% 0px', threshold: 0 });
+            sections.forEach(s => io.observe(s));
+        })();
+    </script>
+</body>
+
+</html>
