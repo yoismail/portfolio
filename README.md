@@ -29,18 +29,36 @@ The goal is not just to display projects, but to demonstrate:
 
 This portfolio reflects how I approach problems as a Data Engineer:
 
-* 🔄 End-to-end ETL pipeline design (Extract → Transform → Load)
-* 🌊 Medallion architecture (Bronze → Silver → Gold) for raw-to-research data flows
-* ⚡ Asynchronous, high-concurrency API ingestion with retry and rate-limit discipline
-* 🏗️ Scalable data architecture and schema optimization
-* 📊 Analytics-ready data modeling (fact & dimension tables)
-* ⚙️ Distributed processing with PySpark on millions of rows
-* 🔁 Idempotent re-runs and deterministic surrogate keys
-* 📈 Translating data into business decisions
+* 🐳 Containerized data platforms with Docker Compose and orchestrated execution
+* 🔁 Airflow DAGs with parameterized scheduling for stock vs scaled execution
+* 🌊 Medallion architecture (Bronze → Silver → Gold) for raw-to-warehouse data flows
+* 🔄 End-to-end ETL pipeline design (Extract → Transform → Load) with idempotent re-runs
+* ⚡ Distributed processing with PySpark on millions of rows (broadcast joins, explicit caching, year/month partitioning)
+* 🏗️ Three-table dimensional Gold layers and star schema warehouses
+* 🔌 Asynchronous, high-concurrency API ingestion with retry and rate-limit discipline
+* 📊 Analytics-ready data modeling with composite primary keys, DECIMAL precision, and indexed query paths
+* 🔒 Idempotent loads via deterministic surrogate keys, dedup-merge patterns, and row-count validation
+* 📈 Translating data into business decisions through warehouse-side feature engineering
 
 ---
 
 ## 🚀 Featured Work
+
+### 🏢 Nova Retail: Dockerized Data Platform with Airflow-Orchestrated Medallion ETL
+
+A containerized on-premise data platform built for a multinational retail scenario, with parameterized stock-vs-scaled execution from the same DAG:
+
+* Architected a 5-service Docker Compose stack (PostgreSQL, custom Spark image, Airflow init/webserver/scheduler) brought up by one command, with health-checked service dependencies and persistent named volumes
+* Built a PySpark medallion pipeline (Bronze partitioned Parquet → Silver joined frame → three-table dimensional Gold) with year/month partitioning on fact tables, explicit broadcast hints on small dimensions, and cache strategy on the join chain
+* Implemented Apache Airflow orchestration with `Param`-based DAG supporting both scheduled stock runs (analytical truth) and on-demand scaled runs (architecture validation), using the sidecar Spark pattern via `docker exec`
+* Designed a three-table dimensional Gold layer (`fact_sales` at transaction grain, `sales_summary` by state-category, `sales_by_month_state` by year-month) with composite primary keys, DECIMAL precision, and read-optimized indexes
+* Validated every PostgreSQL load with read-back row-count comparison; zero silent data loss across all loads
+* End-to-end runtime: 3m 11s stock (555K source rows, 118K Silver records, 3 Gold tables); validated at 2x scale processing 7.5M Silver records in 13m 14s
+
+👉 [View project on GitHub](https://github.com/yoismail/nova_retail_case_study)
+👉 [Read the full case study](https://yoismail.github.io/portfolio/nova_retail.html)
+
+---
 
 ### 🏦 FibbieBanks: 1M-Row PySpark ETL & Star Schema Warehouse
 
@@ -82,6 +100,8 @@ A production-style ETL pipeline built to simulate a fintech transaction system u
 * Implemented data cleaning, validation, and transformation logic across 9 source CSVs
 * Optimized data loading with idempotent inserts and structured logging
 
+*Note: PayFlow and Nova Retail both use the public Olist Brazilian e-commerce dataset, taken from different engineering angles. PayFlow demonstrates classical normalized warehousing on the dataset; Nova Retail demonstrates production-grade infrastructure (Docker, Airflow, medallion architecture) on the same data.*
+
 👉 [View project on GitHub](https://github.com/yoismail/payflow_case_study)
 👉 [Read the full case study](https://yoismail.github.io/portfolio/payflow.html)
 
@@ -111,27 +131,38 @@ A production-style scraping pipeline that walks 60 pages of AliExpress laptop li
 
 * PySpark (DataFrames, SQL, JDBC)
 * Apache Spark (transformation engine)
+* Parquet (columnar storage, partitioned writes)
+
+### Orchestration & Containerization
+
+* Apache Airflow (Param-based DAGs, BashOperator, sidecar Spark pattern)
+* Docker, Docker Compose (multi-service containerized data platforms)
 
 ### Data Engineering
 
 * Python (pandas, SQLAlchemy, psycopg2, python-dotenv)
 * Asynchronous Python (aiohttp, asyncio) for high-concurrency ingestion
-* PostgreSQL (star schema, FK referential integrity, composite keys, indexes)
+* PostgreSQL (star schema, dimensional Gold layers, FK referential integrity, composite keys, indexes)
 * SQL (DDL, complex joins, window functions, CTEs)
+* JDBC (cross-system data movement, parallel-write candidates)
 * ETL Pipelines (modular, idempotent, transactional)
-* Dimensional Modeling (Kimball star schema, surrogate keys, conformed dimensions)
+* Dimensional Modeling (Kimball star schema, three-table Gold, conformed dimensions, surrogate keys)
 * Medallion Architecture (Bronze, Silver, Gold layered data lakes)
 
 ### Data Engineering Patterns
 
 * Deterministic SHA-256 surrogate keys
-* Idempotent loads via temp-table + LEFT JOIN merge and two-stage dedup-merge
-* Layered idempotency (file-existence, tracker-file, wipe-and-rebuild)
+* Idempotent loads via temp-table + LEFT JOIN merge, two-stage dedup-merge, and three-layer overwrite semantics
+* Layered idempotency (file-existence, tracker-file, partition-overwrite, wipe-and-rebuild)
+* Year/month partitioning on fact tables for read pruning
+* Broadcast joins on bounded-size dimensions
+* Explicit caching strategy on join chains (cache-before-action)
+* Row-count validation on every Postgres load (read-back verification)
 * Asynchronous ingestion with semaphore-bounded concurrency and backoff retry
 * Schema validation at every transformation stage
 * Type-aware cleaning (DECIMAL preservation for money and metrics)
-* Custom observability (timed decorators, structured logs)
-* Environment-driven configuration (no hard-coded credentials)
+* Custom observability (timed decorators, structured logs, rotating file handlers, UTF-8 detection)
+* Environment-driven configuration with dual-host detection (local vs container)
 
 ### Web Scraping & Automation
 
@@ -140,17 +171,22 @@ A production-style scraping pipeline that walks 60 pages of AliExpress laptop li
 
 ### Tools & Workflow
 
-* Git & GitHub (GitHub Actions, GitHub Pages)
+* Git & GitHub (GitHub Actions, GitHub Pages, CI/CD)
+* Jenkins (build pipelines)
 * Tableau, Power BI (analytics dashboards)
 * Zoho CRM / Mixpanel (product operations)
+* AWS S3 (object storage)
+* Grafana (observability dashboards)
 * VS Code, PyCharm
 
 ### Currently Learning
 
-* Apache Airflow (orchestration)
 * dbt (analyst-authored transformations)
-* Amazon Redshift, Google BigQuery
-* Apache Kafka
+* Amazon Redshift, Google BigQuery, Snowflake
+* Apache Kafka (event streaming)
+* Terraform (infrastructure-as-code)
+* GCP, Azure (cloud platforms)
+* Hadoop (distributed file system)
 
 ---
 
@@ -159,7 +195,7 @@ A production-style scraping pipeline that walks 60 pages of AliExpress laptop li
 * Responsive and mobile-optimized layout
 * Smooth scrolling and interaction design
 * Clean, recruiter-focused UI
-* Structured project showcase with 5 in-depth case studies
+* Structured project showcase with 6 in-depth case studies (3 featured, 3 secondary)
 * 7 engineering principles backed by working code references
 * Performance-optimized frontend (no frameworks, pure HTML/CSS/JS)
 
@@ -167,10 +203,11 @@ A production-style scraping pipeline that walks 60 pages of AliExpress laptop li
 
 ## 📈 What I'm Currently Building
 
-* Distributed ETL pipelines at higher scale (PySpark on cluster)
+* Spark cluster deployment (Databricks, EMR, Dataproc) for jobs beyond single-host limits
 * dbt-layered analytics models on top of warehouse outputs
-* Airflow-orchestrated production pipelines with retry/alerting
 * SCD Type 2 patterns for slowly changing dimensions
+* Parallel JDBC writes for high-throughput warehouse loads
+* Migration tooling (Alembic, Flyway) for safe DDL evolution
 
 ---
 
