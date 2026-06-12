@@ -2,42 +2,42 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
-<title>AliExpress Case Study | Yomi Ismail</title>
+<title>PayFlow Case Study | Yomi Ismail</title>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<meta name="description" content="AliExpress Laptop ETL Pipeline: a production-grade web scraping and ETL pipeline built with Python, Selenium, BeautifulSoup, and PostgreSQL. Scrapes live listings, enriches data, and loads it for analytics."/>
+<meta name="description" content="PayFlow: A production-grade ETL pipeline and star schema data warehouse built with Python, SQL, and PostgreSQL on the Olist Brazilian E-Commerce dataset."/>
 
 <!-- Favicon -->
 <link rel="icon" href="svg/favicon.svg" type="image/svg+xml"/>
 <link rel="alternate icon" href="svg/favicon.svg"/>
 
-<meta name="theme-color" content="#08060a"/>
+<meta name="theme-color" content="#000000"/>
 <!-- Open Graph -->
 <meta property="og:type" content="article"/>
-<meta property="og:title" content="AliExpress Laptop ETL Pipeline | Yomi Ismail"/>
-<meta property="og:description" content="A production-grade web scraping and ETL pipeline. Selenium + BeautifulSoup + PostgreSQL, with feature engineering and live source health checks."/>
-<meta property="og:image" content="svg/og-aliexpress.svg"/>
+<meta property="og:title" content="PayFlow | End-to-End ETL & Data Warehouse Case Study"/>
+<meta property="og:description" content="A production-grade ETL pipeline and star schema warehouse built with Python, SQL, PostgreSQL and SQLAlchemy. By Yomi Ismail, Data Engineer."/>
+<meta property="og:image" content="svg/og-payflow.svg"/>
 <meta property="og:image:width" content="1200"/>
 <meta property="og:image:height" content="630"/>
-<meta property="og:image:alt" content="AliExpress Laptop ETL Pipeline case study by Yomi Ismail"/>
+<meta property="og:image:alt" content="PayFlow ETL pipeline case study by Yomi Ismail"/>
 <meta property="og:locale" content="en_GB"/>
 
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:title" content="AliExpress Case Study | Yomi Ismail"/>
-<meta name="twitter:description" content="Web scraping pipeline with Selenium, BeautifulSoup, PostgreSQL, and production-grade logging."/>
-<meta name="twitter:image" content="svg/og-aliexpress.svg"/>
+<meta name="twitter:title" content="PayFlow Case Study | Yomi Ismail"/>
+<meta name="twitter:description" content="A production-grade ETL pipeline and star schema warehouse built with Python, SQL, PostgreSQL and SQLAlchemy."/>
+<meta name="twitter:image" content="svg/og-payflow.svg"/>
 
-<!-- Schema.org -->
+<!-- Schema.org structured data -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": ["TechArticle", "CreativeWork"],
-  "name": "AliExpress Laptop ETL Pipeline — Web Scraping & PostgreSQL Warehouse",
-  "headline": "Live web scraping pipeline that walks 60 pages of AliExpress laptop listings, enriches with discount metrics, and appends only new rows to PostgreSQL",
-  "url": "https://yoismail.github.io/portfolio/aliexpress.html",
+  "name": "PayFlow — End-to-End ETL & Data Warehouse",
+  "headline": "Production-style ETL pipeline transforming raw Brazilian e-commerce data into a PostgreSQL star schema warehouse",
+  "url": "https://yoismail.github.io/portfolio/payflow.html",
   "datePublished": "2026-04-01",
   "dateModified": "2026-05-15",
-  "image": "https://yoismail.github.io/portfolio/svg/og-aliexpress.svg",
+  "image": "https://yoismail.github.io/portfolio/svg/og-payflow.svg",
   "inLanguage": "en-GB",
   "author": {
     "@type": "Person",
@@ -55,21 +55,17 @@
     "url": "https://yoismail.github.io/portfolio/"
   },
   "about": [
-    "Web Scraping",
     "ETL Pipeline",
-    "Selenium",
-    "BeautifulSoup",
+    "Data Warehousing",
+    "Star Schema",
     "PostgreSQL",
     "Python",
-    "Feature Engineering",
-    "E-commerce Data"
+    "SQLAlchemy",
+    "Idempotent Loads",
+    "Structured Logging"
   ],
-  "codeRepository": "https://github.com/yoismail/aliExpress_laptop_ETL_pipeline",
+  "codeRepository": "https://github.com/yoismail/payflow_case_study",
   "programmingLanguage": ["Python", "SQL"],
-  "keywords": [
-    "Web Scraping", "ETL", "Selenium", "BeautifulSoup", "Python", "pandas",
-    "PostgreSQL", "SQLAlchemy", "Feature Engineering", "E-commerce Data"
-  ],
   "isPartOf": {
     "@type": "WebSite",
     "name": "Yomi Ismail — Portfolio",
@@ -78,42 +74,40 @@
 }
 </script>
 
-<!-- Plausible -->
-
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Geist:wght@400;500;600&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet"/>
 <style>
 
-/* ── DARK TOKENS — coral/rose lead, live-commerce energy ─ */
+/* ── DARK TOKENS ──────────────────────────────────────── */
 :root {
-  --bg:      #08060a;
-  --bg-nav:  rgba(8,6,10,.9);
-  --bg-alt:  #0e0a10;
-  --bg-surf: #131017;
-  --bg-card: #18141d;
-  --bg-card2:#201b27;
-  --bdr:     rgba(255,255,255,.07);
-  --bdr-hi:  rgba(244,63,94,.5);
-  --acc:     #f43f5e;
-  --acc-s:   rgba(244,63,94,.1);
-  --acc-g:   rgba(244,63,94,.25);
-  --acc-2:   #818cf8;
-  --grad:    linear-gradient(115deg,#f43f5e 0%,#fb7185 30%,#818cf8 100%);
-  --teal:    #2dd4bf;
-  --teal-s:  rgba(45,212,191,.09);
+  --bg:      #000;
+  --bg-nav:  rgba(0,0,0,.9);
+  --bg-alt:  #060810;
+  --bg-surf: #0a0d14;
+  --bg-card: #0f131b;
+  --bg-card2:#141923;
+  --bdr:     rgba(120,160,255,.08);
+  --bdr-hi:  rgba(34,211,238,.5);
+  --acc:     #818cf8;
+  --acc-s:   rgba(129,140,248,.1);
+  --acc-g:   rgba(129,140,248,.25);
+  --acc-2:   #22d3ee;
+  --grad:    linear-gradient(115deg,#818cf8 0%,#6366f1 35%,#22d3ee 100%);
+  --teal:    #22d3ee;
+  --teal-s:  rgba(34,211,238,.09);
   --amber:   #fbbf24;
   --amber-s: rgba(251,191,36,.09);
   --green:   #34d399;
   --green-s: rgba(52,211,153,.09);
   --red:     #f87171;
-  --h1: #f5edee;
-  --h2: #c8bec0;
-  --h3: #685a5e;
+  --h1: #eef2f7;
+  --h2: #b8c2d4;
+  --h3: #5c6680;
   --fd:'Syne',sans-serif;
   --fm:'Geist Mono','IBM Plex Mono',monospace;
   --fb:'Geist','Inter',system-ui,sans-serif;
-  --r:.625rem; --rsm:.3125rem;
+  --r:.5rem; --rsm:.25rem;
   --nav:68px;
   --ez:cubic-bezier(.16,1,.3,1);
 }
@@ -129,11 +123,11 @@
     --bg-card:#ffffff;
     --bg-card2:#f8f4ec;
     --bdr:rgba(26,20,8,.08);
-    --bdr-hi:rgba(190,18,60,.45);
-    --acc:#be123c;
-    --acc-s:rgba(190,18,60,.08);
-    --acc-g:rgba(190,18,60,.2);
-    --acc-2:#e11d48;
+    --bdr-hi:rgba(79,70,229,.45);
+    --acc:#4f46e5;
+    --acc-s:rgba(79,70,229,.08);
+    --acc-g:rgba(79,70,229,.2);
+    --acc-2:#6366f1;
     --amber:#d97706;
     --amber-s:rgba(217,119,6,.09);
     --green:#10b981;
@@ -141,7 +135,7 @@
     --teal:#0d9488;
     --teal-s:rgba(13,148,136,.09);
     --red:#dc2626;
-    --grad:linear-gradient(115deg,#be123c 0%,#e11d48 35%,#0d9488 100%);
+    --grad:linear-gradient(115deg,#4f46e5 0%,#6366f1 35%,#0d9488 100%);
     --h1:#1a1408;
     --h2:#3d3528;
     --h3:#7a6e5a;
@@ -155,11 +149,11 @@
       --bg-card:#ffffff;
       --bg-card2:#f8f4ec;
       --bdr:rgba(26,20,8,.08);
-      --bdr-hi:rgba(190,18,60,.45);
-      --acc:#be123c;
-      --acc-s:rgba(190,18,60,.08);
-      --acc-g:rgba(190,18,60,.2);
-      --acc-2:#e11d48;
+      --bdr-hi:rgba(79,70,229,.45);
+      --acc:#4f46e5;
+      --acc-s:rgba(79,70,229,.08);
+      --acc-g:rgba(79,70,229,.2);
+      --acc-2:#6366f1;
       --amber:#d97706;
       --amber-s:rgba(217,119,6,.09);
       --green:#10b981;
@@ -167,7 +161,7 @@
       --teal:#0d9488;
       --teal-s:rgba(13,148,136,.09);
       --red:#dc2626;
-      --grad:linear-gradient(115deg,#be123c 0%,#e11d48 35%,#0d9488 100%);
+      --grad:linear-gradient(115deg,#4f46e5 0%,#6366f1 35%,#0d9488 100%);
       --h1:#1a1408;
       --h2:#3d3528;
       --h3:#7a6e5a;
@@ -209,94 +203,250 @@ body{transition:background-color .3s var(--ez,cubic-bezier(.16,1,.3,1)),color .3
 
 /* ── RESET ────────────────────────────────────────────── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav) + 1rem);overflow-x:hidden;}
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav) + 1rem);}
 body{font-family:var(--fb);background:var(--bg);color:var(--h2);line-height:1.6;letter-spacing:-.005em;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden;}
 
 /* ── NAV ──────────────────────────────────────────────── */
-nav{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--nav);background:var(--bg-nav);backdrop-filter:blur(18px) saturate(180%);-webkit-backdrop-filter:blur(18px) saturate(180%);border-bottom:1px solid var(--bdr);display:flex;align-items:center;justify-content:space-between;padding:0 clamp(1rem,4vw,2.5rem);transition:background .3s,border-color .3s;gap:1rem;}
-.nav-brand{display:flex;flex-direction:column;justify-content:center;text-decoration:none;white-space:nowrap;flex-shrink:0;line-height:1.1;gap:.1rem;}
-.nav-brand .name{font-family:var(--fd);font-size:.95rem;font-weight:700;letter-spacing:-.02em;color:var(--h1);transition:color .2s;}
-.nav-brand .title{font-family:var(--fm);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--acc);}
-.nav-brand:hover .name{color:var(--acc);}
-@media(max-width:600px){.nav-brand .name{font-size:.85rem;}.nav-brand .title{font-size:.55rem;letter-spacing:.1em;}}
-@media(max-width:420px){.nav-brand .title{display:none;}.nav-brand .name{font-size:.82rem;}}
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  height:var(--nav);
+  background:var(--bg-nav);
+  backdrop-filter:blur(18px) saturate(180%);
+  -webkit-backdrop-filter:blur(18px) saturate(180%);
+  border-bottom:1px solid var(--bdr);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 clamp(1rem,4vw,2.5rem);
+  transition:background .3s,border-color .3s;
+  gap:1rem;
+}
 
-.nav-links{display:flex;align-items:center;gap:.15rem;flex:1;justify-content:flex-end;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;-webkit-overflow-scrolling:touch;scroll-behavior:smooth;mask-image:linear-gradient(to right,transparent,#000 1.5rem,#000 calc(100% - 1.5rem),transparent);-webkit-mask-image:linear-gradient(to right,transparent,#000 1.5rem,#000 calc(100% - 1.5rem),transparent);}
+.nav-brand{
+  display:flex;flex-direction:column;justify-content:center;
+  text-decoration:none;white-space:nowrap;flex-shrink:0;
+  line-height:1.1;gap:.1rem;
+}
+.nav-brand .name{
+  font-family:var(--fd);font-size:.95rem;font-weight:700;
+  letter-spacing:-.02em;color:var(--h1);
+  transition:color .2s;
+}
+.nav-brand .title{
+  font-family:var(--fm);font-size:.6rem;
+  letter-spacing:.14em;text-transform:uppercase;
+  color:var(--acc);
+}
+.nav-brand:hover .name{color:var(--acc);}
+@media(max-width:600px){
+  .nav-brand .name{font-size:.85rem;}
+  .nav-brand .title{font-size:.55rem;letter-spacing:.1em;}
+}
+@media(max-width:420px){
+  .nav-brand .title{display:none;}
+  .nav-brand .name{font-size:.82rem;}
+}
+
+/* nav links — horizontal scroll on mobile */
+.nav-links{
+  display:flex;align-items:center;gap:.15rem;
+  flex:1;justify-content:flex-end;
+  overflow-x:auto;
+  scrollbar-width:none;
+  -ms-overflow-style:none;
+  -webkit-overflow-scrolling:touch;
+  scroll-behavior:smooth;
+  mask-image:linear-gradient(to right,transparent,#000 1.5rem,#000 calc(100% - 1.5rem),transparent);
+  -webkit-mask-image:linear-gradient(to right,transparent,#000 1.5rem,#000 calc(100% - 1.5rem),transparent);
+}
 .nav-links::-webkit-scrollbar{display:none;}
-.nav-links a{font-size:.78rem;color:var(--h3);text-decoration:none;padding:.4rem .8rem;border-radius:var(--rsm);transition:color .18s,background .18s;position:relative;flex-shrink:0;white-space:nowrap;}
+.nav-links a{
+  font-size:.78rem;color:var(--h3);text-decoration:none;
+  padding:.4rem .8rem;border-radius:var(--rsm);
+  transition:color .18s,background .18s;
+  position:relative;flex-shrink:0;white-space:nowrap;
+}
 .nav-links a:hover{color:var(--h1);background:var(--acc-s);}
 @media(max-width:900px){.nav-links{justify-content:flex-start;}}
 .nav-links a.active{color:var(--acc);background:var(--acc-s);}
-@media(max-width:760px){.nav-links{justify-content:flex-start;}.nav-links a{font-size:.74rem;padding:.35rem .65rem;}}
+@media(max-width:760px){
+  .nav-links{justify-content:flex-start;}
+  .nav-links a{font-size:.74rem;padding:.35rem .65rem;}
+}
+
+@media(max-width:520px){
+  }
 
 /* light nav */
 
 
 /* ── LAYOUT ───────────────────────────────────────────── */
-.page{position:relative;z-index:1;max-width:960px;margin:0 auto;padding:0 clamp(1rem,4vw,2.5rem);padding-top:var(--nav);overflow-x:clip;}
+.page{position:relative;z-index:1;max-width:960px;margin:0 auto;padding:0 clamp(1rem,4vw,2.5rem);padding-top:var(--nav);}
 
 /* ── SECTIONS ─────────────────────────────────────────── */
 section{padding:5.5rem 0;position:relative;}
-.sec-alt{background:var(--bg-alt);margin-left:calc(-1 * clamp(1rem,4vw,2.5rem));margin-right:calc(-1 * clamp(1rem,4vw,2.5rem));padding:5.5rem clamp(1rem,4vw,2.5rem);}
-.sec-num{position:absolute;top:3rem;font-family:var(--fd);font-size:clamp(3.5rem,8vw,6.5rem);font-weight:800;line-height:1;pointer-events:none;user-select:none;letter-spacing:-.06em;color:rgba(255,255,255,.04);right:.5rem;}
+.sec-alt{
+  background:var(--bg-alt);
+  margin-left:calc(-1 * clamp(1rem,4vw,2.5rem));
+  margin-right:calc(-1 * clamp(1rem,4vw,2.5rem));
+  padding:5.5rem clamp(1rem,4vw,2.5rem);
+}
+.sec-num{
+  position:absolute;top:3rem;
+  font-family:var(--fd);font-size:clamp(3.5rem,8vw,6.5rem);
+  font-weight:800;line-height:1;
+  pointer-events:none;user-select:none;letter-spacing:-.06em;
+  color:rgba(255,255,255,.04);
+  right:.5rem;z-index:0;
+}
 .sec-alt .sec-num{right:clamp(1rem,4vw,2.5rem);}
 .kicker{font-family:var(--fm);font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--acc);margin-bottom:.6rem;display:flex;align-items:center;gap:.5rem;}
-.kicker::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--acc);box-shadow:0 0 0 3px rgba(244,63,94,.18);flex-shrink:0;}
-.kicker::after{content:'';width:14px;height:1.5px;background:linear-gradient(90deg,var(--acc),transparent);border-radius:1px;flex-shrink:0;}
-
+.kicker::before{content:'';width:16px;height:1.5px;background:var(--acc);border-radius:1px;flex-shrink:0;}
 
 h2{font-family:var(--fd);font-size:clamp(1.75rem,3.2vw,2.4rem);font-weight:700;letter-spacing:-.04em;margin-bottom:.6rem;color:var(--h1);max-width:min(100%,720px);position:relative;z-index:2;padding-right:1rem;}
 .section-intro{font-size:.93rem;color:var(--h2);max-width:38rem;margin-bottom:2.25rem;line-height:1.75;}
 /* ── STICKY TOC ───────────────────────────────────────── */
-.cs-toc{position:fixed;top:calc(var(--nav) + 3rem);left:1.75rem;width:170px;z-index:50;font-family:var(--fm);display:none;opacity:0;transform:translateX(-8px);transition:opacity .4s var(--ez),transform .4s var(--ez);}
+.cs-toc{
+  position:fixed;
+  top:calc(var(--nav) + 3rem);
+  left:1.75rem;
+  width:170px;z-index:50;
+  font-family:var(--fm);
+  display:none;
+  opacity:0;transform:translateX(-8px);
+  transition:opacity .4s var(--ez),transform .4s var(--ez);
+}
 .cs-toc.show{opacity:1;transform:translateX(0);}
 @media(min-width:1400px){.cs-toc{display:block;}}
-.cs-toc-label{font-size:.58rem;letter-spacing:.18em;color:var(--h3);text-transform:uppercase;margin-bottom:1rem;padding-bottom:.55rem;border-bottom:1px solid var(--bdr);display:flex;align-items:center;gap:.5rem;}
-.cs-toc-label::before{content:'';width:14px;height:1.5px;background:var(--acc);border-radius:1px;}
+
+.cs-toc-label{
+  font-size:.58rem;letter-spacing:.18em;
+  color:var(--h3);text-transform:uppercase;
+  margin-bottom:1rem;padding-bottom:.55rem;
+  border-bottom:1px solid var(--bdr);
+  display:flex;align-items:center;gap:.5rem;
+}
+.cs-toc-label::before{
+  content:'';width:14px;height:1.5px;background:var(--acc);border-radius:1px;
+}
 
 .cs-toc ul{list-style:none;display:flex;flex-direction:column;gap:.05rem;}
-.cs-toc a{display:flex;gap:.55rem;align-items:flex-start;font-size:.72rem;color:var(--h3);text-decoration:none;padding:.4rem 0 .4rem .65rem;border-left:1px solid var(--bdr);transition:color .2s,border-color .2s,padding-left .2s var(--ez);line-height:1.4;}
-.cs-toc a:hover{color:var(--h2);border-left-color:var(--h3);padding-left:.85rem;text-decoration:none;}
-.cs-toc a.active{color:var(--acc);border-left-color:var(--acc);border-left-width:2px;padding-left:.8rem;font-weight:500;}
+.cs-toc a{
+  display:flex;gap:.55rem;align-items:flex-start;
+  font-size:.72rem;color:var(--h3);
+  text-decoration:none;padding:.4rem 0 .4rem .65rem;
+  border-left:1px solid var(--bdr);
+  transition:color .2s,border-color .2s,padding-left .2s var(--ez);
+  line-height:1.4;
+}
+.cs-toc a:hover{
+  color:var(--h2);
+  border-left-color:var(--h3);
+  padding-left:.85rem;
+  text-decoration:none;
+}
+.cs-toc a.active{
+  color:var(--acc);
+  border-left-color:var(--acc);
+  border-left-width:2px;
+  padding-left:.8rem;
+  font-weight:500;
+}
 
 
 .cs-toc-num{font-size:.62rem;color:var(--acc);min-width:18px;flex-shrink:0;letter-spacing:.04em;padding-top:.05rem;}
-.cs-meta{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--fm);font-size:.66rem;color:var(--h3);letter-spacing:.05em;margin-bottom:1.25rem;padding:.3rem .8rem;border:1px solid var(--bdr);border-radius:999px;background:var(--bg-surf);width:fit-content;}
-.cs-meta::before{content:'';width:5px;height:5px;background:var(--acc);border-radius:50%;}
+/* reading time meta */
+.cs-meta{
+  display:inline-flex;align-items:center;gap:.5rem;
+  font-family:var(--fm);font-size:.66rem;
+  color:var(--h3);letter-spacing:.05em;
+  margin-bottom:1.25rem;padding:.3rem .8rem;
+  border:1px solid var(--bdr);border-radius:999px;
+  background:var(--bg-surf);
+  width:fit-content;
+}
+.cs-meta::before{
+  content:'';width:5px;height:5px;background:var(--acc);border-radius:50%;
+}
 
 /* ── CASE-STUDY HERO ──────────────────────────────────── */
 #cs-hero{padding:5rem 0 3.5rem;border-bottom:1px solid var(--bdr);}
-.back-link{display:inline-flex;align-items:center;gap:.4rem;font-family:var(--fm);font-size:.7rem;color:var(--h3);text-decoration:none;margin-bottom:1.5rem;transition:color .18s,gap .2s var(--ez);}
-.back-link:hover{color:var(--acc);gap:.6rem;text-decoration:none;}
-.cs-switcher{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem;margin-bottom:1.75rem;padding:.55rem .7rem;background:var(--bg-surf);border:1px solid var(--bdr);border-radius:999px;font-family:var(--fm);font-size:.66rem;width:fit-content;max-width:100%;}
-.cs-switcher-label{color:var(--h3);letter-spacing:.14em;text-transform:uppercase;padding:0 .3rem 0 .4rem;}
-.cs-switcher-link{padding:.32rem .75rem;border-radius:999px;color:var(--h2);text-decoration:none;letter-spacing:.02em;transition:color .18s,background .18s;white-space:nowrap;}
-.cs-switcher-link:hover{color:var(--acc);background:var(--acc-s);text-decoration:none;}
-.cs-switcher-link.current{color:var(--acc);background:var(--acc-s);cursor:default;pointer-events:none;}
-@media(max-width:520px){.cs-switcher{font-size:.6rem;padding:.45rem .55rem;}.cs-switcher-label{display:none;}.cs-switcher-link{padding:.28rem .6rem;}}
-
-.cs-title{font-family:var(--fd);font-size:clamp(2rem,5vw,3.4rem);font-weight:800;letter-spacing:-.04em;line-height:1.05;margin-bottom:1.1rem;color:var(--h1);}
-.cs-title .hi{background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;}
-.cs-sub{font-size:1rem;color:var(--h2);max-width:620px;line-height:1.75;margin-bottom:2rem;}
-/* live-source indicator — unique signature for this page */
-.live-pill{
-  display:inline-flex;align-items:center;gap:.55rem;
-  font-family:var(--fm);font-size:.68rem;
-  color:var(--acc);letter-spacing:.06em;text-transform:uppercase;
-  padding:.32rem .9rem;border-radius:999px;
-  border:1px solid rgba(244,63,94,.3);background:var(--acc-s);
-  margin-bottom:1.5rem;width:fit-content;
+.back-link{
+  display:inline-flex;align-items:center;gap:.4rem;
+  font-family:var(--fm);font-size:.7rem;
+  color:var(--h3);text-decoration:none;
+  margin-bottom:1.5rem;
+  transition:color .18s,gap .2s var(--ez);
 }
-.live-dot{width:6px;height:6px;background:var(--acc);border-radius:50%;animation:livepulse 2s infinite;flex-shrink:0;}
-@keyframes livepulse{0%,100%{box-shadow:0 0 0 0 rgba(244,63,94,.5);}50%{box-shadow:0 0 0 6px rgba(244,63,94,0);}}
+.back-link:hover{color:var(--acc);gap:.6rem;text-decoration:none;}
 
+/* Cross-case-study quick switcher */
+.cs-switcher{
+  display:flex;flex-wrap:wrap;align-items:center;gap:.4rem;
+  margin-bottom:1.75rem;padding:.55rem .7rem;
+  background:var(--bg-surf);border:1px solid var(--bdr);
+  border-radius:999px;
+  font-family:var(--fm);font-size:.66rem;
+  width:fit-content;max-width:100%;
+}
+.cs-switcher-label{
+  color:var(--h3);letter-spacing:.14em;text-transform:uppercase;
+  padding:0 .3rem 0 .4rem;
+}
+.cs-switcher-link{
+  padding:.32rem .75rem;border-radius:999px;
+  color:var(--h2);text-decoration:none;
+  letter-spacing:.02em;
+  transition:color .18s,background .18s;
+  white-space:nowrap;
+}
+.cs-switcher-link:hover{
+  color:var(--acc);background:var(--acc-s);text-decoration:none;
+}
+.cs-switcher-link.current{
+  color:var(--acc);background:var(--acc-s);
+  cursor:default;pointer-events:none;
+}
+@media(max-width:520px){
+  .cs-switcher{font-size:.6rem;padding:.45rem .55rem;}
+  .cs-switcher-label{display:none;}
+  .cs-switcher-link{padding:.28rem .6rem;}
+}
+
+.cs-title{
+  font-family:var(--fd);
+  font-size:clamp(2rem,5vw,3.4rem);
+  font-weight:800;letter-spacing:-.04em;
+  line-height:1.05;margin-bottom:1.1rem;
+  color:var(--h1);
+}
+.cs-title .hi{
+  background:var(--grad);
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+  color:transparent;
+}
+.cs-sub{font-size:1rem;color:var(--h2);max-width:620px;line-height:1.75;margin-bottom:2rem;}
 .meta-row{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:2rem;}
-.meta-pill{font-family:var(--fm);font-size:.7rem;padding:.32rem .85rem;border-radius:999px;border:1px solid var(--bdr);background:var(--bg-surf);color:var(--h3);letter-spacing:.04em;}
-.meta-pill.acc{border-color:rgba(244,63,94,.4);color:var(--acc);background:var(--acc-s);}
+.meta-pill{
+  font-family:var(--fm);font-size:.7rem;
+  padding:.32rem .85rem;border-radius:999px;
+  border:1px solid var(--bdr);background:var(--bg-surf);
+  color:var(--h3);letter-spacing:.04em;
+}
+.meta-pill.acc{border-color:rgba(124,127,255,.4);color:var(--acc);background:var(--acc-s);}
 
 /* stat strip */
-.stat-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:1px;background:var(--bdr);border:1px solid var(--bdr);border-radius:var(--r);overflow:hidden;position:relative;z-index:1;}
-.stat-strip::before{content:'';position:absolute;inset:-40px;background:radial-gradient(ellipse at 30% 50%,rgba(244,63,94,.18),transparent 60%),radial-gradient(ellipse at 80% 50%,rgba(129,140,248,.12),transparent 60%);pointer-events:none;z-index:-1;filter:blur(20px);}
+.stat-strip{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+  gap:1px;background:var(--bdr);border:1px solid var(--bdr);border-radius:var(--r);
+  overflow:hidden;position:relative;z-index:1;
+}
+.stat-strip::before{
+  content:'';position:absolute;inset:-40px;
+  background:radial-gradient(ellipse at 30% 50%,rgba(129,140,248,.18),transparent 60%),
+             radial-gradient(ellipse at 80% 50%,rgba(45,212,191,.12),transparent 60%);
+  pointer-events:none;z-index:-1;filter:blur(20px);
+}
 .stat-cell{background:var(--bg-card);padding:1.5rem 1.5rem;transition:background .18s;}
 .stat-cell:hover{background:var(--bg-card2);}
 .stat-num{font-family:var(--fd);font-size:clamp(1.3rem,2.2vw,1.55rem);font-weight:800;color:var(--h1);line-height:1;margin-bottom:.3rem;}
@@ -308,8 +458,17 @@ h2{font-family:var(--fd);font-size:clamp(1.75rem,3.2vw,2.4rem);font-weight:700;l
 .grid-2{grid-template-columns:repeat(auto-fit,minmax(290px,1fr));}
 .grid-3{grid-template-columns:repeat(auto-fit,minmax(240px,1fr));}
 
-.card{background:var(--bg-card);border:1px solid var(--bdr);border-radius:var(--r);padding:1.5rem;position:relative;overflow:hidden;isolation:isolate;transition:border-color .2s var(--ez),transform .2s var(--ez),box-shadow .2s var(--ez);}
-.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1.5px;background:linear-gradient(90deg,transparent,var(--acc),transparent);opacity:0;transition:opacity .2s;}
+.card{
+  background:var(--bg-card);border:1px solid var(--bdr);
+  border-radius:var(--r);padding:1.5rem;
+  position:relative;overflow:hidden;isolation:isolate;
+  transition:border-color .2s var(--ez),transform .2s var(--ez),box-shadow .2s var(--ez);
+}
+.card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1.5px;
+  background:linear-gradient(90deg,transparent,var(--acc),transparent);
+  opacity:0;transition:opacity .2s;
+}
 .card:hover{border-color:var(--bdr-hi);transform:translateY(-3px);box-shadow:0 10px 28px rgba(0,0,0,.25);}
 .card:hover::before{opacity:1;}
 
@@ -320,38 +479,257 @@ h2{font-family:var(--fd);font-size:clamp(1.75rem,3.2vw,2.4rem);font-weight:700;l
 .card ul li{margin-bottom:.25rem;}
 .card ul li strong{color:var(--h1);font-weight:500;}
 /* ── PIPELINE VISUAL ──────────────────────────────────── */
-.pipeline-visual{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:1px;background:var(--bdr);border:1px solid var(--bdr);border-radius:var(--r);overflow:hidden;margin-bottom:1.5rem;}
-.pipe-node-cs{background:var(--bg-card);padding:1.2rem 1rem;position:relative;transition:background .18s;}
+.pipeline-visual{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+  gap:1px;background:var(--bdr);border:1px solid var(--bdr);
+  border-radius:var(--r);overflow:hidden;margin-bottom:1.5rem;
+}
+.pipe-node-cs{
+  background:var(--bg-card);padding:1.2rem 1rem;
+  position:relative;transition:background .18s;
+}
 .pipe-node-cs:hover{background:var(--bg-card2);}
 
 .pipe-step-num{font-family:var(--fm);font-size:.6rem;letter-spacing:.12em;color:var(--acc);text-transform:uppercase;margin-bottom:.35rem;}
 .pipe-step-name{font-family:var(--fd);font-size:.85rem;font-weight:600;color:var(--h1);margin-bottom:.2rem;}
 .pipe-step-detail{font-size:.72rem;color:var(--h3);line-height:1.45;margin-bottom:.4rem;}
 .pipe-script{font-family:var(--fm);font-size:.65rem;color:var(--amber);}
-/* ── CODE BLOCK — with gutter like PayFlow ────────────── */
-.code-block{background:#0a0710;border:1px solid rgba(244,63,94,.18);border-radius:var(--r);padding:1.25rem 1.4rem 1.25rem 3rem;font-family:var(--fm);font-size:.78rem;line-height:1.7;overflow-x:auto;margin-bottom:1rem;color:var(--h2);position:relative;transition:border-color .25s var(--ez),box-shadow .25s var(--ez);}
-.code-block::before{content:'';position:absolute;top:0;left:0;bottom:0;width:2.2rem;background:rgba(244,63,94,.04);border-right:1px solid rgba(244,63,94,.12);border-radius:var(--r) 0 0 var(--r);}
-.code-block::after{content:'';position:absolute;top:0;left:2.2rem;right:0;height:2px;background:var(--grad);opacity:.7;}
-.code-block:hover{border-color:rgba(244,63,94,.35);box-shadow:0 8px 32px rgba(244,63,94,.12);}
+/* ── CODE BLOCK ───────────────────────────────────────── */
+.code-block{
+  background:#020812;border:1px solid rgba(129,140,248,.18);
+  border-radius:var(--r);padding:1.25rem 1.4rem 1.25rem 3rem;
+  font-family:var(--fm);font-size:.78rem;
+  line-height:1.7;overflow-x:auto;margin-bottom:1rem;
+  color:var(--h2);position:relative;
+  transition:border-color .25s var(--ez),box-shadow .25s var(--ez);
+}
+.code-block::before{
+  content:'';position:absolute;top:0;left:0;bottom:0;
+  width:2.2rem;
+  background:rgba(129,140,248,.04);
+  border-right:1px solid rgba(129,140,248,.12);
+  border-radius:var(--r) 0 0 var(--r);
+}
+.code-block::after{
+  content:'';position:absolute;top:0;left:2.2rem;right:0;
+  height:2px;
+  background:var(--grad);
+  opacity:.7;
+}
+.code-block:hover{
+  border-color:rgba(34,211,238,.4);
+  box-shadow:0 8px 32px rgba(34,211,238,.12);
+}
 
 
 .code-block .cm{color:#5c6580;}
 .code-block .ck{color:var(--acc);}
-.code-block .cs{color:#fb7185;}
+.code-block .cs{color:var(--teal);}
 .code-block .cn{color:var(--amber);}
 .code-block .cv{color:#e879f9;}
 .code-block .ct{color:var(--h2);}
 
-/* ── DATA TABLE (for extracted columns / engineered features) ── */
-.data-table{width:100%;border-collapse:collapse;font-size:.85rem;background:var(--bg-card);border:1px solid var(--bdr);border-radius:var(--r);overflow:hidden;margin-bottom:1.25rem;}
-.data-table thead th{background:var(--bg-surf);font-family:var(--fm);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--h3);padding:.85rem 1.1rem;text-align:left;font-weight:500;border-bottom:1px solid var(--bdr);}
-.data-table tbody td{padding:.75rem 1.1rem;border-bottom:1px solid var(--bdr);color:var(--h2);vertical-align:top;}
-.data-table tbody tr:last-child td{border-bottom:none;}
-.data-table tbody tr:hover td{background:var(--bg-card2);}
-.data-table tbody td:first-child{font-family:var(--fm);font-size:.78rem;color:var(--acc);white-space:nowrap;}
+/* ── STAR SCHEMA VISUAL ───────────────────────────────── */
+.star-schema{
+  margin:0 auto 1.75rem;
+  max-width:680px;
+  position:relative;
+  padding:.5rem 0;
+}
+.star-svg{
+  width:100%;height:auto;display:block;
+  overflow:visible;
+}
 
+/* connection lines from fact to dims */
+.star-line{
+  stroke:rgba(129,140,248,.28);
+  stroke-width:1.4;
+  stroke-linecap:round;
+  stroke-dasharray:1;
+  stroke-dashoffset:1;
+  pathLength:1;
+  animation:star-line-draw 1.2s cubic-bezier(.16,1,.3,1) forwards;
+}
+.star-lines line:nth-child(1){animation-delay:.2s;}
+.star-lines line:nth-child(2){animation-delay:.4s;}
+.star-lines line:nth-child(3){animation-delay:.6s;}
+.star-lines line:nth-child(4){animation-delay:.8s;}
 
-@media(max-width:600px){.data-table{font-size:.78rem;}.data-table thead th,.data-table tbody td{padding:.6rem .8rem;}}
+@keyframes star-line-draw{
+  to{stroke-dashoffset:0;}
+}
+
+/* fact node — center, theatrical */
+.fact-box{
+  fill:rgba(129,140,248,.12);
+  stroke:var(--acc);
+  stroke-width:1.8;
+  filter:drop-shadow(0 0 18px rgba(129,140,248,.35));
+  opacity:0;
+  animation:star-pop 1s cubic-bezier(.16,1,.3,1) 1.2s forwards;
+}
+.fact-label{
+  font-family:var(--fm);
+  font-size:13px;
+  font-weight:500;
+  fill:var(--h1);
+  letter-spacing:.02em;
+  opacity:0;
+  animation:star-text-in .8s ease-out 1.5s forwards;
+}
+.fact-sub{
+  font-family:var(--fm);
+  font-size:9px;
+  fill:var(--acc);
+  letter-spacing:.22em;
+  opacity:0;
+  animation:star-text-in .8s ease-out 1.7s forwards;
+}
+
+/* dimension nodes */
+.star-dim .dim-box{
+  fill:var(--bg-card);
+  stroke:rgba(255,255,255,.12);
+  stroke-width:1.4;
+  opacity:0;
+  animation:star-pop 1s cubic-bezier(.16,1,.3,1) forwards;
+}
+.star-dim:nth-of-type(1) .dim-box{animation-delay:.2s;}
+.star-dim:nth-of-type(2) .dim-box{animation-delay:.4s;}
+.star-dim:nth-of-type(3) .dim-box{animation-delay:.6s;}
+.star-dim:nth-of-type(4) .dim-box{animation-delay:.8s;}
+
+.dim-label{
+  font-family:var(--fm);
+  font-size:11px;
+  font-weight:500;
+  fill:var(--h1);
+  letter-spacing:.02em;
+  opacity:0;
+  animation:star-text-in .8s ease-out forwards;
+}
+.dim-sub{
+  font-family:var(--fm);
+  font-size:7px;
+  fill:var(--h3);
+  letter-spacing:.18em;
+  opacity:0;
+  animation:star-text-in .8s ease-out forwards;
+}
+.star-dim:nth-of-type(1) .dim-label,.star-dim:nth-of-type(1) .dim-sub{animation-delay:.5s;}
+.star-dim:nth-of-type(2) .dim-label,.star-dim:nth-of-type(2) .dim-sub{animation-delay:.7s;}
+.star-dim:nth-of-type(3) .dim-label,.star-dim:nth-of-type(3) .dim-sub{animation-delay:.9s;}
+.star-dim:nth-of-type(4) .dim-label,.star-dim:nth-of-type(4) .dim-sub{animation-delay:1.1s;}
+
+@keyframes star-pop{
+  0%{opacity:0;transform:scale(.85);}
+  100%{opacity:1;transform:scale(1);}
+}
+.fact-box,.star-dim .dim-box{
+  transform-origin:center;
+  transform-box:fill-box;
+}
+
+@keyframes star-text-in{
+  0%{opacity:0;}
+  100%{opacity:1;}
+}
+
+/* flow dots traveling from each dimension toward the fact center */
+.star-flow{
+  fill:var(--acc-2);
+  opacity:0;
+  filter:drop-shadow(0 0 4px rgba(34,211,238,.7));
+  transform-box:fill-box;
+  transform-origin:center;
+  animation-duration:3.5s;
+  animation-iteration-count:infinite;
+  animation-timing-function:ease-in-out;
+}
+.flow-n{animation-name:flow-from-n;animation-delay:2.2s;}
+.flow-e{animation-name:flow-from-e;animation-delay:2.9s;}
+.flow-s{animation-name:flow-from-s;animation-delay:3.6s;}
+.flow-w{animation-name:flow-from-w;animation-delay:4.3s;}
+
+@keyframes flow-from-n{
+  0%,5%{opacity:0;transform:translateY(0);}
+  10%{opacity:1;}
+  60%{opacity:1;transform:translateY(85px);}
+  75%{opacity:0;transform:translateY(105px);}
+  100%{opacity:0;transform:translateY(105px);}
+}
+@keyframes flow-from-e{
+  0%,5%{opacity:0;transform:translateX(0);}
+  10%{opacity:1;}
+  60%{opacity:1;transform:translateX(-110px);}
+  75%{opacity:0;transform:translateX(-120px);}
+  100%{opacity:0;transform:translateX(-120px);}
+}
+@keyframes flow-from-s{
+  0%,5%{opacity:0;transform:translateY(0);}
+  10%{opacity:1;}
+  60%{opacity:1;transform:translateY(-70px);}
+  75%{opacity:0;transform:translateY(-70px);}
+  100%{opacity:0;transform:translateY(-70px);}
+}
+@keyframes flow-from-w{
+  0%,5%{opacity:0;transform:translateX(0);}
+  10%{opacity:1;}
+  60%{opacity:1;transform:translateX(115px);}
+  75%{opacity:0;transform:translateX(120px);}
+  100%{opacity:0;transform:translateX(120px);}
+}
+
+/* mobile — scale labels and gracefully tighten */
+@media(max-width:560px){
+  .fact-label{font-size:11px;}
+  .fact-sub{font-size:8px;}
+  .dim-label{font-size:9px;}
+  .dim-sub{font-size:6px;}
+}
+
+@media(prefers-reduced-motion: reduce){
+  .star-line,.fact-box,.star-dim .dim-box,
+  .fact-label,.fact-sub,.dim-label,.dim-sub{
+    animation:none;opacity:1;
+  }
+  .star-line{stroke-dashoffset:0;}
+  .star-flow{animation:none;opacity:0;}
+}
+
+/* caption beneath the visual */
+.star-caption{
+  display:flex;align-items:center;justify-content:center;flex-wrap:wrap;
+  gap:.55rem;
+  font-family:var(--fm);font-size:.66rem;
+  color:var(--h3);letter-spacing:.04em;
+  margin-top:1.25rem;
+  padding:0 1rem;
+  text-align:center;
+  opacity:0;
+  animation:star-text-in 1s ease-out 2s forwards;
+}
+.star-cap-fact{color:var(--acc);font-weight:500;}
+.star-cap-sep{color:var(--h3);opacity:.5;}
+.star-cap-arrow{color:var(--acc-2);}
+
+/* ── SCHEMA PILLS ─────────────────────────────────────── */
+.schema-block{background:var(--bg-card);border:1px solid var(--bdr);border-radius:var(--r);padding:1.5rem;}
+.schema-group{margin-bottom:1.2rem;}
+.schema-group:last-child{margin-bottom:0;}
+.schema-label{font-family:var(--fm);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--h3);margin-bottom:.5rem;}
+.schema-pills{display:flex;flex-wrap:wrap;gap:.4rem;}
+.schema-pill{
+  font-family:var(--fm);font-size:.74rem;
+  padding:.32rem .8rem;border-radius:var(--rsm);
+  border:1px solid var(--bdr);background:var(--bg-surf);
+  color:var(--h3);
+}
+.schema-pill.fact{border-color:rgba(124,127,255,.4);color:var(--acc);background:var(--acc-s);}
+.schema-pill.dim{border-color:rgba(45,212,191,.4);color:var(--teal);background:var(--teal-s);}
+.schema-pill.orch{border-color:rgba(251,191,36,.3);color:var(--amber);background:var(--amber-s);}
+
 
 /* ── DECISION TABLE ───────────────────────────────────── */
 .decision-wrapper{border:1px solid var(--bdr);border-radius:var(--r);overflow:hidden;}
@@ -375,12 +753,26 @@ h2{font-family:var(--fd);font-size:clamp(1.75rem,3.2vw,2.4rem);font-weight:700;l
 
 /* ── IMPACT METRICS ───────────────────────────────────── */
 .impact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;}
-.impact-card{background:var(--bg-card);border:1px solid var(--bdr);border-radius:var(--r);padding:1.5rem;text-align:center;transition:border-color .2s,transform .2s;}
+.impact-card{
+  background:var(--bg-card);border:1px solid var(--bdr);
+  border-radius:var(--r);padding:1.5rem;text-align:center;
+  transition:border-color .2s,transform .2s;
+}
 .impact-card:hover{border-color:var(--bdr-hi);transform:translateY(-2px);}
 
-.impact-num{font-family:var(--fd);font-size:clamp(1.6rem,4vw,2.4rem);font-weight:800;line-height:1.1;margin-bottom:.55rem;background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;color:transparent;filter:drop-shadow(0 4px 16px currentColor);word-break:break-word;overflow-wrap:break-word;letter-spacing:-.02em;}
-.impact-num.acc{background-image:linear-gradient(135deg,#f43f5e,#fb7185);color:#f43f5e;}
-.impact-num.indigo{background-image:linear-gradient(135deg,#818cf8,#a78bfa);color:#818cf8;}
+.impact-num{
+  font-family:var(--fd);
+  font-size:clamp(1.6rem,4vw,2.4rem);
+  font-weight:800;
+  line-height:1.1;margin-bottom:.55rem;
+  background-clip:text;-webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;color:transparent;
+  filter:drop-shadow(0 4px 16px currentColor);
+  word-break:break-word;overflow-wrap:break-word;
+  letter-spacing:-.02em;
+}
+.impact-num.green{background-image:linear-gradient(135deg,#34d399,#10b981);color:#34d399;}
+.impact-num.acc{background-image:linear-gradient(135deg,#818cf8,#a78bfa);color:#818cf8;}
 .impact-num.teal{background-image:linear-gradient(135deg,#2dd4bf,#22d3ee);color:#2dd4bf;}
 .impact-num.amber{background-image:linear-gradient(135deg,#fbbf24,#f59e0b);color:#fbbf24;}
 
@@ -398,57 +790,19 @@ h2{font-family:var(--fd);font-size:clamp(1.75rem,3.2vw,2.4rem);font-weight:700;l
 .btn-ghost{display:inline-flex;align-items:center;gap:.4rem;padding:.7rem 1.4rem;background:var(--bg-card);color:var(--h2);border:1px solid var(--bdr);border-radius:999px;font-size:.86rem;text-decoration:none;cursor:pointer;transition:border-color .2s,color .2s,background .2s;}
 .btn-ghost:hover{border-color:var(--bdr-hi);color:var(--h1);background:var(--acc-s);text-decoration:none;}
 
-/* ── TECH STACK COMPONENTS (ported from FibbieBanks) ──── */
-.sec-kicker{
-  font-family:var(--fm);font-size:.62rem;
-  color:var(--acc);letter-spacing:.22em;text-transform:uppercase;
-  display:flex;align-items:center;gap:.55rem;
-  margin-bottom:.85rem;
-}
-.sec-kicker::before{
-  content:'';width:18px;height:1px;background:var(--acc);
-}
-.sec-kicker .sec-num-inline{
-  font-family:var(--fm);font-size:.62rem;color:var(--h3);
-  letter-spacing:.05em;margin-right:.2rem;
-  position:static;background:none;-webkit-text-fill-color:initial;
-  font-weight:400;line-height:1;
-}
-.sec-h{
-  font-family:var(--fd);font-size:clamp(1.75rem,3.2vw,2.4rem);
-  font-weight:700;letter-spacing:-.03em;
-  line-height:1.15;margin-bottom:1.5rem;color:var(--h1);
-}
-.sec-h .acc{color:var(--acc);}
-.sec-p{font-size:1rem;line-height:1.7;margin-bottom:1rem;color:var(--h2);}
-.sec-p strong{color:var(--h1);font-weight:600;}
-.sec-p code{
-  font-family:var(--fm);font-size:.85em;
-  padding:.1em .35em;border-radius:.3em;
-  background:var(--bg-surf);border:1px solid var(--bdr);
-  color:var(--h1);
-}
-.tech-grid{
-  display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
-  gap:.65rem;margin-top:1.25rem;
-}
-.tech-item{
-  padding:.85rem 1rem;
-  background:var(--bg-card);
-  border:1px solid var(--bdr);
-  border-radius:.6rem;
-  font-family:var(--fm);font-size:.78rem;
-  color:var(--h2);letter-spacing:.02em;
-  display:flex;flex-direction:column;gap:.25rem;
-  transition:border-color .2s,transform .2s var(--ez);
-}
-.tech-item:hover{border-color:var(--bdr-hi);transform:translateY(-1px);}
-.tech-name{color:var(--h1);font-weight:500;}
-.tech-role{color:var(--h3);font-size:.66rem;letter-spacing:.04em;}
-
 /* ── CTA ──────────────────────────────────────────────── */
-.cta-card{background:var(--bg-card);border:1px solid var(--bdr);border-radius:var(--r);padding:2.25rem 2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem;position:relative;overflow:hidden;}
-.cta-card::after{content:'';position:absolute;bottom:-60px;right:-60px;width:200px;height:200px;background:radial-gradient(circle,var(--acc-g),transparent 70%);pointer-events:none;}
+.cta-card{
+  background:var(--bg-card);border:1px solid var(--bdr);
+  border-radius:var(--r);padding:2.25rem 2rem;
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:1.5rem;position:relative;overflow:hidden;
+}
+.cta-card::after{
+  content:'';position:absolute;bottom:-60px;right:-60px;
+  width:200px;height:200px;
+  background:radial-gradient(circle,var(--acc-g),transparent 70%);
+  pointer-events:none;
+}
 
 .cta-card h3{font-family:var(--fd);font-size:1.2rem;font-weight:700;margin-bottom:.4rem;color:var(--h1);}
 .cta-card p{font-size:.88rem;color:var(--h2);}
@@ -576,7 +930,15 @@ footer:hover .footer-mark{opacity:1;transform:translateY(-1px);}
 }
 
 /* ── BACK TO TOP ──────────────────────────────────────── */
-.to-top{position:fixed;bottom:1.5rem;right:1.5rem;z-index:150;width:42px;height:42px;border-radius:50%;background:var(--bg-card);border:1px solid var(--bdr);color:var(--h2);cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;transform:translateY(8px);pointer-events:none;transition:opacity .25s var(--ez),transform .25s var(--ez),border-color .18s,background .18s;}
+.to-top{
+  position:fixed;bottom:1.5rem;right:1.5rem;z-index:150;
+  width:42px;height:42px;border-radius:50%;
+  background:var(--bg-card);border:1px solid var(--bdr);
+  color:var(--h2);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;transform:translateY(8px);pointer-events:none;
+  transition:opacity .25s var(--ez),transform .25s var(--ez),border-color .18s,background .18s;
+}
 .to-top.show{opacity:1;transform:translateY(0);pointer-events:auto;}
 .to-top:hover{border-color:var(--acc);color:var(--acc);background:var(--acc-s);}
 
@@ -592,26 +954,145 @@ footer:hover .footer-mark{opacity:1;transform:translateY(-1px);}
   .sec-num{font-size:4.5rem;}
   .to-top{bottom:1rem;right:1rem;width:38px;height:38px;}
 }
-@media(max-width:380px){.pipeline-visual{grid-template-columns:1fr;}}
-.read-next{margin-top:2rem;padding-top:3.5rem;border-top:1px solid var(--bdr);}
-.read-next-eyebrow{font-family:var(--fm);font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:var(--h3);margin-bottom:.5rem;display:flex;align-items:center;gap:.6rem;}
-.read-next-eyebrow::before{content:'';width:18px;height:1px;background:var(--acc);}
-.read-next-h{font-family:var(--fd);font-size:clamp(1.4rem,2.6vw,1.75rem);font-weight:700;letter-spacing:-.03em;margin-bottom:2rem;color:var(--h1);}
-.read-next-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+@media(max-width:380px){
+  .pipeline-visual{grid-template-columns:1fr;}
+}
+
+/* ── TECH STACK COMPONENTS (ported from FibbieBanks) ──── */
+.sec-kicker{
+  font-family:var(--fm);font-size:.62rem;
+  color:var(--acc);letter-spacing:.22em;text-transform:uppercase;
+  display:flex;align-items:center;gap:.55rem;
+  margin-bottom:.85rem;
+}
+.sec-kicker::before{
+  content:'';width:18px;height:1px;background:var(--acc);
+}
+.sec-kicker .sec-num-inline{
+  font-family:var(--fm);font-size:.62rem;color:var(--h3);
+  letter-spacing:.05em;margin-right:.2rem;
+  position:static;background:none;-webkit-text-fill-color:initial;
+  font-weight:400;line-height:1;
+}
+.sec-h{
+  font-family:var(--fd);font-size:clamp(1.75rem,3.2vw,2.4rem);
+  font-weight:700;letter-spacing:-.03em;
+  line-height:1.15;margin-bottom:1.5rem;color:var(--h1);
+}
+.sec-h .acc{color:var(--acc);}
+.sec-p{font-size:1rem;line-height:1.7;margin-bottom:1rem;color:var(--h2);}
+.sec-p strong{color:var(--h1);font-weight:600;}
+.sec-p code{
+  font-family:var(--fm);font-size:.85em;
+  padding:.1em .35em;border-radius:.3em;
+  background:var(--bg-surf);border:1px solid var(--bdr);
+  color:var(--h1);
+}
+.tech-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+  gap:.65rem;margin-top:1.25rem;
+}
+.tech-item{
+  padding:.85rem 1rem;
+  background:var(--bg-card);
+  border:1px solid var(--bdr);
+  border-radius:.6rem;
+  font-family:var(--fm);font-size:.78rem;
+  color:var(--h2);letter-spacing:.02em;
+  display:flex;flex-direction:column;gap:.25rem;
+  transition:border-color .2s,transform .2s var(--ez);
+}
+.tech-item:hover{border-color:var(--bdr-hi);transform:translateY(-1px);}
+.tech-name{color:var(--h1);font-weight:500;}
+.tech-role{color:var(--h3);font-size:.66rem;letter-spacing:.04em;}
+
+/* ── READ NEXT (related case studies) ─────────────────── */
+.read-next{
+  margin-top:2rem;padding-top:3.5rem;
+  border-top:1px solid var(--bdr);
+}
+.read-next-eyebrow{
+  font-family:var(--fm);font-size:.66rem;
+  letter-spacing:.22em;text-transform:uppercase;
+  color:var(--h3);margin-bottom:.5rem;
+  display:flex;align-items:center;gap:.6rem;
+}
+.read-next-eyebrow::before{
+  content:'';width:18px;height:1px;background:var(--acc);
+}
+.read-next-h{
+  font-family:var(--fd);font-size:clamp(1.4rem,2.6vw,1.75rem);
+  font-weight:700;letter-spacing:-.03em;
+  margin-bottom:2rem;color:var(--h1);
+}
+.read-next-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:1rem;
+}
 @media(max-width:680px){.read-next-grid{grid-template-columns:1fr;}}
-.read-next-card{display:flex;flex-direction:column;gap:.5rem;padding:1.5rem;background:var(--bg-card);border:1px solid var(--bdr);border-radius:var(--r);text-decoration:none;position:relative;overflow:hidden;transition:border-color .2s var(--ez),transform .2s var(--ez),box-shadow .2s var(--ez);}
-.read-next-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:0;background:var(--acc);transition:height .3s var(--ez);}
-.read-next-card:hover{border-color:var(--bdr-hi);transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,.25);text-decoration:none;}
+.read-next-card{
+  display:flex;flex-direction:column;gap:.5rem;
+  padding:1.5rem;
+  background:var(--bg-card);
+  border:1px solid var(--bdr);
+  border-radius:var(--r);
+  text-decoration:none;
+  position:relative;overflow:hidden;
+  transition:border-color .2s var(--ez),transform .2s var(--ez),box-shadow .2s var(--ez);
+}
+.read-next-card::before{
+  content:'';position:absolute;top:0;left:0;
+  width:3px;height:0;background:var(--acc);
+  transition:height .3s var(--ez);
+}
+.read-next-card:hover{
+  border-color:var(--bdr-hi);
+  transform:translateY(-3px);
+  box-shadow:0 12px 32px rgba(0,0,0,.25);
+  text-decoration:none;
+}
 .read-next-card:hover::before{height:100%;}
-.read-next-label{font-family:var(--fm);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--acc);}
-.read-next-title{font-family:var(--fd);font-size:1.15rem;font-weight:600;color:var(--h1);letter-spacing:-.02em;line-height:1.25;margin-top:.1rem;}
-.read-next-desc{font-size:.86rem;color:var(--h2);line-height:1.55;margin-bottom:.3rem;}
-.read-next-tags{display:flex;flex-wrap:wrap;gap:.3rem;margin-top:.2rem;margin-bottom:.85rem;}
-.read-next-tag{font-family:var(--fm);font-size:.62rem;padding:.18rem .5rem;border:1px solid var(--bdr);border-radius:var(--rsm);background:var(--bg-surf);color:var(--h3);letter-spacing:.04em;}
-.read-next-cta{font-family:var(--fm);font-size:.74rem;color:var(--acc);display:inline-flex;align-items:center;gap:.4rem;margin-top:auto;padding-bottom:2px;border-bottom:1px solid transparent;transition:gap .22s var(--ez),color .18s var(--ez),border-color .18s var(--ez);align-self:flex-start;}
-.read-next-card:hover .read-next-cta{gap:.65rem;color:var(--h1);border-bottom-color:var(--acc);}
+.read-next-label{
+  font-family:var(--fm);font-size:.6rem;
+  letter-spacing:.16em;text-transform:uppercase;
+  color:var(--acc);
+}
+.read-next-title{
+  font-family:var(--fd);font-size:1.15rem;font-weight:600;
+  color:var(--h1);letter-spacing:-.02em;
+  line-height:1.25;margin-top:.1rem;
+}
+.read-next-desc{
+  font-size:.86rem;color:var(--h2);
+  line-height:1.55;margin-bottom:.3rem;
+}
+.read-next-tags{
+  display:flex;flex-wrap:wrap;gap:.3rem;
+  margin-top:.2rem;margin-bottom:.85rem;
+}
+.read-next-tag{
+  font-family:var(--fm);font-size:.62rem;
+  padding:.18rem .5rem;
+  border:1px solid var(--bdr);border-radius:var(--rsm);
+  background:var(--bg-surf);color:var(--h3);
+  letter-spacing:.04em;
+}
+.read-next-cta{
+  font-family:var(--fm);font-size:.74rem;
+  color:var(--acc);
+  display:inline-flex;align-items:center;gap:.4rem;
+  margin-top:auto;
+  padding-bottom:2px;
+  border-bottom:1px solid transparent;
+  transition:gap .22s var(--ez),color .18s var(--ez),border-color .18s var(--ez);
+  align-self:flex-start;
+}
+.read-next-card:hover .read-next-cta{
+  gap:.65rem;color:var(--h1);
+  border-bottom-color:var(--acc);
+}
 .read-next-cta-arrow{display:inline-block;transition:transform .22s var(--ez);}
 .read-next-card:hover .read-next-cta-arrow{transform:translateX(4px);}
+
 </style>
 <script>
   // Apply theme as early as possible to avoid flash-of-wrong-theme.
@@ -636,8 +1117,8 @@ footer:hover .footer-mark{opacity:1;transform:translateY(-1px);}
     <li><a href="#cs-hero"><span class="cs-toc-num">00</span><span>Overview</span></a></li>
     <li><a href="#problem"><span class="cs-toc-num">01</span><span>The Problem</span></a></li>
     <li><a href="#architecture"><span class="cs-toc-num">02</span><span>Architecture</span></a></li>
-    <li><a href="#scraping"><span class="cs-toc-num">03</span><span>Scraping</span></a></li>
-    <li><a href="#features"><span class="cs-toc-num">04</span><span>Features</span></a></li>
+    <li><a href="#schema"><span class="cs-toc-num">03</span><span>Schema Design</span></a></li>
+    <li><a href="#approach"><span class="cs-toc-num">04</span><span>Engineering</span></a></li>
     <li><a href="#decisions"><span class="cs-toc-num">05</span><span>Decisions</span></a></li>
     <li><a href="#impact"><span class="cs-toc-num">06</span><span>Impact</span></a></li>
     <li><a href="#tech"><span class="cs-toc-num">07</span><span>Tech Stack</span></a></li>
@@ -655,8 +1136,7 @@ footer:hover .footer-mark{opacity:1;transform:translateY(-1px);}
     <a href="#cs-hero">Overview</a>
     <a href="#problem">Problem</a>
     <a href="#architecture">Architecture</a>
-    <a href="#scraping">Scraping</a>
-    <a href="#features">Features</a>
+    <a href="#schema">Schema</a>
     <a href="#decisions">Decisions</a>
     <a href="#impact">Impact</a>
     <a href="#read-next">Other case studies</a>
@@ -675,7 +1155,7 @@ footer:hover .footer-mark{opacity:1;transform:translateY(-1px);}
 
 <div class="page">
 
-  <!-- HERO -->
+  <!-- CASE STUDY HERO -->
   <section id="cs-hero">
     <a href="index.html" class="back-link">
       <svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
@@ -686,34 +1166,31 @@ footer:hover .footer-mark{opacity:1;transform:translateY(-1px);}
       <a href="nova_retail.html" class="cs-switcher-link">Nova Retail</a>
       <a href="fibbiebanks.html" class="cs-switcher-link">FibbieBanks</a>
       <a href="xtd_research_labs.html" class="cs-switcher-link">XTD Research Labs</a>
-      <a href="payflow.html" class="cs-switcher-link">PayFlow</a>
+      <a href="payflow.html" class="cs-switcher-link current" aria-current="page">PayFlow</a>
       <a href="chocodelight.html" class="cs-switcher-link">ChocoDelight</a>
-      <a href="aliexpress.html" class="cs-switcher-link current" aria-current="page">AliExpress</a>
+      <a href="aliexpress.html" class="cs-switcher-link">AliExpress</a>
     </div>
     <div class="cs-meta">~6 min read · Updated May 2026</div>
-    <div class="kicker">Case Study · Live Web Scraping &amp; ETL</div>
-    <div class="live-pill">
-      <span class="live-dot"></span>
-      Live data source
-    </div>
-    <h1 class="cs-title">AliExpress Laptop <span class="hi">ETL Pipeline</span><br/>&amp; PostgreSQL warehouse</h1>
-    <p class="cs-sub">A production-style web scraping pipeline that scrapes 60 pages of AliExpress laptop listings, validates and enriches the data with discount metrics and price bands, and appends only new records to a PostgreSQL warehouse. Modular, idempotent at the load layer, observable, and ready to rerun.</p>
+    <div class="kicker">Case Study · End-to-End Data Engineering</div>
+    <h1 class="cs-title">PayFlow — <span class="hi">ETL pipeline</span><br/>&amp; data warehouse</h1>
+    <p class="cs-sub">A production-style ETL pipeline transforming raw Brazilian e-commerce data into a PostgreSQL star schema warehouse, with clean staging, idempotent loads, structured observability, and a single-command orchestrator.</p>
     <div class="meta-row">
-      <span class="meta-pill acc">Live web scraping</span>
-      <span class="meta-pill">Selenium + BeautifulSoup</span>
-      <span class="meta-pill">60 pages per run</span>
-      <span class="meta-pill">PostgreSQL warehouse</span>
-      <span class="meta-pill">Append-only loads</span>
+      <span class="meta-pill acc">Production-grade ETL</span>
+      <span class="meta-pill">Olist Brazilian E-Commerce</span>
+      <span class="meta-pill">9 source CSVs</span>
+      <span class="meta-pill">100K+ orders</span>
+      <span class="meta-pill">PostgreSQL star schema</span>
     </div>
     <div class="stat-strip">
-      <div class="stat-cell"><div class="stat-num">60</div><div class="stat-label">pages scraped</div></div>
-      <div class="stat-cell"><div class="stat-num">9</div><div class="stat-label">source columns</div></div>
-      <div class="stat-cell"><div class="stat-num">6</div><div class="stat-label">engineered features</div></div>
-      <div class="stat-cell"><div class="stat-num">4</div><div class="stat-label">ETL stages</div></div>
+      <div class="stat-cell"><div class="stat-num">100K+</div><div class="stat-label">orders processed</div></div>
+      <div class="stat-cell"><div class="stat-num">9</div><div class="stat-label">source CSVs</div></div>
+      <div class="stat-cell"><div class="stat-num">4</div><div class="stat-label">pipeline layers</div></div>
+      <div class="stat-cell"><div class="stat-num">4</div><div class="stat-label">dimension tables</div></div>
+      <div class="stat-cell"><div class="stat-num">2</div><div class="stat-label">fact tables</div></div>
       <div class="stat-cell"><div class="stat-num">1</div><div class="stat-label">command to run</div></div>
     </div>
     <div class="cta-actions" style="margin-top:2rem;">
-      <a href="https://github.com/yoismail/aliExpress_laptop_ETL_pipeline" target="_blank" rel="noopener noreferrer" class="btn-primary">
+      <a href="https://github.com/yoismail/payflow_case_study" target="_blank" rel="noopener noreferrer" class="btn-primary">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
         View on GitHub
       </a>
@@ -728,27 +1205,27 @@ footer:hover .footer-mark{opacity:1;transform:translateY(-1px);}
   <section id="problem" class="fade-up sec-alt">
     <span class="sec-num">01</span>
     <div class="kicker">The Problem</div>
-    <h2>Live, hostile, unstructured</h2>
-    <p class="section-intro">E-commerce pages are not built to be scraped. They lazy-load content, show cookie banners on every visit, detect automated browsers, and change their HTML layout without warning. The data you eventually pull is raw text full of inconsistencies. A pipeline that works once is easy. A pipeline that works repeatedly, against a live site, is the harder problem.</p>
+    <h2>Raw, inconsistent, untrusted</h2>
+    <p class="section-intro">The raw Olist dataset is 9 separate CSV files with inconsistent naming, mixed data types, duplicate records, and no clear separation between source data and analytics-ready tables. This is a realistic representation of what raw data looks like in production environments.</p>
     <div class="card-grid grid-2">
       <div class="card">
-        <h3>Scraping challenges</h3>
+        <h3>Data quality issues</h3>
         <ul>
-          <li>Lazy-loaded listings that need explicit waits</li>
-          <li>Cookie banners blocking content on every visit</li>
-          <li>Bot detection flags on default browser automation</li>
-          <li>Pagination behaviour that varies between page loads</li>
-          <li>Inconsistent HTML structure across listing variants</li>
+          <li>Inconsistent column naming and casing across files</li>
+          <li>Mixed datetime formats and string-typed numeric columns</li>
+          <li>Duplicate order records and orphaned foreign keys</li>
+          <li>Missing values in critical join columns</li>
+          <li>No referential integrity between raw files</li>
         </ul>
       </div>
       <div class="card">
-        <h3>Data quality challenges</h3>
+        <h3>Workflow issues</h3>
         <ul>
-          <li>Prices stored as strings with currency symbols</li>
-          <li>Missing original prices on non-discounted items</li>
-          <li>Duplicate listings across consecutive page loads</li>
-          <li>No surrogate keys, only listing text as identity</li>
-          <li>Mixed casing and inconsistent shipping labels</li>
+          <li>No separation between raw, staging, and analytics data</li>
+          <li>Manual, one-off cleaning scripts that broke on rerun</li>
+          <li>No logging, so failures were silent and hard to diagnose</li>
+          <li>No idempotency, so reruns created duplicate rows</li>
+          <li>Analysts couldn't trust downstream metrics</li>
         </ul>
       </div>
     </div>
@@ -758,140 +1235,220 @@ footer:hover .footer-mark{opacity:1;transform:translateY(-1px);}
   <section id="architecture" class="fade-up">
     <span class="sec-num">02</span>
     <div class="kicker">Architecture</div>
-    <h2>Four-stage pipeline</h2>
-    <p class="section-intro">The pipeline runs end to end with a single command. Each stage is an isolated module that can also run independently. A DataFrame is passed in memory between extract, transform, and load (no intermediate file unless requested), keeping the pipeline fast and the failure surface predictable.</p>
+    <h2>Pipeline structure</h2>
+    <p class="section-intro">The pipeline follows a classic multi-layer warehouse architecture: raw data stays immutable, a staging layer normalises and validates it, and the analytics layer builds the star schema from clean inputs.</p>
 
     <div class="pipeline-visual">
       <div class="pipe-node-cs">
         <div class="pipe-step-num">Step 01</div>
-        <div class="pipe-step-name">Health Check</div>
-        <div class="pipe-step-detail">HTTP + browser test before scraping</div>
-        <div class="pipe-script">scraper.py</div>
+        <div class="pipe-step-name">Wipe</div>
+        <div class="pipe-step-detail">Reset schemas &amp; folders to a clean state</div>
+        <div class="pipe-script">wipe_all.py</div>
       </div>
       <div class="pipe-node-cs">
         <div class="pipe-step-num">Step 02</div>
         <div class="pipe-step-name">Extract</div>
-        <div class="pipe-step-detail">Scrape 60 pages, parse HTML, return DataFrame</div>
+        <div class="pipe-step-detail">Download, unzip &amp; validate raw CSVs from Kaggle</div>
         <div class="pipe-script">extract.py</div>
       </div>
       <div class="pipe-node-cs">
         <div class="pipe-step-num">Step 03</div>
-        <div class="pipe-step-name">Transform</div>
-        <div class="pipe-step-detail">Clean prices, dedupe, engineer features, validate</div>
-        <div class="pipe-script">transform.py</div>
+        <div class="pipe-step-name">Explore</div>
+        <div class="pipe-step-detail">Auto-discover shape, dtypes, missing values</div>
+        <div class="pipe-script">explore.py</div>
       </div>
       <div class="pipe-node-cs">
         <div class="pipe-step-num">Step 04</div>
-        <div class="pipe-step-name">Load</div>
-        <div class="pipe-step-detail">Dedupe vs existing, append only new rows</div>
-        <div class="pipe-script">load.py</div>
+        <div class="pipe-step-name">Clean</div>
+        <div class="pipe-step-detail">Standardise, cast types, load staging schema</div>
+        <div class="pipe-script">clean.py</div>
       </div>
       <div class="pipe-node-cs">
         <div class="pipe-step-num">Step 05</div>
+        <div class="pipe-step-name">Transform</div>
+        <div class="pipe-step-detail">Build full star schema (dims + facts)</div>
+        <div class="pipe-script">transform.py</div>
+      </div>
+      <div class="pipe-node-cs">
+        <div class="pipe-step-num">Step 06</div>
         <div class="pipe-step-name">Orchestrate</div>
-        <div class="pipe-step-detail">Single command, in-memory df passing, timed</div>
+        <div class="pipe-step-detail">Single-command DAG with timing + logs</div>
         <div class="pipe-script">run_all.py</div>
       </div>
     </div>
 
     <div class="code-block">
-<span class="cm"># Run the full pipeline end-to-end</span>
+<span class="cm"># Run the full pipeline in one command</span>
 <br/><span class="ck">python</span> <span class="cs">-m</span> <span class="ct">etl.run_all</span>
 <br/>
 <br/><span class="cm"># What run_all.py executes:</span>
-<br/><span class="cn">1.</span> <span class="ct">scraper.health_check()</span>     <span class="cm">→  HTTP request + real browser test</span>
-<br/><span class="cn">2.</span> <span class="ct">extract.scrape()</span>            <span class="cm">→  60 pages, returns DataFrame</span>
-<br/><span class="cn">3.</span> <span class="ct">transform.clean(df)</span>          <span class="cm">→  type cast, dedupe, engineer features</span>
-<br/><span class="cn">4.</span> <span class="ct">load.append(df)</span>              <span class="cm">→  dedupe vs DB, append only new rows</span>
+<br/><span class="cn">1.</span> <span class="ct">wipe_all</span>    <span class="cm">→  drop &amp; recreate staging + analytics schemas</span>
+<br/><span class="cn">2.</span> <span class="ct">extract</span>     <span class="cm">→  download Kaggle ZIPs, validate CSVs, log row counts</span>
+<br/><span class="cn">3.</span> <span class="ct">clean</span>       <span class="cm">→  cast types, handle nulls, load staging schema</span>
+<br/><span class="cn">4.</span> <span class="ct">transform</span>   <span class="cm">→  build dim_* + fact_* tables in analytics schema</span>
 <br/>
-<br/><span class="cm"># Every step: timed, logged via custom ColorFormatter, fail-fast</span>
+<br/><span class="cm"># All steps: timed, logged, fail-fast</span>
     </div>
   </section>
 
-  <!-- SCRAPING -->
-  <section id="scraping" class="fade-up sec-alt">
+  <!-- SCHEMA -->
+  <section id="schema" class="fade-up sec-alt">
     <span class="sec-num">03</span>
-    <div class="kicker">Scraping Layer</div>
-    <h2>Reliable scraping, hostile target</h2>
-    <p class="section-intro">The extraction layer is the most fragile part of any web scraping pipeline. I treated it as a system with explicit reliability requirements, not a script to be rerun until it works.</p>
+    <div class="kicker">Schema Design</div>
+    <h2>Star schema</h2>
+    <p class="section-intro">The analytics layer is a fully normalised star schema optimised for BI workloads. Surrogate keys, FK constraints, and date key mapping throughout. All tables are defined explicitly in SQL DDL, not inferred from Python.</p>
+
+    <!-- Animated star schema visual: central fact + 4 dimensions -->
+    <div class="star-schema fade-up" aria-label="Star schema: fact_orders at center with four dimension tables (dim_customer, dim_product, dim_seller, dim_date) radiating outward">
+      <svg class="star-svg" viewBox="0 0 680 360" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+        <defs>
+          <linearGradient id="star-line-grad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#22d3ee" stop-opacity="0"/>
+            <stop offset="50%" stop-color="#22d3ee" stop-opacity="1"/>
+            <stop offset="100%" stop-color="#22d3ee" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+
+        <!-- Connection lines (drawn first so they sit beneath nodes) -->
+        <!-- Center at 340, 180. Dims at: N(340,55), E(560,180), S(340,305), W(120,180) -->
+        <g class="star-lines">
+          <line class="star-line" x1="340" y1="180" x2="340" y2="75"/>   <!-- to N -->
+          <line class="star-line" x1="340" y1="180" x2="540" y2="180"/>  <!-- to E -->
+          <line class="star-line" x1="340" y1="180" x2="340" y2="285"/>  <!-- to S -->
+          <line class="star-line" x1="340" y1="180" x2="140" y2="180"/>  <!-- to W -->
+        </g>
+
+        <!-- Flow dots traveling FROM dimensions TOWARD fact center (data enrichment direction) -->
+        <circle class="star-flow flow-n" r="3" cx="340" cy="75"/>
+        <circle class="star-flow flow-e" r="3" cx="540" cy="180"/>
+        <circle class="star-flow flow-s" r="3" cx="340" cy="285"/>
+        <circle class="star-flow flow-w" r="3" cx="140" cy="180"/>
+
+        <!-- Dimension nodes (smaller rounded rects) -->
+        <g class="star-dim" transform="translate(280 40)">
+          <rect class="dim-box" width="120" height="44" rx="8"/>
+          <text class="dim-label" x="60" y="20" text-anchor="middle">dim_customer</text>
+          <text class="dim-sub" x="60" y="33" text-anchor="middle">CUSTOMER</text>
+        </g>
+        <g class="star-dim" transform="translate(540 158)">
+          <rect class="dim-box" width="120" height="44" rx="8"/>
+          <text class="dim-label" x="60" y="20" text-anchor="middle">dim_product</text>
+          <text class="dim-sub" x="60" y="33" text-anchor="middle">PRODUCT</text>
+        </g>
+        <g class="star-dim" transform="translate(280 276)">
+          <rect class="dim-box" width="120" height="44" rx="8"/>
+          <text class="dim-label" x="60" y="20" text-anchor="middle">dim_seller</text>
+          <text class="dim-sub" x="60" y="33" text-anchor="middle">SELLER</text>
+        </g>
+        <g class="star-dim" transform="translate(20 158)">
+          <rect class="dim-box" width="120" height="44" rx="8"/>
+          <text class="dim-label" x="60" y="20" text-anchor="middle">dim_date</text>
+          <text class="dim-sub" x="60" y="33" text-anchor="middle">DATE</text>
+        </g>
+
+        <!-- Fact table at center (larger, stronger styling) -->
+        <g class="star-fact" transform="translate(260 145)">
+          <rect class="fact-box" width="160" height="70" rx="10"/>
+          <text class="fact-label" x="80" y="28" text-anchor="middle">fact_orders</text>
+          <text class="fact-sub" x="80" y="50" text-anchor="middle">FACT TABLE</text>
+        </g>
+      </svg>
+
+      <!-- accessible caption -->
+      <div class="star-caption">
+        <span class="star-cap-fact">fact_orders</span>
+        <span class="star-cap-sep">+</span>
+        <span>4 conformed dimensions</span>
+        <span class="star-cap-arrow">→</span>
+        <span>1 star, 1 query path per metric</span>
+      </div>
+    </div>
+
+    <div class="schema-block" style="margin-bottom:1rem;">
+      <div class="schema-group">
+        <div class="schema-label">Staging schema (cleaned 1:1 from raw, validated)</div>
+        <div class="schema-pills">
+          <span class="schema-pill orch">staging_customers</span>
+          <span class="schema-pill orch">staging_orders</span>
+          <span class="schema-pill orch">staging_order_items</span>
+          <span class="schema-pill orch">staging_payments</span>
+        </div>
+      </div>
+      <div class="schema-group">
+        <div class="schema-label">Fact tables (transactional grain, surrogate keys, FK integrity)</div>
+        <div class="schema-pills">
+          <span class="schema-pill fact">fact_orders</span>
+          <span class="schema-pill fact">fact_order_items</span>
+        </div>
+      </div>
+      <div class="schema-group">
+        <div class="schema-label">Dimension tables (conformed, reusable, date-key mapped)</div>
+        <div class="schema-pills">
+          <span class="schema-pill dim">dim_customer</span>
+          <span class="schema-pill dim">dim_product</span>
+          <span class="schema-pill dim">dim_seller</span>
+          <span class="schema-pill dim">dim_date</span>
+        </div>
+      </div>
+      <div class="schema-group">
+        <div class="schema-label">ETL modules &amp; orchestration</div>
+        <div class="schema-pills">
+          <span class="schema-pill orch">extract.py</span>
+          <span class="schema-pill orch">explore.py</span>
+          <span class="schema-pill orch">clean.py</span>
+          <span class="schema-pill orch">transform.py</span>
+          <span class="schema-pill orch">run_all.py</span>
+          <span class="schema-pill orch">wipe_all.py</span>
+          <span class="schema-pill orch">logger.py</span>
+          <span class="schema-pill orch">db_config.py</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="code-block">
+<span class="cm">-- Example: fact_orders (simplified DDL)</span>
+<br/><span class="ck">CREATE TABLE</span> <span class="cs">analytics.fact_orders</span> (
+<br/>  &nbsp;&nbsp;<span class="cv">order_key</span>        <span class="cn">SERIAL PRIMARY KEY</span>,
+<br/>  &nbsp;&nbsp;<span class="cv">order_id</span>         <span class="cn">TEXT NOT NULL</span>,
+<br/>  &nbsp;&nbsp;<span class="cv">customer_key</span>     <span class="cn">INT REFERENCES</span> <span class="cs">dim_customer</span>(<span class="cv">customer_key</span>),
+<br/>  &nbsp;&nbsp;<span class="cv">date_key</span>         <span class="cn">INT REFERENCES</span> <span class="cs">dim_date</span>(<span class="cv">date_key</span>),
+<br/>  &nbsp;&nbsp;<span class="cv">order_status</span>     <span class="cn">TEXT</span>,
+<br/>  &nbsp;&nbsp;<span class="cv">item_count</span>       <span class="cn">INT</span>,
+<br/>  &nbsp;&nbsp;<span class="cv">total_value</span>      <span class="cn">NUMERIC(12,2)</span>
+<br/>);
+    </div>
+  </section>
+
+  <!-- APPROACH -->
+  <section id="approach" class="fade-up">
+    <span class="sec-num">04</span>
+    <div class="kicker">Engineering Approach</div>
+    <h2>How it's built</h2>
     <div class="card-grid grid-3">
       <div class="card">
-        <h3>Health check first</h3>
-        <p>Before scraping, <strong>scraper.py</strong> sends an HTTP request to AliExpress and opens a real Chrome browser. If either fails, the pipeline aborts with a clear error instead of producing garbage output.</p>
+        <h3>Modular ETL</h3>
+        <p>Each stage is an isolated Python module (extract, clean, transform), independently testable and replaceable. No monolithic scripts.</p>
       </div>
       <div class="card">
-        <h3>Bot detection avoidance</h3>
-        <p>Selenium is configured to disable common automation flags. The browser opens looking like a real user agent, not a default Chromedriver instance.</p>
+        <h3>Idempotent loads</h3>
+        <p><strong>wipe_all.py</strong> drops and recreates all schemas before each run, guaranteeing clean, deterministic output with no duplicate rows.</p>
       </div>
       <div class="card">
-        <h3>Cookie banner auto-accept</h3>
-        <p>The scraper waits for the cookie banner to render, dismisses it, then continues. No human intervention, no scraped HTML hidden behind a modal.</p>
+        <h3>SQL-first modeling</h3>
+        <p>All warehouse tables defined in explicit SQL DDL files, not inferred from pandas DataFrames. Schema is the source of truth, not Python.</p>
       </div>
       <div class="card">
-        <h3>Explicit waits, not sleep</h3>
-        <p>Every page transition uses <strong>WebDriverWait</strong> against a specific element selector. No <strong>time.sleep()</strong> guesses. The scraper waits exactly as long as needed and no longer.</p>
+        <h3>Production-grade logging</h3>
+        <p>Cross-platform <strong>ColorFormatter</strong> with UTF-8 detection, rotating file logs (no ANSI codes), emoji-safe console output, section banners, and timing decorators on every stage. Built for incident debugging at 2am.</p>
       </div>
       <div class="card">
-        <h3>BeautifulSoup for parsing</h3>
-        <p>Selenium handles navigation. BeautifulSoup handles parsing. Each tool does what it is best at, and the parsing logic is unit-testable without spinning up a browser.</p>
+        <h3>Config-driven</h3>
+        <p>All DB credentials and input paths managed via <strong>.env</strong> and <strong>db_config.py</strong>. No hardcoded values anywhere in the codebase.</p>
       </div>
       <div class="card">
-        <h3>Pagination across 60 pages</h3>
-        <p>The scraper walks through all 60 pages of laptop listings in a single run, with retry logic at each page transition. Failure on page 42 does not corrupt the data from pages 1 through 41.</p>
+        <h3>Pre-load validation</h3>
+        <p>Validation at extract, clean, and transform stages. Row counts, schema checks, null counts, and dataset profiling via <strong>explore.py</strong> before any data reaches the warehouse.</p>
       </div>
-    </div>
-  </section>
-
-  <!-- FEATURES -->
-  <section id="features" class="fade-up">
-    <span class="sec-num">04</span>
-    <div class="kicker">Feature Engineering</div>
-    <h2>From raw scrape to analytics-ready</h2>
-    <p class="section-intro">The transform stage does more than clean data. It engineers business-friendly features that turn raw scraped text into something a BI tool or SQL query can answer questions against.</p>
-
-    <h3 style="font-family:var(--fd);font-size:1.05rem;font-weight:600;color:var(--h1);margin-bottom:.8rem;">Source columns scraped</h3>
-    <table class="data-table">
-      <thead><tr><th>Column</th><th>Description</th></tr></thead>
-      <tbody>
-        <tr><td>product_name</td><td>Full listing title</td></tr>
-        <tr><td>product_price</td><td>Current sale price (£)</td></tr>
-        <tr><td>was_price</td><td>Original crossed-out price (£)</td></tr>
-        <tr><td>discount_info</td><td>Discount label from the listing</td></tr>
-        <tr><td>extra_discount</td><td>Additional coupon or offer</td></tr>
-        <tr><td>shipping_status</td><td>Free shipping or not</td></tr>
-        <tr><td>total_sold_count</td><td>Number of units sold</td></tr>
-        <tr><td>top_selling_status</td><td>Top selling on AliExpress flag</td></tr>
-        <tr><td>scraped_at</td><td>Timestamp of scrape</td></tr>
-      </tbody>
-    </table>
-
-    <h3 style="font-family:var(--fd);font-size:1.05rem;font-weight:600;color:var(--h1);margin-top:2.25rem;margin-bottom:.8rem;">Features engineered in transform</h3>
-    <table class="data-table">
-      <thead><tr><th>Column</th><th>Logic</th></tr></thead>
-      <tbody>
-        <tr><td>discount_amount</td><td><strong>was_price − product_price</strong> in £</td></tr>
-        <tr><td>discount_percentage</td><td>% saved off the original price</td></tr>
-        <tr><td>is_on_sale</td><td>Boolean. Was-price exists and is higher than current price</td></tr>
-        <tr><td>is_free_shipping</td><td>Boolean. Free shipping offered on the listing</td></tr>
-        <tr><td>is_top_seller</td><td>Boolean. Top-selling badge present on the listing</td></tr>
-        <tr><td>price_band</td><td>Budget / Mid-Range / Upper-Mid / Premium / Luxury</td></tr>
-      </tbody>
-    </table>
-
-    <div class="code-block" style="margin-top:1.5rem;">
-<span class="cm">-- Example queries the warehouse can answer:</span>
-<br/>
-<br/><span class="cm">-- Which laptops offer the best discount?</span>
-<br/><span class="ck">SELECT</span> <span class="ct">product_name, product_price, discount_percentage</span>
-<br/><span class="ck">FROM</span> <span class="cs">laptops</span>
-<br/><span class="ck">WHERE</span> <span class="ct">is_on_sale =</span> <span class="cn">TRUE</span>
-<br/><span class="ck">ORDER BY</span> <span class="ct">discount_percentage</span> <span class="ck">DESC</span> <span class="ck">LIMIT</span> <span class="cn">10</span>;
-<br/>
-<br/><span class="cm">-- What price band has the most listings?</span>
-<br/><span class="ck">SELECT</span> <span class="ct">price_band,</span> <span class="ck">COUNT</span>(*) <span class="ck">AS</span> <span class="ct">total</span>
-<br/><span class="ck">FROM</span> <span class="cs">laptops</span>
-<br/><span class="ck">GROUP BY</span> <span class="ct">price_band</span>
-<br/><span class="ck">ORDER BY</span> <span class="ct">total</span> <span class="ck">DESC</span>;
     </div>
   </section>
 
@@ -902,28 +1459,24 @@ footer:hover .footer-mark{opacity:1;transform:translateY(-1px);}
     <h2>Design choices &amp; tradeoffs</h2>
     <div class="decision-wrapper">
       <div class="decision-row">
-        <div class="decision-cell">Selenium + BeautifulSoup</div>
-        <div class="decision-cell">Selenium handles dynamic JavaScript rendering and navigation. BeautifulSoup handles parsing the resulting HTML. Each tool stays in its lane. The parsing layer is unit-testable without launching a browser, which is the difference between an hour of debugging and ten seconds of pytest.</div>
+        <div class="decision-cell">SQL-first modeling</div>
+        <div class="decision-cell">Tables defined in <strong>.sql</strong> DDL files, not generated from Python types. Makes the schema auditable, reviewable, and portable. A recruiter or data analyst can read the schema without touching Python.</div>
       </div>
       <div class="decision-row">
-        <div class="decision-cell">Append-only load</div>
-        <div class="decision-cell">Unlike PayFlow and ChocoDelight, which wipe and reload, this pipeline appends. Scraping a live source is non-idempotent at the source layer (data changes between runs), so the load step deduplicates against existing rows before inserting. New listings get added, old data stays untouched, no row is ever duplicated.</div>
+        <div class="decision-cell">Idempotent wipe</div>
+        <div class="decision-cell">Rather than upsert logic, the pipeline resets entirely on each run. Simpler to reason about, eliminates partial-load bugs, and makes the pipeline safe for scheduled execution.</div>
       </div>
       <div class="decision-row">
-        <div class="decision-cell">In-memory df passing</div>
-        <div class="decision-cell">Extract, transform, and load pass a DataFrame directly between stages instead of always writing CSVs to disk between steps. This keeps the orchestrated pipeline fast. Each step can still be run independently and writes its CSV output if you need to inspect intermediate state.</div>
+        <div class="decision-cell">Surrogate keys</div>
+        <div class="decision-cell">All dimension and fact tables use surrogate integer keys (SERIAL) rather than natural keys from the source data. Decouples the warehouse from upstream source system changes.</div>
       </div>
       <div class="decision-row">
-        <div class="decision-cell">Explicit waits, never sleep</div>
-        <div class="decision-cell"><strong>time.sleep()</strong> is a guess. <strong>WebDriverWait</strong> is a contract. Every page interaction waits for a specific element to be present or interactable, not for a hardcoded number of seconds. Scraper is faster on fast networks, more reliable on slow ones, and never flaky for reasons that should not matter.</div>
+        <div class="decision-cell">Staging layer</div>
+        <div class="decision-cell">Raw data is never written to directly by the analytics layer. The staging schema acts as a clean intermediate layer, validating and standardising before promotion to the warehouse.</div>
       </div>
       <div class="decision-row">
-        <div class="decision-cell">Health check before scrape</div>
-        <div class="decision-cell">Before extract.py runs, scraper.py confirms AliExpress is reachable via HTTP and Chrome can launch successfully. If either fails, the pipeline aborts before scraping a single page. Saves time on broken environments and surfaces config issues clearly.</div>
-      </div>
-      <div class="decision-row">
-        <div class="decision-cell">Feature engineering in Python</div>
-        <div class="decision-cell">Discount percentage, price bands, and boolean flags are computed in the transform stage in pandas, not as derived columns in SQL views. Logic lives in version-controlled Python where it can be tested, reviewed, and changed in one place. Downstream analytics see clean, semantically meaningful columns.</div>
+        <div class="decision-cell">Semantic naming</div>
+        <div class="decision-cell">All warehouse tables and columns use business-readable names (<strong>dim_customer</strong>, <strong>order_status</strong>) rather than source system codes. Analytics teams can query without a data dictionary.</div>
       </div>
     </div>
   </section>
@@ -931,53 +1484,24 @@ footer:hover .footer-mark{opacity:1;transform:translateY(-1px);}
   <!-- IMPACT -->
   <section id="impact" class="fade-up">
     <span class="sec-num">06</span>
-    <div class="kicker">Outcomes</div>
-    <h2>What this pipeline enables</h2>
+    <div class="kicker">Impact</div>
+    <h2>Business outcomes</h2>
     <div class="impact-grid">
       <div class="impact-card">
-        <div class="impact-num acc">60 pages</div>
-        <div class="impact-label">Scraped end-to-end in a single run with retry logic at every page transition</div>
+        <div class="impact-num green">↓80%</div>
+        <div class="impact-label">Reduction in manual cleaning steps (from 12 ad-hoc scripts to a single orchestrated run)</div>
       </div>
       <div class="impact-card">
-        <div class="impact-num indigo">6 features</div>
-        <div class="impact-label">Engineered in the transform stage (discount %, price bands, three boolean flags)</div>
+        <div class="impact-num acc">↓90%</div>
+        <div class="impact-label">Fewer pipeline inconsistencies through pre-load validation and idempotent design</div>
       </div>
       <div class="impact-card">
         <div class="impact-num teal">1 cmd</div>
         <div class="impact-label">Full pipeline runs end-to-end with <strong>python -m etl.run_all</strong></div>
       </div>
       <div class="impact-card">
-        <div class="impact-num amber">0 dupes</div>
-        <div class="impact-label">Append-only loads with pre-insert deduplication. Reruns never corrupt the warehouse</div>
-      </div>
-    </div>
-
-    <h3 style="font-family:var(--fd);font-size:1.1rem;font-weight:600;margin-top:2.5rem;margin-bottom:.85rem;color:var(--h1);">What this warehouse can answer</h3>
-    <p style="font-size:.88rem;color:var(--h2);max-width:640px;line-height:1.7;margin-bottom:1.25rem;">Each engineered feature directly enables a category of analytical question. Below are real business questions a price-intelligence team or competitive-analysis team would ask of this data, all answerable with a single SQL query.</p>
-    <div class="card-grid grid-3">
-      <div class="card">
-        <h3>Pricing intelligence</h3>
-        <ul>
-          <li>Best-discount laptops right now</li>
-          <li>Average price by price band</li>
-          <li>Discount distribution across the catalog</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h3>Listing patterns</h3>
-        <ul>
-          <li>Share of listings on sale at any time</li>
-          <li>Free-shipping vs paid-shipping price differential</li>
-          <li>Top-seller flag correlation with discount depth</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h3>Trend tracking</h3>
-        <ul>
-          <li>Price changes over time per listing</li>
-          <li>Listing churn (new vs returning items)</li>
-          <li>Long-running discounts vs flash sales</li>
-        </ul>
+        <div class="impact-num amber">6 tbls</div>
+        <div class="impact-label">Analytics-ready warehouse tables (2 facts, 4 dims) ready for BI</div>
       </div>
     </div>
   </section>
@@ -990,47 +1514,47 @@ footer:hover .footer-mark{opacity:1;transform:translateY(-1px);}
 
     <div class="tech-grid">
       <div class="tech-item">
-        <span class="tech-name">Python 3.10+</span>
-        <span class="tech-role">ETL + scraping orchestration</span>
-      </div>
-      <div class="tech-item">
-        <span class="tech-name">Selenium WebDriver</span>
-        <span class="tech-role">Browser automation + pagination</span>
-      </div>
-      <div class="tech-item">
-        <span class="tech-name">BeautifulSoup</span>
-        <span class="tech-role">HTML parsing + element extraction</span>
+        <span class="tech-name">Python 3.x</span>
+        <span class="tech-role">ETL logic + orchestration</span>
       </div>
       <div class="tech-item">
         <span class="tech-name">pandas</span>
-        <span class="tech-role">Cleaning + feature engineering</span>
+        <span class="tech-role">DataFrame cleaning + type casting</span>
       </div>
       <div class="tech-item">
         <span class="tech-name">PostgreSQL 18</span>
-        <span class="tech-role">Append-only warehouse</span>
+        <span class="tech-role">Staging + analytics schemas</span>
       </div>
       <div class="tech-item">
         <span class="tech-name">SQLAlchemy</span>
-        <span class="tech-role">DB engine + bulk loads</span>
+        <span class="tech-role">Connection management + bulk loads</span>
       </div>
       <div class="tech-item">
         <span class="tech-name">psycopg2</span>
         <span class="tech-role">Postgres driver</span>
       </div>
       <div class="tech-item">
-        <span class="tech-name">Custom logger</span>
-        <span class="tech-role">Cross-platform ColorFormatter</span>
+        <span class="tech-name">SQL (DDL)</span>
+        <span class="tech-role">Hand-authored schema + constraints</span>
       </div>
       <div class="tech-item">
         <span class="tech-name">python-dotenv</span>
         <span class="tech-role">Env-var config loader</span>
+      </div>
+      <div class="tech-item">
+        <span class="tech-name">Custom logger</span>
+        <span class="tech-role">ColorFormatter + timing decorators</span>
+      </div>
+      <div class="tech-item">
+        <span class="tech-name">Kaggle API</span>
+        <span class="tech-role">Source data ingestion</span>
       </div>
     </div>
 
     <h3 class="sec-h" style="font-size:1.2rem;margin-top:2.5rem;margin-bottom:.85rem;">If I were scaling this up</h3>
 
     <p class="sec-p">
-      For higher volumes and reliability the natural evolutions would be: <strong>Playwright</strong> instead of Selenium for faster, more resilient browser automation; <strong>proxy rotation</strong> to avoid rate-limiting on long-running scrapes; <strong>asynchronous fetching</strong> (asyncio + aiohttp) for static endpoints to parallelise page retrieval; <strong>Airflow or Prefect orchestration</strong> for scheduled runs with retry and alerting; <strong>change-detection logic</strong> to flag price drops or stock changes per listing rather than just appending new rows; and <strong>migration tooling</strong> (Alembic, Flyway) for evolving the schema safely as scraped attributes change.
+      For higher volumes the natural evolutions would be: <strong>PySpark</strong> to distribute the transform across executors when row counts pass ~10M; <strong>dbt</strong> on top of the warehouse for analyst-authored transformations and tested SQL models; <strong>Airflow or Prefect orchestration</strong> for scheduled runs with retry and alerting; <strong>SCD Type 2 dimensions</strong> with <code>valid_from</code> / <code>valid_to</code> columns to track customer attribute changes over time; <strong>incremental fact loads</strong> partitioned by order date to avoid full reloads; and <strong>migration tooling</strong> (Alembic, Flyway) for evolving the DDL safely instead of <code>DROP + CREATE</code>.
     </p>
   </section>
 
@@ -1038,12 +1562,12 @@ footer:hover .footer-mark{opacity:1;transform:translateY(-1px);}
   <section class="fade-up" style="margin-top:5rem;margin-bottom:0;">
     <div style="padding:2.5rem 2rem;background:var(--bg-card);border:1px solid var(--bdr);border-radius:var(--r);text-align:center;">
       <div class="sec-kicker" style="justify-content:center;margin-bottom:1rem;">Let's talk</div>
-      <h2 class="sec-h" style="text-align:center;font-size:clamp(1.4rem,2.8vw,1.9rem);margin-bottom:1rem;">Need a data engineer who can build reliable scraping pipelines?</h2>
+      <h2 class="sec-h" style="text-align:center;font-size:clamp(1.4rem,2.8vw,1.9rem);margin-bottom:1rem;">Need a data engineer who builds production-grade ETL?</h2>
       <p class="sec-p" style="max-width:580px;margin:0 auto 1.75rem;font-size:.98rem;">
         I'm currently looking for Data Engineer / Analytics Engineer roles. UK-based, open to remote or hybrid.
       </p>
       <div class="cta-actions" style="justify-content:center;">
-        <a href="https://github.com/yoismail/aliExpress_laptop_ETL_pipeline" class="btn-primary" target="_blank" rel="noopener">
+        <a href="https://github.com/yoismail/payflow_case_study" class="btn-primary" target="_blank" rel="noopener">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58v-2.06c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.21.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.5.99.11-.77.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.31-.54-1.53.11-3.19 0 0 1.01-.32 3.3 1.23.96-.27 1.98-.4 3-.41 1.02 0 2.04.14 3 .41 2.29-1.55 3.3-1.23 3.3-1.23.65 1.66.24 2.88.12 3.19.77.84 1.24 1.91 1.24 3.22 0 4.61-2.8 5.62-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.69.83.58A12 12 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
           View this project on GitHub
         </a>
@@ -1071,10 +1595,10 @@ footer:hover .footer-mark{opacity:1;transform:translateY(-1px);}
         </div>
         <span class="read-next-cta">Read the case study<span class="read-next-cta-arrow">→</span></span>
       </a>
-      <a href="payflow.html" class="read-next-card">
-        <div class="read-next-label">Case study · End-to-end ETL</div>
-        <div class="read-next-title">PayFlow — ETL & Warehouse</div>
-        <p class="read-next-desc">A production-style ETL pipeline that loads 9 raw Brazilian e-commerce CSVs into a full PostgreSQL star schema, with idempotent loads and structured logging.</p>
+      <a href="chocodelight.html" class="read-next-card">
+        <div class="read-next-label">Case study · Layered platform</div>
+        <div class="read-next-title">ChocoDelight Data Platform</div>
+        <p class="read-next-desc">Three-schema PostgreSQL warehouse on chocolate sales data, with raw, operational, and analytics layers and a full dimensional model.</p>
         <div class="read-next-tags">
           <span class="read-next-tag">Python</span>
           <span class="read-next-tag">PostgreSQL</span>
@@ -1190,6 +1714,7 @@ footer:hover .footer-mark{opacity:1;transform:translateY(-1px);}
   </div>
 </footer>
 
+<!-- BACK TO TOP -->
 <button class="to-top" id="toTop" aria-label="Scroll to top">
   <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
 </button>
@@ -1233,7 +1758,7 @@ footer:hover .footer-mark{opacity:1;transform:translateY(-1px);}
       document.getElementById('year').textContent=new Date().getFullYear();
     })();
 
-/* fade-in */
+/* fade-in on scroll */
 (function(){
   const io=new IntersectionObserver(entries=>{
     entries.forEach(e=>{
@@ -1275,12 +1800,14 @@ footer:hover .footer-mark{opacity:1;transform:translateY(-1px);}
     const id=a.getAttribute('href').slice(1);
     tocMap.set(id,a);
   });
+  // show after scrolling past hero
   function update(){
     if(window.scrollY>400)toc.classList.add('show');
     else toc.classList.remove('show');
   }
   window.addEventListener('scroll',update,{passive:true});
   update();
+  // sync active state
   const sections=document.querySelectorAll('section[id]');
   const io=new IntersectionObserver(entries=>{
     entries.forEach(e=>{
