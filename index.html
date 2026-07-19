@@ -390,6 +390,8 @@ h2{font-family:var(--fd);font-size:clamp(1.75rem,3.2vw,2.4rem);font-weight:700;l
 .tl-loc{font-family:var(--fm);font-size:.68rem;color:var(--h3);margin-bottom:.6rem;}
 .tl-role{font-size:.88rem;font-weight:500;color:var(--h2);margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;}
 .tl-subrole{font-family:var(--fm);font-size:.72rem;font-style:italic;color:var(--h3);margin-top:-.5rem;margin-bottom:.85rem;letter-spacing:.01em;}
+.tl-subhead{font-family:var(--fm);font-size:.72rem;font-weight:600;color:var(--acc);text-transform:uppercase;letter-spacing:.14em;margin:0 0 1.75rem 0;padding-bottom:.5rem;border-bottom:1px solid var(--bdr);}
+.tl-subhead:not(:first-child){margin-top:2.5rem;}
 .tl-badge{font-family:var(--fm);font-size:.6rem;padding:.12rem .55rem;border-radius:999px;letter-spacing:.06em;}
 .tl-badge.current{background:var(--amber-s);color:var(--amber);border:1px solid rgba(251,191,36,.25);}
 .tl-badge.fintech{background:rgba(167,139,250,.09);color:#a78bfa;border:1px solid rgba(167,139,250,.22);}
@@ -522,9 +524,9 @@ footer:hover .footer-mark{opacity:1;transform:translateY(-1px);}
   <div class="nav-links" id="navLinks">
     <a href="#featured-case-study">Case Study</a>
     <a href="#projects">Projects</a>
+    <a href="#tech-stack">Stack</a>
     <a href="#experience">Experience</a>
     <a href="principles.html">Principles</a>
-    <a href="#tech-stack">Stack</a>
     <a href="#cv">CV</a>
     <a href="#contact">Contact</a>
   </div>
@@ -690,174 +692,8 @@ footer:hover .footer-mark{opacity:1;transform:translateY(-1px);}
     </div>
   </section>
 
-  <!-- EXPERIENCE -->
-  <section id="experience" class="fade-up sec-alt">
-    <span class="sec-num">03</span>
-    <div class="kicker">Experience</div>
-    <h2>Work history</h2>
-    <p class="section-intro">6+ years across data engineering, fintech product operations, and analytics, with quantified impact from production systems.</p>
-    <div class="timeline">
-      <div class="tl-item fade-up">
-        <div class="tl-dot"></div>
-        <div class="tl-period">Jan 2026 – Present</div>
-        <div class="tl-company">Amdari Inc.</div>
-        <div class="tl-loc">UK · Remote</div>
-        <div class="tl-role">Data Engineer <span class="tl-badge current">Current</span></div>
-        <ul class="tl-bullets">
-          <li>Designed end-to-end pipelines using <strong>Python, SQL &amp; Apache Airflow</strong>. Improved batch processing efficiency by <strong>35%</strong>.</li>
-          <li>Optimised PostgreSQL via partitioning &amp; query tuning. Achieved <strong>£10K quarterly cost reduction</strong> in AWS S3 and <strong>40% query performance gain</strong>.</li>
-          <li>Automated workflows with <strong>Airflow DAGs</strong>, eliminating <strong>20+ hours of manual processing</strong> per month.</li>
-          <li>Integrated <strong>CI/CD</strong> with Docker, Jenkins &amp; GitHub Actions. Reduced release rollbacks by <strong>50%</strong>.</li>
-          <li>Monitored cloud infrastructure with <strong>Grafana</strong>, maintaining <strong>99.9% uptime</strong>.</li>
-          <li>Built <strong>Power BI dashboards</strong> cutting executive decision time by <strong>30%</strong>.</li>
-        </ul>
-        <div class="tag-row"><span class="tag">Python</span><span class="tag">SQL</span><span class="tag">Airflow</span><span class="tag">PostgreSQL</span><span class="tag">AWS</span><span class="tag">Power BI</span><span class="tag">Docker</span><span class="tag">GitHub Actions</span><span class="tag">Grafana</span></div>
-      </div>
-      <div class="tl-item fade-up">
-        <div class="tl-dot"></div>
-        <div class="tl-period">Jan 2025 – Jan 2026</div>
-        <div class="tl-company">Yawee Foods Limited</div>
-        <div class="tl-loc">E-commerce · Ipswich / Colchester, England</div>
-        <div class="tl-role">Retail Assistant / E-commerce Support <span class="tl-badge banking">E-commerce</span></div>
-        <div class="tl-subrole">with data analytics contributions</div>
-        <ul class="tl-bullets">
-          <li>Built <strong>batch data workflows in Python</strong>: ingested CSV exports from the e-commerce platform, applied cleaning, validation and standardisation, and produced analysis-ready datasets for reporting.</li>
-          <li>Produced <strong>analytics reports</strong> on daily transactions and stock levels, surfacing inventory trends that informed restocking decisions and reduced over-stocking / under-stocking.</li>
-          <li>Analysed sales data to generate actionable insights on product performance, sales trends, and customer buying behaviour, supporting marketing strategy and operational planning.</li>
-          <li>Investigated customer enquiries and complaints to detect recurring patterns, recommending process improvements to enhance service quality and retention.</li>
-        </ul>
-        <div class="tag-row"><span class="tag">Python</span><span class="tag">Batch Workflows</span><span class="tag">Analytics Reporting</span><span class="tag">CRM</span><span class="tag">Inventory Analytics</span></div>
-      </div>
-      <div class="tl-item fade-up">
-        <div class="tl-dot"></div>
-        <div class="tl-period">Oct 2022 – Dec 2024</div>
-        <div class="tl-company">NOMBA (Kudi)</div>
-        <div class="tl-loc">Fintech · Nigeria</div>
-        <div class="tl-role">Product Operations Associate <span class="tl-badge fintech">Fintech</span></div>
-        <ul class="tl-bullets">
-          <li>Monitored real-time transaction data, reducing downtime and improving uptime to <strong>80%+</strong>.</li>
-          <li>Conducted quantitative analysis using <strong>Tableau, Mixpanel &amp; SQL</strong> to guide retention strategies.</li>
-          <li>Led cross-functional incident response with engineering, compliance &amp; customer success teams.</li>
-          <li>Processed support tickets in <strong>Zoho CRM</strong>, generating trend reports to identify systemic issues.</li>
-        </ul>
-        <div class="tag-row"><span class="tag">SQL</span><span class="tag">Tableau</span><span class="tag">Mixpanel</span><span class="tag">Zoho CRM</span></div>
-      </div>
-      <div class="tl-item fade-up">
-        <div class="tl-dot"></div>
-        <div class="tl-period">Sep 2019 – Feb 2022</div>
-        <div class="tl-company">Access Bank PLC</div>
-        <div class="tl-loc">Banking · Nigeria</div>
-        <div class="tl-role">Customer Care Officer / ATM Custodian <span class="tl-badge banking">Banking</span></div>
-        <ul class="tl-bullets">
-          <li>Tracked CSAT metrics across full customer lifecycle, maintaining <strong>90–95%+ satisfaction scores</strong>.</li>
-          <li>Analysed mobile banking adoption data to optimise digital engagement and self-service rates.</li>
-        </ul>
-        <div class="tag-row"><span class="tag">CRM</span><span class="tag">Data Analysis</span><span class="tag">CSAT / NPS</span></div>
-      </div>
-      <div class="tl-item fade-up">
-        <div class="tl-dot"></div>
-        <div class="tl-period">Apr 2019 – Sep 2019</div>
-        <div class="tl-company">Interswitch Group</div>
-        <div class="tl-loc">Fintech · Nigeria</div>
-        <div class="tl-role">Financial Inclusion Partner <span class="tl-badge fintech">Fintech</span></div>
-        <ul class="tl-bullets">
-          <li>Onboarded <strong>20+ agents</strong> in assigned territories, tracking KPIs to optimise market coverage.</li>
-          <li>Built weekly <strong>Power BI dashboards</strong> tracking agent activity and revenue for senior management.</li>
-          <li>Identified bottlenecks via operational audits, increasing productivity by <strong>15–20%</strong>.</li>
-        </ul>
-        <div class="tag-row"><span class="tag">Power BI</span><span class="tag">Excel</span><span class="tag">KPI Tracking</span></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- NUMBERS BAND -->
-  <div class="numbers-band fade-up">
-    <div class="numbers-eyebrow">By the numbers</div>
-    <div class="numbers-grid">
-      <div class="num-card num-card-hero" data-counter data-target="10" data-prefix="£" data-suffix="K" data-decimals="0">
-        <div class="num-hero-content">
-          <div class="num-hero-label">Headline impact</div>
-          <div class="num-hero-big" data-counter-target>£10K</div>
-          <div class="num-hero-kicker">Quarterly saved</div>
-          <div class="num-hero-context">AWS S3 cost reduction at <strong>Amdari Inc.</strong> through partitioning and query tuning. Achieved within the first quarter of joining.</div>
-        </div>
-        <div class="num-hero-glyph">
-          <svg width="96" height="96" viewBox="0 0 96 96" aria-hidden="true">
-            <path class="glyph-path glow" d="M 10 22 L 26 22 L 26 38 L 42 38 L 42 54 L 58 54 L 58 70 L 86 70" pathLength="1"/>
-            <circle class="glyph-dot" cx="86" cy="70" r="3.5"/>
-          </svg>
-        </div>
-      </div>
-      <div class="numbers-secondary">
-        <div class="num-card num-card-sec" data-counter data-target="6" data-prefix="" data-suffix="+" data-decimals="0">
-          <div class="num-sec-top">
-            <div class="num-big" data-counter-target>6+</div>
-            <div class="num-sec-glyph"><svg width="36" height="36" viewBox="0 0 36 36" aria-hidden="true"><path class="glyph-path" d="M 4 18 L 32 18" pathLength="1"/><circle class="glyph-dot" cx="32" cy="18" r="3.5"/></svg></div>
-          </div>
-          <div class="num-label">Years</div>
-          <div class="num-context">Across data engineering, fintech product ops, and banking analytics.</div>
-        </div>
-        <div class="num-card num-card-sec" data-counter data-target="6" data-prefix="" data-suffix="" data-decimals="0">
-          <div class="num-sec-top">
-            <div class="num-big" data-counter-target>6</div>
-            <div class="num-sec-glyph"><svg width="36" height="36" viewBox="0 0 36 36" aria-hidden="true"><path class="glyph-path" d="M 8 26 L 8 18 M 18 26 L 18 12 M 28 26 L 28 6" pathLength="1"/></svg></div>
-          </div>
-          <div class="num-label">Flagship Projects</div>
-          <div class="num-context">Production-style pipelines, all open-source on GitHub.</div>
-        </div>
-        <div class="num-card num-card-sec" data-counter data-target="99.9" data-prefix="" data-suffix="%" data-decimals="1">
-          <div class="num-sec-top">
-            <div class="num-big" data-counter-target>99.9%</div>
-            <div class="num-sec-glyph"><svg width="36" height="36" viewBox="0 0 36 36" aria-hidden="true"><path class="glyph-path" d="M 31.2 14 A 14 14 0 1 1 21 4.8" pathLength="1"/><circle class="glyph-dot" cx="21" cy="4.8" r="2.2"/></svg></div>
-          </div>
-          <div class="num-label">System Uptime</div>
-          <div class="num-context">Production data infrastructure monitored with Grafana and Airflow.</div>
-        </div>
-      </div>
-    </div>
-    <div class="industries-row">
-      <span class="industries-eyebrow">Industries</span>
-      <span class="industry-pill"><span class="industry-dot"></span>Data Engineering</span>
-      <span class="industry-pill"><span class="industry-dot"></span>Fintech</span>
-      <span class="industry-pill"><span class="industry-dot"></span>Banking</span>
-      <span class="industry-pill"><span class="industry-dot"></span>E-commerce</span>
-      <span class="industry-pill"><span class="industry-dot"></span>Retail Analytics</span>
-      <span class="industry-pill"><span class="industry-dot"></span>Financial Inclusion</span>
-    </div>
-  </div>
-
-  <!-- PRINCIPLES TEASER -->
-  <section id="principles-teaser" class="fade-up">
-    <span class="sec-num">04</span>
-    <div class="kicker">How I Think</div>
-    <h2>Engineering principles</h2>
-    <p class="section-intro">Every project on this site follows a small set of positions I have taken often enough that they feel less like opinions and more like defaults.</p>
-    <div class="principles-teaser">
-      <div class="pt-grid">
-        <div class="pt-left">
-          <h3>Seven principles I bring to <span class="hi">every project.</span></h3>
-          <p>These are not borrowed from blog posts. They are positions I have defended in pull requests, learned from incidents, and applied in production. Each one comes with the trade-off I accept by holding it.</p>
-          <a href="principles.html" class="pt-cta">
-            Read all seven principles
-            <svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </a>
-        </div>
-        <ul class="pt-list">
-          <li><span class="pt-num">01</span><span><strong>Schema is the source of truth</strong>, not Python.</span></li>
-          <li><span class="pt-num">02</span><span><strong>Idempotency is a contract</strong>, not a feature.</span></li>
-          <li><span class="pt-num">03</span><span>Write logs <strong>assuming you'll be debugging at 2am</strong>.</span></li>
-          <li><span class="pt-num">04</span><span>Validate before you load, <strong>not after</strong>.</span></li>
-          <li><span class="pt-num">05</span><span>Configuration belongs in <strong>environment variables</strong>, not code.</span></li>
-          <li><span class="pt-num">06</span><span><strong>Modular ETL</strong> beats monolithic scripts, always.</span></li>
-          <li><span class="pt-num">07</span><span>Engineer features in the warehouse, <strong>not in dashboards</strong>.</span></li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- SKILLS -->
   <section id="tech-stack" class="fade-up sec-alt">
-    <span class="sec-num">05</span>
+    <span class="sec-num">03</span>
     <div class="kicker">Stack</div>
     <h2>Skills &amp; tech stack</h2>
     <p class="section-intro">Production-proven tools I use daily, and working knowledge I'm actively building on.</p>
@@ -923,6 +759,213 @@ footer:hover .footer-mark{opacity:1;transform:translateY(-1px);}
     </div>
   </section>
 
+  <section id="experience" class="fade-up sec-alt">
+    <span class="sec-num">04</span>
+    <div class="kicker">Experience</div>
+    <h2>Work history</h2>
+    <p class="section-intro">6+ years across data engineering, fintech product operations, and analytics, with quantified impact from production systems.</p>
+    <div class="timeline">
+      <div class="tl-subhead">Data &amp; Analytics Experience</div>
+      <div class="tl-item fade-up">
+        <div class="tl-dot"></div>
+        <div class="tl-period">Jan 2026 – Present</div>
+        <div class="tl-company">Amdari Inc.</div>
+        <div class="tl-loc">UK · Remote</div>
+        <div class="tl-role">Data Engineer <span class="tl-badge current">Current</span></div>
+        <ul class="tl-bullets">
+          <li>Optimised PostgreSQL database architecture through <strong>schema normalisation, table partitioning, and query tuning</strong>, achieving a <strong>£10K quarterly cost reduction</strong> in AWS S3 storage while enhancing query performance by <strong>40%</strong>.</li>
+          <li>Developed and deployed interactive <strong>Power BI dashboards</strong>, reducing executive decision-making time by <strong>30%</strong> through access to reliable, high-quality insights.</li>
+          <li>Automated repetitive workflows using <strong>Apache Airflow DAGs</strong> and Python scripts, eliminating <strong>20+ hours of manual data processing</strong> per month and improving operational throughput.</li>
+          <li>Conducted <strong>root cause analysis</strong> on data inconsistencies using SQL and Python (pandas), reducing reporting errors by <strong>25%</strong> and strengthening data validation processes.</li>
+          <li>Partnered with business and product teams to translate requirements into scalable data solutions, boosting project delivery efficiency by <strong>20%</strong>.</li>
+          <li>Enhanced cloud infrastructure reliability through <strong>Grafana and Jenkins-based performance monitoring</strong>, minimising downtime and improving system uptime to <strong>99.9%</strong>.</li>
+          <li>Integrated <strong>CI/CD pipelines</strong> using Docker, Jenkins, and GitHub Actions, ensuring consistent deployment of ETL workflows and reducing release rollbacks by <strong>50%</strong>.</li>
+        </ul>
+        <div class="tag-row"><span class="tag">Python</span><span class="tag">SQL</span><span class="tag">Airflow</span><span class="tag">PostgreSQL</span><span class="tag">AWS</span><span class="tag">Power BI</span><span class="tag">Docker</span><span class="tag">Jenkins</span><span class="tag">GitHub Actions</span><span class="tag">Grafana</span></div>
+      </div>
+      <div class="tl-item fade-up">
+        <div class="tl-dot"></div>
+        <div class="tl-period">Jan 2026 – Present</div>
+        <div class="tl-company">Marvgallup Group Ltd</div>
+        <div class="tl-loc">Operations · London, UK</div>
+        <div class="tl-role">Operations / Project Manager <span class="tl-badge current">Current</span></div>
+        <div class="tl-subrole">Concurrent with Data Engineer role at Amdari</div>
+        <ul class="tl-bullets">
+          <li>Lead end-to-end project delivery, including strategic planning, budgeting, resource allocation, implementation, and evaluation, achieving <strong>95%+ on-time project completion</strong>.</li>
+          <li>Oversee daily operations across procurement, logistics, warehousing, and distribution, leveraging <strong>data analytics</strong> to improve operational efficiency by <strong>20–25%</strong>.</li>
+          <li>Design, implement, and optimise operational processes and systems using data insights, reducing costs by <strong>10–15%</strong> while aligning with strategic objectives.</li>
+          <li>Monitor supplier and logistics performance through <strong>KPI tracking and dashboards</strong>, negotiating contracts and driving <strong>10–20%</strong> improvement in supplier performance metrics.</li>
+          <li>Implement data-driven reporting frameworks to track operational metrics, workflow efficiency, and risk management, ensuring <strong>100% audit readiness</strong> and regulatory compliance.</li>
+          <li>Serve as a key liaison for clients and stakeholders, using analytics to inform decision-making, optimise service delivery, and strengthen business relationships.</li>
+        </ul>
+        <div class="tag-row"><span class="tag">Data Analytics</span><span class="tag">KPI Dashboards</span><span class="tag">Process Optimisation</span><span class="tag">Procurement</span><span class="tag">Logistics</span><span class="tag">Vendor Management</span></div>
+      </div>
+      <div class="tl-item fade-up">
+        <div class="tl-dot"></div>
+        <div class="tl-period">Jan 2025 – Jan 2026</div>
+        <div class="tl-company">Yawee Foods Limited</div>
+        <div class="tl-loc">E-commerce · Ipswich / Colchester, England</div>
+        <div class="tl-role">Retail Assistant / E-commerce Support <span class="tl-badge banking">E-commerce</span></div>
+        <div class="tl-subrole">with data analytics contributions</div>
+        <ul class="tl-bullets">
+          <li>Built <strong>batch data workflows in Python</strong>: ingested CSV exports from the e-commerce platform, applied cleaning, validation and standardisation, and produced analysis-ready datasets for reporting.</li>
+          <li>Produced <strong>analytics reports</strong> on daily transactions and stock levels, surfacing inventory trends that informed restocking decisions and reduced over-stocking / under-stocking.</li>
+          <li>Analysed sales data to generate actionable insights on product performance, sales trends, and customer buying behaviour, supporting marketing strategy and operational planning.</li>
+          <li>Investigated customer enquiries and complaints to detect recurring patterns, recommending process improvements to enhance service quality and retention.</li>
+        </ul>
+        <div class="tag-row"><span class="tag">Python</span><span class="tag">Batch Workflows</span><span class="tag">Analytics Reporting</span><span class="tag">CRM</span><span class="tag">Inventory Analytics</span></div>
+      </div>
+      <div class="tl-subhead">Professional Background</div>
+      <div class="tl-item fade-up">
+        <div class="tl-dot"></div>
+        <div class="tl-period">Oct 2022 – Dec 2024</div>
+        <div class="tl-company">NOMBA (Kudi)</div>
+        <div class="tl-loc">Fintech · Nigeria</div>
+        <div class="tl-role">Product Operations Associate <span class="tl-badge fintech">Fintech</span></div>
+        <ul class="tl-bullets">
+          <li>Monitored real-time transaction data, reducing downtime and improving uptime to <strong>80%+</strong>.</li>
+          <li>Conducted quantitative analysis using <strong>Tableau, Mixpanel &amp; SQL</strong> to guide retention strategies.</li>
+          <li>Led cross-functional incident response with engineering, compliance &amp; customer success teams.</li>
+          <li>Processed support tickets in <strong>Zoho CRM</strong>, generating trend reports to identify systemic issues.</li>
+        </ul>
+        <div class="tag-row"><span class="tag">SQL</span><span class="tag">Tableau</span><span class="tag">Mixpanel</span><span class="tag">Zoho CRM</span></div>
+      </div>
+      <div class="tl-item fade-up">
+        <div class="tl-dot"></div>
+        <div class="tl-period">Feb 2022 – Oct 2022</div>
+        <div class="tl-company">NOMBA (Kudi)</div>
+        <div class="tl-loc">Fintech · Nigeria</div>
+        <div class="tl-role">Customer Success Associate <span class="tl-badge fintech">Fintech</span></div>
+        <ul class="tl-bullets">
+          <li>Delivered personalised, multi-channel customer support, contributing to <strong>90%+ CSAT</strong> through clear communication and positive engagement.</li>
+          <li>Collaborated with internal stakeholders to resolve customer issues efficiently, reducing <strong>average resolution time by 25%</strong> and improving service consistency.</li>
+          <li>Maintained strong product and policy knowledge, decreasing repeat inquiries by <strong>20%</strong> and improving first-contact accuracy.</li>
+          <li>Resolved <strong>70-75% of cases at First Call Resolution (FCR)</strong>, escalating complex issues to backend teams and following through to closure within SLA.</li>
+          <li>Logged and documented customer interactions with <strong>100% ticket accuracy</strong>, ensuring audit readiness and smooth stakeholder handoffs.</li>
+          <li>Explained solutions in clear, simple terms, reducing follow-up contacts by <strong>15%</strong>.</li>
+        </ul>
+        <div class="tag-row"><span class="tag">Customer Success</span><span class="tag">FCR</span><span class="tag">SLA</span><span class="tag">CSAT</span><span class="tag">Ticket Management</span></div>
+      </div>
+      <div class="tl-item fade-up">
+        <div class="tl-dot"></div>
+        <div class="tl-period">Sep 2019 – Feb 2022</div>
+        <div class="tl-company">Access Bank PLC</div>
+        <div class="tl-loc">Banking · Nigeria</div>
+        <div class="tl-role">Customer Care Officer / ATM Custodian <span class="tl-badge banking">Banking</span></div>
+        <ul class="tl-bullets">
+          <li>Supported customers across the full customer lifecycle (onboarding, activation, usage, issue resolution, retention) via digital-first channels, maintaining <strong>90-95%+ CSAT</strong> and fast response times.</li>
+          <li>Onboarded customers onto <strong>mobile banking applications</strong>, guiding users through setup, verification, and feature adoption to increase digital engagement and self-service usage.</li>
+          <li>Resolved issues across electronic channels, payments, cards, and ATM services, escalating complex cases where required and following through to resolution <strong>within SLA</strong>.</li>
+          <li>Processed customer account requests and service changes, ensuring <strong>KYC / AML compliance</strong>, data accuracy, and adherence to internal controls and regulatory requirements.</li>
+          <li>Monitored service availability including <strong>ATM uptime</strong>, proactively identifying issues and collaborating with internal teams to minimise customer impact.</li>
+          <li>Operated in a high-volume fintech environment handling <strong>50+ customer interactions daily</strong> while maintaining quality and accuracy.</li>
+          <li>Recognised in the <strong>top 5 nationwide</strong> for service delivery.</li>
+        </ul>
+        <div class="tag-row"><span class="tag">Customer Lifecycle</span><span class="tag">Digital Onboarding</span><span class="tag">KYC / AML</span><span class="tag">SLA Management</span><span class="tag">CSAT</span><span class="tag">ATM Operations</span></div>
+      </div>
+      <div class="tl-item fade-up">
+        <div class="tl-dot"></div>
+        <div class="tl-period">Apr 2019 – Sep 2019</div>
+        <div class="tl-company">Interswitch Group</div>
+        <div class="tl-loc">Fintech · Nigeria</div>
+        <div class="tl-role">Financial Inclusion Partner <span class="tl-badge fintech">Fintech</span></div>
+        <ul class="tl-bullets">
+          <li>Onboarded <strong>20+ agents</strong> in assigned territories, tracking KPIs to optimise market coverage.</li>
+          <li>Built weekly <strong>Power BI dashboards</strong> tracking agent activity and revenue for senior management.</li>
+          <li>Identified bottlenecks via operational audits, increasing productivity by <strong>15–20%</strong>.</li>
+        </ul>
+        <div class="tag-row"><span class="tag">Power BI</span><span class="tag">Excel</span><span class="tag">KPI Tracking</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="principles-teaser" class="fade-up">
+    <span class="sec-num">05</span>
+    <div class="kicker">How I Think</div>
+    <h2>Engineering principles</h2>
+    <p class="section-intro">Every project on this site follows a small set of positions I have taken often enough that they feel less like opinions and more like defaults.</p>
+    <div class="principles-teaser">
+      <div class="pt-grid">
+        <div class="pt-left">
+          <h3>Seven principles I bring to <span class="hi">every project.</span></h3>
+          <p>These are not borrowed from blog posts. They are positions I have defended in pull requests, learned from incidents, and applied in production. Each one comes with the trade-off I accept by holding it.</p>
+          <a href="principles.html" class="pt-cta">
+            Read all seven principles
+            <svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+        <ul class="pt-list">
+          <li><span class="pt-num">01</span><span><strong>Schema is the source of truth</strong>, not Python.</span></li>
+          <li><span class="pt-num">02</span><span><strong>Idempotency is a contract</strong>, not a feature.</span></li>
+          <li><span class="pt-num">03</span><span>Write logs <strong>assuming you'll be debugging at 2am</strong>.</span></li>
+          <li><span class="pt-num">04</span><span>Validate before you load, <strong>not after</strong>.</span></li>
+          <li><span class="pt-num">05</span><span>Configuration belongs in <strong>environment variables</strong>, not code.</span></li>
+          <li><span class="pt-num">06</span><span><strong>Modular ETL</strong> beats monolithic scripts, always.</span></li>
+          <li><span class="pt-num">07</span><span>Engineer features in the warehouse, <strong>not in dashboards</strong>.</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <!-- NUMBERS BAND -->
+  <div class="numbers-band fade-up">
+    <div class="numbers-eyebrow">By the numbers</div>
+    <div class="numbers-grid">
+      <div class="num-card num-card-hero" data-counter data-target="10" data-prefix="£" data-suffix="K" data-decimals="0">
+        <div class="num-hero-content">
+          <div class="num-hero-label">Headline impact</div>
+          <div class="num-hero-big" data-counter-target>£10K</div>
+          <div class="num-hero-kicker">Quarterly saved</div>
+          <div class="num-hero-context">AWS S3 cost reduction at <strong>Amdari Inc.</strong> through partitioning and query tuning. Achieved within the first quarter of joining.</div>
+        </div>
+        <div class="num-hero-glyph">
+          <svg width="96" height="96" viewBox="0 0 96 96" aria-hidden="true">
+            <path class="glyph-path glow" d="M 10 22 L 26 22 L 26 38 L 42 38 L 42 54 L 58 54 L 58 70 L 86 70" pathLength="1"/>
+            <circle class="glyph-dot" cx="86" cy="70" r="3.5"/>
+          </svg>
+        </div>
+      </div>
+      <div class="numbers-secondary">
+        <div class="num-card num-card-sec" data-counter data-target="6" data-prefix="" data-suffix="+" data-decimals="0">
+          <div class="num-sec-top">
+            <div class="num-big" data-counter-target>6+</div>
+            <div class="num-sec-glyph"><svg width="36" height="36" viewBox="0 0 36 36" aria-hidden="true"><path class="glyph-path" d="M 4 18 L 32 18" pathLength="1"/><circle class="glyph-dot" cx="32" cy="18" r="3.5"/></svg></div>
+          </div>
+          <div class="num-label">Years</div>
+          <div class="num-context">Across data engineering, fintech product ops, and banking analytics.</div>
+        </div>
+        <div class="num-card num-card-sec" data-counter data-target="6" data-prefix="" data-suffix="" data-decimals="0">
+          <div class="num-sec-top">
+            <div class="num-big" data-counter-target>6</div>
+            <div class="num-sec-glyph"><svg width="36" height="36" viewBox="0 0 36 36" aria-hidden="true"><path class="glyph-path" d="M 8 26 L 8 18 M 18 26 L 18 12 M 28 26 L 28 6" pathLength="1"/></svg></div>
+          </div>
+          <div class="num-label">Flagship Projects</div>
+          <div class="num-context">Production-style pipelines, all open-source on GitHub.</div>
+        </div>
+        <div class="num-card num-card-sec" data-counter data-target="99.9" data-prefix="" data-suffix="%" data-decimals="1">
+          <div class="num-sec-top">
+            <div class="num-big" data-counter-target>99.9%</div>
+            <div class="num-sec-glyph"><svg width="36" height="36" viewBox="0 0 36 36" aria-hidden="true"><path class="glyph-path" d="M 31.2 14 A 14 14 0 1 1 21 4.8" pathLength="1"/><circle class="glyph-dot" cx="21" cy="4.8" r="2.2"/></svg></div>
+          </div>
+          <div class="num-label">System Uptime</div>
+          <div class="num-context">Production data infrastructure monitored with Grafana and Airflow.</div>
+        </div>
+      </div>
+    </div>
+    <div class="industries-row">
+      <span class="industries-eyebrow">Industries</span>
+      <span class="industry-pill"><span class="industry-dot"></span>Data Engineering</span>
+      <span class="industry-pill"><span class="industry-dot"></span>Fintech</span>
+      <span class="industry-pill"><span class="industry-dot"></span>Banking</span>
+      <span class="industry-pill"><span class="industry-dot"></span>E-commerce</span>
+      <span class="industry-pill"><span class="industry-dot"></span>Retail Analytics</span>
+      <span class="industry-pill"><span class="industry-dot"></span>Financial Inclusion</span>
+    </div>
+  </div>
+
+  <!-- PRINCIPLES TEASER -->
+  <!-- SKILLS -->
   <!-- CERTIFICATIONS -->
   <section id="certifications" class="fade-up">
     <span class="sec-num">06</span>
