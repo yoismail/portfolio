@@ -29,14 +29,15 @@ The goal is not just to display projects, but to demonstrate:
 
 This portfolio reflects how I approach problems as a Data Engineer:
 
-* 🐳 Containerized data platforms with Docker Compose and orchestrated execution
+* ☁️ Cloud-native serverless ELT pipelines on GCP (Cloud Composer, Dataproc Serverless, GCS, BigQuery)
+* 🐳 Containerized on-premise data platforms with Docker Compose and orchestrated execution
 * 🔁 Airflow DAGs with parameterized scheduling for stock vs scaled execution
 * 🌊 Medallion architecture (Bronze → Silver → Gold) for raw-to-warehouse data flows
-* 🔄 End-to-end ETL pipeline design (Extract → Transform → Load) with idempotent re-runs
+* 🔄 End-to-end ETL and ELT pipeline design with idempotent re-runs
 * ⚡ Distributed processing with PySpark on millions of rows (broadcast joins, explicit caching, year/month partitioning)
 * 🏗️ Three-table dimensional Gold layers and star schema warehouses
 * 🔌 Asynchronous, high-concurrency API ingestion with retry and rate-limit discipline
-* 📊 Analytics-ready data modeling with composite primary keys, DECIMAL precision, and indexed query paths
+* 📊 Analytics-ready data modeling with composite primary keys, explicit BigQuery schemas, DECIMAL precision, and indexed query paths
 * 🔒 Idempotent loads via deterministic surrogate keys, dedup-merge patterns, and row-count validation
 * 📈 Translating data into business decisions through warehouse-side feature engineering
 
@@ -57,6 +58,24 @@ A containerized on-premise data platform built for a multinational retail scenar
 
 👉 [View project on GitHub](https://github.com/yoismail/nova_retail_case_study)
 👉 [Read the full case study](https://yoismail.github.io/portfolio/nova_retail.html)
+
+---
+
+### ⚽ World Football Insights: Cloud-Native Serverless ELT on GCP
+
+A production-shipped cloud-native ELT pipeline built for a global sports analytics scenario, orchestrating async API extraction, PySpark medallion transformations, and BigQuery lakehouse loads on managed Google Cloud infrastructure:
+
+* Designed a 14-task Cloud Composer DAG with fan-out/converge/validate/fan-out shape, processing three entity streams (teams, standings, matches) in parallel where they can be, converging at both Dataproc jobs and the quality gate
+* Deployed on real Cloud Composer 2 (service 2.17.7, Airflow 2.11.1) with Dataproc Serverless (runtime 2.1) as the compute layer: zero clusters managed by hand, ephemeral compute spun up per batch
+* Extracted from TheSportsDB REST API using asynchronous `aiohttp` with exponential backoff on HTTP 429 rate limits and configurable request delay
+* Implemented lakehouse Medallion: Bronze stays as raw NDJSON in GCS (single source of truth), Silver and Gold materialize as BigQuery external tables (no duplicated warehouse storage)
+* Declared explicit BigQuery schemas for all 6 tables using `SchemaField` objects converted to dict via `to_api_repr()`, replacing `autodetect=True` for production-grade type control
+* Added a Python data quality gate between Silver and Gold: reads each Silver Parquet, checks row counts, verifies required columns, fails DAG loudly before Gold is touched
+* Debugged a real Dataproc machine-type provisioning issue (`e4-custom-4-15872` unavailable in `us-central1-a`) with a targeted `execution_config: {}` fix; cut end-to-end runtime from 1h 13m to 11m 53s (84% reduction)
+* Traded runtime for correctness on the schema-fields change: final production runtime 24m 53s with explicit schemas vs 11m 53s with `autodetect=True` on my optimized run
+
+👉 [View project on GitHub](https://github.com/yoismail/worldcup_football_elt)
+👉 [Read the full case study](https://yoismail.github.io/portfolio/wfi.html)
 
 ---
 
@@ -127,6 +146,13 @@ A production-style scraping pipeline that walks 60 pages of AliExpress laptop li
 
 ## ⚙️ Tech Stack
 
+### Cloud-Native (GCP)
+
+* Google Cloud Composer 2 (managed Apache Airflow)
+* Dataproc Serverless (managed PySpark)
+* Google Cloud Storage (data lake, Parquet, NDJSON)
+* Google BigQuery (external tables, explicit schemas)
+
 ### Distributed & Big Data
 
 * PySpark (DataFrames, SQL, JDBC)
@@ -135,7 +161,7 @@ A production-style scraping pipeline that walks 60 pages of AliExpress laptop li
 
 ### Orchestration & Containerization
 
-* Apache Airflow (Param-based DAGs, BashOperator, sidecar Spark pattern)
+* Apache Airflow (Param-based DAGs, BashOperator, sidecar Spark pattern, Cloud Composer)
 * Docker, Docker Compose (multi-service containerized data platforms)
 
 ### Data Engineering
@@ -145,14 +171,15 @@ A production-style scraping pipeline that walks 60 pages of AliExpress laptop li
 * PostgreSQL (star schema, dimensional Gold layers, FK referential integrity, composite keys, indexes)
 * SQL (DDL, complex joins, window functions, CTEs)
 * JDBC (cross-system data movement, parallel-write candidates)
-* ETL Pipelines (modular, idempotent, transactional)
+* ETL and ELT Pipelines (modular, idempotent, transactional)
 * Dimensional Modeling (Kimball star schema, three-table Gold, conformed dimensions, surrogate keys)
 * Medallion Architecture (Bronze, Silver, Gold layered data lakes)
+* Lakehouse Medallion (Bronze in object storage, Silver/Gold in warehouse)
 
 ### Data Engineering Patterns
 
 * Deterministic SHA-256 surrogate keys
-* Idempotent loads via temp-table + LEFT JOIN merge, two-stage dedup-merge, and three-layer overwrite semantics
+* Idempotent loads via temp-table + LEFT JOIN merge, two-stage dedup-merge, WRITE_TRUNCATE/WRITE_OVERWRITE, and three-layer overwrite semantics
 * Layered idempotency (file-existence, tracker-file, partition-overwrite, wipe-and-rebuild)
 * Year/month partitioning on fact tables for read pruning
 * Broadcast joins on bounded-size dimensions
@@ -160,6 +187,7 @@ A production-style scraping pipeline that walks 60 pages of AliExpress laptop li
 * Row-count validation on every Postgres load (read-back verification)
 * Asynchronous ingestion with semaphore-bounded concurrency and backoff retry
 * Schema validation at every transformation stage
+* Explicit BigQuery `SchemaField` declarations (no `autodetect` in production)
 * Type-aware cleaning (DECIMAL preservation for money and metrics)
 * Custom observability (timed decorators, structured logs, rotating file handlers, UTF-8 detection)
 * Environment-driven configuration with dual-host detection (local vs container)
@@ -181,11 +209,11 @@ A production-style scraping pipeline that walks 60 pages of AliExpress laptop li
 
 ### Currently Learning
 
+* Azure Databricks, Azure Data Factory, Azure Synapse, Azure SQL Database (working knowledge)
 * dbt (analyst-authored transformations)
-* Amazon Redshift, Google BigQuery, Snowflake
+* Amazon Redshift, Snowflake
 * Apache Kafka (event streaming)
 * Terraform (infrastructure-as-code)
-* GCP, Azure (cloud platforms)
 * Hadoop (distributed file system)
 
 ---
@@ -195,7 +223,7 @@ A production-style scraping pipeline that walks 60 pages of AliExpress laptop li
 * Responsive and mobile-optimized layout
 * Smooth scrolling and interaction design
 * Clean, recruiter-focused UI
-* Structured project showcase with 6 in-depth case studies (3 featured, 3 secondary)
+* Structured project showcase with 7 in-depth case studies (4 featured, 3 secondary)
 * 7 engineering principles backed by working code references
 * Performance-optimized frontend (no frameworks, pure HTML/CSS/JS)
 
@@ -208,6 +236,7 @@ A production-style scraping pipeline that walks 60 pages of AliExpress laptop li
 * SCD Type 2 patterns for slowly changing dimensions
 * Parallel JDBC writes for high-throughput warehouse loads
 * Migration tooling (Alembic, Flyway) for safe DDL evolution
+* Pytest coverage across the featured projects (starting with FibbieBanks)
 
 ---
 
