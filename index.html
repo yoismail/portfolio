@@ -257,7 +257,6 @@
     }
 
     html {
-      scroll-behavior: smooth;
       scroll-padding-top: calc(var(--nav) + 1rem);
       overflow-x: hidden;
     }
@@ -282,8 +281,8 @@
       z-index: 200;
       height: var(--nav);
       background: var(--bg-nav);
-      backdrop-filter: blur(18px) saturate(180%);
-      -webkit-backdrop-filter: blur(18px) saturate(180%);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       border-bottom: 1px solid var(--bdr);
       display: flex;
       align-items: center;
@@ -291,6 +290,7 @@
       padding: 0 clamp(1rem, 4vw, 2.5rem);
       transition: background .3s, border-color .3s;
       gap: 1rem;
+      will-change: background;
     }
 
     .nav-brand {
@@ -2586,11 +2586,13 @@
       opacity: 0;
       transform: translateY(24px);
       transition: opacity .65s var(--ez), transform .65s var(--ez);
+      will-change: opacity, transform;
     }
 
     .fade-up.visible {
       opacity: 1;
       transform: translateY(0);
+      will-change: auto;
     }
 
     /* ── MOBILE TWEAKS ────────────────────────────────────── */
