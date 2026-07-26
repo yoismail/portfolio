@@ -2260,7 +2260,8 @@
             <code>df.sort_values(natural_id).reset_index(drop=True).index + 1</code>. Deterministic for the same input,
             simple, fast. Trade-off: keys shift if new rows are added, so this only works because the warehouse is
             rebuilt from scratch every run (wipe-and-load). For a warehouse that merged data over time, content-based
-            hashing (e.g. SHA-256 of natural keys) would be the right call instead.</div>
+            hashing (e.g. SHA-256 of natural keys) would be the right call instead.
+          </div>
         </div>
         <div class="decision-row">
           <div class="decision-cell">Feature engineering in cleaning</div>
@@ -2280,7 +2281,8 @@
             <code>validate_foreign_keys()</code> checks: <code>sales→customers</code>, <code>sales→products</code>,
             <code>sales→stores</code>, <code>sales→regions</code>, <code>sales→calendar</code>. If any fails, the
             pipeline halts with <code>sys.exit(1)</code> and a structured error. Catches referential integrity issues
-            before they reach the warehouse.</div>
+            before they reach the warehouse.
+          </div>
         </div>
         <div class="decision-row">
           <div class="decision-cell">DB constraints, not just types</div>
@@ -2298,7 +2300,8 @@
             <code>dim_stores</code> also has a <code>region_key</code> FK to the same dim. The most common analytical
             query against this warehouse is "revenue by region", and the direct fact-to-region path saves an extra join.
             The full normalised path via <code>dim_stores</code> is still there for queries that need other store
-            attributes. Documented snowflake, not accidental snowflake.</div>
+            attributes. Documented snowflake, not accidental snowflake.
+          </div>
         </div>
         <div class="decision-row">
           <div class="decision-cell">Production-grade logging</div>
@@ -2307,7 +2310,8 @@
             console can render emojis; dual handlers route colorized output to the terminal and clean UTF-8 to a
             rotating file (no ANSI codes in logs); a <code>section()</code> helper visually separates ETL stages; a
             <code>timed()</code> decorator logs how long each stage takes; SQLAlchemy engine noise is suppressed.
-            Result: observability that holds up at 2am, not just on the demo screen.</div>
+            Result: observability that holds up at 2am, not just on the demo screen.
+          </div>
         </div>
       </div>
     </section>
