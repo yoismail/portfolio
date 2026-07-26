@@ -74,7 +74,7 @@ A production-shipped cloud-native ELT pipeline built for a global sports analyti
 * Debugged a real Dataproc machine-type provisioning issue (`e4-custom-4-15872` unavailable in `us-central1-a`) with a targeted `execution_config: {}` fix; cut end-to-end runtime from 1h 13m to 11m 53s (84% reduction)
 * Traded runtime for correctness on the schema-fields change: final production runtime 24m 53s with explicit schemas vs 11m 53s with `autodetect=True` on my optimized run
 
-👉 [View project on GitHub](https://github.com/yoismail/worldcup_football_elt)
+👉 [View project on GitHub](https://github.com/yoismail/worldcup_football_intelligence)
 👉 [Read the full case study](https://yoismail.github.io/portfolio/wfi.html)
 
 ---
