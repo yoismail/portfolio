@@ -3,10 +3,10 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title>World Football Insights (WFI) Case Study | Yomi Ismail</title>
+    <title>National Hospital Azure Data Warehouse Case Study | Yomi Ismail</title>
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta name="description"
-        content="World Football Insights: A cloud-native serverless ELT pipeline I built on Google Cloud Platform for a global sports analytics scenario, orchestrating async API extraction, PySpark medallion transformations, and BigQuery lakehouse loads via Cloud Composer and Dataproc Serverless." />
+        content="National Hospital Azure Data Warehouse: A cloud-native ELT pipeline I built on Microsoft Azure for a healthcare analytics scenario, orchestrating Azure Data Factory extractions, Databricks PySpark transformations, and two-schema (STG + EDW) SQL Database loads with a two-layer data quality suite that quarantined 14 records with illogical dates." />
 
     <!-- Favicon -->
     <link rel="icon" href="svg/favicon.svg" type="image/svg+xml" />
@@ -15,22 +15,22 @@
     <meta name="theme-color" content="#000000" />
     <!-- Open Graph -->
     <meta property="og:type" content="article" />
-    <meta property="og:title" content="World Football Insights | Cloud-Native Serverless ELT on GCP" />
+    <meta property="og:title" content="National Hospital | Azure ELT Data Warehouse for Healthcare" />
     <meta property="og:description"
-        content="A cloud-native serverless ELT pipeline on GCP: Cloud Composer orchestration, Dataproc Serverless transformations, GCS lakehouse, BigQuery warehouse. Real production deployment with explicit schemas. By Yomi Ismail, Data Engineer." />
-    <meta property="og:image" content="svg/og-wfi.svg" />
+        content="A cloud-native ELT pipeline on Azure: Data Factory orchestration, Databricks PySpark transformations, ADLS Gen2 lakehouse, Azure SQL Database warehouse with STG and EDW schemas. Real deployment with a two-layer DQ suite that caught 14 records with illogical dates. By Yomi Ismail, Data Engineer." />
+    <meta property="og:image" content="svg/og-national-hospital.svg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt"
-        content="World Football Insights cloud-native serverless ELT pipeline on GCP case study by Yomi Ismail" />
+        content="National Hospital Azure Data Warehouse case study by Yomi Ismail: ADF, Databricks, ADLS Gen2, Azure SQL" />
     <meta property="og:locale" content="en_GB" />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="World Football Insights Case Study | Yomi Ismail" />
+    <meta name="twitter:title" content="National Hospital Case Study | Yomi Ismail" />
     <meta name="twitter:description"
-        content="Cloud-native serverless ELT on GCP with Cloud Composer, Dataproc Serverless, GCS lakehouse, and BigQuery warehouse." />
-    <meta name="twitter:image" content="svg/og-wfi.svg" />
+        content="Cloud-native ELT on Azure with Data Factory, Databricks, ADLS Gen2, and Azure SQL Database. Two-layer DQ suite for hospital data." />
+    <meta name="twitter:image" content="svg/og-national-hospital.svg" />
 
     <!-- Schema.org structured data -->
     <script type="application/ld+json">
@@ -99,15 +99,15 @@
             --bg-card: #15130f;
             --bg-card2: #1c1914;
             --bdr: rgba(255, 255, 255, .07);
-            --bdr-hi: rgba(37, 99, 235, .5);
+            --bdr-hi: rgba(5, 150, 105, .5);
 
             --h1: #f3eee5;
             --h2: #c9c2b3;
             --h3: #62594c;
 
-            --acc: #2563eb;
-            --acc-s: rgba(37, 99, 235, .1);
-            --acc-2: #3b82f6;
+            --acc: #059669;
+            --acc-s: rgba(5, 150, 105, .1);
+            --acc-2: #10b981;
             --green: #34d399;
             --teal: #2dd4bf;
             --amber: #f59e0b;
@@ -2201,67 +2201,69 @@
             <div class="cs-switcher" role="navigation" aria-label="Case study navigation">
                 <span class="cs-switcher-label">Case studies</span>
                 <a href="nova_retail.html" class="cs-switcher-link">Nova Retail</a>
-                <a href="wfi.html" class="cs-switcher-link current" aria-current="page">World Football Insights</a>
-                <a href="national_hospital.html" class="cs-switcher-link">National Hospital</a>
+                <a href="wfi.html" class="cs-switcher-link">World Football Insights</a>
+                <a href="national_hospital.html" class="cs-switcher-link current" aria-current="page">National
+                    Hospital</a>
                 <a href="fibbiebanks.html" class="cs-switcher-link">FibbieBanks</a>
                 <a href="xtd_research_labs.html" class="cs-switcher-link">XTD Research Labs</a>
                 <a href="payflow.html" class="cs-switcher-link">PayFlow</a>
                 <a href="chocodelight.html" class="cs-switcher-link">ChocoDelight</a>
                 <a href="aliexpress.html" class="cs-switcher-link">AliExpress</a>
             </div>
-            <div class="cs-meta">~14 min read · Updated July 2026</div>
-            <div class="kicker">Case Study · Featured · GCP + Serverless + ELT</div>
+            <div class="cs-meta">~14 min read · Updated August 2026</div>
+            <div class="kicker">Case Study · Featured · Azure + ELT + Healthcare</div>
 
-            <h1 class="cs-title">World Football Insights: <span class="hi">Cloud-native serverless ELT</span><br />on
-                Google Cloud Platform</h1>
+            <h1 class="cs-title">National Hospital: <span class="hi">Azure ELT data warehouse</span><br />for a
+                healthcare analytics scenario</h1>
 
             <p class="cs-lede">
-                A cloud-native serverless ELT pipeline I built on Google Cloud Platform for a global sports analytics
-                scenario. Cloud Composer 2 orchestrates 14 tasks with parallel fan-out and quality gates. Dataproc
-                Serverless runs the PySpark medallion transformations without any cluster management. Bronze raw data
-                stays in a Google Cloud Storage lakehouse; Silver and Gold materialize as BigQuery external tables.
-                Async aiohttp extraction from TheSportsDB API. Explicit BigQuery schemas replace autodetect. Real
-                production deployment: managed infrastructure, real cost, real runtime data.
+                A cloud-native ELT pipeline I built on Microsoft Azure for a healthcare analytics scenario. Azure Data
+                Factory orchestrates a 13-activity pipeline with parallel fan-out and a quality gate. Databricks runs
+                the PySpark transformations. Raw CSVs land in ADLS Gen2, are cleaned and quarantined through a
+                visibility-first transformation layer, then loaded into Azure SQL Database in a two-schema (STG + EDW)
+                warehouse. A two-layer data quality suite runs at both Databricks and SQL layers, catching 14 records
+                with illogical dates and quarantining them for source-system review. Real deployment: 2m 20s end-to-end
+                runtime, daily schedule, 4-check safety net, honest engineering tradeoffs.
             </p>
 
             <div class="meta-row">
                 <span class="meta-pill acc">Featured case study</span>
-                <span class="meta-pill">Cloud Composer 2.17.7</span>
-                <span class="meta-pill">Apache Airflow 2.11.1</span>
-                <span class="meta-pill">Dataproc Serverless 2.1</span>
-                <span class="meta-pill">BigQuery lakehouse</span>
-                <span class="meta-pill">GCS medallion</span>
+                <span class="meta-pill">Azure Data Factory V2</span>
+                <span class="meta-pill">Azure Databricks</span>
+                <span class="meta-pill">Azure SQL Database</span>
+                <span class="meta-pill">ADLS Gen2</span>
+                <span class="meta-pill">Two-schema warehouse</span>
             </div>
 
             <div class="stat-strip">
                 <div class="stat-cell">
-                    <div class="stat-num">14</div>
-                    <div class="stat-label">orchestrated tasks</div>
-                </div>
-                <div class="stat-cell">
-                    <div class="stat-num">3</div>
-                    <div class="stat-label">entity streams</div>
+                    <div class="stat-num">13</div>
+                    <div class="stat-label">orchestrated activities</div>
                 </div>
                 <div class="stat-cell">
                     <div class="stat-num">6</div>
-                    <div class="stat-label">BigQuery tables</div>
+                    <div class="stat-label">source CSVs, 4 departments</div>
                 </div>
                 <div class="stat-cell">
-                    <div class="stat-num">11m 53s</div>
-                    <div class="stat-label">optimized runtime</div>
+                    <div class="stat-num">7,506</div>
+                    <div class="stat-label">rows loaded to EDW</div>
                 </div>
                 <div class="stat-cell">
-                    <div class="stat-num">84%</div>
-                    <div class="stat-label">runtime cut after debug</div>
+                    <div class="stat-num">2m 20s</div>
+                    <div class="stat-label">end-to-end pipeline runtime</div>
                 </div>
                 <div class="stat-cell">
-                    <div class="stat-num">0</div>
-                    <div class="stat-label">clusters managed by hand</div>
+                    <div class="stat-num">14</div>
+                    <div class="stat-label">rows quarantined for bad dates</div>
+                </div>
+                <div class="stat-cell">
+                    <div class="stat-num">99.3%</div>
+                    <div class="stat-label">source-to-warehouse retention</div>
                 </div>
             </div>
 
             <div class="cs-cta-row">
-                <a href="https://github.com/yoismail/worldcup_football_intelligence" class="btn-primary" target="_blank"
+                <a href="https://github.com/yoismail/national_hospital_azure_dw" class="btn-primary" target="_blank"
                     rel="noopener">
                     <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                         <path
@@ -2282,43 +2284,37 @@
         <!-- ───── 01 · THE PROBLEM ───── -->
         <section id="problem" class="fade-up sec-alt">
             <div class="sec-kicker"><span class="sec-num">01</span> The Problem</div>
-            <h2 class="sec-h">A sports analytics company outgrows manual reporting</h2>
+            <h2 class="sec-h">A hospital's data lives in six spreadsheets across four departments</h2>
 
             <p class="sec-p">
-                World Football Insights (WFI) is a global sports analytics company that provides football statistics,
-                tournament insights, and historical performance data to broadcasters, sports journalists, football
-                federations, and research institutions. Their existing reporting process meant analysts spent
-                considerable time manually extracting football data from public sources, consolidating into
-                spreadsheets, and preparing datasets before analysis could begin.
+                National Hospital is a healthcare institution focused on continuously improving patient care through
+                data-driven insights. Their existing reporting process meant analysts spent significant time manually
+                consolidating CSV files from four separate departments (Registration, Consultation and Medical, Lab and
+                Scan, Research and Development) into spreadsheets before any analysis could begin. Six CSVs from six
+                systems, no shared identifiers enforced, no single source of truth for a patient's history across the
+                hospital.
             </p>
 
             <p class="sec-p">
-                The brief was direct. WFI wanted a cloud-native ELT platform that could automatically extract football
-                data from a REST API, land raw JSON in Google Cloud Storage, transform it into analytical datasets, and
-                make the results queryable through BigQuery. Cloud Composer would orchestrate. The infrastructure had to
-                be scalable, fault-tolerant, and generate trusted analytical tables that support historical comparisons
-                and future predictive analytics initiatives.
-            </p>
-
-            <p class="sec-p">
-                Two constraints made this different from previous projects I have built. First, the platform had to be
-                fully cloud-native on GCP: no on-premise components, no locally-managed clusters, no infrastructure I
-                had to maintain by hand. Second, the pattern had to be ELT (extract, load, transform) rather than ETL.
-                Raw data lands first, then transformations happen in a compute layer separate from the warehouse. That
-                is a meaningfully different discipline from the on-premise ETL work I had shipped before.
+                The brief was direct. The hospital wanted a cloud-native ELT platform that could automatically ingest
+                CSV extracts from each department, land them in Azure blob storage, apply cleaning and dimensional
+                modeling transformations, and materialize analytics-ready tables in a data warehouse that supports
+                disease prediction research, trial recruitment analytics, and better patient care planning. The platform
+                had to be scheduled, quality-checked, and demonstrably production-shaped on real Azure infrastructure,
+                not local emulation.
             </p>
 
             <div class="callout">
                 <div class="callout-label">The architectural choice</div>
                 <p>
-                    For this GCP deployment, I chose a cloud-native serverless pattern with managed services (Cloud
-                    Composer for orchestration, Dataproc Serverless for Spark, GCS lakehouse, BigQuery warehouse), no
-                    infrastructure to own, and a lakehouse-medallion layout where Bronze stays in object storage while
-                    Silver and Gold materialize in the warehouse. That is the opposite architectural pattern to Nova
-                    Retail (on-premise Docker Compose, PySpark on a single host writing to PostgreSQL). Both patterns
-                    are correct in their contexts: on-premise Docker suits controlled-environment cost predictability
-                    and full-stack ownership; cloud-native serverless suits elastic scale and zero infrastructure
-                    maintenance. Together they show two credible production shapes for a modern data platform.
+                    For this Azure deployment, I chose the classical enterprise data warehousing pattern of STG
+                    (staging) and EDW (Enterprise Data Warehouse) schemas inside a single SQL database, rather than the
+                    lakehouse Medallion pattern (Bronze in object storage, Silver and Gold in the warehouse) I used for
+                    World Football Insights on GCP. Medallion suits data-lake-first architectures where transformations
+                    happen in Spark and analysts read Parquet directly; STG + EDW suits warehouse-first architectures
+                    where SQL analysts and Power BI users query the warehouse directly. Both patterns are correct in
+                    their contexts. The National Hospital use case is warehouse-first: BI analysts querying via Power
+                    BI, not data scientists reading Parquet.
                 </p>
             </div>
         </section>
@@ -2326,99 +2322,89 @@
         <!-- ───── 02 · ARCHITECTURE ───── -->
         <section id="architecture" class="fade-up">
             <div class="sec-kicker"><span class="sec-num">02</span> Architecture</div>
-            <h2 class="sec-h">A serverless topology with 14 orchestrated tasks</h2>
+            <h2 class="sec-h">A 13-activity ADF pipeline with a two-layer DQ suite</h2>
 
             <p class="sec-p">
-                The whole pipeline runs on managed GCP services. Cloud Composer (which is managed Apache Airflow on GKE)
-                hosts the DAG. Dataproc Serverless runs the PySpark transformations without me creating or managing a
-                single cluster. Google Cloud Storage stores raw NDJSON, Silver Parquet, and Gold Parquet. BigQuery
-                materializes Silver and Gold as external tables. No servers. No clusters. No infrastructure I have to
-                maintain.
+                The whole pipeline runs on managed Azure services. Azure Data Factory hosts the pipeline definition.
+                Azure Databricks runs the PySpark transformations. Azure Data Lake Storage Gen2 (accessed via WASB
+                protocol) holds raw CSVs, processed Parquet, and a quarantine folder. Azure SQL Database stores the STG
+                and EDW schemas. Azure Key Vault stores the storage account key so the Databricks notebook can access
+                blob storage securely.
             </p>
 
             <p class="sec-p">
-                The DAG has a fan-out / merge / validate / fan-out / merge / fan-out shape. Three entity streams (teams,
-                standings, matches) flow through in parallel where they can, and converge at the two Dataproc jobs and
-                the quality gate.
+                The pipeline shape is a fan-out / converge / validate pattern. One Databricks transformation runs first,
+                producing six cleaned datasets in ADLS. Six Copy Data activities then fan out in parallel to load STG
+                tables. Five EDW load scripts fan back out to load the warehouse. Finally, a single Script activity runs
+                four data quality checks against the loaded EDW.
             </p>
 
             <div class="arch-topology">
                 <div class="arch-layer">
-                    <div class="arch-layer-label">EXTRACT</div>
-                    <div class="arch-node"><strong>extract_and_upload_raw</strong><span>PythonOperator · async aiohttp +
-                            GCSHook</span></div>
+                    <div class="arch-layer-label">TRANSFORM</div>
+                    <div class="arch-node acc"><strong>run_transformation</strong><span>Databricks Notebook · PySpark ·
+                            cleaning + quarantine</span></div>
                 </div>
-                <div class="arch-arrow">↓ fans out</div>
+                <div class="arch-arrow">↓ fans out to 6 parallel loads</div>
                 <div class="arch-layer">
-                    <div class="arch-layer-label">GATE 1 · file existence</div>
+                    <div class="arch-layer-label">LOAD STG</div>
                     <div class="arch-nodes-row">
-                        <div class="arch-node"><strong>wait_teams</strong><span>GCSObjectExistenceSensor</span></div>
-                        <div class="arch-node"><strong>wait_standings</strong><span>GCSObjectExistenceSensor</span>
+                        <div class="arch-node"><strong>cp_patients_stg</strong><span>Copy Data · wildcard read</span>
                         </div>
-                        <div class="arch-node"><strong>wait_matches</strong><span>GCSObjectExistenceSensor</span></div>
-                    </div>
-                </div>
-                <div class="arch-arrow">↓ converge</div>
-                <div class="arch-layer">
-                    <div class="arch-layer-label">BRONZE → SILVER</div>
-                    <div class="arch-node acc"><strong>bronze_to_silver</strong><span>DataprocCreateBatchOperator ·
-                            PySpark 2.1</span></div>
-                </div>
-                <div class="arch-arrow">↓</div>
-                <div class="arch-layer">
-                    <div class="arch-layer-label">GATE 2 · data quality</div>
-                    <div class="arch-node acc"><strong>validate_silver_data</strong><span>PythonOperator · row + column
-                            checks</span></div>
-                </div>
-                <div class="arch-arrow">↓ fans out</div>
-                <div class="arch-layer">
-                    <div class="arch-layer-label">LOAD SILVER TO BIGQUERY</div>
-                    <div class="arch-nodes-row">
-                        <div class="arch-node"><strong>load_silver_teams</strong><span>GCSToBigQueryOperator</span>
+                        <div class="arch-node"><strong>cp_participants_stg</strong><span>Copy Data · wildcard
+                                read</span></div>
+                        <div class="arch-node"><strong>cp_med_records_stg</strong><span>Copy Data · wildcard read</span>
                         </div>
-                        <div class="arch-node"><strong>load_silver_standings</strong><span>GCSToBigQueryOperator</span>
+                        <div class="arch-node"><strong>cp_imaging_stg</strong><span>Copy Data · wildcard read</span>
                         </div>
-                        <div class="arch-node"><strong>load_silver_matches</strong><span>GCSToBigQueryOperator</span>
+                        <div class="arch-node"><strong>cp_labs_stg</strong><span>Copy Data · wildcard read</span></div>
+                        <div class="arch-node"><strong>cp_trails_stg</strong><span>Copy Data · wildcard read</span>
                         </div>
                     </div>
                 </div>
-                <div class="arch-arrow">↓ converge</div>
+                <div class="arch-arrow">↓ converge and fan out to 5 parallel EDW loads</div>
                 <div class="arch-layer">
-                    <div class="arch-layer-label">SILVER → GOLD</div>
-                    <div class="arch-node acc"><strong>silver_to_gold</strong><span>DataprocCreateBatchOperator ·
-                            PySpark 2.1</span></div>
-                </div>
-                <div class="arch-arrow">↓ fans out</div>
-                <div class="arch-layer">
-                    <div class="arch-layer-label">LOAD GOLD TO BIGQUERY</div>
+                    <div class="arch-layer-label">LOAD EDW</div>
                     <div class="arch-nodes-row">
-                        <div class="arch-node"><strong>load_gold_teams</strong><span>GCSToBigQueryOperator</span></div>
-                        <div class="arch-node"><strong>load_gold_standings</strong><span>GCSToBigQueryOperator</span>
+                        <div class="arch-node"><strong>load_patients_edw</strong><span>Script · DELETE + INSERT</span>
                         </div>
-                        <div class="arch-node"><strong>load_gold_matches</strong><span>GCSToBigQueryOperator</span>
+                        <div class="arch-node"><strong>load_participants_edw</strong><span>Script · DELETE +
+                                INSERT</span></div>
+                        <div class="arch-node"><strong>load_med_record_edw</strong><span>Script · DELETE + INSERT</span>
                         </div>
+                        <div class="arch-node"><strong>load_trials_edw</strong><span>Script · DELETE + INSERT</span>
+                        </div>
+                        <div class="arch-node"><strong>load_labs_imaging_edw</strong><span>Script · combined lab +
+                                imaging</span></div>
                     </div>
+                </div>
+                <div class="arch-arrow">↓ safety net</div>
+                <div class="arch-layer">
+                    <div class="arch-layer-label">DATA QUALITY</div>
+                    <div class="arch-node acc"><strong>run_dq_checks</strong><span>Script · 4-check safety net · fails
+                            pipeline on hard violations</span></div>
                 </div>
             </div>
 
             <p class="sec-p" style="margin-top:2rem;">
-                The Bronze layer is deliberately absent from BigQuery. It stays in GCS as raw NDJSON. This is the honest
-                lakehouse pattern: raw data lives in object storage as the single source of truth, only cleaned and
-                enriched layers live in the warehouse. Analysts who need to audit raw responses can query GCS Parquet
-                through BigQuery External Tables, but the warehouse itself does not carry duplicate storage cost.
+                The pattern that matters here is separation of concerns. Databricks handles the messy work of reading
+                CSVs with mixed quoting, filtering nulls, quarantining suspicious rows, and writing clean data with
+                audit timestamps. ADF handles orchestration, dependency management, retries, scheduling, and monitoring.
+                Azure SQL Database is the queryable analytics surface. Each service does what it does best.
             </p>
 
             <div class="callout">
-                <div class="callout-label">The honest bucket sprawl</div>
+                <div class="callout-label">The honest bucket count</div>
                 <p>
-                    Managed GCP services create their own supporting buckets. My project ended up with four:
-                    <code>worldcup-football-bucket</code> (my main lakehouse),
-                    <code>us-central1-worldcup-footba-...</code> (Composer's DAG and log bucket),
-                    <code>dataproc-staging-us-central1-...</code>, and <code>dataproc-temp-us-central1-...</code>. Only
-                    the first is mine to think about. The other three are the honest cost of running on managed
-                    infrastructure: Composer and Dataproc each need their own scratch space to stage jobs and cache
-                    logs. Worth naming because it is exactly the kind of thing tutorials skip and production diagrams
-                    gloss over.
+                    The deployed Azure resource group holds seven resources: <code>nahospDF</code> (Data Factory),
+                    <code>nathosp</code> (Key Vault), <code>nathospdatalake</code> (Storage Account),
+                    <code>nathospdb</code> (SQL server), <code>nathospDB</code> (SQL database),
+                    <code>project_workspace</code> (Databricks Service), and the resource group itself. Data Factory and
+                    Databricks run in East US; the SQL server runs in Central US. The region split introduces small
+                    inter-region egress costs and adds a few seconds of latency per operation. At this data volume
+                    (~12,500 rows), the cost is measured in pennies and the latency in seconds. At production scale,
+                    resources should be consolidated to a single region. Worth naming honestly rather than pretending it
+                    is a design choice.
                 </p>
             </div>
         </section>
@@ -2426,350 +2412,302 @@
         <!-- ───── 03 · SCHEMA & STORAGE ───── -->
         <section id="schema" class="fade-up sec-alt">
             <div class="sec-kicker"><span class="sec-num">03</span> Schema and storage</div>
-            <h2 class="sec-h">Six BigQuery tables, three GCS layers, one honest medallion</h2>
+            <h2 class="sec-h">Two schemas, five entities, one honest layered warehouse</h2>
 
             <p class="sec-p">
-                The <code>worldcup-football-bucket</code> holds four top-level folders visible in the GCS browser:
-                <code>raw/</code>, <code>silver/</code>, <code>gold/</code>, and <code>scripts/</code>. Raw NDJSON files
-                land in <code>raw/</code> from the extract task. The two Dataproc Serverless jobs read from GCS and
-                write partitioned Parquet to <code>silver/</code> and <code>gold/</code>. The <code>scripts/</code>
-                folder holds the PySpark job files that Dataproc executes.
+                The <code>nathospdatalake</code> storage account holds four top-level folders visible in the Azure
+                Storage browser: <code>raw/</code>, <code>processed_data/</code>, <code>quarantine/</code>, and
+                Databricks-managed scratch space. Raw CSVs land in <code>raw/</code> directly from the source
+                departments. The Databricks notebook reads from <code>raw/</code>, applies cleaning and validation,
+                writes clean data to <code>processed_data/</code>, and writes any rejected rows to
+                <code>quarantine/</code> for analyst review.
             </p>
 
             <div class="schema-block">
-                <div class="schema-h">GCS lakehouse layout</div>
-                <pre class="schema-pre">gs://worldcup-football-bucket/
+                <div class="schema-h">ADLS Gen2 layout</div>
+                <pre class="schema-pre">wasbs://nationalhospital@nathospdatalake.blob.core.windows.net/
 ├── raw/
-│   ├── worldcup_teams.ndjson
-│   ├── worldcup_standings.ndjson
-│   └── worldcup_matches.ndjson
-├── silver/
-│   ├── teams/       ← partitioned Parquet, snappy compression
-│   ├── standings/   ← partitioned Parquet, snappy compression
-│   └── matches/     ← partitioned Parquet, snappy compression
-├── gold/
-│   ├── teams/       ← curated Parquet, snappy compression
-│   ├── standings/   ← curated Parquet, snappy compression
-│   └── matches/     ← curated Parquet, snappy compression
-└── scripts/
-    ├── bronze_to_silver.py
-    └── silver_to_gold.py</pre>
+│   ├── patients_data.csv                    (1,000 rows)
+│   ├── trial_participants_data.csv          (500 rows)
+│   ├── medical_records_data.csv             (2,000 rows)
+│   ├── imaging_results_data.csv             (1,500 rows)
+│   ├── lab_results_data.csv                 (2,500 rows)
+│   └── clinical_trials_data.csv             (20 rows)
+├── processed_data/                          (Databricks output, wildcard-read by ADF)
+│   ├── patients_data_processed/*.csv
+│   ├── participants_data_processed/*.csv
+│   ├── med_records_data_processed/*.csv
+│   ├── imaging_data_processed/*.csv
+│   ├── lab_data_processed/*.csv
+│   └── trials_data_processed/*.csv
+└── quarantine/                              (rows rejected by DQ, for analyst review)
+    └── medical_records_bad_dates/*.csv      (14 rows: discharge < admission)</pre>
             </div>
 
             <p class="sec-p">
-                BigQuery materializes six tables in the <code>worldcup_dataset</code> dataset: three Silver, three Gold.
-                Every table is an external table pointing at its GCS Parquet folder, which means the warehouse never
-                duplicates storage. When Dataproc writes a new Parquet file, the next BigQuery query sees the latest
-                data automatically.
+                Azure SQL Database <code>nathospDB</code> holds two schemas: <code>STG</code> (staging, tables mirror
+                the cleaned CSV structure) and <code>EDW</code> (Enterprise Data Warehouse, tables have primary keys,
+                load audit timestamps, and analytics-ready structure). The pipeline's final Script activities do a
+                <code>DELETE FROM EDW.table WHERE patient_id IN (SELECT patient_id FROM STG.table)</code> followed by an
+                <code>INSERT INTO EDW SELECT * FROM STG</code>, which produces deterministic, idempotent loads.
             </p>
 
             <div class="schema-block">
-                <div class="schema-h">BigQuery tables in worldcup_dataset</div>
+                <div class="schema-h">Azure SQL Database tables in nathospDB (EDW schema)</div>
                 <div class="schema-table">
                     <div class="schema-card fact" style="grid-column:1/-1;">
-                        <div class="schema-card-name">worldcup_dataset · Silver + Gold external tables</div>
+                        <div class="schema-card-name">nathospDB · STG + EDW schemas · 5 entity streams</div>
                         <div class="schema-card-cols">
-                            All six tables materialize as BigQuery external tables pointing at GCS Parquet. No warehouse
-                            storage duplication. Backing data is written by Dataproc Serverless PySpark jobs; BigQuery
-                            reads it transparently.
+                            Every entity is duplicated across STG and EDW schemas: STG mirrors the CSV cleaning output,
+                            EDW holds the analytics-ready copy with primary keys and load audit columns. Idempotent
+                            DELETE + INSERT pattern means re-runs produce identical warehouse state.
                         </div>
                     </div>
                     <div class="schema-card">
-                        <div class="schema-card-name">silver_teams</div>
+                        <div class="schema-card-name">dim_patient</div>
                         <div class="schema-card-cols">
-                            <span class="pk">32 rows</span> · gs://.../silver/teams/*.parquet · Cleaned team profiles,
-                            one row per national team, schema faithful to TheSportsDB
+                            <span class="pk">1,000 rows</span> · dim · patient_id PK · demographic fields (name, DOB,
+                            gender, address)
                         </div>
                     </div>
                     <div class="schema-card">
-                        <div class="schema-card-name">silver_standings</div>
+                        <div class="schema-card-name">dim_participants</div>
                         <div class="schema-card-cols">
-                            <span class="pk">32 rows</span> · gs://.../silver/standings/*.parquet · Group-stage
-                            standings, one row per team per group, STRING-typed counts
+                            <span class="pk">500 rows</span> · bridge · trial-patient enrollment with status
                         </div>
                     </div>
                     <div class="schema-card">
-                        <div class="schema-card-name">silver_matches</div>
+                        <div class="schema-card-name">fact_med_record</div>
                         <div class="schema-card-cols">
-                            <span class="pk">64 rows</span> · gs://.../silver/matches/*.parquet · All fixtures with
-                            fixed schema, home/away teams, scores, venue detail
+                            <span class="pk">1,986 rows</span> · fact · patient admissions and discharges with diagnosis
+                            (14 rows quarantined for bad dates)
                         </div>
                     </div>
                     <div class="schema-card">
-                        <div class="schema-card-name">gold_teams</div>
+                        <div class="schema-card-name">fact_labs</div>
                         <div class="schema-card-cols">
-                            <span class="pk">32 rows</span> · gs://.../gold/teams/*.parquet · Distinct team profiles for
-                            analytical joins, curated with performance metrics
+                            <span class="pk">4,000 rows</span> · fact · combined lab and imaging results (labs + imaging
+                            merged in load script)
                         </div>
                     </div>
                     <div class="schema-card">
-                        <div class="schema-card-name">gold_standings</div>
+                        <div class="schema-card-name">fact_trials</div>
                         <div class="schema-card-cols">
-                            <span class="pk">32 rows</span> · gs://.../gold/standings/*.parquet · Enriched standings:
-                            points_per_game, win_percentage, running_total_points via window functions
+                            <span class="pk">20 rows</span> · dim-like · clinical trial metadata (name, investigator,
+                            dates, description)
                         </div>
                     </div>
                     <div class="schema-card">
-                        <div class="schema-card-name">gold_matches</div>
+                        <div class="schema-card-name">dim_date</div>
                         <div class="schema-card-cols">
-                            <span class="pk">64 rows</span> · gs://.../gold/matches/*.parquet · Match analytics with
-                            result classification, total_goals, home/away goal differentials
+                            <span class="pk">4,018 rows</span> · calendar · 2020-01-01 through 2030-12-31 with year,
+                            quarter, month, week, day_of_week
                         </div>
                     </div>
                 </div>
             </div>
 
-            <p class="sec-p">
-                Every schema is declared explicitly in the DAG. No <code>autodetect=True</code>. Silver keeps most
-                fields as STRING to stay faithful to TheSportsDB API's raw form. Gold introduces FLOAT-typed derived
-                metrics (<code>points_per_game</code>, <code>win_percentage</code>, <code>total_goals</code>,
-                <code>home_goal_diff</code>, <code>away_goal_diff</code>, <code>running_total_points</code>) that come
-                from PySpark division and window aggregation. Every table has an <code>ingested_at</code> or
-                <code>gold_loaded_at</code> TIMESTAMP for traceability.
-            </p>
-
-            <div class="callout">
-                <div class="callout-label">Why STRING, not INT, for count fields</div>
-                <p>
-                    TheSportsDB API returns numeric fields (goals scored, points, played games) as strings. Silver
-                    honestly reflects this. In Gold, PySpark's implicit string-to-double coercion makes arithmetic work
-                    correctly ("2" + "1" produces 3.0, not "21"), which I verified with a spot-check query against
-                    <code>gold_matches</code>. The tradeoff: analysts running SUM or AVG on a raw count field need to
-                    CAST to INT64 first. Casting to numeric types across the board would be more correct but adds real
-                    churn. I chose to accept the imperfection and document it here rather than optimize prematurely.
-                </p>
-            </div>
         </section>
 
         <!-- ───── 04 · ENGINEERING ───── -->
         <section id="engineering" class="fade-up">
             <div class="sec-kicker"><span class="sec-num">04</span> Engineering</div>
-            <h2 class="sec-h">Async extraction, quality gates, and explicit schemas</h2>
+            <h2 class="sec-h">A visibility-first cleaning layer and a four-check SQL safety net</h2>
 
             <p class="sec-p">
-                The extract task is an <code>aiohttp</code> async loop that fetches three endpoints from TheSportsDB:
-                all teams in the competition, the league table (standings), and all fixtures for the season. Each
-                response is normalized into newline-delimited JSON and uploaded to GCS via <code>GCSHook</code>. The
-                loop has built-in retry with exponential backoff on HTTP 429 rate limits and non-200 responses. Between
-                requests, it sleeps for a configurable delay to avoid burst-triggering the API.
+                The Databricks transformation notebook uses a helper function called
+                <code>clean_with_visibility()</code> that replaces the common anti-pattern of silent
+                <code>dropDuplicates + na.drop()</code>. Instead of quietly removing rows, it reports raw count,
+                deduplication count, missing-critical-field count, and final count for every entity. It only drops rows
+                missing genuinely critical fields (patient_id, record_id) rather than any null in any column, so a
+                patient record with a missing address is preserved rather than silently discarded.
             </p>
 
             <div class="code-block">
-                <span class="code-block-label">dags/worldcup_elt_pipeline.py · async extraction with backoff</span>
-                <pre><span class="keyword">async def</span> <span class="fn">fetch_json</span>(url):
-    <span class="keyword">for</span> attempt <span class="keyword">in</span> <span class="fn">range</span>(RETRIES):
-        <span class="keyword">try</span>:
-            <span class="keyword">async with</span> aiohttp.<span class="fn">ClientSession</span>(
-                timeout=aiohttp.<span class="fn">ClientTimeout</span>(total=<span class="num">30</span>)
-            ) <span class="keyword">as</span> session:
-                <span class="keyword">async with</span> session.<span class="fn">get</span>(url) <span class="keyword">as</span> response:
-                    <span class="keyword">if</span> response.status == <span class="num">200</span>:
-                        data = <span class="keyword">await</span> response.<span class="fn">json</span>()
-                        <span class="keyword">if</span> <span class="fn">any</span>(data.<span class="fn">values</span>()):
-                            <span class="keyword">return</span> data
-                    <span class="keyword">elif</span> response.status == <span class="num">429</span>:
-                        wait_time = DELAY * (<span class="num">2</span> ** attempt)
-                        logging.<span class="fn">warning</span>(<span class="string">f"Rate limited, wait {wait_time}s"</span>)
-                        <span class="keyword">await</span> asyncio.<span class="fn">sleep</span>(wait_time)
-                    <span class="keyword">else</span>:
-                        logging.<span class="fn">warning</span>(<span class="string">f"HTTP {response.status}, retry {attempt+1}"</span>)
-                        <span class="keyword">await</span> asyncio.<span class="fn">sleep</span>(DELAY)
-        <span class="keyword">except</span> Exception <span class="keyword">as</span> error:
-            wait_time = DELAY * (<span class="num">2</span> ** attempt)
-            logging.<span class="fn">error</span>(<span class="string">f"Error: {error}, retry {attempt+1}"</span>)
-            <span class="keyword">await</span> asyncio.<span class="fn">sleep</span>(wait_time)
-    <span class="keyword">return</span> <span class="keyword">None</span></pre>
+                <span class="code-block-label">databricks · clean_with_visibility() helper</span>
+                <pre><span class="keyword">def</span> <span class="fn">clean_with_visibility</span>(df, entity_name, critical_cols, quarantine=<span class="keyword">True</span>,
+                          original_raw_count=<span class="keyword">None</span>, pre_filtered_count=<span class="num">0</span>,
+                          pre_filtered_reason=<span class="keyword">None</span>):
+    <span class="comment">"""Clean a DataFrame with full DQ visibility. Reports source-to-warehouse
+    retention rate, quarantines dropped rows, and only drops on critical field
+    nulls rather than any-null."""</span>
+    raw_count = df.<span class="fn">count</span>()
+    true_raw = original_raw_count <span class="keyword">if</span> original_raw_count <span class="keyword">is not</span> <span class="keyword">None</span> <span class="keyword">else</span> raw_count
+
+    deduped_df = df.<span class="fn">dropDuplicates</span>()
+    duplicates_removed = raw_count - deduped_df.<span class="fn">count</span>()
+
+    null_filter = F.<span class="fn">lit</span>(<span class="keyword">False</span>)
+    <span class="keyword">for</span> col <span class="keyword">in</span> critical_cols:
+        null_filter = null_filter | F.<span class="fn">col</span>(col).<span class="fn">isNull</span>()
+
+    dropped_df = deduped_df.<span class="fn">filter</span>(null_filter)
+    cleaned_df = deduped_df.<span class="fn">filter</span>(~null_filter).<span class="fn">withColumn</span>(<span class="string">"loaded_at"</span>, F.<span class="fn">current_timestamp</span>())
+
+    <span class="keyword">if</span> quarantine <span class="keyword">and</span> dropped_df.<span class="fn">count</span>() > <span class="num">0</span>:
+        dropped_df.write.<span class="fn">mode</span>(<span class="string">"overwrite"</span>).<span class="fn">csv</span>(<span class="string">f"{storage_path}/quarantine/{entity_name}"</span>, header=<span class="keyword">True</span>)
+
+    <span class="fn">print</span>(<span class="string">f"[{entity_name}] Retention: {(cleaned_df.count() / true_raw * 100):.1f}% (source to warehouse)"</span>)
+    <span class="keyword">return</span> cleaned_df</pre>
             </div>
 
             <p class="sec-p">
-                Three <code>GCSObjectExistenceSensor</code> tasks then wait in parallel for each raw file to land.
-                Sensor mode is <code>reschedule</code>, which releases the worker slot between pokes so a slow API
-                upstream does not tie up Composer resources. Poke interval is 15 seconds, timeout is 5 minutes. If any
-                file fails to arrive, the downstream Bronze-to-Silver job never starts.
-            </p>
-
-            <p class="sec-p">
-                Bronze-to-Silver runs as a Dataproc Serverless PySpark batch. It reads NDJSON, explodes the nested API
-                arrays, renames fields to snake_case, casts data types where appropriate, and writes partitioned Parquet
-                with snappy compression to <code>gs://.../silver/</code>. Silver-to-Gold does the same, plus adds
-                derived metrics through Spark SQL functions and window aggregations for group standings.
-            </p>
-
-            <p class="sec-p">
-                Between Silver writes and Silver-to-Gold, a Python validation task reads each Silver Parquet from GCS,
-                checks row count is non-zero, and confirms required columns exist. If any check fails, the whole DAG
-                fails before Gold is touched. This is the "validate before load" principle applied to a cloud pipeline:
-                if Silver is broken, do not let broken data propagate to the analytics layer.
+                Before this helper runs on <code>medical_records</code>, a date sanity filter identifies rows where
+                <code>discharge_date &lt; admission_date</code> and writes them to a quarantine folder. The filter
+                caught 14 rows, all from a January 2024 cluster (dates like admission 2024-01-14 with discharge
+                2024-01-07). The pattern is too tight to be random. In a real hospital, this would trigger investigation
+                with the source-system team about a specific window of data entry.
             </p>
 
             <div class="code-block">
-                <span class="code-block-label">dags/worldcup_elt_pipeline.py · Silver quality gate</span>
-                <pre><span class="keyword">def</span> <span class="fn">validate_silver</span>(**context):
-    gcs = <span class="fn">GCSHook</span>()
-    errors = []
-    <span class="keyword">for</span> entity <span class="keyword">in</span> [<span class="string">"teams"</span>, <span class="string">"standings"</span>, <span class="string">"matches"</span>]:
-        folder_prefix = <span class="string">f"{PATHS['silver']}/{entity}/"</span>
-        all_files = gcs.<span class="fn">list</span>(BUCKET, prefix=folder_prefix)
-        parquet_files = [p <span class="keyword">for</span> p <span class="keyword">in</span> all_files <span class="keyword">if</span> p.<span class="fn">endswith</span>(<span class="string">".parquet"</span>)]
-        <span class="keyword">if not</span> parquet_files:
-            errors.<span class="fn">append</span>(<span class="string">f"{entity}: no Parquet files found"</span>)
-            <span class="keyword">continue</span>
-        file_bytes = gcs.<span class="fn">download</span>(BUCKET, parquet_files[<span class="num">0</span>])
-        df = pq.<span class="fn">read_table</span>(<span class="fn">BytesIO</span>(file_bytes)).<span class="fn">to_pandas</span>()
-        <span class="keyword">if</span> <span class="fn">len</span>(df) == <span class="num">0</span>:
-            errors.<span class="fn">append</span>(<span class="string">f"{entity}: zero rows"</span>)
-        required = REQUIRED_COLUMNS[entity]
-        <span class="keyword">for</span> col <span class="keyword">in</span> required:
-            <span class="keyword">if</span> col <span class="keyword">not in</span> df.columns:
-                errors.<span class="fn">append</span>(<span class="string">f"{entity}: missing column {col}"</span>)
-    <span class="keyword">if</span> errors:
-        <span class="keyword">raise</span> <span class="fn">ValueError</span>(<span class="string">f"Validation failed: {errors}"</span>)</pre>
+                <span class="code-block-label">databricks · date sanity quarantine for medical_records</span>
+                <pre>bad_dates_df = med_records_df.<span class="fn">filter</span>(
+    F.<span class="fn">col</span>(<span class="string">"discharge_date"</span>).<span class="fn">isNotNull</span>()
+    & F.<span class="fn">col</span>(<span class="string">"admission_date"</span>).<span class="fn">isNotNull</span>()
+    & (F.<span class="fn">col</span>(<span class="string">"discharge_date"</span>) < F.<span class="fn">col</span>(<span class="string">"admission_date"</span>))
+)
+
+<span class="keyword">if</span> bad_dates_df.<span class="fn">count</span>() > <span class="num">0</span>:
+    <span class="fn">print</span>(<span class="string">f"[medical_records] Date sanity: {bad_dates_df.count()} records with illogical dates"</span>)
+    bad_dates_df.write.<span class="fn">mode</span>(<span class="string">"overwrite"</span>).<span class="fn">csv</span>(
+        <span class="string">f"{storage_path}/quarantine/medical_records_bad_dates"</span>, header=<span class="keyword">True</span>
+    )
+
+med_records_df = med_records_df.<span class="fn">filter</span>(
+    F.<span class="fn">col</span>(<span class="string">"discharge_date"</span>).<span class="fn">isNull</span>()
+    | F.<span class="fn">col</span>(<span class="string">"admission_date"</span>).<span class="fn">isNull</span>()
+    | (F.<span class="fn">col</span>(<span class="string">"discharge_date"</span>) >= F.<span class="fn">col</span>(<span class="string">"admission_date"</span>))
+)</pre>
             </div>
 
             <p class="sec-p">
-                The final loads to BigQuery use <code>GCSToBigQueryOperator</code> with <code>external_table=True</code>
-                and <code>schema_fields=...</code> pointing at pre-declared dictionaries derived from
-                <code>SchemaField</code> objects. Every column has its type and mode declared before the load runs.
-                BigQuery does not infer anything.
+                The SQL side runs a four-check data quality safety net after all EDW loads succeed: row count parity
+                between STG and EDW, primary key uniqueness on every table, foreign key orphan detection (facts
+                referencing missing patients), and date sanity as a downstream check that upstream Databricks quarantine
+                actually worked. Hard failures use <code>THROW</code> to fail the pipeline; soft warnings pass with
+                alerts.
             </p>
 
             <div class="code-block">
-                <span class="code-block-label">dags/worldcup_elt_pipeline.py · explicit schema declaration
-                    (gold_standings excerpt)</span>
-                <pre>GOLD_SCHEMAS = {
-    <span class="string">"standings"</span>: [
-        <span class="fn">SchemaField</span>(<span class="string">"standing_id"</span>, <span class="string">"STRING"</span>, mode=<span class="string">"NULLABLE"</span>),
-        <span class="fn">SchemaField</span>(<span class="string">"position"</span>, <span class="string">"STRING"</span>, mode=<span class="string">"NULLABLE"</span>),
-        <span class="fn">SchemaField</span>(<span class="string">"team_id"</span>, <span class="string">"STRING"</span>, mode=<span class="string">"NULLABLE"</span>),
-        <span class="fn">SchemaField</span>(<span class="string">"team_name"</span>, <span class="string">"STRING"</span>, mode=<span class="string">"NULLABLE"</span>),
-        <span class="comment"># ... 12 more fields ...</span>
-        <span class="fn">SchemaField</span>(<span class="string">"points_per_game"</span>, <span class="string">"FLOAT"</span>, mode=<span class="string">"NULLABLE"</span>),
-        <span class="fn">SchemaField</span>(<span class="string">"win_percentage"</span>, <span class="string">"FLOAT"</span>, mode=<span class="string">"NULLABLE"</span>),
-        <span class="fn">SchemaField</span>(<span class="string">"goals_scored_per_game"</span>, <span class="string">"FLOAT"</span>, mode=<span class="string">"NULLABLE"</span>),
-        <span class="fn">SchemaField</span>(<span class="string">"goals_conceded_per_game"</span>, <span class="string">"FLOAT"</span>, mode=<span class="string">"NULLABLE"</span>),
-        <span class="fn">SchemaField</span>(<span class="string">"running_total_points"</span>, <span class="string">"FLOAT"</span>, mode=<span class="string">"NULLABLE"</span>),
-        <span class="fn">SchemaField</span>(<span class="string">"gold_loaded_at"</span>, <span class="string">"TIMESTAMP"</span>, mode=<span class="string">"NULLABLE"</span>),
-    ],
-    <span class="comment"># teams and matches schemas omitted for brevity</span>
-}
+                <span class="code-block-label">azure sql · foreign key orphan check (excerpt)</span>
+                <pre><span class="comment">-- Catches the classic pipeline bug: Databricks dropped a patient,
+-- but the medical records for that patient survived. Orphan facts
+-- silently corrupt downstream analytics.</span>
+<span class="keyword">SELECT</span> <span class="string">'fact_med_record'</span>,
+       (<span class="keyword">SELECT COUNT</span>(*) <span class="keyword">FROM</span> EDW.fact_med_record f
+        <span class="keyword">LEFT JOIN</span> EDW.dim_patient p <span class="keyword">ON</span> f.patient_id = p.patient_id
+        <span class="keyword">WHERE</span> p.patient_id <span class="keyword">IS NULL</span>)
 
-<span class="comment"># Convert SchemaField objects to JSON-safe dicts for the operator</span>
-GOLD_SCHEMA_DICTS = {
-    name: [field.<span class="fn">to_api_repr</span>() <span class="keyword">for</span> field <span class="keyword">in</span> schema_list]
-    <span class="keyword">for</span> name, schema_list <span class="keyword">in</span> GOLD_SCHEMAS.<span class="fn">items</span>()
-}</pre>
+<span class="keyword">IF</span> @orphan_total > <span class="num">0</span>
+<span class="keyword">BEGIN</span>
+    <span class="keyword">SET</span> @error_count = @error_count + <span class="num">1</span>
+    <span class="keyword">SET</span> @error_message = <span class="string">'ORPHAN FACTS DETECTED: '</span> +
+        <span class="fn">CAST</span>(@orphan_total <span class="keyword">AS</span> <span class="keyword">VARCHAR</span>) +
+        <span class="string">' fact rows reference patients that do not exist in EDW.dim_patient.'</span>
+<span class="keyword">END</span></pre>
             </div>
         </section>
 
         <!-- ───── 05 · DECISIONS ───── -->
         <section id="decisions" class="fade-up sec-alt">
             <div class="sec-kicker"><span class="sec-num">05</span> Decisions</div>
-            <h2 class="sec-h">Ten decisions I made, and honest tradeoffs on each</h2>
+            <h2 class="sec-h">Nine decisions I made, with honest tradeoffs on each</h2>
 
             <div class="dec-grid">
 
                 <div class="dec-card">
                     <div class="dec-num">01</div>
-                    <h3 class="dec-h">Bronze stays in the lake, not the warehouse</h3>
-                    <p>An earlier iteration loaded raw NDJSON into BigQuery as <code>bronze_*</code> external tables. I
-                        removed those loads in a targeted refactor. Raw data lives in <code>gs://.../raw/</code> as
-                        newline-delimited JSON. Only Silver and Gold materialize in BigQuery. The tradeoff: analysts
-                        cannot directly SQL-query raw responses. The gain: no duplicated storage cost and a cleaner
-                        medallion story where the lake and warehouse have clear separate roles.</p>
+                    <h3 class="dec-h">STG + EDW schemas over medallion Bronze/Silver/Gold</h3>
+                    <p>The brief allowed either pattern. I picked the classical enterprise warehousing layout (STG for
+                        landing, EDW for analytics) over medallion because National Hospital's use case is
+                        warehouse-first (SQL analysts querying via Power BI), not lake-first (data scientists reading
+                        Parquet). Both patterns are correct in their contexts. Tradeoff: no explicit "Silver" curation
+                        layer, so cleaning logic lives in Databricks rather than as a queryable intermediate table.
+                        Gain: simpler mental model for BI users, cleaner separation of staging vs analytics tables.</p>
                 </div>
 
                 <div class="dec-card">
                     <div class="dec-num">02</div>
-                    <h3 class="dec-h">Dataproc Serverless over managed clusters</h3>
-                    <p>The obvious cloud-native Spark choice would have been Dataproc classic (persistent clusters). I
-                        picked Dataproc Serverless instead: I submit a batch, GCP provisions ephemeral compute, runs the
-                        PySpark job, tears it down. No cluster to size, no autoscaling to configure, no cost when idle.
-                        The tradeoff: cold starts add 2 to 3 minutes per batch to my end-to-end runtime, which is real.
-                        Worth it for a pipeline that runs on a schedule, not continuously.</p>
+                    <h3 class="dec-h">Databricks over stored procedures for transformations</h3>
+                    <p>Azure allows either. I picked Databricks because PySpark's expressiveness (window functions,
+                        complex string handling, quarantine writes to blob) is genuinely better than T-SQL stored
+                        procedures for this class of work. Tradeoff: cold-start cost per pipeline run (~1 minute for
+                        Databricks cluster start). Gain: transformation code is version-controlled Python, testable in
+                        isolation, and matches the toolchain of Nova Retail and WFI for consistency across my portfolio.
+                    </p>
                 </div>
 
                 <div class="dec-card">
                     <div class="dec-num">03</div>
-                    <h3 class="dec-h">External tables over native BigQuery tables</h3>
-                    <p>Every load task uses <code>external_table=True</code>. BigQuery stores metadata pointing at GCS
-                        Parquet, not the data itself. Any Dataproc-written change appears in the next query without a
-                        copy. The tradeoff: query performance is slightly slower than native BigQuery storage because
-                        reads pull from GCS. For analytics volumes at WFI's scale, the tradeoff is invisible; for a
-                        high-throughput dashboard, native tables would be better.</p>
+                    <h3 class="dec-h">Visibility-first cleaning over silent na.drop()</h3>
+                    <p>The obvious pattern is <code>df.dropDuplicates().na.drop()</code>. It works, but drops any row
+                        with any null in any column silently. I replaced it with a <code>clean_with_visibility()</code>
+                        helper that only drops rows missing genuinely critical fields (patient_id, record_id), reports
+                        what was dropped and why, and quarantines rejected rows to a folder analysts can review.
+                        Tradeoff: more code and slightly slower (extra count operations). Gain: production-grade
+                        observability into what gets dropped, and no silent data loss.</p>
                 </div>
 
                 <div class="dec-card">
                     <div class="dec-num">04</div>
-                    <h3 class="dec-h">Explicit schemas, no <code>autodetect</code></h3>
-                    <p>The pipeline first ran with <code>autodetect=True</code> on every load. It worked, but
-                        production-grade means deterministic. I declared <code>SchemaField</code> objects for every
-                        column of every Silver and Gold table, converted them to dicts via <code>to_api_repr()</code>
-                        for provider compatibility, and passed them to the operators. The tradeoff: end-to-end runtime
-                        went from 11m 53s to 24m 53s (about 2x) because BigQuery now validates every Parquet field
-                        against the declared schema instead of quickly inferring types. I accepted the slowdown for the
-                        correctness gain.</p>
+                    <h3 class="dec-h">Two-layer data quality suite (Databricks + SQL)</h3>
+                    <p>DQ could live at one layer only. Instead I split it: Databricks catches upstream problems (bad
+                        source data, missing critical fields, illogical dates), SQL catches downstream problems (row
+                        count parity, PK uniqueness, FK orphans). Tradeoff: two places to maintain DQ logic. Gain: each
+                        layer catches failure modes the other misses, and the SQL layer serves as a safety net that
+                        surfaces bugs in the upstream Databricks quarantine logic.</p>
                 </div>
 
                 <div class="dec-card">
                     <div class="dec-num">05</div>
-                    <h3 class="dec-h">Reschedule-mode sensors over poke-mode</h3>
-                    <p>All three GCS file sensors use <code>mode="reschedule"</code>, not <code>mode="poke"</code>.
-                        Reschedule releases the Airflow worker slot between checks; poke holds the slot for the entire
-                        sensor lifetime. With three parallel sensors and a Composer environment on a modest tier, poke
-                        mode would starve the executor pool. Reschedule keeps the pool free for other work.</p>
+                    <h3 class="dec-h">Quarantine over auto-correct for illogical dates</h3>
+                    <p>The 14 medical records with <code>discharge_date &lt; admission_date</code> could have been
+                        silently dropped, auto-corrected by swapping the dates, or loaded with a suspicious flag. I
+                        chose quarantine: write them to <code>quarantine/medical_records_bad_dates/</code>, remove them
+                        from the loaded data, and document the pattern. Tradeoff: 14 rows do not reach the warehouse
+                        (0.7% loss). Gain: the warehouse stays clean, the bad data remains inspectable for source-system
+                        investigation, and no silent auto-correction hides the underlying data quality issue.</p>
                 </div>
 
                 <div class="dec-card">
                     <div class="dec-num">06</div>
-                    <h3 class="dec-h">Validation gate between Silver and Gold, not at end</h3>
-                    <p>The <code>validate_silver_data</code> task sits between the Silver loads and Silver-to-Gold. If
-                        Silver is bad, the Gold job never runs and Gold tables never get overwritten with garbage.
-                        Placing validation at the end (after Gold loads) would mean bad data reaches analysts before I
-                        catch it. Placing it here means the pipeline fails loudly at the right moment.</p>
+                    <h3 class="dec-h">DELETE + INSERT for EDW loads over MERGE</h3>
+                    <p>Both patterns produce idempotent loads. I chose
+                        <code>DELETE FROM EDW WHERE patient_id IN (SELECT FROM STG); INSERT INTO EDW SELECT * FROM STG</code>
+                        because it is explicit about intent and easy to reason about at 2am. Tradeoff: no fine-grained
+                        update logic; every row is replaced wholesale. Gain: deterministic warehouse state on every run,
+                        and re-runs produce identical results. <code>MERGE</code> would be the natural next step for a
+                        v2 that needs SCD Type 2 history tracking.</p>
                 </div>
 
                 <div class="dec-card">
                     <div class="dec-num">07</div>
-                    <h3 class="dec-h"><code>WRITE_OVERWRITE</code> for idempotent loads</h3>
-                    <p>Every <code>GCSToBigQueryOperator</code> uses <code>write_disposition="WRITE_OVERWRITE"</code>.
-                        Re-runs produce deterministic table state: run the DAG twice and the tables look identical. This
-                        is the correct posture for a nightly-shape pipeline: the truth is what the latest source data
-                        says, not an accumulated append log. Note: <code>WRITE_OVERWRITE</code> is not a documented
-                        BigQuery disposition (Google lists WRITE_TRUNCATE, WRITE_APPEND, WRITE_EMPTY only) but the
-                        Airflow Google provider accepts it and it works as intended.</p>
+                    <h3 class="dec-h">Wildcard file paths over dataset-per-file</h3>
+                    <p>ADF Copy Data activities read from <code>processed_data/patients_data_processed/*.csv</code>.
+                        Databricks writes CSV as a folder of part files rather than a single file, so wildcard paths
+                        handle both single-partition and multi-partition outputs without change. Tradeoff: dataset
+                        definitions are less strict about what they will match. Gain: pipeline handles Databricks
+                        partitioning changes without requiring dataset republishing.</p>
                 </div>
 
                 <div class="dec-card">
                     <div class="dec-num">08</div>
-                    <h3 class="dec-h">Async extraction with retries and rate-limit handling</h3>
-                    <p>The extract task uses <code>aiohttp</code> with <code>asyncio</code>, not the more common
-                        <code>requests</code> library. Three endpoints get fetched with retry logic that specifically
-                        handles HTTP 429 with exponential backoff. Delay-between-requests is configurable via
-                        <code>DELAY = 7</code>. For three endpoints this is overkill (I could hit them synchronously),
-                        but the pattern generalizes to hundreds of endpoints and the correct rate-limit hygiene reads as
-                        production-grade even at small scale.</p>
+                    <h3 class="dec-h">Storage account key via Databricks secret scope</h3>
+                    <p>The obvious anti-pattern is hardcoding the storage account key in the Databricks notebook.
+                        Instead, the key lives in an Azure Key Vault-backed Databricks secret scope, referenced as
+                        <code>dbutils.secrets.get(scope="datalakekey", key="datalakekey")</code>. Tradeoff: one-time
+                        setup complexity to create the secret scope. Gain: no credentials in source control, secure
+                        rotation possible, and the notebook is safe to share for open code review.</p>
                 </div>
 
                 <div class="dec-card">
                     <div class="dec-num">09</div>
-                    <h3 class="dec-h">Empty <code>execution_config: {}</code> after machine-type debug</h3>
-                    <p>An early run failed with
-                        <code>The specified machine type 'e4-custom-4-15872' does not exist in zone 'us-central1-a'</code>.
-                        Dataproc Serverless was auto-selecting a machine family that GCP had rolled out to some zones
-                        but not mine. Adding an empty <code>execution_config: {}</code> in the batch config forced
-                        Dataproc to use zone-appropriate defaults, and the batch provisioned cleanly. The fix cut
-                        end-to-end runtime from 1h 13m to 12m; it was the difference between a broken pipeline and one
-                        that ships.</p>
-                </div>
-
-                <div class="dec-card">
-                    <div class="dec-num">10</div>
-                    <h3 class="dec-h">Fan-out then converge, at every layer</h3>
-                    <p>Three entity streams (teams, standings, matches) run in parallel where they can. Both Dataproc
-                        batches process all three entities together (converging the streams because they need
-                        cross-references). Both BigQuery load stages fan back out to three parallel loads. The final DAG
-                        shape shows the medallion architecture visually: streams that can be independent run
-                        independently, streams that need cross-reference converge just long enough.</p>
+                    <h3 class="dec-h">Daily schedule over event-driven</h3>
+                    <p>Real hospitals batch overnight rather than event-stream in real-time. The ADF trigger runs the
+                        pipeline daily at 10:00 AM UK time (auto-adjusts for daylight savings). Tradeoff: up to 24 hours
+                        of latency between source data change and warehouse refresh. Gain: matches actual hospital
+                        reporting cadence, avoids the complexity of event-driven triggers that would be genuinely
+                        overkill for this data volume and analytical use case.</p>
                 </div>
 
             </div>
@@ -2778,136 +2716,161 @@ GOLD_SCHEMA_DICTS = {
         <!-- ───── 06 · IMPACT & RUNTIME ───── -->
         <section id="impact" class="fade-up">
             <div class="sec-kicker"><span class="sec-num">06</span> Impact and runtime</div>
-            <h2 class="sec-h">Three runs, one debugging story, honest numbers</h2>
+            <h2 class="sec-h">Real pipeline runs, real numbers, real analytics output</h2>
 
             <p class="sec-p">
-                The pipeline shipped end-to-end on Cloud Composer. Below are three real runs I captured, in the order I
-                made them. Each row is a real Composer run ID; each duration is what Airflow measured.
+                The pipeline runs end-to-end in about 2 minutes and 20 seconds on real Azure infrastructure. Every
+                activity is logged in Data Factory's monitoring UI with per-activity start times, durations, and success
+                or failure status. Below is a captured run from August 23, 2026.
             </p>
 
             <div class="runtime-grid">
 
                 <div class="runtime-row">
-                    <div class="runtime-label">Run 1 · initial deployment</div>
-                    <div class="runtime-val">1h 13m 25s</div>
-                    <div class="runtime-note">First end-to-end run. Ran but slowly. Dataproc Serverless was
-                        auto-selecting an <code>e4-custom-4-15872</code> machine that turned out to be unavailable in
-                        <code>us-central1-a</code>. The provisioning failed and Dataproc fell back to slower defaults
-                        with retries baked in. Real spend, real completion, but not production-shape.</div>
-                </div>
-
-                <div class="runtime-row acc">
-                    <div class="runtime-label">Run 2 · after <code>execution_config: {}</code> fix</div>
-                    <div class="runtime-val">11m 53s</div>
-                    <div class="runtime-note">I added an empty <code>execution_config: {}</code> to both Dataproc
-                        batches. Dataproc stopped trying to auto-select bleeding-edge machine families and used
-                        zone-appropriate defaults instead. The pipeline dropped from 73 minutes to 12 minutes: an 84%
-                        reduction from a two-line config change. This is the runtime I would put on a CV or interview
-                        slide.</div>
+                    <div class="runtime-label">Databricks transformation (run_transformation)</div>
+                    <div class="runtime-val">1m 8s</div>
+                    <div class="runtime-note">Reads 6 CSVs from <code>raw/</code>, cleans through
+                        <code>clean_with_visibility()</code>, quarantines 14 medical_records with bad dates, writes
+                        cleaned data to <code>processed_data/</code>. Cold-start cost for Databricks cluster is included
+                        in this duration.</div>
                 </div>
 
                 <div class="runtime-row">
-                    <div class="runtime-label">Run 3 · after explicit BigQuery schemas</div>
-                    <div class="runtime-val">24m 53s</div>
-                    <div class="runtime-note">I replaced <code>autodetect=True</code> with
-                        <code>schema_fields=...</code> on all six load tasks. BigQuery now validates each Parquet field
-                        against a declared schema on every load, which added roughly 13 minutes across the six parallel
-                        loads. This is the tradeoff of explicit schemas: correctness costs runtime. For a nightly
-                        pipeline, the tradeoff is trivial. For a real-time pipeline it would need optimization. I chose
-                        to accept it and document it here.</div>
+                    <div class="runtime-label">Six parallel STG copies (Copy Data)</div>
+                    <div class="runtime-val">16-23s each</div>
+                    <div class="runtime-note">Wildcard reads from <code>processed_data/</code> into <code>STG</code>
+                        tables via ADF Copy Data. Pre-copy <code>TRUNCATE TABLE STG.*</code> ensures deterministic
+                        re-runs.</div>
+                </div>
+
+                <div class="runtime-row">
+                    <div class="runtime-label">Five parallel EDW loads (Script)</div>
+                    <div class="runtime-val">9-27s each</div>
+                    <div class="runtime-note">
+                        <code>DELETE FROM EDW WHERE patient_id IN (SELECT FROM STG); INSERT INTO EDW SELECT * FROM STG</code>.
+                        The 27-second outlier is <code>load_labs_imaging_edw</code> which combines two source datasets
+                        into one target table.</div>
+                </div>
+
+                <div class="runtime-row acc">
+                    <div class="runtime-label">Data quality checks (run_dq_checks)</div>
+                    <div class="runtime-val">10s</div>
+                    <div class="runtime-note">Four-check safety net: row count parity, PK uniqueness, FK orphans, date
+                        sanity. Fails pipeline on hard violations, warns on soft violations, passes silently when clean.
+                        Screenshot-ready output in ADF activity logs.</div>
+                </div>
+
+                <div class="runtime-row">
+                    <div class="runtime-label">End-to-end pipeline runtime</div>
+                    <div class="runtime-val">2m 20s</div>
+                    <div class="runtime-note">From <code>run_transformation</code> start (09:53:43) to
+                        <code>run_dq_checks</code> completion (09:56:13). Consistent across multiple runs. Well within
+                        the daily-schedule window.</div>
                 </div>
 
             </div>
 
-            <p class="sec-p" style="margin-top:2rem;">
-                The pattern is real and worth naming honestly. First run: 1h 13m. Fix a two-line config bug: 11m 53s.
-                Add production-grade schemas: 24m 53s. Each move was a genuine engineering decision with a genuine
-                tradeoff. The final production shape (Run 3) is slower than the peak-optimized run, and that is the
-                correct answer for what the pipeline needs to do.
+            <h3 class="sec-h" style="font-size:1.2rem;margin-top:2.5rem;margin-bottom:.85rem;">The January 2024 anomaly
+            </h3>
+
+            <p class="sec-p">
+                The monthly admission trend query surfaced 49 months of data (January 2020 through January 2024).
+                Baseline admission volume is roughly 40 per month with modest seasonal variation. January 2024 stood out
+                with only 28 admissions, meaningfully below the baseline. Interestingly, this is the same month where
+                the DQ suite flagged 14 medical records with illogical <code>discharge_date &lt; admission_date</code>
+                values.
+            </p>
+
+            <p class="sec-p">
+                Two independent data quality signals converging on the same time period suggest a source-system issue
+                during January 2024 rather than random noise. In a real hospital deployment, this pattern would trigger
+                investigation with the source IT team about that specific window (potentially a data-entry system bug, a
+                shift change with training gaps, or a data migration during that month). Neither the low admission count
+                nor the bad dates would be visible without the pipeline surfacing them. This is the difference between a
+                data pipeline that moves data and a data platform that produces insight.
             </p>
 
             <div class="callout">
                 <div class="callout-label">On honest cost</div>
                 <p>
-                    Cloud Composer is not free. My environment burned roughly $1 to $2 per end-to-end run in Dataproc
-                    Serverless compute plus Composer's ambient overhead, funded from the GCP free trial credit. This
-                    complements Nova Retail's on-premise Docker approach: Nova runs at zero marginal cost on a single
-                    host; WFI runs on managed infrastructure with real cloud spend. A modern data platform typically
-                    needs both patterns depending on scale, elasticity requirements, and infrastructure ownership
-                    preferences.
+                    Real Azure infrastructure costs real money. Each end-to-end pipeline run consumes roughly £0.30 to
+                    £0.60 in Databricks compute plus Azure SQL Database ambient overhead. Cloud Composer for WFI cost £1
+                    to £2 per run; this pipeline is cheaper because Databricks Serverless clusters spin up and down more
+                    efficiently than Cloud Composer's persistent environment. Total spend during development stayed well
+                    within the free Azure trial credit.
                 </p>
             </div>
         </section>
 
         <!-- ───── 07 · TECH STACK ───── -->
         <section id="tech" class="fade-up sec-alt">
-            <div class="sec-kicker"><span class="sec-num">07</span> Tech Stack</div>
+            <div class="sec-kicker"><span class="sec-num">07</span> Tech stack</div>
             <h2 class="sec-h">The tools, and what each one does here.</h2>
 
             <div class="tech-grid">
                 <div class="tech-item">
-                    <span class="tech-name">Cloud Composer 2.17.7</span>
-                    <span class="tech-role">Managed Airflow on GKE · hosts the 14-task DAG</span>
+                    <span class="tech-name">Azure Data Factory V2</span>
+                    <span class="tech-role">Orchestration · 13-activity pipeline · daily trigger</span>
                 </div>
                 <div class="tech-item">
-                    <span class="tech-name">Apache Airflow 2.11.1</span>
-                    <span class="tech-role">Orchestration · fan-out/converge/validate/fan-out shape</span>
+                    <span class="tech-name">Azure Databricks</span>
+                    <span class="tech-role">PySpark transformations · visibility-first cleaning</span>
                 </div>
                 <div class="tech-item">
-                    <span class="tech-name">Dataproc Serverless 2.1</span>
-                    <span class="tech-role">Ephemeral PySpark batches · zero clusters managed</span>
+                    <span class="tech-name">Azure SQL Database</span>
+                    <span class="tech-role">Warehouse · STG + EDW schemas · analytics surface</span>
+                </div>
+                <div class="tech-item">
+                    <span class="tech-name">Azure Data Lake Gen2</span>
+                    <span class="tech-role">Storage · raw + processed + quarantine folders</span>
+                </div>
+                <div class="tech-item">
+                    <span class="tech-name">Azure Key Vault</span>
+                    <span class="tech-role">Secret storage · datalake key for Databricks</span>
                 </div>
                 <div class="tech-item">
                     <span class="tech-name">PySpark 3.x</span>
-                    <span class="tech-role">Distributed transform · Bronze to Silver, Silver to Gold</span>
-                </div>
-                <div class="tech-item">
-                    <span class="tech-name">Google Cloud Storage</span>
-                    <span class="tech-role">Lakehouse · Bronze NDJSON + Silver/Gold Parquet</span>
-                </div>
-                <div class="tech-item">
-                    <span class="tech-name">Google BigQuery</span>
-                    <span class="tech-role">Warehouse · 6 external tables with explicit schemas</span>
-                </div>
-                <div class="tech-item">
-                    <span class="tech-name">aiohttp + asyncio</span>
-                    <span class="tech-role">Async API extraction · HTTP 429 backoff retry</span>
-                </div>
-                <div class="tech-item">
-                    <span class="tech-name">pandas + pyarrow</span>
-                    <span class="tech-role">Python-side Parquet validation · quality gate</span>
-                </div>
-                <div class="tech-item">
-                    <span class="tech-name">Parquet + snappy</span>
-                    <span class="tech-role">Columnar storage · Silver and Gold layers</span>
-                </div>
-                <div class="tech-item">
-                    <span class="tech-name">NDJSON</span>
-                    <span class="tech-role">Newline-delimited JSON · raw Bronze layer</span>
-                </div>
-                <div class="tech-item">
-                    <span class="tech-name">GCS Existence Sensor</span>
-                    <span class="tech-role">File-readiness gates · reschedule mode</span>
-                </div>
-                <div class="tech-item">
-                    <span class="tech-name">GCSToBigQueryOperator</span>
-                    <span class="tech-role">Loads to BigQuery · WRITE_OVERWRITE idempotency</span>
-                </div>
-                <div class="tech-item">
-                    <span class="tech-name">Dataproc Batch Operator</span>
-                    <span class="tech-role">Serverless batch submission · templated batch_id</span>
-                </div>
-                <div class="tech-item">
-                    <span class="tech-name">SchemaField (BigQuery)</span>
-                    <span class="tech-role">Explicit schema declarations · no autodetect</span>
-                </div>
-                <div class="tech-item">
-                    <span class="tech-name">TheSportsDB API</span>
-                    <span class="tech-role">Public REST API · teams, standings, matches endpoints</span>
+                    <span class="tech-role">Distributed transform · Databricks-bundled runtime</span>
                 </div>
                 <div class="tech-item">
                     <span class="tech-name">Python 3.11</span>
-                    <span class="tech-role">Extract, validate, DAG code · Composer-provided runtime</span>
+                    <span class="tech-role">Databricks notebooks · Cleaning + validation logic</span>
+                </div>
+                <div class="tech-item">
+                    <span class="tech-name">T-SQL</span>
+                    <span class="tech-role">EDW load scripts · 4-check DQ safety net</span>
+                </div>
+                <div class="tech-item">
+                    <span class="tech-name">Copy Data Activity</span>
+                    <span class="tech-role">Blob to STG · wildcard file path · TRUNCATE precopy</span>
+                </div>
+                <div class="tech-item">
+                    <span class="tech-name">Script Activity</span>
+                    <span class="tech-role">EDW loads · DELETE + INSERT idempotency · DQ checks</span>
+                </div>
+                <div class="tech-item">
+                    <span class="tech-name">Databricks Notebook Activity</span>
+                    <span class="tech-role">Triggers PySpark cleaning · returns to ADF on success</span>
+                </div>
+                <div class="tech-item">
+                    <span class="tech-name">Schedule Trigger</span>
+                    <span class="tech-role">Daily 10:00 UK time · auto-adjusts for daylight savings</span>
+                </div>
+                <div class="tech-item">
+                    <span class="tech-name">Databricks Secret Scope</span>
+                    <span class="tech-role">Key Vault-backed · no credentials in notebook code</span>
+                </div>
+                <div class="tech-item">
+                    <span class="tech-name">NVARCHAR</span>
+                    <span class="tech-role">Warehouse text columns · migrated from deprecated TEXT</span>
+                </div>
+                <div class="tech-item">
+                    <span class="tech-name">WASB Protocol</span>
+                    <span class="tech-role">Databricks to blob storage · account key auth</span>
+                </div>
+                <div class="tech-item">
+                    <span class="tech-name">10Alytics Dataset</span>
+                    <span class="tech-role">Synthetic hospital data · 6 CSVs across 4 departments</span>
                 </div>
             </div>
 
@@ -2915,67 +2878,65 @@ GOLD_SCHEMA_DICTS = {
             </h3>
 
             <p class="sec-p">
-                For production against a broader competition catalog, the natural evolutions would be:
-                <strong>parameterized league and season</strong> so the same DAG runs per league and consolidates at
-                Gold; <strong>incremental loads</strong> replacing <code>WRITE_OVERWRITE</code> with partition-by-date
-                and merge-on-key so growing data does not rebuild the entire warehouse on every run; <strong>numeric
-                    casting at the Spark layer</strong> so analysts can <code>SUM(points)</code> without a
-                <code>CAST</code>; <strong>pytest coverage</strong> on the extract logic, PySpark transformations, and
-                schema declarations to catch regressions in CI, not at runtime; <strong>dbt models on top of
-                    Silver</strong> for analyst-authored Gold transformations with version-controlled SQL and built-in
-                testing; <strong>watermarks and idempotency keys</strong> on the load tasks to handle late-arriving data
-                gracefully; and <strong>Looker Studio dashboards or a business API layer</strong> to close the loop from
-                raw NDJSON all the way to decisions.
+                For production against a full hospital's actual admissions data (millions of rows, not thousands), the
+                natural evolutions would be: <strong>consolidate resources to a single Azure region</strong> to
+                eliminate inter-region egress; <strong>SCD Type 2 dimensions</strong> on <code>dim_patient</code> so
+                address and contact changes retain history; <strong>MERGE statements</strong> replacing DELETE + INSERT
+                for finer-grained update semantics; <strong>incremental loading</strong> with watermarks or CDC rather
+                than full-refresh; <strong>HIPAA-aware transformations</strong> including PHI hashing, audit logs on
+                sensitive queries, and column-level encryption; <strong>dbt models on top of EDW</strong> for
+                analyst-authored curated marts; <strong>Power BI dashboards</strong> for the Registration, Medical, Lab,
+                and R&amp;D departments; <strong>pytest coverage</strong> on the Databricks transformations to catch
+                schema drift in CI rather than at runtime; and <strong>Azure Monitor alerts</strong> wired to the DQ
+                check output for on-call notification when the pipeline finds real problems.
             </p>
         </section>
 
-        <!-- ───── LIMITS + NEXT ───── -->
+        <!-- ───── 08 · HONEST LIMITS ───── -->
         <section class="fade-up" style="margin-top:5rem;margin-bottom:0;">
             <div class="sec-kicker"><span class="sec-num">08</span> Honest limits</div>
             <h2 class="sec-h">What this project does not do (yet)</h2>
 
             <div class="limits-grid">
                 <div class="limit-card">
-                    <h3 class="limit-h">No unit tests</h3>
-                    <p>Neither the DAG code nor the PySpark jobs have pytest coverage. Data quality is enforced through
-                        the runtime <code>validate_silver_data</code> gate, which catches broken Silver before Gold
-                        runs. But there is no CI-time check that the extract logic, the Spark transformations, or the
-                        schema declarations behave correctly against fixtures. This is the next honest improvement.</p>
+                    <h3 class="limit-h">No HIPAA compliance</h3>
+                    <p>The pipeline processes synthetic patient data with no encryption at rest for sensitive fields, no
+                        PHI hashing, no audit logs on sensitive queries, no column-level access control. A production
+                        healthcare pipeline would need all of these. Worth naming as scope, not as oversight.</p>
                 </div>
                 <div class="limit-card">
                     <h3 class="limit-h">No incremental loads</h3>
-                    <p>Every run does <code>WRITE_OVERWRITE</code>. That is right for a pipeline pulling a bounded
-                        competition (32 teams, 64 fixtures), but wrong for a growing data source. Extending this to a
-                        live-season pipeline would need partition-by-date, watermarks, and merge-on-key logic in the
-                        Spark jobs.</p>
+                    <p>Every run does a full-refresh <code>DELETE + INSERT</code>. Correct for a bounded synthetic
+                        dataset; wrong for a growing hospital dataset. A production pipeline would need watermarks or
+                        Change Data Capture (CDC) with merge-on-key logic.</p>
                 </div>
                 <div class="limit-card">
-                    <h3 class="limit-h">Numeric fields stored as STRING</h3>
-                    <p>Silver keeps most fields as STRING to match TheSportsDB's raw form. Gold introduces FLOATs for
-                        derived metrics only. Base fields like <code>points</code>, <code>played_games</code>,
-                        <code>goals_for</code> remain STRING. Analysts running SUM or AVG on those need to CAST to INT64
-                        first. Casting at the Spark layer would be the correct production fix; I chose not to do it in
-                        this iteration to avoid churn.</p>
+                    <h3 class="limit-h">No unit tests</h3>
+                    <p>Neither the Databricks notebook nor the SQL DQ suite have pytest or tSQLt coverage. Data quality
+                        is enforced at runtime through the two-layer suite, but there is no CI-time check that the
+                        transformation logic or schema declarations behave correctly against fixtures. Next honest
+                        improvement.</p>
                 </div>
                 <div class="limit-card">
-                    <h3 class="limit-h">No dbt on top</h3>
-                    <p>Gold tables are the analytics surface. In a mature analytics stack, dbt would sit on top of
-                        Silver and produce Gold through SQL-authored, version-controlled, tested transformations. Right
-                        now Gold logic is baked into <code>silver_to_gold.py</code> as PySpark code. Migrating to dbt
-                        would separate business logic from compute and give analysts the ability to author
-                        transformations themselves.</p>
+                    <h3 class="limit-h">No SCD Type 2 on dim_patient</h3>
+                    <p>If a patient's address or contact number changes, the previous value is overwritten. Real
+                        hospital analytics often need history (address on the date of admission, not current address).
+                        Adding SCD Type 2 would require effective-from and effective-to columns plus updated load logic.
+                    </p>
                 </div>
                 <div class="limit-card">
-                    <h3 class="limit-h">Only one league, one season</h3>
-                    <p>Hardcoded to <code>LEAGUE_ID = "4429"</code> and <code>SEASON = "2026"</code>. A production
-                        platform for a client like WFI would parameterize league and season, run the DAG per league, and
-                        consolidate across leagues at the Gold layer. This is genuinely the next iteration.</p>
+                    <h3 class="limit-h">Labs and imaging merged into one fact</h3>
+                    <p><code>fact_labs</code> contains both lab results and imaging results in a single table with
+                        columns like <code>image_url</code> that are null for lab rows. Cleaner Kimball design would
+                        split into <code>fact_lab_result</code> and <code>fact_imaging_result</code> because their grain
+                        differs. Preserved as-is in this iteration; would refactor in v2.</p>
                 </div>
                 <div class="limit-card">
-                    <h3 class="limit-h">No downstream consumer story</h3>
-                    <p>Gold tables land in BigQuery. From there, downstream would look like: Looker Studio dashboards, a
-                        business-facing API layer, or embedded charts inside WFI's product. None of that exists yet. The
-                        pipeline is a foundation, not the whole platform.</p>
+                    <h3 class="limit-h">No Power BI dashboard yet</h3>
+                    <p>The brief architecture diagram shows Power BI as the consumer. The EDW is queryable via SQL and
+                        Power BI Desktop can connect natively, but no dashboards exist yet. Adding disease frequency,
+                        monthly admission trend, and trial enrollment funnel visuals would complete the end-to-end
+                        analytics story.</p>
                 </div>
             </div>
         </section>
@@ -2986,14 +2947,14 @@ GOLD_SCHEMA_DICTS = {
                 style="padding:2.5rem 2rem;background:var(--bg-card);border:1px solid var(--bdr);border-radius:var(--r);text-align:center;">
                 <div class="sec-kicker" style="justify-content:center;margin-bottom:1rem;">Let's talk</div>
                 <h2 class="sec-h" style="text-align:center;font-size:clamp(1.4rem,2.8vw,1.9rem);margin-bottom:1rem;">
-                    Need a data engineer who ships cloud-native pipelines?</h2>
+                    Need a data engineer who ships production Azure pipelines?</h2>
                 <p class="sec-p" style="max-width:580px;margin:0 auto 1.75rem;font-size:.98rem;">
                     I'm currently looking for Data Engineer / Analytics Engineer roles. UK-based, open to remote or
                     hybrid.
                 </p>
                 <div class="cs-cta-row" style="justify-content:center;">
-                    <a href="https://github.com/yoismail/worldcup_football_intelligence" class="btn-primary"
-                        target="_blank" rel="noopener">
+                    <a href="https://github.com/yoismail/national_hospital_azure_dw" class="btn-primary" target="_blank"
+                        rel="noopener">
                         <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                             <path
                                 d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58v-2.06c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.21.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.5.99.11-.77.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.31-.54-1.53.11-3.19 0 0 1.01-.32 3.3 1.23.96-.27 1.98-.4 3-.41 1.02 0 2.04.14 3 .41 2.29-1.55 3.3-1.23 3.3-1.23.65 1.66.24 2.88.12 3.19.77.84 1.24 1.91 1.24 3.22 0 4.61-2.8 5.62-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.69.83.58A12 12 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
@@ -3022,7 +2983,7 @@ GOLD_SCHEMA_DICTS = {
                     <div class="read-next-title">Nova Retail · Dockerized Data Platform</div>
                     <p class="read-next-desc">A containerised on-premise data platform with 5-service Docker Compose
                         stack, Airflow-orchestrated PySpark medallion pipeline, and a three-table dimensional Gold layer
-                        in PostgreSQL. The on-premise counterpart to this project.</p>
+                        in PostgreSQL.</p>
                     <div class="read-next-tags">
                         <span class="read-next-tag">Docker</span>
                         <span class="read-next-tag">Airflow</span>
@@ -3030,12 +2991,25 @@ GOLD_SCHEMA_DICTS = {
                     </div>
                     <span class="read-next-cta">Read the case study<span class="read-next-cta-arrow">→</span></span>
                 </a>
+                <a href="wfi.html" class="read-next-card">
+                    <div class="read-next-label">Case study · Featured · Cloud-Native Serverless on GCP</div>
+                    <div class="read-next-title">World Football Insights · GCP Serverless ELT</div>
+                    <p class="read-next-desc">A cloud-native serverless ELT pipeline on GCP with Cloud Composer,
+                        Dataproc Serverless, GCS lakehouse, and BigQuery warehouse. The cloud-native counterpart to Nova
+                        Retail's on-premise pattern.</p>
+                    <div class="read-next-tags">
+                        <span class="read-next-tag">GCP</span>
+                        <span class="read-next-tag">Serverless</span>
+                        <span class="read-next-tag">BigQuery</span>
+                    </div>
+                    <span class="read-next-cta">Read the case study<span class="read-next-cta-arrow">→</span></span>
+                </a>
                 <a href="fibbiebanks.html" class="read-next-card">
                     <div class="read-next-label">Case study · Featured · PySpark + Star Schema</div>
                     <div class="read-next-title">FibbieBanks · 1M-Row PySpark ETL</div>
                     <p class="read-next-desc">A distributed PySpark ETL pipeline processing 1 million synthetic banking
-                        transactions into a validated PostgreSQL star schema with deterministic SHA-256 surrogate keys
-                        and idempotent re-runs.</p>
+                        transactions into a validated PostgreSQL star schema with deterministic SHA-256 surrogate keys.
+                    </p>
                     <div class="read-next-tags">
                         <span class="read-next-tag">PySpark</span>
                         <span class="read-next-tag">Star schema</span>
@@ -3043,20 +3017,9 @@ GOLD_SCHEMA_DICTS = {
                     </div>
                     <span class="read-next-cta">Read the case study<span class="read-next-cta-arrow">→</span></span>
                 </a>
-                <a href="xtd_research_labs.html" class="read-next-card">
-                    <div class="read-next-label">Case study · Featured · Async + Medallion</div>
-                    <div class="read-next-title">XTD Research Labs · Async + Medallion Pipeline</div>
-                    <p class="read-next-desc">An async aiohttp ingestion and PySpark medallion pipeline processing three
-                        years of UK regional carbon intensity data into a PostgreSQL research warehouse.</p>
-                    <div class="read-next-tags">
-                        <span class="read-next-tag">aiohttp</span>
-                        <span class="read-next-tag">Medallion</span>
-                        <span class="read-next-tag">PostgreSQL</span>
-                    </div>
-                    <span class="read-next-cta">Read the case study<span class="read-next-cta-arrow">→</span></span>
-                </a>
             </div>
         </section>
+
 
     </div><!-- /page -->
 

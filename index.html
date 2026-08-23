@@ -2760,6 +2760,7 @@
         <span class="hero-stack-pill">Docker</span>
         <span class="hero-stack-pill">AWS</span>
         <span class="hero-stack-pill">GCP</span>
+        <span class="hero-stack-pill">Azure</span>
         <span class="hero-stack-pill">Power BI</span>
       </div>
       <div class="hero-actions fade-up">
@@ -2788,37 +2789,41 @@
       <div class="kicker">Featured</div>
       <h2>Featured case studies</h2>
       <div class="feature-card">
-        <h3>Nova Retail: Dockerized Data Platform with Airflow-Orchestrated Medallion ETL</h3>
-        <div class="feature-sub">Docker Compose · Apache Airflow · PySpark · PostgreSQL · 3-table Gold</div>
-        <p class="feature-desc">A containerised on-premise data platform built for a multinational retail scenario. Five
-          Docker services (PostgreSQL, Spark, Airflow init/webserver/scheduler) brought up by one command. A PySpark
-          medallion pipeline (Bronze partitioned Parquet to Silver joined frame to a three-table dimensional Gold layer)
-          runs end-to-end in 3 minutes 11 seconds at stock scale. Airflow's parameterised DAG supports both scheduled
-          stock runs (analytical truth) and on-demand scaled tests (architecture validation), demonstrated processing
-          7.5M rows through the pipeline at 2x scale.</p>
+        <h3>National Hospital: Azure ELT Data Warehouse for Healthcare Analytics</h3>
+        <div class="feature-sub">Azure Data Factory · Databricks · Azure SQL Database · ADLS Gen2 · Two-layer DQ suite
+        </div>
+        <p class="feature-desc">A cloud-native ELT pipeline built for a healthcare analytics scenario on Microsoft
+          Azure. Azure Data Factory orchestrates a 13-activity pipeline with parallel fan-out and a four-check quality
+          gate. Databricks runs the PySpark transformations with a visibility-first cleaning layer that reports
+          source-to-warehouse retention and quarantines suspicious rows. Raw CSVs land in ADLS Gen2, are cleaned through
+          a transparent transformation layer, then loaded into Azure SQL Database in a two-schema (STG + EDW) warehouse.
+          A two-layer data quality suite runs at both Databricks and SQL layers, catching 14 records with illogical
+          dates and quarantining them for source-system review. Real deployment: 2m 20s end-to-end runtime, daily
+          schedule, 4-check safety net, 99.3% source-to-warehouse retention.</p>
         <div class="arch">
           <div class="arch-step">
-            <div class="arch-num">🐳</div>
-            <div class="arch-name">Docker</div>
-            <div class="arch-desc">5-service stack, one command</div>
-          </div>
-          <div class="arch-step">
-            <div class="arch-num">🔁</div>
-            <div class="arch-name">Airflow</div>
-            <div class="arch-desc">Parameterised DAG, sidecar Spark</div>
+            <div class="arch-num">🏭</div>
+            <div class="arch-name">ADF</div>
+            <div class="arch-desc">13-activity pipeline, daily schedule</div>
           </div>
           <div class="arch-step">
             <div class="arch-num">⚡</div>
-            <div class="arch-name">PySpark</div>
-            <div class="arch-desc">Partition, broadcast, cache</div>
+            <div class="arch-name">Databricks</div>
+            <div class="arch-desc">PySpark cleaning + quarantine</div>
           </div>
           <div class="arch-step">
-            <div class="arch-num">📦</div>
-            <div class="arch-name">Postgres</div>
-            <div class="arch-desc">3 tables, row-count validated</div>
+            <div class="arch-num">🪣</div>
+            <div class="arch-name">ADLS Gen2</div>
+            <div class="arch-desc">Raw + processed + quarantine</div>
+          </div>
+          <div class="arch-step">
+            <div class="arch-num">📊</div>
+            <div class="arch-name">Azure SQL</div>
+            <div class="arch-desc">STG + EDW schemas, 4-check DQ</div>
           </div>
         </div>
-        <a href="nova_retail.html" class="card-link">View full case study<span class="card-link-arrow">→</span></a>
+        <a href="national_hospital.html" class="card-link">View full case study<span
+            class="card-link-arrow">→</span></a>
       </div>
       <div class="feature-card" style="margin-top:1.5rem;">
         <h3>World Football Insights: Cloud-Native Serverless ELT on GCP</h3>
@@ -2853,6 +2858,39 @@
           </div>
         </div>
         <a href="wfi.html" class="card-link">View full case study<span class="card-link-arrow">→</span></a>
+      </div>
+      <div class="feature-card" style="margin-top:1.5rem;">
+        <h3>Nova Retail: Dockerized Data Platform with Airflow-Orchestrated Medallion ETL</h3>
+        <div class="feature-sub">Docker Compose · Apache Airflow · PySpark · PostgreSQL · 3-table Gold</div>
+        <p class="feature-desc">A containerised on-premise data platform built for a multinational retail scenario. Five
+          Docker services (PostgreSQL, Spark, Airflow init/webserver/scheduler) brought up by one command. A PySpark
+          medallion pipeline (Bronze partitioned Parquet to Silver joined frame to a three-table dimensional Gold layer)
+          runs end-to-end in 3 minutes 11 seconds at stock scale. Airflow's parameterised DAG supports both scheduled
+          stock runs (analytical truth) and on-demand scaled tests (architecture validation), demonstrated processing
+          7.5M rows through the pipeline at 2x scale.</p>
+        <div class="arch">
+          <div class="arch-step">
+            <div class="arch-num">🐳</div>
+            <div class="arch-name">Docker</div>
+            <div class="arch-desc">5-service stack, one command</div>
+          </div>
+          <div class="arch-step">
+            <div class="arch-num">🔁</div>
+            <div class="arch-name">Airflow</div>
+            <div class="arch-desc">Parameterised DAG, sidecar Spark</div>
+          </div>
+          <div class="arch-step">
+            <div class="arch-num">⚡</div>
+            <div class="arch-name">PySpark</div>
+            <div class="arch-desc">Partition, broadcast, cache</div>
+          </div>
+          <div class="arch-step">
+            <div class="arch-num">📦</div>
+            <div class="arch-name">Postgres</div>
+            <div class="arch-desc">3 tables, row-count validated</div>
+          </div>
+        </div>
+        <a href="nova_retail.html" class="card-link">View full case study<span class="card-link-arrow">→</span></a>
       </div>
       <div class="feature-card" style="margin-top:1.5rem;">
         <h3>FibbieBanks: 1M-Row PySpark ETL &amp; Star Schema Warehouse</h3>
@@ -3026,6 +3064,11 @@
             <span class="stag proven">Google BigQuery</span>
             <span class="stag proven">Cloud Composer</span>
             <span class="stag proven">Dataproc Serverless</span>
+            <span class="stag proven">Microsoft Azure</span>
+            <span class="stag proven">Azure Data Factory</span>
+            <span class="stag proven">Azure Databricks</span>
+            <span class="stag proven">Azure SQL Database</span>
+            <span class="stag proven">Azure Data Lake Gen2</span>
           </div>
         </div>
         <div>
@@ -3036,7 +3079,6 @@
             <span class="stag growing">dbt</span>
             <span class="stag growing">Apache Kafka</span>
             <span class="stag growing">Terraform</span>
-            <span class="stag growing">Azure</span>
             <span class="stag growing">Hadoop</span>
             <span class="stag growing">Agile / Scrum</span>
           </div>
@@ -3307,10 +3349,10 @@
             <div class="num-label">Years</div>
             <div class="num-context">Across data engineering, fintech product ops, and banking analytics.</div>
           </div>
-          <div class="num-card num-card-sec" data-counter data-target="7" data-prefix="" data-suffix=""
+          <div class="num-card num-card-sec" data-counter data-target="8" data-prefix="" data-suffix=""
             data-decimals="0">
             <div class="num-sec-top">
-              <div class="num-big" data-counter-target>7</div>
+              <div class="num-big" data-counter-target>8</div>
               <div class="num-sec-glyph"><svg width="36" height="36" viewBox="0 0 36 36" aria-hidden="true">
                   <path class="glyph-path" d="M 8 26 L 8 18 M 18 26 L 18 12 M 28 26 L 28 6" pathLength="1" />
                 </svg></div>
@@ -3478,6 +3520,14 @@
                 <path d="M14 2v6h6" />
               </svg>
               World Football Insights
+            </a></li>
+          <li><a href="national_hospital.html" class="footer-link">
+              <svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+                <path d="M14 2v6h6" />
+              </svg>
+              National Hospital
             </a></li>
           <li><a href="fibbiebanks.html" class="footer-link"><svg aria-hidden="true" width="13" height="13"
                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

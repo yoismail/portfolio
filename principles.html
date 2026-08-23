@@ -1187,6 +1187,7 @@
           Applied in
           <a href="nova_retail.html#schema">Nova Retail · DDL Owned by SQL</a>
           <a href="wfi.html#schema">World Football Insights · Explicit BigQuery Schemas</a>
+          <a href="national_hospital.html#schema">National Hospital · Two-Schema STG+EDW Design</a>
           <a href="fibbiebanks.html#schema">FibbieBanks · DDL-Owned Schema</a>
           <a href="xtd_research_labs.html#schema">XTD Research Labs · Schema Owned by SQL</a>
           <a href="payflow.html#schema">PayFlow · Schema Design</a>
@@ -1215,6 +1216,7 @@
           Applied in
           <a href="nova_retail.html#decisions">Nova Retail · Three Overwrite Layers</a>
           <a href="wfi.html#decisions">World Football Insights · WRITE_OVERWRITE Idempotency</a>
+          <a href="national_hospital.html#decisions">National Hospital · DELETE+INSERT EDW Loads</a>
           <a href="fibbiebanks.html#decisions">FibbieBanks · Deterministic Surrogate Keys</a>
           <a href="xtd_research_labs.html#decisions">XTD Research Labs · Three Idempotency Models</a>
           <a href="payflow.html#decisions">PayFlow · Decisions</a>
@@ -1237,6 +1239,7 @@
           Applied in
           <a href="nova_retail.html#engineering">Nova Retail · Shared Logger</a>
           <a href="wfi.html#engineering">World Football Insights · Async Retry Logging</a>
+          <a href="national_hospital.html#engineering">National Hospital · Visibility-First Cleaning</a>
           <a href="fibbiebanks.html#engineering">FibbieBanks · Custom Logger</a>
           <a href="xtd_research_labs.html#engineering">XTD Research Labs · Custom Logger</a>
           <a href="payflow.html#approach">PayFlow · Engineering Approach</a>
@@ -1265,6 +1268,7 @@
           Applied in
           <a href="nova_retail.html#engineering">Nova Retail · Row-Count Validation</a>
           <a href="wfi.html#engineering">World Football Insights · Silver Quality Gate</a>
+          <a href="national_hospital.html#engineering">National Hospital · Two-Layer DQ Suite</a>
           <a href="fibbiebanks.html#engineering">FibbieBanks · Schema Validation</a>
           <a href="xtd_research_labs.html#architecture">XTD Research Labs · Empty-Payload Defense</a>
           <a href="payflow.html#approach">PayFlow · Pre-load Validation</a>
@@ -1279,8 +1283,7 @@
         <div class="principle-body">
           <p>Database URLs, credentials, source paths, environment flags. None of these belong as string literals in
             Python files, and none belong in a central config module that gets committed to the repo. They belong in a
-            <strong>.env</strong> file, loaded at startup, never logged, and never committed.
-          </p>
+            <strong>.env</strong> file, loaded at startup, never logged, and never committed.</p>
           <p>This is not a security feature, although it is also that. It is a portability feature. A pipeline that
             reads its config from environment variables runs on my laptop, in CI, in staging, and in production with no
             code changes. A pipeline with hardcoded values runs in exactly one place and breaks in every other.</p>
@@ -1289,6 +1292,7 @@
           Applied in
           <a href="nova_retail.html#decisions">Nova Retail · Dual-Host Detection</a>
           <a href="wfi.html#decisions">World Football Insights · GCP Service Account</a>
+          <a href="national_hospital.html#decisions">National Hospital · Key Vault Secret Scope</a>
           <a href="fibbiebanks.html#decisions">FibbieBanks · Env-Var Config</a>
           <a href="xtd_research_labs.html#tech">XTD Research Labs · Fail-Fast Env Loader</a>
           <a href="payflow.html#approach">PayFlow · Config-driven</a>
@@ -1405,6 +1409,14 @@
                 <path d="M14 2v6h6" />
               </svg>
               World Football Insights
+            </a></li>
+          <li><a href="national_hospital.html" class="footer-link">
+              <svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+                <path d="M14 2v6h6" />
+              </svg>
+              National Hospital
             </a></li>
           <li><a href="fibbiebanks.html" class="footer-link">
               <svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"

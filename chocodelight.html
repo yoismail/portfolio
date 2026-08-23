@@ -1938,6 +1938,7 @@
         <span class="cs-switcher-label">Case studies</span>
         <a href="nova_retail.html" class="cs-switcher-link">Nova Retail</a>
         <a href="wfi.html" class="cs-switcher-link">World Football Insights</a>
+        <a href="national_hospital.html" class="cs-switcher-link">National Hospital</a>
         <a href="fibbiebanks.html" class="cs-switcher-link">FibbieBanks</a>
         <a href="xtd_research_labs.html" class="cs-switcher-link">XTD Research Labs</a>
         <a href="payflow.html" class="cs-switcher-link">PayFlow</a>
@@ -2260,8 +2261,7 @@
             <code>df.sort_values(natural_id).reset_index(drop=True).index + 1</code>. Deterministic for the same input,
             simple, fast. Trade-off: keys shift if new rows are added, so this only works because the warehouse is
             rebuilt from scratch every run (wipe-and-load). For a warehouse that merged data over time, content-based
-            hashing (e.g. SHA-256 of natural keys) would be the right call instead.
-          </div>
+            hashing (e.g. SHA-256 of natural keys) would be the right call instead.</div>
         </div>
         <div class="decision-row">
           <div class="decision-cell">Feature engineering in cleaning</div>
@@ -2281,8 +2281,7 @@
             <code>validate_foreign_keys()</code> checks: <code>sales→customers</code>, <code>sales→products</code>,
             <code>sales→stores</code>, <code>sales→regions</code>, <code>sales→calendar</code>. If any fails, the
             pipeline halts with <code>sys.exit(1)</code> and a structured error. Catches referential integrity issues
-            before they reach the warehouse.
-          </div>
+            before they reach the warehouse.</div>
         </div>
         <div class="decision-row">
           <div class="decision-cell">DB constraints, not just types</div>
@@ -2300,8 +2299,7 @@
             <code>dim_stores</code> also has a <code>region_key</code> FK to the same dim. The most common analytical
             query against this warehouse is "revenue by region", and the direct fact-to-region path saves an extra join.
             The full normalised path via <code>dim_stores</code> is still there for queries that need other store
-            attributes. Documented snowflake, not accidental snowflake.
-          </div>
+            attributes. Documented snowflake, not accidental snowflake.</div>
         </div>
         <div class="decision-row">
           <div class="decision-cell">Production-grade logging</div>
@@ -2310,8 +2308,7 @@
             console can render emojis; dual handlers route colorized output to the terminal and clean UTF-8 to a
             rotating file (no ANSI codes in logs); a <code>section()</code> helper visually separates ETL stages; a
             <code>timed()</code> decorator logs how long each stage takes; SQLAlchemy engine noise is suppressed.
-            Result: observability that holds up at 2am, not just on the demo screen.
-          </div>
+            Result: observability that holds up at 2am, not just on the demo screen.</div>
         </div>
       </div>
     </section>
@@ -2533,6 +2530,14 @@
               </svg>
               World Football Insights
             </a></li>
+          <li><a href="national_hospital.html" class="footer-link">
+              <svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+                <path d="M14 2v6h6" />
+              </svg>
+              National Hospital
+            </a></li>
           <li><a href="fibbiebanks.html" class="footer-link">
               <svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -2606,7 +2611,7 @@
               </svg>
               Experience
             </a></li>
-          <li><a href="index.html#stack" class="footer-link">
+          <li><a href="index.html#tech-stack" class="footer-link">
               <svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <polygon points="12 2 2 7 12 12 22 7 12 2" />
