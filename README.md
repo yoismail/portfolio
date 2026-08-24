@@ -29,7 +29,7 @@ The goal is not just to display projects, but to demonstrate:
 
 This portfolio reflects how I approach problems as a Data Engineer:
 
-* ☁️ Cloud-native serverless ELT pipelines on GCP (Cloud Composer, Dataproc Serverless, GCS, BigQuery)
+* ☁️ Cloud-native ELT pipelines on both Azure (Data Factory, Databricks, ADLS Gen2, SQL Database) and GCP (Cloud Composer, Dataproc Serverless, GCS, BigQuery)
 * 🐳 Containerized on-premise data platforms with Docker Compose and orchestrated execution
 * 🔁 Airflow DAGs with parameterized scheduling for stock vs scaled execution
 * 🌊 Medallion architecture (Bronze → Silver → Gold) for raw-to-warehouse data flows
@@ -45,19 +45,21 @@ This portfolio reflects how I approach problems as a Data Engineer:
 
 ## 🚀 Featured Work
 
-### 🏢 Nova Retail: Dockerized Data Platform with Airflow-Orchestrated Medallion ETL
+### 🏥 National Hospital: Azure ELT Data Warehouse for Healthcare Analytics
 
-A containerized on-premise data platform built for a multinational retail scenario, with parameterized stock-vs-scaled execution from the same DAG:
+A production-shipped Azure ELT pipeline built for a healthcare analytics scenario, orchestrating Data Factory extractions, Databricks PySpark transformations, and two-schema (STG + EDW) SQL Database loads with a two-layer data quality suite:
 
-* Architected a 5-service Docker Compose stack (PostgreSQL, custom Spark image, Airflow init/webserver/scheduler) brought up by one command, with health-checked service dependencies and persistent named volumes
-* Built a PySpark medallion pipeline (Bronze partitioned Parquet → Silver joined frame → three-table dimensional Gold) with year/month partitioning on fact tables, explicit broadcast hints on small dimensions, and cache strategy on the join chain
-* Implemented Apache Airflow orchestration with `Param`-based DAG supporting both scheduled stock runs (analytical truth) and on-demand scaled runs (architecture validation), using the sidecar Spark pattern via `docker exec`
-* Designed a three-table dimensional Gold layer (`fact_sales` at transaction grain, `sales_summary` by state-category, `sales_by_month_state` by year-month) with composite primary keys, DECIMAL precision, and read-optimized indexes
-* Validated every PostgreSQL load with read-back row-count comparison; zero silent data loss across all loads
-* End-to-end runtime: 3m 11s stock (555K source rows, 118K Silver records, 3 Gold tables); validated at 2x scale processing 7.5M Silver records in 13m 14s
+* Designed a 13-activity Azure Data Factory pipeline with fan-out topology: one Databricks transformation feeding 6 parallel STG copies, 5 parallel EDW loads, and a final data quality safety net
+* Deployed on real Microsoft Azure infrastructure: Data Factory V2, Databricks Service, ADLS Gen2, Azure SQL Database, and Key Vault with a secret scope for storage credentials
+* Followed the classical enterprise warehousing pattern (STG staging + EDW warehouse schemas in a single SQL database) rather than lakehouse Medallion: matches warehouse-first analytical use cases where SQL and BI tools are primary consumers
+* Built a visibility-first `clean_with_visibility()` helper in Databricks that reports source-to-warehouse retention per entity, quarantines rejected rows to a `quarantine/` folder, and only drops on critical field nulls (not any null)
+* Detected 14 medical records with `discharge_date < admission_date` all clustered in January 2024, quarantined them for source-system review, and surfaced the same time period as a low-admission anomaly in the monthly trend query
+* Implemented a two-layer data quality suite: Databricks visibility layer (counts, quarantine, retention reporting) plus SQL safety net (row count parity, PK uniqueness, FK orphan detection, date sanity), fails pipeline on hard violations via `THROW`
+* Made EDW loads idempotent via `DELETE FROM EDW WHERE patient_id IN (SELECT FROM STG); INSERT INTO EDW SELECT * FROM STG` pattern; re-runs produce deterministic warehouse state
+* Scheduled to run daily at 10:00 AM UK time via Azure Data Factory Schedule Trigger with automatic daylight savings adjustment; end-to-end pipeline runtime under 2 minutes 30 seconds
 
-👉 [View project on GitHub](https://github.com/yoismail/nova_retail_case_study)
-👉 [Read the full case study](https://yoismail.github.io/portfolio/nova_retail.html)
+👉 [View project on GitHub](https://github.com/yoismail/national_hospital_azure_dw)
+👉 [Read the full case study](https://yoismail.github.io/portfolio/national_hospital.html)
 
 ---
 
@@ -76,6 +78,22 @@ A production-shipped cloud-native ELT pipeline built for a global sports analyti
 
 👉 [View project on GitHub](https://github.com/yoismail/worldcup_football_intelligence)
 👉 [Read the full case study](https://yoismail.github.io/portfolio/wfi.html)
+
+---
+
+### 🏢 Nova Retail: Dockerized Data Platform with Airflow-Orchestrated Medallion ETL
+
+A containerized on-premise data platform built for a multinational retail scenario, with parameterized stock-vs-scaled execution from the same DAG:
+
+* Architected a 5-service Docker Compose stack (PostgreSQL, custom Spark image, Airflow init/webserver/scheduler) brought up by one command, with health-checked service dependencies and persistent named volumes
+* Built a PySpark medallion pipeline (Bronze partitioned Parquet → Silver joined frame → three-table dimensional Gold) with year/month partitioning on fact tables, explicit broadcast hints on small dimensions, and cache strategy on the join chain
+* Implemented Apache Airflow orchestration with `Param`-based DAG supporting both scheduled stock runs (analytical truth) and on-demand scaled runs (architecture validation), using the sidecar Spark pattern via `docker exec`
+* Designed a three-table dimensional Gold layer (`fact_sales` at transaction grain, `sales_summary` by state-category, `sales_by_month_state` by year-month) with composite primary keys, DECIMAL precision, and read-optimized indexes
+* Validated every PostgreSQL load with read-back row-count comparison; zero silent data loss across all loads
+* End-to-end runtime: 3m 11s stock (555K source rows, 118K Silver records, 3 Gold tables); validated at 2x scale processing 7.5M Silver records in 13m 14s
+
+👉 [View project on GitHub](https://github.com/yoismail/nova_retail_case_study)
+👉 [Read the full case study](https://yoismail.github.io/portfolio/nova_retail.html)
 
 ---
 
@@ -146,6 +164,14 @@ A production-style scraping pipeline that walks 60 pages of AliExpress laptop li
 
 ## ⚙️ Tech Stack
 
+### Cloud-Native (Azure)
+
+* Azure Data Factory V2 (fan-out orchestration, Copy Data, Script activities)
+* Azure Databricks (PySpark transformations, secret scopes, WASB connectivity)
+* Azure Data Lake Storage Gen2 (raw + processed + quarantine layers)
+* Azure SQL Database (STG + EDW schemas, T-SQL DQ checks)
+* Azure Key Vault (secret storage via Databricks-backed scopes)
+
 ### Cloud-Native (GCP)
 
 * Google Cloud Composer 2 (managed Apache Airflow)
@@ -209,7 +235,6 @@ A production-style scraping pipeline that walks 60 pages of AliExpress laptop li
 
 ### Currently Learning
 
-* Azure Databricks, Azure Data Factory, Azure Synapse, Azure SQL Database (working knowledge)
 * dbt (analyst-authored transformations)
 * Amazon Redshift, Snowflake
 * Apache Kafka (event streaming)
