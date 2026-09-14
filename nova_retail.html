@@ -375,6 +375,7 @@
       display: none;
     }
 
+    .nav-links{counter-reset:navidx;}
     .nav-links a {
       font-size: .78rem;
       color: var(--h3);
@@ -386,6 +387,7 @@
       flex-shrink: 0;
       white-space: nowrap;
     }
+    .nav-links a:not([href="index.html"])::before{counter-increment:navidx;content:counter(navidx,decimal-leading-zero) '\00b7';font-family:var(--fm);font-size:.85em;opacity:.5;margin-right:.35em;}
 
     .nav-links a:hover {
       color: var(--h1);

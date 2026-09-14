@@ -376,6 +376,7 @@
       display: none;
     }
 
+    .nav-links{counter-reset:navidx;}
     .nav-links a {
       font-size: .78rem;
       color: var(--h3);
@@ -387,6 +388,7 @@
       flex-shrink: 0;
       white-space: nowrap;
     }
+    .nav-links a:not([href="index.html"])::before{counter-increment:navidx;content:counter(navidx,decimal-leading-zero) '\00b7';font-family:var(--fm);font-size:.85em;opacity:.5;margin-right:.35em;}
 
     .nav-links a:hover {
       color: var(--h1);
@@ -444,24 +446,9 @@
       padding: 5.5rem clamp(1rem, 4vw, 2.5rem);
     }
 
-    .sec-num {
-      position: absolute;
-      top: 3rem;
-      font-family: var(--fd);
-      font-size: clamp(3.5rem, 8vw, 6.5rem);
-      font-weight: 800;
-      line-height: 1;
-      pointer-events: none;
-      user-select: none;
-      letter-spacing: -.06em;
-      color: rgba(255, 255, 255, .04);
-      right: .5rem;
-      z-index: 0;
-    }
+    .sec-num{position:absolute;top:1.5rem;left:0;font-family:var(--fm);font-size:.66rem;font-weight:500;line-height:1;pointer-events:none;user-select:none;letter-spacing:.1em;color:var(--h3);padding:.3rem .55rem;border:1px solid var(--bdr);border-radius:2px;background:var(--bg-surf);z-index:0;}
 
-    .sec-alt .sec-num {
-      right: clamp(1rem, 4vw, 2.5rem);
-    }
+    .sec-alt .sec-num{left:clamp(1rem,4vw,2.5rem);background:var(--bg-card);}
 
     .kicker {
       font-family: var(--fm);
@@ -808,7 +795,7 @@
     /* ── CARDS ────────────────────────────────────────────── */
     .card-grid {
       display: grid;
-      gap: 1rem;
+      gap: 1rem; counter-reset: cardidx;
     }
 
     .grid-2 {
@@ -825,6 +812,7 @@
       border-radius: var(--r);
       padding: 1.75rem;
       position: relative;
+      counter-increment: cardidx;
       overflow: hidden;
       isolation: isolate;
       transition: border-color .2s var(--ez), transform .2s var(--ez), box-shadow .2s var(--ez);
@@ -841,6 +829,8 @@
       opacity: 0;
       transition: opacity .2s;
     }
+
+    .card::after{content:counter(cardidx,decimal-leading-zero);position:absolute;top:.9rem;right:1rem;font-family:var(--fm);font-size:.6rem;letter-spacing:.05em;color:var(--h3);opacity:.55;pointer-events:none;}
 
     .card:hover {
       border-color: var(--bdr-hi);
@@ -1532,9 +1522,7 @@
         align-items: flex-start;
       }
 
-      .sec-num {
-        font-size: 4.5rem;
-      }
+      .sec-num{top:1.1rem;}
 
       .to-top {
         bottom: 1rem;
