@@ -90,23 +90,24 @@
   <style>
     /* ── DARK TOKENS ──────────────────────────────────────── */
     :root {
-      --bg: #050402;
-      --bg-surf: #100d09;
-      --bg-card: #15130f;
-      --bg-card2: #1c1914;
+      --bg: #0a0b0d;
+      --bg-surf: #121417;
+      --bg-card: #15171b;
+      --bg-card2: #1b1e23;
       --bdr: rgba(255,255,255,.14);
-      --bdr-hi: rgba(16, 185, 129, .5);
+      --bdr-hi: rgba(91, 155, 213, .5);
 
-      --h1: #f3eee5;
-      --h2: #c9c2b3;
-      --h3: #62594c;
+      --h1: #eee9de;
+      --h2: #c4beb0;
+      --h3: #655e50;
 
-      --acc: #10b981;
-      --acc-s: rgba(16, 185, 129, .1);
+      --acc: #5b9bd5;
+      --acc-s: rgba(91, 155, 213, .1);
+      --acc-btn: #2a5490;
       --acc-2: var(--acc);
-      --green: #34d399;
+      --green: #5b9bd5;
       --teal: var(--acc);
-      --amber: #f59e0b;
+      --amber: #d98b5f;
 
       --r:4px;
       --rsm:2px;
@@ -127,12 +128,13 @@
       --bg-card: #ffffff;
       --bg-card2: #f8f4ec;
       --bdr: rgba(26,20,8,.16);
-      --bdr-hi: rgba(5, 150, 105, .45);
-      --acc: #059669;
-      --acc-s: rgba(5, 150, 105, .08);
+      --bdr-hi: rgba(42, 84, 144, .45);
+      --acc: #2a5490;
+      --acc-s: rgba(42, 84, 144, .08);
+      --acc-btn: var(--acc);
       --acc-2: var(--acc);
-      --amber: #d97706;
-      --green: #10b981;
+      --amber: #a15832;
+      --green: #2a5490;
       --teal: var(--acc);
       --h1: #1a1408;
       --h2: #3d3528;
@@ -146,12 +148,13 @@
         --bg-card: #ffffff;
         --bg-card2: #f8f4ec;
         --bdr: rgba(26,20,8,.16);
-        --bdr-hi: rgba(5, 150, 105, .45);
-        --acc: #059669;
-        --acc-s: rgba(5, 150, 105, .08);
+        --bdr-hi: rgba(42, 84, 144, .45);
+        --acc: #2a5490;
+        --acc-s: rgba(42, 84, 144, .08);
+      --acc-btn: var(--acc);
         --acc-2: var(--acc);
-        --amber: #d97706;
-        --green: #10b981;
+        --amber: #a15832;
+        --green: #2a5490;
         --teal: var(--acc);
         --h1: #1a1408;
         --h2: #3d3528;
@@ -601,7 +604,7 @@
     }
 
     .meta-pill.acc {
-      border-color: rgba(16, 185, 129, .4);
+      border-color: rgba(91, 155, 213, .4);
       color: var(--acc);
       background: var(--acc-s);
     }
@@ -672,7 +675,7 @@
 
     .cs-pill.acc {
       background: var(--acc-s);
-      border-color: rgba(16, 185, 129, .32);
+      border-color: rgba(91, 155, 213, .32);
       color: var(--acc);
     }
 
@@ -701,7 +704,7 @@
     }
 
     .btn-primary {
-      background: var(--acc);
+      background: var(--acc-btn);
       color: #fff;
       font-weight: 600;
     }
@@ -711,7 +714,7 @@
       transform: translateY(-1px);
       text-decoration: none;
       color: #fff;
-      box-shadow: 0 8px 24px rgba(16, 185, 129, .3);
+      box-shadow: 0 8px 24px rgba(91, 155, 213, .3);
     }
 
     .btn-ghost {
@@ -1321,8 +1324,8 @@
     }
 
     .schema-card.fact {
-      border-color: rgba(16, 185, 129, .32);
-      background: linear-gradient(135deg, var(--bg-card), rgba(16, 185, 129, .04));
+      border-color: rgba(91, 155, 213, .32);
+      background: linear-gradient(135deg, var(--bg-card), rgba(91, 155, 213, .04));
     }
 
     .schema-card-name {
@@ -1775,7 +1778,7 @@
       width: 42px;
       height: 42px;
       border-radius: 50%;
-      background: var(--acc);
+      background: var(--acc-btn);
       color: #fff;
       display: flex;
       align-items: center;
@@ -1786,7 +1789,7 @@
       transform: translateY(20px);
       pointer-events: none;
       transition: all .25s var(--ez);
-      box-shadow: 0 8px 24px rgba(16, 185, 129, .32);
+      box-shadow: 0 8px 24px rgba(91, 155, 213, .32);
       z-index: 200;
     }
 

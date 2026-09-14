@@ -92,29 +92,30 @@
   <style>
     /* ── DARK TOKENS — coral/rose lead, live-commerce energy ─ */
     :root {
-      --bg: #08060a;
-      --bg-nav: rgba(8, 6, 10, .9);
-      --bg-alt: #0e0a10;
-      --bg-surf: #131017;
-      --bg-card: #18141d;
-      --bg-card2: #201b27;
+      --bg: #0a0b0d;
+      --bg-nav: rgba(10, 11, 13, .9);
+      --bg-alt: #0e1013;
+      --bg-surf: #121417;
+      --bg-card: #15171b;
+      --bg-card2: #1b1e23;
       --bdr: rgba(255,255,255,.14);
-      --bdr-hi: rgba(244, 63, 94, .5);
-      --acc: #f43f5e;
-      --acc-s: rgba(244, 63, 94, .1);
-      --acc-g: rgba(244, 63, 94, .25);
+      --bdr-hi: rgba(91, 155, 213, .5);
+      --acc: #5b9bd5;
+      --acc-s: rgba(91, 155, 213, .1);
+      --acc-btn: #2a5490;
+      --acc-g: rgba(91, 155, 213, .25);
       --acc-2: var(--acc);
       --grad: var(--acc);
       --teal: var(--acc);
       --teal-s: var(--acc-s);
-      --amber: #fbbf24;
-      --amber-s: rgba(251, 191, 36, .09);
-      --green: #34d399;
-      --green-s: rgba(52, 211, 153, .09);
+      --amber: #d98b5f;
+      --amber-s: rgba(217, 139, 95, .09);
+      --green: #5b9bd5;
+      --green-s: rgba(91, 155, 213, .09);
       --red: #f87171;
-      --h1: #f5edee;
-      --h2: #c8bec0;
-      --h3: #685a5e;
+      --h1: #eee9de;
+      --h2: #c4beb0;
+      --h3: #655e50;
       --fd: 'Montserrat', sans-serif;
       --fm: 'Geist Mono', 'IBM Plex Mono', monospace;
       --fb: 'Montserrat', 'Inter', system-ui, sans-serif;
@@ -135,15 +136,16 @@
       --bg-card: #ffffff;
       --bg-card2: #f8f4ec;
       --bdr: rgba(26,20,8,.16);
-      --bdr-hi: rgba(190, 18, 60, .45);
-      --acc: #be123c;
-      --acc-s: rgba(190, 18, 60, .08);
-      --acc-g: rgba(190, 18, 60, .2);
+      --bdr-hi: rgba(42, 84, 144, .45);
+      --acc: #2a5490;
+      --acc-s: rgba(42, 84, 144, .08);
+      --acc-btn: var(--acc);
+      --acc-g: rgba(42, 84, 144, .2);
       --acc-2: var(--acc);
-      --amber: #d97706;
-      --amber-s: rgba(217, 119, 6, .09);
-      --green: #10b981;
-      --green-s: rgba(16, 185, 129, .09);
+      --amber: #a15832;
+      --amber-s: rgba(161, 88, 50, .09);
+      --green: #2a5490;
+      --green-s: rgba(42, 84, 144, .09);
       --teal: var(--acc);
       --teal-s: var(--acc-s);
       --red: #dc2626;
@@ -162,15 +164,16 @@
         --bg-card: #ffffff;
         --bg-card2: #f8f4ec;
         --bdr: rgba(26,20,8,.16);
-        --bdr-hi: rgba(190, 18, 60, .45);
-        --acc: #be123c;
-        --acc-s: rgba(190, 18, 60, .08);
-        --acc-g: rgba(190, 18, 60, .2);
+        --bdr-hi: rgba(42, 84, 144, .45);
+        --acc: #2a5490;
+        --acc-s: rgba(42, 84, 144, .08);
+      --acc-btn: var(--acc);
+        --acc-g: rgba(42, 84, 144, .2);
         --acc-2: var(--acc);
-        --amber: #d97706;
-        --amber-s: rgba(217, 119, 6, .09);
-        --green: #10b981;
-        --green-s: rgba(16, 185, 129, .09);
+        --amber: #a15832;
+        --amber-s: rgba(161, 88, 50, .09);
+        --green: #2a5490;
+        --green-s: rgba(42, 84, 144, .09);
         --teal: var(--acc);
         --teal-s: var(--acc-s);
         --red: #dc2626;
@@ -468,7 +471,7 @@
       height: 6px;
       border-radius: 50%;
       background: var(--acc);
-      box-shadow: 0 0 0 3px rgba(244, 63, 94, .18);
+      box-shadow: 0 0 0 3px rgba(91, 155, 213, .18);
       flex-shrink: 0;
     }
 
@@ -735,7 +738,7 @@
       text-transform: uppercase;
       padding: .32rem .9rem;
       border-radius:3px;
-      border: 1px solid rgba(244, 63, 94, .3);
+      border: 1px solid rgba(91, 155, 213, .3);
       background: var(--acc-s);
       margin-bottom: 1.5rem;
       width: fit-content;
@@ -781,7 +784,7 @@
     }
 
     .meta-pill.acc {
-      border-color: rgba(244, 63, 94, .4);
+      border-color: rgba(91, 155, 213, .4);
       color: var(--acc);
       background: var(--acc-s);
     }
@@ -970,7 +973,7 @@
     /* ── CODE BLOCK — with gutter like PayFlow ────────────── */
     .code-block {
       background: #0a0710;
-      border: 1px solid rgba(244, 63, 94, .18);
+      border: 1px solid rgba(91, 155, 213, .18);
       border-radius: var(--r);
       padding: 1.25rem 1.4rem 1.25rem 3rem;
       font-family: var(--fm);
@@ -990,8 +993,8 @@
       left: 0;
       bottom: 0;
       width: 2.2rem;
-      background: rgba(244, 63, 94, .04);
-      border-right: 1px solid rgba(244, 63, 94, .12);
+      background: rgba(91, 155, 213, .04);
+      border-right: 1px solid rgba(91, 155, 213, .12);
       border-radius: var(--r) 0 0 var(--r);
     }
 
@@ -1007,8 +1010,8 @@
     }
 
     .code-block:hover {
-      border-color: rgba(244, 63, 94, .35);
-      box-shadow: 0 8px 32px rgba(244, 63, 94, .12);
+      border-color: rgba(91, 155, 213, .35);
+      box-shadow: 0 8px 32px rgba(91, 155, 213, .12);
     }
 
 
@@ -1211,7 +1214,7 @@
       align-items: center;
       gap: .4rem;
       padding: .7rem 1.5rem;
-      background: var(--acc);
+      background: var(--acc-btn);
       color: #fff;
       border-radius:3px;
       font-size: .86rem;
