@@ -98,7 +98,7 @@
             --bg-surf: #100d09;
             --bg-card: #15130f;
             --bg-card2: #1c1914;
-            --bdr: rgba(255, 255, 255, .07);
+            --bdr: rgba(255,255,255,.14);
             --bdr-hi: rgba(5, 150, 105, .5);
 
             --h1: #f3eee5;
@@ -107,13 +107,13 @@
 
             --acc: #059669;
             --acc-s: rgba(5, 150, 105, .1);
-            --acc-2: #10b981;
+            --acc-2: var(--acc);
             --green: #34d399;
-            --teal: #2dd4bf;
+            --teal: var(--acc);
             --amber: #f59e0b;
 
-            --r: 1rem;
-            --rsm: .55rem;
+            --r:4px;
+            --rsm:2px;
             --nav: 68px;
             --fs: "Syne", "Inter", sans-serif;
             --fd: "Montserrat", "Inter", sans-serif;
@@ -130,14 +130,14 @@
             --bg-surf: #f5f0e6;
             --bg-card: #ffffff;
             --bg-card2: #f8f4ec;
-            --bdr: rgba(26, 20, 8, .08);
+            --bdr: rgba(26,20,8,.16);
             --bdr-hi: rgba(5, 150, 105, .45);
             --acc: #059669;
             --acc-s: rgba(5, 150, 105, .08);
-            --acc-2: #10b981;
+            --acc-2: var(--acc);
             --amber: #d97706;
             --green: #10b981;
-            --teal: #0d9488;
+            --teal: var(--acc);
             --h1: #1a1408;
             --h2: #3d3528;
             --h3: #7a6e5a;
@@ -149,14 +149,14 @@
                 --bg-surf: #f5f0e6;
                 --bg-card: #ffffff;
                 --bg-card2: #f8f4ec;
-                --bdr: rgba(26, 20, 8, .08);
+                --bdr: rgba(26,20,8,.16);
                 --bdr-hi: rgba(5, 150, 105, .45);
                 --acc: #059669;
                 --acc-s: rgba(5, 150, 105, .08);
-                --acc-2: #10b981;
+                --acc-2: var(--acc);
                 --amber: #d97706;
                 --green: #10b981;
-                --teal: #0d9488;
+                --teal: var(--acc);
                 --h1: #1a1408;
                 --h2: #3d3528;
                 --h3: #7a6e5a;
@@ -178,7 +178,7 @@
             align-items: center;
             background: var(--bg-surf);
             border: 1px solid var(--bdr);
-            border-radius: 999px;
+            border-radius:3px;
             padding: .2rem;
             gap: 0;
             cursor: pointer;
@@ -195,7 +195,7 @@
             border: 0;
             width: 26px;
             height: 26px;
-            border-radius: 999px;
+            border-radius:3px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -485,7 +485,7 @@
             padding: .55rem .7rem;
             background: var(--bg-surf);
             border: 1px solid var(--bdr);
-            border-radius: 999px;
+            border-radius:3px;
             font-family: var(--fm);
             font-size: .66rem;
             width: fit-content;
@@ -501,7 +501,7 @@
 
         .cs-switcher-link {
             padding: .32rem .75rem;
-            border-radius: 999px;
+            border-radius:3px;
             color: var(--h2);
             text-decoration: none;
             letter-spacing: .02em;
@@ -551,13 +551,7 @@
             color: var(--acc);
         }
 
-        .cs-title .hi {
-            background: linear-gradient(115deg, #10b981 0%, #34d399 50%, #2dd4bf 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            color: transparent;
-        }
+        .cs-title .hi { color: var(--acc); }
 
         .cs-lede {
             font-size: 1rem;
@@ -601,7 +595,7 @@
             font-family: var(--fm);
             font-size: .7rem;
             padding: .32rem .85rem;
-            border-radius: 999px;
+            border-radius:3px;
             border: 1px solid var(--bdr);
             background: var(--bg-surf);
             color: var(--h3);
@@ -628,16 +622,7 @@
             margin-bottom: 2rem;
         }
 
-        .stat-strip::before {
-            content: '';
-            position: absolute;
-            inset: -40px;
-            background: radial-gradient(ellipse at 30% 50%, rgba(16, 185, 129, .18), transparent 60%),
-                radial-gradient(ellipse at 80% 50%, rgba(45, 212, 191, .12), transparent 60%);
-            pointer-events: none;
-            z-index: -1;
-            filter: blur(20px);
-        }
+        .stat-strip::before{display:none;}
 
         .stat-cell {
             background: var(--bg-card);
@@ -680,7 +665,7 @@
             padding: .4rem .85rem;
             background: var(--bg-surf);
             border: 1px solid var(--bdr);
-            border-radius: 999px;
+            border-radius:3px;
             font-family: var(--fm);
             font-size: .66rem;
             color: var(--h2);
@@ -993,41 +978,15 @@
         }
 
         /* ── IMPACT NUMBERS ───────────────────────────────────── */
-        .impact-num {
-            font-family: var(--fd);
-            font-size: clamp(1.6rem, 4vw, 2.4rem);
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: .55rem;
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            color: transparent;
-            filter: drop-shadow(0 4px 16px currentColor);
-            word-break: break-word;
-            overflow-wrap: break-word;
-            letter-spacing: -.02em;
-        }
+        .impact-num{font-family:var(--fd);font-size:clamp(1.6rem,4vw,2.4rem);font-weight:800;line-height:1.1;margin-bottom:.55rem;color:var(--acc);word-break:break-word;overflow-wrap:break-word;letter-spacing:-.02em;}
 
-        .impact-num.acc {
-            background-image: linear-gradient(135deg, #10b981, #34d399);
-            color: #10b981;
-        }
+        .impact-num.acc{color:var(--acc);}
 
-        .impact-num.green {
-            background-image: linear-gradient(135deg, #10b981, #34d399);
-            color: #10b981;
-        }
+        .impact-num.green{color:var(--acc);}
 
-        .impact-num.teal {
-            background-image: linear-gradient(135deg, #22d3ee, #2dd4bf);
-            color: #22d3ee;
-        }
+        .impact-num.teal{color:var(--acc);}
 
-        .impact-num.amber {
-            background-image: linear-gradient(135deg, #fbbf24, #f59e0b);
-            color: #fbbf24;
-        }
+        .impact-num.amber{color:var(--acc);}
 
         .impact-card {
             padding: 1.5rem 1.4rem;
@@ -1511,7 +1470,7 @@
         .read-next-card:hover {
             border-color: var(--bdr-hi);
             transform: translateY(-3px);
-            box-shadow: 0 12px 32px rgba(0, 0, 0, .25);
+            box-shadow: 0 3px 10px rgba(0,0,0,.16);
             text-decoration: none;
         }
 
