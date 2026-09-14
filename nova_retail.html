@@ -551,13 +551,7 @@
       color: var(--acc);
     }
 
-    .cs-title .hi {
-      background: linear-gradient(115deg, #10b981 0%, #34d399 50%, #2dd4bf 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      color: transparent;
-    }
+    .cs-title .hi { color: var(--acc); }
 
     .cs-lede {
       font-size: 1rem;
@@ -628,16 +622,7 @@
       margin-bottom: 2rem;
     }
 
-    .stat-strip::before {
-      content: '';
-      position: absolute;
-      inset: -40px;
-      background: radial-gradient(ellipse at 30% 50%, rgba(16, 185, 129, .18), transparent 60%),
-        radial-gradient(ellipse at 80% 50%, rgba(45, 212, 191, .12), transparent 60%);
-      pointer-events: none;
-      z-index: -1;
-      filter: blur(20px);
-    }
+    .stat-strip::before{display:none;}
 
     .stat-cell {
       background: var(--bg-card);
@@ -993,41 +978,15 @@
     }
 
     /* ── IMPACT NUMBERS ───────────────────────────────────── */
-    .impact-num {
-      font-family: var(--fd);
-      font-size: clamp(1.6rem, 4vw, 2.4rem);
-      font-weight: 800;
-      line-height: 1.1;
-      margin-bottom: .55rem;
-      background-clip: text;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      color: transparent;
-      filter: drop-shadow(0 4px 16px currentColor);
-      word-break: break-word;
-      overflow-wrap: break-word;
-      letter-spacing: -.02em;
-    }
+    .impact-num{font-family:var(--fd);font-size:clamp(1.6rem,4vw,2.4rem);font-weight:800;line-height:1.1;margin-bottom:.55rem;color:var(--acc);word-break:break-word;overflow-wrap:break-word;letter-spacing:-.02em;}
 
-    .impact-num.acc {
-      background-image: linear-gradient(135deg, #10b981, #34d399);
-      color: #10b981;
-    }
+    .impact-num.acc{color:var(--acc);}
 
-    .impact-num.green {
-      background-image: linear-gradient(135deg, #10b981, #34d399);
-      color: #10b981;
-    }
+    .impact-num.green{color:var(--acc);}
 
-    .impact-num.teal {
-      background-image: linear-gradient(135deg, #22d3ee, #2dd4bf);
-      color: #22d3ee;
-    }
+    .impact-num.teal{color:var(--acc);}
 
-    .impact-num.amber {
-      background-image: linear-gradient(135deg, #fbbf24, #f59e0b);
-      color: #fbbf24;
-    }
+    .impact-num.amber{color:var(--acc);}
 
     .impact-card {
       padding: 1.5rem 1.4rem;
