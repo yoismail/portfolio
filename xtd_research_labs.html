@@ -1820,7 +1820,7 @@
 <body>
 
   <!-- NAV -->
-  <nav>
+  <nav aria-label="Primary">
     <a class="nav-brand" href="index.html">
       <span class="name">Yomi Ismail</span>
       <span class="title">Data Engineer</span>
@@ -1881,7 +1881,7 @@
         </svg>
         Back to portfolio
       </a>
-      <div class="cs-switcher" role="navigation" aria-label="Case study navigation">
+      <nav class="cs-switcher" aria-label="Case study navigation">
         <span class="cs-switcher-label">Case studies</span>
         <a href="national_hospital.html" class="cs-switcher-link">National Hospital</a>
         <a href="wfi.html" class="cs-switcher-link">World Football Insights</a>
@@ -1891,7 +1891,7 @@
         <a href="payflow.html" class="cs-switcher-link">PayFlow</a>
         <a href="chocodelight.html" class="cs-switcher-link">ChocoDelight</a>
         <a href="aliexpress.html" class="cs-switcher-link">AliExpress</a>
-      </div>
+      </nav>
       <div class="cs-meta">~10 min read · Updated May 2026</div>
       <div class="kicker">Case Study · Featured · Async + Medallion</div>
 
@@ -2811,7 +2811,7 @@ df.to_sql(table_name, engine, schema=<span class="string">"carbon_data"</span>,
   </footer>
 
   <!-- BACK TO TOP -->
-  <button class="to-top" id="toTop" aria-label="Back to top">
+  <button type="button" class="to-top" id="toTop" aria-label="Back to top">
     <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
       stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
       <polyline points="18 15 12 9 6 15" />

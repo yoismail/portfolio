@@ -1,0 +1,59 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  html-validate:
+    name: HTML validation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Validate markup
+        run: npx --yes html-validate@11 *.html
+
+  link-check:
+    name: Broken links
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check internal links (offline)
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: >-
+            --offline
+            --no-progress
+            --include-fragments
+            *.html
+          fail: true
+
+  external-link-check:
+    # Non-blocking: github.com and linkedin.com reject automated/bot
+    # traffic outright (403 / connection refused) regardless of whether
+    # the link is actually broken, so this job can't be a reliable gate.
+    # It still excludes those two known-unreachable-by-bots domains and
+    # stays green as a real (if informational) check on anything else
+    # linked from the site, e.g. the Google Fonts CDN.
+    name: External links (informational)
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check external links
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: >-
+            --no-progress
+            --timeout 20
+            --retry-wait-time 5
+            --max-retries 2
+            --exclude "github\.com"
+            --exclude "linkedin\.com"
+            *.html
+          fail: true

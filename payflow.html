@@ -2203,7 +2203,7 @@
   </aside>
 
   <!-- NAV -->
-  <nav>
+  <nav aria-label="Primary">
     <a class="nav-brand" href="index.html">
       <span class="name">Yomi Ismail</span>
       <span class="title">Data Engineer</span>
@@ -2248,7 +2248,7 @@
         </svg>
         Back to portfolio
       </a>
-      <div class="cs-switcher" role="navigation" aria-label="Case study navigation">
+      <nav class="cs-switcher" aria-label="Case study navigation">
         <span class="cs-switcher-label">Case studies</span>
         <a href="national_hospital.html" class="cs-switcher-link">National Hospital</a>
         <a href="wfi.html" class="cs-switcher-link">World Football Insights</a>
@@ -2258,7 +2258,7 @@
         <a href="payflow.html" class="cs-switcher-link current" aria-current="page">PayFlow</a>
         <a href="chocodelight.html" class="cs-switcher-link">ChocoDelight</a>
         <a href="aliexpress.html" class="cs-switcher-link">AliExpress</a>
-      </div>
+      </nav>
       <div class="cs-meta">~6 min read · Updated May 2026</div>
       <div class="kicker">Case Study · End-to-End Data Engineering</div>
       <h1 class="cs-title">PayFlow — <span class="hi">ETL pipeline</span><br />&amp; data warehouse</h1>
@@ -2425,7 +2425,7 @@
         not inferred from Python.</p>
 
       <!-- Animated star schema visual: central fact + 4 dimensions -->
-      <div class="star-schema fade-up"
+      <div class="star-schema fade-up" role="group"
         aria-label="Star schema: fact_orders at center with four dimension tables (dim_customer, dim_product, dim_seller, dim_date) radiating outward">
         <svg class="star-svg" viewBox="0 0 680 360" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
           <defs>
@@ -2746,7 +2746,7 @@
       <div class="read-next-grid">
         <a href="fibbiebanks.html" class="read-next-card">
           <div class="read-next-label">Case study · Featured · Distributed ETL</div>
-          <div class="read-next-title">FibbieBanks ETL & Warehouse</div>
+          <div class="read-next-title">FibbieBanks ETL &amp; Warehouse</div>
           <p class="read-next-desc">A 1M-row PySpark pipeline for synthetic banking transactions, with a validated star
             schema warehouse, deterministic SHA-256 surrogate keys, and idempotent re-runs on PostgreSQL.</p>
           <div class="read-next-tags">
@@ -2950,7 +2950,7 @@
   </footer>
 
   <!-- BACK TO TOP -->
-  <button class="to-top" id="toTop" aria-label="Scroll to top">
+  <button type="button" class="to-top" id="toTop" aria-label="Scroll to top">
     <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
       stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M12 19V5M5 12l7-7 7 7" />

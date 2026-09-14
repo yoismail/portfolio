@@ -2098,7 +2098,7 @@
 <body>
 
     <!-- NAV -->
-    <nav>
+    <nav aria-label="Primary">
         <a class="nav-brand" href="index.html">
             <span class="name">Yomi Ismail</span>
             <span class="title">Data Engineer</span>
@@ -2159,7 +2159,7 @@
                 </svg>
                 Back to portfolio
             </a>
-            <div class="cs-switcher" role="navigation" aria-label="Case study navigation">
+            <nav class="cs-switcher" aria-label="Case study navigation">
                 <span class="cs-switcher-label">Case studies</span>
                 <a href="national_hospital.html" class="cs-switcher-link current" aria-current="page">National
                     Hospital</a>
@@ -2170,7 +2170,7 @@
                 <a href="payflow.html" class="cs-switcher-link">PayFlow</a>
                 <a href="chocodelight.html" class="cs-switcher-link">ChocoDelight</a>
                 <a href="aliexpress.html" class="cs-switcher-link">AliExpress</a>
-            </div>
+            </nav>
             <div class="cs-meta">~14 min read · Updated August 2026</div>
             <div class="kicker">Case Study · Featured · Azure + ELT + Healthcare</div>
 
@@ -2402,7 +2402,7 @@
 │   ├── lab_data_processed/*.csv
 │   └── trials_data_processed/*.csv
 └── quarantine/                              (rows rejected by DQ, for analyst review)
-    └── medical_records_bad_dates/*.csv      (14 rows: discharge < admission)</pre>
+    └── medical_records_bad_dates/*.csv      (14 rows: discharge &lt; admission)</pre>
             </div>
 
             <p class="sec-p">
@@ -2524,8 +2524,8 @@
                 <span class="code-block-label">databricks · date sanity quarantine for medical_records</span>
                 <pre>bad_dates_df = med_records_df.<span class="fn">filter</span>(
     F.<span class="fn">col</span>(<span class="string">"discharge_date"</span>).<span class="fn">isNotNull</span>()
-    & F.<span class="fn">col</span>(<span class="string">"admission_date"</span>).<span class="fn">isNotNull</span>()
-    & (F.<span class="fn">col</span>(<span class="string">"discharge_date"</span>) < F.<span class="fn">col</span>(<span class="string">"admission_date"</span>))
+    &amp; F.<span class="fn">col</span>(<span class="string">"admission_date"</span>).<span class="fn">isNotNull</span>()
+    &amp; (F.<span class="fn">col</span>(<span class="string">"discharge_date"</span>) &lt; F.<span class="fn">col</span>(<span class="string">"admission_date"</span>))
 )
 
 <span class="keyword">if</span> bad_dates_df.<span class="fn">count</span>() > <span class="num">0</span>:
@@ -3160,7 +3160,7 @@ med_records_df = med_records_df.<span class="fn">filter</span>(
     </footer>
 
     <!-- BACK TO TOP -->
-    <button class="to-top" id="toTop" aria-label="Back to top">
+    <button type="button" class="to-top" id="toTop" aria-label="Back to top">
         <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
             stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="18 15 12 9 6 15" />
