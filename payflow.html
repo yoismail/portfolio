@@ -302,6 +302,8 @@
       gap: 1rem;
     }
 
+    @media(max-width:760px){nav{backdrop-filter:none;-webkit-backdrop-filter:none;}}
+
     .nav-brand {
       display: flex;
       flex-direction: column;
@@ -346,10 +348,6 @@
     }
 
     @media(max-width:420px) {
-      .nav-brand .title {
-        display: none;
-      }
-
       .nav-brand .name {
         font-size: .82rem;
       }
@@ -3025,6 +3023,7 @@
           if (e.isIntersecting) {
             links.forEach(l => l.classList.remove('active'));
             link.classList.add('active');
+            link.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
           }
         });
       }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
