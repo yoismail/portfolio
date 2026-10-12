@@ -569,6 +569,16 @@ footer:hover .footer-mark{opacity:1;transform:translateY(-1px);}
 /* ── ANIMATIONS ───────────────────────────────────────── */
 .fade-up{opacity:0;transform:translateY(16px);transition:opacity .4s var(--ez),transform .4s var(--ez);will-change:opacity,transform;}
 .fade-up.visible{opacity:1;transform:translateY(0);will-change:auto;}
+/* staggered reveal for grid/row children inside a fade-up section — each
+   item gets its own hidden state + delay so a card grid or step row
+   cascades in instead of popping as one flat block. */
+:is(.card-grid,.grid-2,.grid-3,.grid-4)>*,.arch-step,.cert-cell,.num-card-sec{opacity:0;transform:translateY(10px);transition:opacity .4s var(--ez),transform .4s var(--ez);}
+.fade-up.visible :is(.card-grid,.grid-2,.grid-3,.grid-4)>*,.fade-up.visible :is(.arch-step,.cert-cell,.num-card-sec){opacity:1;transform:translateY(0);}
+:is(.card-grid,.grid-2,.grid-3,.grid-4)>*:nth-child(2),:is(.arch-step,.cert-cell,.num-card-sec):nth-child(2){transition-delay:.07s}
+:is(.card-grid,.grid-2,.grid-3,.grid-4)>*:nth-child(3),:is(.arch-step,.cert-cell,.num-card-sec):nth-child(3){transition-delay:.14s}
+:is(.card-grid,.grid-2,.grid-3,.grid-4)>*:nth-child(4),:is(.arch-step,.cert-cell,.num-card-sec):nth-child(4){transition-delay:.21s}
+:is(.card-grid,.grid-2,.grid-3,.grid-4)>*:nth-child(n+5),:is(.arch-step,.cert-cell,.num-card-sec):nth-child(n+5){transition-delay:.28s}
+@media(prefers-reduced-motion:reduce){:is(.card-grid,.grid-2,.grid-3,.grid-4)>*,.arch-step,.cert-cell,.num-card-sec{opacity:1;transform:none;transition:none;}}
 
 /* ── MOBILE TWEAKS ────────────────────────────────────── */
 @media(max-width:520px){

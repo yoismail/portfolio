@@ -1560,11 +1560,23 @@
       transform: translateY(0);
     }
 
+    /* staggered reveal for grid/row children inside a fade-up section — each
+       item gets its own hidden state + delay so a card grid or step row
+       cascades in instead of popping as one flat block. */
+    :is(.card-grid,.grid-2,.grid-3,.grid-4,.schema-table,.impact-grid,.dec-grid,.limits-grid)>*,.arch-step,.cert-cell,.num-card-sec{opacity:0;transform:translateY(10px);transition:opacity .45s var(--ez),transform .45s var(--ez);}
+    .fade-up.in :is(.card-grid,.grid-2,.grid-3,.grid-4,.schema-table,.impact-grid,.dec-grid,.limits-grid)>*,.fade-up.in :is(.arch-step,.cert-cell,.num-card-sec){opacity:1;transform:translateY(0);}
+    :is(.card-grid,.grid-2,.grid-3,.grid-4,.schema-table,.impact-grid,.dec-grid,.limits-grid)>*:nth-child(2),:is(.arch-step,.cert-cell,.num-card-sec):nth-child(2){transition-delay:.07s}
+    :is(.card-grid,.grid-2,.grid-3,.grid-4,.schema-table,.impact-grid,.dec-grid,.limits-grid)>*:nth-child(3),:is(.arch-step,.cert-cell,.num-card-sec):nth-child(3){transition-delay:.14s}
+    :is(.card-grid,.grid-2,.grid-3,.grid-4,.schema-table,.impact-grid,.dec-grid,.limits-grid)>*:nth-child(4),:is(.arch-step,.cert-cell,.num-card-sec):nth-child(4){transition-delay:.21s}
+    :is(.card-grid,.grid-2,.grid-3,.grid-4,.schema-table,.impact-grid,.dec-grid,.limits-grid)>*:nth-child(n+5),:is(.arch-step,.cert-cell,.num-card-sec):nth-child(n+5){transition-delay:.28s}
+
     @media(prefers-reduced-motion:reduce) {
       .fade-up {
         opacity: 1;
         transform: none;
       }
+
+        :is(.card-grid,.grid-2,.grid-3,.grid-4,.schema-table,.impact-grid,.dec-grid,.limits-grid)>*,.arch-step,.cert-cell,.num-card-sec{opacity:1;transform:none;transition:none;}
     }
 
     /* ── FOOTER ───────────────────────────────────────────── */
