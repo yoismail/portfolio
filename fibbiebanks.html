@@ -2,6 +2,22 @@
 <html lang="en">
 
 <head>
+  <script>
+    if('scrollRestoration' in history){history.scrollRestoration='manual';}
+    /* Chrome restores a reloaded page's old scroll offset by default —
+       scrollRestoration:'manual' stops that, but late-loading webfonts
+       can still shift layout after the browser's own hash-jump fires,
+       landing an anchored reload a bit off. Correct once more at load,
+       once everything has actually settled. */
+    window.addEventListener('load',function(){
+      if(location.hash){
+        var el=document.querySelector(location.hash);
+        if(el)el.scrollIntoView();
+      }else{
+        window.scrollTo(0,0);
+      }
+    });
+  </script>
   <meta charset="UTF-8" />
   <title>FibbieBanks Case Study | Yomi Ismail</title>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
