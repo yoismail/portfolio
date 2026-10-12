@@ -178,6 +178,13 @@ body{font-family:var(--fb);background:var(--bg);color:var(--h2);line-height:1.6;
 
 /* ── NAV ──────────────────────────────────────────────── */
 nav{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--nav);background:var(--bg-nav);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--bdr);display:flex;align-items:center;justify-content:space-between;padding:0 clamp(1rem,4vw,2.5rem);transition:background .3s,border-color .3s;gap:1rem;will-change:background;}
+/* backdrop-filter on a fixed element is one of the more reliable ways
+   to make a page feel laggy while scrolling — the browser re-samples
+   and blurs whatever's behind the nav on every frame. Worth it on
+   desktop; not worth it on the phones most likely to actually drop
+   frames over it, so it's off below 760px and the nav just relies on
+   --bg-nav's own opacity instead. */
+@media(max-width:760px){nav{backdrop-filter:none;-webkit-backdrop-filter:none;}}
 .nav-brand{display:flex;flex-direction:column;justify-content:center;text-decoration:none;white-space:nowrap;flex-shrink:0;line-height:1.1;gap:.1rem;}
 .nav-brand .name{font-family:var(--fd);font-size:.95rem;font-weight:700;letter-spacing:-.02em;color:var(--h1);transition:color .2s;}
 .nav-brand .title{font-family:var(--fm);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--acc);}
@@ -560,7 +567,7 @@ footer:hover .footer-mark{opacity:1;transform:translateY(-1px);}
 .to-top:hover{border-color:var(--acc);color:var(--acc);background:var(--acc-s);}
 
 /* ── ANIMATIONS ───────────────────────────────────────── */
-.fade-up{opacity:0;transform:translateY(24px);transition:opacity .65s var(--ez),transform .65s var(--ez);will-change:opacity,transform;}
+.fade-up{opacity:0;transform:translateY(16px);transition:opacity .4s var(--ez),transform .4s var(--ez);will-change:opacity,transform;}
 .fade-up.visible{opacity:1;transform:translateY(0);will-change:auto;}
 
 /* ── MOBILE TWEAKS ────────────────────────────────────── */
@@ -1259,11 +1266,15 @@ footer:hover .footer-mark{opacity:1;transform:translateY(-1px);}
 /* year stamp */
 (function(){document.getElementById('year').textContent=new Date().getFullYear();})();
 
-/* fade-in on scroll */
+/* fade-in on scroll — rootMargin extends the trigger zone below the
+   viewport, so the reveal starts while a section is still off-screen
+   and has finished by the time scrolling actually brings it into
+   view, instead of visibly popping in a beat after it's already
+   on-screen. */
 (function(){
   const io=new IntersectionObserver(entries=>{
     entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}});
-  },{threshold:0.07});
+  },{rootMargin:'0px 0px 200px 0px',threshold:0});
   document.querySelectorAll('.fade-up').forEach(el=>io.observe(el));
 })();
 
@@ -1279,10 +1290,19 @@ footer:hover .footer-mark{opacity:1;transform:translateY(-1px);}
     if(!map.has(id))map.set(id,[]);
     map.get(id).push(a);
   });
+  const navLinksEl=document.getElementById('navLinks');
   const io=new IntersectionObserver(entries=>{
     entries.forEach(e=>{
       const active=map.get(e.target.id);if(!active)return;
-      if(e.isIntersecting){links.forEach(l=>l.classList.remove('active'));active.forEach(l=>l.classList.add('active'));}
+      if(e.isIntersecting){
+        links.forEach(l=>l.classList.remove('active'));
+        active.forEach(l=>l.classList.add('active'));
+        // On the horizontally-scrolling mobile nav strip, the newly
+        // active link can be off to the side with nothing to prompt
+        // a manual swipe — bring it into view automatically.
+        const navLink=active.find(l=>l.closest && l.closest('#navLinks'));
+        if(navLink&&navLinksEl)navLink.scrollIntoView({block:'nearest',inline:'center',behavior:'smooth'});
+      }
     });
   },{rootMargin:'-40% 0px -55% 0px',threshold:0});
   sections.forEach(s=>io.observe(s));
