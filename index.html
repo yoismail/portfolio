@@ -183,7 +183,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--nav);background
 .nav-brand .title{font-family:var(--fm);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--acc);}
 .nav-brand:hover .name{color:var(--acc);}
 @media(max-width:600px){.nav-brand .name{font-size:.85rem;}.nav-brand .title{font-size:.55rem;letter-spacing:.1em;}}
-@media(max-width:420px){.nav-brand .title{display:none;}.nav-brand .name{font-size:.82rem;}}
+@media(max-width:420px){.nav-brand .name{font-size:.82rem;}}
 .nav-links{display:flex;align-items:center;gap:.15rem;flex:1;justify-content:flex-end;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;-webkit-overflow-scrolling:touch;scroll-behavior:smooth;mask-image:linear-gradient(to right,transparent,#000 1.5rem,#000 calc(100% - 1.5rem),transparent);-webkit-mask-image:linear-gradient(to right,transparent,#000 1.5rem,#000 calc(100% - 1.5rem),transparent);}
 .nav-links::-webkit-scrollbar{display:none;}
 .nav-links{counter-reset:navidx;}
@@ -264,6 +264,33 @@ h2{font-family:var(--fd);font-size:clamp(1.75rem,3.2vw,2.4rem);font-weight:700;l
 .hero-bio strong{color:var(--h1);font-weight:500;}
 .hero-avail{font-family:var(--fm);font-size:.72rem;color:var(--h3);margin-bottom:2rem;position:relative;z-index:1;}
 .hero-avail span{color:var(--acc);}
+.hero-flex{display:block;}
+.hero-side{position:relative;z-index:1;}
+.hero-side-label{display:none;}
+/* Below this, the hero is one column, dataflow diagram and stack
+   pills just sitting under the pitch like always. Above it, there's
+   enough room to stop stacking everything in one narrative column —
+   the diagram and stack move into their own bordered panel beside
+   the text, like a spec sheet's reference panel next to its prose,
+   instead of every hero on the internet reading top-to-bottom:
+   headline, subtext, buttons.
+   A deliberately higher threshold than the page rail's 1180px: the
+   rail only needs ~200px to work, but splitting the hero needs real
+   room on both sides or the headline starts wrapping onto 4 lines
+   while the 6-stop diagram's labels wrap onto 2 — tried it at 1180
+   and both columns were visibly squeezed between there and ~1380px. */
+@media(min-width:1400px){
+  .hero-flex{display:grid;grid-template-columns:1.15fr .85fr;gap:3rem;align-items:start;}
+  .hero-main{padding-top:.5rem;}
+  .hero-side{border:1px solid var(--bdr);border-radius:4px;background:var(--bg-surf);padding:1.6rem 1.5rem 1.75rem;margin-top:1.5rem;}
+  .hero-side .dataflow{margin:0 0 1.75rem;padding:0;}
+  .hero-side .dataflow-svg{max-width:100%;}
+  .hero-side .dataflow-labels{max-width:100%;}
+  .hero-side .df-label{font-size:.58rem;padding:.3rem .05rem;}
+  .hero-side .hero-stack{margin:0;}
+  .hero-side-label{display:flex;align-items:center;gap:.5rem;font-family:var(--fm);font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--h3);margin-bottom:1.35rem;padding-bottom:.9rem;border-bottom:1px solid var(--bdr);}
+  .hero-side-label::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--acc);flex-shrink:0;}
+}
 
 /* ── ANIMATED DATAFLOW (hero visual) ──────────────────── */
 .dataflow{position:relative;z-index:1;margin-bottom:2.25rem;margin-top:.5rem;padding:.25rem 0;}
@@ -607,62 +634,69 @@ footer:hover .footer-mark{opacity:1;transform:translateY(-1px);}
   <!-- HERO -->
   <section id="hero">
     <div id="hero-grid"></div>
-    <div class="hero-badge fade-up">
-      <span class="badge-dot"></span>
-      Data Engineer at Amdari Inc. · Suffolk, UK
-    </div>
-    <h1 class="hero-title fade-up">Building data systems<br/><span class="hi-wrap"><span class="hi">analysts trust.</span><svg class="sketch-underline" viewBox="0 0 280 14" preserveAspectRatio="none" aria-hidden="true"><path d="M 4 8 Q 35 4, 70 7 T 140 6 Q 175 9, 210 5 T 276 8" pathLength="1"/></svg></span></h1>
-    <p class="hero-tagline fade-up">I used to be the person who had to explain why the dashboard was wrong.</p>
-    <p class="hero-bio fade-up">
-      Six years inside fintech and banking systems showed me what bad data costs. Now I build the pipelines that fix it: <strong>production ETL, star schema warehouses, and CI/CD-ready infrastructure</strong>.
-    </p>
-    <p class="hero-avail fade-up">
-      Based in Suffolk, England · <span>Remote or hybrid · UK-based roles</span>
-    </p>
-    <div class="dataflow fade-up" aria-label="Data engineering pipeline: Source File through to BI Layer" role="group">
-      <svg class="dataflow-svg" viewBox="0 0 660 90" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
-        <line class="df-track" x1="55" y1="45" x2="605" y2="45"/>
-        <g class="df-station" transform="translate(55 45)"><circle class="df-ring" r="11"/><circle class="df-core" r="5"/></g>
-        <g class="df-station" transform="translate(165 45)"><circle class="df-ring" r="11"/><circle class="df-core" r="5"/></g>
-        <g class="df-station" transform="translate(275 45)"><circle class="df-ring" r="11"/><circle class="df-core" r="5"/></g>
-        <g class="df-station" transform="translate(385 45)"><circle class="df-ring" r="11"/><circle class="df-core" r="5"/></g>
-        <g class="df-station" transform="translate(495 45)"><circle class="df-ring" r="11"/><circle class="df-core" r="5"/></g>
-        <g class="df-station df-station-final" transform="translate(605 45)"><circle class="df-ring" r="11"/><circle class="df-core" r="5"/></g>
-        <circle class="df-flow df-flow-a" r="3.2" cy="45"/>
-        <circle class="df-flow df-flow-b" r="2.6" cy="45"/>
-        <circle class="df-flow df-flow-c" r="2.2" cy="45"/>
-      </svg>
-      <div class="dataflow-labels">
-        <span class="df-label" data-tip="CSV, JSON, Parquet, or API, before any cleaning">Source File</span>
-        <span class="df-label" data-tip="Download, unzip, validate schema">Extract</span>
-        <span class="df-label" data-tip="Clean, type-cast, standardise">Stage</span>
-        <span class="df-label" data-tip="SQL joins, feature engineering">Transform</span>
-        <span class="df-label" data-tip="Star schema, idempotent loads">Warehouse</span>
-        <span class="df-label df-label-final" data-tip="Power BI, dashboards, reporting">BI Layer</span>
+    <div class="hero-flex">
+      <div class="hero-main">
+        <div class="hero-badge fade-up">
+          <span class="badge-dot"></span>
+          Data Engineer at Amdari Inc. · Suffolk, UK
+        </div>
+        <h1 class="hero-title fade-up">Building data systems<br/><span class="hi-wrap"><span class="hi">analysts trust.</span><svg class="sketch-underline" viewBox="0 0 280 14" preserveAspectRatio="none" aria-hidden="true"><path d="M 4 8 Q 35 4, 70 7 T 140 6 Q 175 9, 210 5 T 276 8" pathLength="1"/></svg></span></h1>
+        <p class="hero-tagline fade-up">I used to be the person who had to explain why the dashboard was wrong.</p>
+        <p class="hero-bio fade-up">
+          Six years inside fintech and banking systems showed me what bad data costs. Now I build the pipelines that fix it: <strong>production ETL, star schema warehouses, and CI/CD-ready infrastructure</strong>.
+        </p>
+        <p class="hero-avail fade-up">
+          Based in Suffolk, England · <span>Remote or hybrid · UK-based roles</span>
+        </p>
+        <div class="hero-actions fade-up">
+          <a href="nova_retail.html" class="btn-primary">
+            <svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+            View featured case study
+          </a>
+          <a href="mailto:ismailyomi@gmail.com?subject=CV%20Request&amp;body=Hi%20Yomi%2C%0A%0AI%20came%20across%20your%20portfolio%20and%20would%20like%20to%20request%20your%20CV%20for...%0A%0AThanks%2C" class="btn-ghost">
+            <svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="M2 7l10 7 10-7"/></svg>
+            Email me for CV
+          </a>
+        </div>
       </div>
-    </div>
-    <div class="hero-stack fade-up" aria-label="Core technologies" role="group">
-      <span class="hero-stack-label">Core stack</span>
-      <span class="hero-stack-pill">Python</span>
-      <span class="hero-stack-pill">PySpark</span>
-      <span class="hero-stack-pill">SQL</span>
-      <span class="hero-stack-pill">Airflow</span>
-      <span class="hero-stack-pill">PostgreSQL</span>
-      <span class="hero-stack-pill">Docker</span>
-      <span class="hero-stack-pill">AWS</span>
-      <span class="hero-stack-pill">GCP</span>
-      <span class="hero-stack-pill">Azure</span>
-      <span class="hero-stack-pill">Power BI</span>
-    </div>
-    <div class="hero-actions fade-up">
-      <a href="nova_retail.html" class="btn-primary">
-        <svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
-        View featured case study
-      </a>
-      <a href="mailto:ismailyomi@gmail.com?subject=CV%20Request&amp;body=Hi%20Yomi%2C%0A%0AI%20came%20across%20your%20portfolio%20and%20would%20like%20to%20request%20your%20CV%20for...%0A%0AThanks%2C" class="btn-ghost">
-        <svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="M2 7l10 7 10-7"/></svg>
-        Email me for CV
-      </a>
+      <div class="hero-side fade-up">
+        <div class="hero-side-label">Pipeline overview</div>
+        <div class="dataflow" aria-label="Data engineering pipeline: Source File through to BI Layer" role="group">
+          <svg class="dataflow-svg" viewBox="0 0 660 90" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+            <line class="df-track" x1="55" y1="45" x2="605" y2="45"/>
+            <g class="df-station" transform="translate(55 45)"><circle class="df-ring" r="11"/><circle class="df-core" r="5"/></g>
+            <g class="df-station" transform="translate(165 45)"><circle class="df-ring" r="11"/><circle class="df-core" r="5"/></g>
+            <g class="df-station" transform="translate(275 45)"><circle class="df-ring" r="11"/><circle class="df-core" r="5"/></g>
+            <g class="df-station" transform="translate(385 45)"><circle class="df-ring" r="11"/><circle class="df-core" r="5"/></g>
+            <g class="df-station" transform="translate(495 45)"><circle class="df-ring" r="11"/><circle class="df-core" r="5"/></g>
+            <g class="df-station df-station-final" transform="translate(605 45)"><circle class="df-ring" r="11"/><circle class="df-core" r="5"/></g>
+            <circle class="df-flow df-flow-a" r="3.2" cy="45"/>
+            <circle class="df-flow df-flow-b" r="2.6" cy="45"/>
+            <circle class="df-flow df-flow-c" r="2.2" cy="45"/>
+          </svg>
+          <div class="dataflow-labels">
+            <span class="df-label" data-tip="CSV, JSON, Parquet, or API, before any cleaning">Source File</span>
+            <span class="df-label" data-tip="Download, unzip, validate schema">Extract</span>
+            <span class="df-label" data-tip="Clean, type-cast, standardise">Stage</span>
+            <span class="df-label" data-tip="SQL joins, feature engineering">Transform</span>
+            <span class="df-label" data-tip="Star schema, idempotent loads">Warehouse</span>
+            <span class="df-label df-label-final" data-tip="Power BI, dashboards, reporting">BI Layer</span>
+          </div>
+        </div>
+        <div class="hero-stack" aria-label="Core technologies" role="group">
+          <span class="hero-stack-label">Core stack</span>
+          <span class="hero-stack-pill">Python</span>
+          <span class="hero-stack-pill">PySpark</span>
+          <span class="hero-stack-pill">SQL</span>
+          <span class="hero-stack-pill">Airflow</span>
+          <span class="hero-stack-pill">PostgreSQL</span>
+          <span class="hero-stack-pill">Docker</span>
+          <span class="hero-stack-pill">AWS</span>
+          <span class="hero-stack-pill">GCP</span>
+          <span class="hero-stack-pill">Azure</span>
+          <span class="hero-stack-pill">Power BI</span>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -676,10 +710,10 @@ footer:hover .footer-mark{opacity:1;transform:translateY(-1px);}
       <div class="feature-sub">Azure Data Factory · Databricks · Azure SQL Database · ADLS Gen2 · Two-layer DQ suite</div>
       <p class="feature-desc">A cloud-native ELT pipeline built for a healthcare analytics scenario on Microsoft Azure. Azure Data Factory orchestrates a 13-activity pipeline with parallel fan-out and a four-check quality gate. Databricks runs the PySpark transformations with a visibility-first cleaning layer that reports source-to-warehouse retention and quarantines suspicious rows. Raw CSVs land in ADLS Gen2, are cleaned through a transparent transformation layer, then loaded into Azure SQL Database in a two-schema (STG + EDW) warehouse. A two-layer data quality suite runs at both Databricks and SQL layers, catching 14 records with illogical dates and quarantining them for source-system review. Real deployment: 2m 20s end-to-end runtime, daily schedule, 4-check safety net, 99.3% source-to-warehouse retention.</p>
       <div class="arch">
-        <div class="arch-step"><div class="arch-num">🏭</div><div class="arch-name">ADF</div><div class="arch-desc">13-activity pipeline, daily schedule</div></div>
-        <div class="arch-step"><div class="arch-num">⚡</div><div class="arch-name">Databricks</div><div class="arch-desc">PySpark cleaning + quarantine</div></div>
-        <div class="arch-step"><div class="arch-num">🪣</div><div class="arch-name">ADLS Gen2</div><div class="arch-desc">Raw + processed + quarantine</div></div>
-        <div class="arch-step"><div class="arch-num">📊</div><div class="arch-name">Azure SQL</div><div class="arch-desc">STG + EDW schemas, 4-check DQ</div></div>
+        <div class="arch-step"><div class="arch-num">01</div><div class="arch-name">ADF</div><div class="arch-desc">13-activity pipeline, daily schedule</div></div>
+        <div class="arch-step"><div class="arch-num">02</div><div class="arch-name">Databricks</div><div class="arch-desc">PySpark cleaning + quarantine</div></div>
+        <div class="arch-step"><div class="arch-num">03</div><div class="arch-name">ADLS Gen2</div><div class="arch-desc">Raw + processed + quarantine</div></div>
+        <div class="arch-step"><div class="arch-num">04</div><div class="arch-name">Azure SQL</div><div class="arch-desc">STG + EDW schemas, 4-check DQ</div></div>
       </div>
       <a href="national_hospital.html" class="card-link">View full case study<span class="card-link-arrow">→</span></a>
     </div>
@@ -688,10 +722,10 @@ footer:hover .footer-mark{opacity:1;transform:translateY(-1px);}
       <div class="feature-sub">Cloud Composer · Dataproc Serverless · GCS lakehouse · BigQuery · TheSportsDB API</div>
       <p class="feature-desc">A cloud-native ELT pipeline built for a global sports analytics scenario, shipped on real Google Cloud Platform infrastructure. Cloud Composer 2 orchestrates a 14-task DAG with parallel fan-out and a Silver quality gate. Dataproc Serverless runs the PySpark medallion transformations without any cluster to manage. Bronze raw NDJSON stays in a GCS lakehouse; Silver and Gold materialize as BigQuery external tables with explicit SchemaField declarations replacing autodetect. Real production deployment: 11m 53s optimized runtime, 84% reduction after debugging a Dataproc machine-type provisioning issue, real GCP spend within the free trial.</p>
       <div class="arch">
-        <div class="arch-step"><div class="arch-num">☁️</div><div class="arch-name">Composer</div><div class="arch-desc">Managed Airflow, 14-task DAG</div></div>
-        <div class="arch-step"><div class="arch-num">⚡</div><div class="arch-name">Dataproc</div><div class="arch-desc">Serverless PySpark, zero clusters</div></div>
-        <div class="arch-step"><div class="arch-num">🪣</div><div class="arch-name">GCS</div><div class="arch-desc">Lakehouse Bronze + Silver/Gold</div></div>
-        <div class="arch-step"><div class="arch-num">📊</div><div class="arch-name">BigQuery</div><div class="arch-desc">6 external tables, explicit schemas</div></div>
+        <div class="arch-step"><div class="arch-num">01</div><div class="arch-name">Composer</div><div class="arch-desc">Managed Airflow, 14-task DAG</div></div>
+        <div class="arch-step"><div class="arch-num">02</div><div class="arch-name">Dataproc</div><div class="arch-desc">Serverless PySpark, zero clusters</div></div>
+        <div class="arch-step"><div class="arch-num">03</div><div class="arch-name">GCS</div><div class="arch-desc">Lakehouse Bronze + Silver/Gold</div></div>
+        <div class="arch-step"><div class="arch-num">04</div><div class="arch-name">BigQuery</div><div class="arch-desc">6 external tables, explicit schemas</div></div>
       </div>
       <a href="wfi.html" class="card-link">View full case study<span class="card-link-arrow">→</span></a>
     </div>
@@ -700,10 +734,10 @@ footer:hover .footer-mark{opacity:1;transform:translateY(-1px);}
       <div class="feature-sub">Docker Compose · Apache Airflow · PySpark · PostgreSQL · 3-table Gold</div>
       <p class="feature-desc">A containerised on-premise data platform built for a multinational retail scenario. Five Docker services (PostgreSQL, Spark, Airflow init/webserver/scheduler) brought up by one command. A PySpark medallion pipeline (Bronze partitioned Parquet to Silver joined frame to a three-table dimensional Gold layer) runs end-to-end in 3 minutes 11 seconds at stock scale. Airflow's parameterised DAG supports both scheduled stock runs (analytical truth) and on-demand scaled tests (architecture validation), demonstrated processing 7.5M rows through the pipeline at 2x scale.</p>
       <div class="arch">
-        <div class="arch-step"><div class="arch-num">🐳</div><div class="arch-name">Docker</div><div class="arch-desc">5-service stack, one command</div></div>
-        <div class="arch-step"><div class="arch-num">🔁</div><div class="arch-name">Airflow</div><div class="arch-desc">Parameterised DAG, sidecar Spark</div></div>
-        <div class="arch-step"><div class="arch-num">⚡</div><div class="arch-name">PySpark</div><div class="arch-desc">Partition, broadcast, cache</div></div>
-        <div class="arch-step"><div class="arch-num">📦</div><div class="arch-name">Postgres</div><div class="arch-desc">3 tables, row-count validated</div></div>
+        <div class="arch-step"><div class="arch-num">01</div><div class="arch-name">Docker</div><div class="arch-desc">5-service stack, one command</div></div>
+        <div class="arch-step"><div class="arch-num">02</div><div class="arch-name">Airflow</div><div class="arch-desc">Parameterised DAG, sidecar Spark</div></div>
+        <div class="arch-step"><div class="arch-num">03</div><div class="arch-name">PySpark</div><div class="arch-desc">Partition, broadcast, cache</div></div>
+        <div class="arch-step"><div class="arch-num">04</div><div class="arch-name">Postgres</div><div class="arch-desc">3 tables, row-count validated</div></div>
       </div>
       <a href="nova_retail.html" class="card-link">View full case study<span class="card-link-arrow">→</span></a>
     </div>
@@ -725,10 +759,10 @@ footer:hover .footer-mark{opacity:1;transform:translateY(-1px);}
       <div class="feature-sub">UK Carbon Intensity API · aiohttp async · PySpark · PostgreSQL</div>
       <p class="feature-desc">A three-stage pipeline built for a UK grid decarbonization research scenario. Async aiohttp pulls 1,095 days of regional carbon intensity from a live government API into a Bronze data lake, with semaphore-bounded concurrency and exponential-backoff retry. PySpark explodes deeply nested JSON and pivots fuel types across Silver and Gold layers. A two-stage dedup-merge lands the result in PostgreSQL with composite-key idempotency. 8.7M intermediate rows down to 19,728 daily research metrics.</p>
       <div class="arch">
-        <div class="arch-step"><div class="arch-num">🥉</div><div class="arch-name">Bronze</div><div class="arch-desc">Async aiohttp, retry + backoff</div></div>
-        <div class="arch-step"><div class="arch-num">🥈</div><div class="arch-name">Silver</div><div class="arch-desc">Explode + pivot, Parquet append</div></div>
-        <div class="arch-step"><div class="arch-num">🥇</div><div class="arch-name">Gold</div><div class="arch-desc">Daily aggregate, full rebuild</div></div>
-        <div class="arch-step"><div class="arch-num">📦</div><div class="arch-name">Load</div><div class="arch-desc">Two-stage dedup-merge</div></div>
+        <div class="arch-step"><div class="arch-num">01</div><div class="arch-name">Bronze</div><div class="arch-desc">Async aiohttp, retry + backoff</div></div>
+        <div class="arch-step"><div class="arch-num">02</div><div class="arch-name">Silver</div><div class="arch-desc">Explode + pivot, Parquet append</div></div>
+        <div class="arch-step"><div class="arch-num">03</div><div class="arch-name">Gold</div><div class="arch-desc">Daily aggregate, full rebuild</div></div>
+        <div class="arch-step"><div class="arch-num">04</div><div class="arch-name">Load</div><div class="arch-desc">Two-stage dedup-merge</div></div>
       </div>
       <a href="xtd_research_labs.html" class="card-link">View full case study<span class="card-link-arrow">→</span></a>
     </div>
