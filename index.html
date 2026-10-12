@@ -165,8 +165,16 @@ body{transition:background-color .3s var(--ez),color .3s var(--ez);}
   .theme-toggle svg{width:13px;height:13px;}
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav) + 1rem);overflow-x:hidden;}
-body{font-family:var(--fb);background:var(--bg);color:var(--h2);line-height:1.6;letter-spacing:-.005em;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden;}
+/* No overflow-x here (or on body) on purpose: any non-visible overflow
+   on html/body stops body's overflow from propagating to the viewport
+   per the CSS spec's special html/body case, and body (now a literal
+   scroll container of its own) becomes the containing block every
+   position:sticky element in the page resolves against instead of the
+   viewport — which silently breaks sticky anywhere on the page, not
+   just wherever the overflow was meant to guard against. .page-main's
+   own overflow-x:clip below guards its horizontal bleed instead. */
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav) + 1rem);overflow-x:clip;}
+body{font-family:var(--fb);background:var(--bg);color:var(--h2);line-height:1.6;letter-spacing:-.005em;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:clip;}
 
 /* ── NAV ──────────────────────────────────────────────── */
 nav{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--nav);background:var(--bg-nav);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--bdr);display:flex;align-items:center;justify-content:space-between;padding:0 clamp(1rem,4vw,2.5rem);transition:background .3s,border-color .3s;gap:1rem;will-change:background;}
@@ -187,7 +195,46 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--nav);background
 @media(max-width:760px){.nav-links{justify-content:flex-start;}.nav-links a{font-size:.74rem;padding:.35rem .65rem;}}
 
 /* ── LAYOUT ───────────────────────────────────────────── */
-.page{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:0 clamp(1rem,4vw,2.5rem);padding-top:var(--nav);overflow-x:clip;}
+.page{position:relative;z-index:1;max-width:1100px;margin:0 auto;}
+/* overflow-x:clip lives here, not on .page — any overflow value but
+   visible on .page would hijack the sticky containing-block search
+   for .page-rail's sticky child below, breaking it the moment .page
+   itself doesn't independently scroll (it never does; the document
+   does). Scoped to .page-main instead, where the decorative bleed it
+   was guarding against (ghost section numerals, the hero dot-grid)
+   actually lives. */
+.page-main{padding:0 clamp(1rem,4vw,2.5rem);padding-top:var(--nav);min-width:0;overflow-x:clip;}
+/* Below this, the page is one centered reading column, same as it
+   always was. Above it, a real desktop viewport has hundreds of
+   spare pixels either side of that column doing nothing — so instead
+   of just centering a mobile-width column in open space, a sticky
+   section index fills the left margin with something a document
+   this size actually benefits from: a running table of contents. */
+@media(min-width:1180px){
+  .page{display:grid;grid-template-columns:200px minmax(0,1fr);column-gap:3.5rem;max-width:1520px;}
+  .page-rail{display:block !important;}
+}
+/* Split in two deliberately: .page-rail is the full-height grid cell
+   (it has to span the whole row for the sticky child below to have
+   room to stick within — align-items:stretch, the grid default, is
+   what makes that happen) while .rail-inner is the actual sticky,
+   content-sized element pinned near the top of it. Sticky on
+   .page-rail itself doesn't work: with align-items:start it has no
+   extra height to stick within, and with the default stretch its own
+   box IS the full height, which repositioning it can't fix either way
+   — only a shorter element nested inside a tall one can stick. */
+.page-rail{display:none;}
+.rail-inner{position:sticky;top:calc(var(--nav) + 2.5rem);display:flex;flex-direction:column;gap:0;}
+.rail-inner::before{content:'';position:absolute;left:5px;top:10px;bottom:10px;width:1px;background:linear-gradient(to bottom,var(--bdr),var(--bdr) 85%,transparent);}
+.rail-link{display:flex;align-items:baseline;gap:.65rem;padding:.55rem 0 .55rem .95rem;position:relative;text-decoration:none;color:var(--h3);transition:color .18s var(--ez);}
+.rail-link::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:11px;height:11px;border-radius:50%;background:var(--bg);border:1.5px solid var(--bdr);transition:border-color .2s var(--ez),background .2s var(--ez);}
+.rail-num{font-family:var(--fm);font-size:.64rem;letter-spacing:.04em;color:var(--h3);flex-shrink:0;transition:color .18s var(--ez);}
+.rail-label{font-family:var(--fm);font-size:.7rem;letter-spacing:.02em;line-height:1.3;}
+.rail-link:hover{color:var(--h1);}
+.rail-link:hover::before{border-color:var(--acc);}
+.rail-link.active{color:var(--acc);}
+.rail-link.active .rail-num{color:var(--acc);}
+.rail-link.active::before{background:var(--acc);border-color:var(--acc);box-shadow:0 0 0 3px var(--acc-s);}
 section{padding:5.5rem 0;position:relative;}
 .sec-alt{background:var(--bg-alt);margin-left:calc(-1 * clamp(1rem,4vw,2.5rem));margin-right:calc(-1 * clamp(1rem,4vw,2.5rem));padding:5.5rem clamp(1rem,4vw,2.5rem);}
 .sec-num{position:absolute;top:1.5rem;left:0;font-family:var(--fm);font-size:.66rem;font-weight:500;line-height:1;pointer-events:none;user-select:none;letter-spacing:.1em;color:var(--h3);padding:.3rem .55rem;border:1px solid var(--bdr);border-radius:2px;background:var(--bg-surf);z-index:0;}
@@ -544,6 +591,18 @@ footer:hover .footer-mark{opacity:1;transform:translateY(-1px);}
 </nav>
 
 <div class="page">
+  <aside class="page-rail" aria-label="Section index">
+    <div class="rail-inner">
+      <a class="rail-link" href="#featured-case-study"><span class="rail-num">01</span><span class="rail-label">Case Study</span></a>
+      <a class="rail-link" href="#projects"><span class="rail-num">02</span><span class="rail-label">Projects</span></a>
+      <a class="rail-link" href="#tech-stack"><span class="rail-num">03</span><span class="rail-label">Stack</span></a>
+      <a class="rail-link" href="#experience"><span class="rail-num">04</span><span class="rail-label">Experience</span></a>
+      <a class="rail-link" href="#principles-teaser"><span class="rail-num">05</span><span class="rail-label">Principles</span></a>
+      <a class="rail-link" href="#certifications"><span class="rail-num">06</span><span class="rail-label">Certs</span></a>
+      <a class="rail-link" href="#cv"><span class="rail-num">07</span><span class="rail-label">CV</span></a>
+    </div>
+  </aside>
+  <div class="page-main">
 
   <!-- HERO -->
   <section id="hero">
@@ -1036,6 +1095,7 @@ footer:hover .footer-mark{opacity:1;transform:translateY(-1px);}
     </div>
   </section>
 
+  </div>
 </div>
 
 <!-- CONTACT -->
@@ -1173,16 +1233,22 @@ footer:hover .footer-mark{opacity:1;transform:translateY(-1px);}
   document.querySelectorAll('.fade-up').forEach(el=>io.observe(el));
 })();
 
-/* active nav link based on section in view */
+/* active nav + rail link based on section in view */
 (function(){
   const sections=document.querySelectorAll('section[id]');
-  const links=document.querySelectorAll('.nav-links a');
+  const links=document.querySelectorAll('.nav-links a, .rail-link');
   const map=new Map();
-  links.forEach(a=>{const href=a.getAttribute('href');if(href&&href.startsWith('#'))map.set(href.slice(1),a);});
+  links.forEach(a=>{
+    const href=a.getAttribute('href');
+    if(!href||!href.startsWith('#'))return;
+    const id=href.slice(1);
+    if(!map.has(id))map.set(id,[]);
+    map.get(id).push(a);
+  });
   const io=new IntersectionObserver(entries=>{
     entries.forEach(e=>{
-      const link=map.get(e.target.id);if(!link)return;
-      if(e.isIntersecting){links.forEach(l=>l.classList.remove('active'));link.classList.add('active');}
+      const active=map.get(e.target.id);if(!active)return;
+      if(e.isIntersecting){links.forEach(l=>l.classList.remove('active'));active.forEach(l=>l.classList.add('active'));}
     });
   },{rootMargin:'-40% 0px -55% 0px',threshold:0});
   sections.forEach(s=>io.observe(s));
