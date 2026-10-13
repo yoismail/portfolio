@@ -96,7 +96,7 @@
   ],
   "isPartOf": {
     "@type": "WebSite",
-    "name": "Yomi Ismail — Portfolio",
+    "name": "Yomi Ismail | Portfolio",
     "url": "https://yoismail.github.io/portfolio/"
   }
 }
@@ -2368,7 +2368,7 @@ silver_df = silver_df.cache()</pre>
 
     loaded = check_df.count()
     <span class="keyword">if</span> loaded == row_count:
-        logging.info(<span class="string">"✅ Validation OK — row count matches"</span>)
+        logging.info(<span class="string">"✅ Validation OK: row count matches"</span>)
     <span class="keyword">else</span>:
         logging.warning(<span class="string">f"⚠️ Mismatch! Source: {row_count} | DB: {loaded}"</span>)</pre>
       </div>
@@ -2406,12 +2406,12 @@ silver_df = silver_df.cache()</pre>
 2026-06-08 13:59:14 INFO Sales by Month + State created: <span class="num">565</span> groups
 
 2026-06-08 13:59:14 INFO 🔷 STEP 5: LOAD TO POSTGRESQL
-2026-06-08 13:59:43 INFO ✅ Load successful → retail_gold.fact_sales — <span class="num">118,431</span> rows
-2026-06-08 13:59:43 INFO ✅ Validation OK — row count matches
-2026-06-08 13:59:53 INFO ✅ Load successful → retail_gold.sales_summary — <span class="num">1,394</span> rows
-2026-06-08 13:59:53 INFO ✅ Validation OK — row count matches
-2026-06-08 14:00:05 INFO ✅ Load successful → retail_gold.sales_by_month_state — <span class="num">565</span> rows
-2026-06-08 14:00:05 INFO ✅ Validation OK — row count matches
+2026-06-08 13:59:43 INFO ✅ Load successful → retail_gold.fact_sales: <span class="num">118,431</span> rows
+2026-06-08 13:59:43 INFO ✅ Validation OK: row count matches
+2026-06-08 13:59:53 INFO ✅ Load successful → retail_gold.sales_summary: <span class="num">1,394</span> rows
+2026-06-08 13:59:53 INFO ✅ Validation OK: row count matches
+2026-06-08 14:00:05 INFO ✅ Load successful → retail_gold.sales_by_month_state: <span class="num">565</span> rows
+2026-06-08 14:00:05 INFO ✅ Validation OK: row count matches
 
 2026-06-08 14:00:06 INFO ✅✅✅ PIPELINE COMPLETED ✅✅✅
 2026-06-08 14:00:07 INFO ⏱️ Step completed in <span class="num">3m 11s</span></pre>

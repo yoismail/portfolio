@@ -52,7 +52,7 @@
 {
   "@context": "https://schema.org",
   "@type": ["TechArticle", "CreativeWork"],
-  "name": "FibbieBanks — 1M-Row PySpark ETL & Star Schema Warehouse",
+  "name": "FibbieBanks: 1M-Row PySpark ETL & Star Schema Warehouse",
   "headline": "Distributed PySpark pipeline processing 1 million synthetic banking transactions into a PostgreSQL star schema warehouse with deterministic SHA-256 surrogate keys and idempotent re-runs",
   "url": "https://yoismail.github.io/portfolio/fibbiebanks.html",
   "datePublished": "2026-05-17",
@@ -92,7 +92,7 @@
   ],
   "isPartOf": {
     "@type": "WebSite",
-    "name": "Yomi Ismail — Portfolio",
+    "name": "Yomi Ismail | Portfolio",
     "url": "https://yoismail.github.io/portfolio/"
   }
 }
@@ -1918,7 +1918,7 @@
       <div class="cs-meta">~8 min read · Updated May 2026</div>
       <div class="kicker">Case Study · Featured · Distributed ETL</div>
 
-      <h1 class="cs-title">FibbieBanks — <span class="hi">PySpark ETL pipeline</span><br />&amp; star schema warehouse
+      <h1 class="cs-title">FibbieBanks: <span class="hi">PySpark ETL pipeline</span><br />&amp; star schema warehouse
       </h1>
 
       <p class="cs-lede">
@@ -2076,7 +2076,7 @@
         <pre><span class="keyword">def</span> <span class="fn">main</span>():
     df_cleaned, spark = <span class="fn">clean_main</span>()
 
-    <span class="comment"># Build the date dimension first — others depend on it</span>
+    <span class="comment"># Build the date dimension first, others depend on it</span>
     dim_date_df = <span class="fn">dim_date</span>(df_cleaned)
 
     <span class="comment"># Build the surrogate-keyed dimensions in parallel</span>
@@ -2271,15 +2271,15 @@
 2026-05-17 15:47:31 INFO ✅ dim_date table created.
 2026-05-17 15:47:31 INFO 🔷 Creating dim_transaction table
 2026-05-17 15:47:31 INFO ✅ Schema validation passed.
-2026-05-17 15:47:36 INFO ✅ dim_transaction table created — amount is NUMERIC.
+2026-05-17 15:47:36 INFO ✅ dim_transaction table created, amount is NUMERIC.
 2026-05-17 15:47:36 INFO ⏱️ Step completed in <span class="num">2m 6s</span>
-2026-05-17 15:47:42 INFO 🔷 Loading dimension &amp; fact tables — INCREMENTAL MODE
-2026-05-17 15:47:54 INFO ℹ️ <span class="self">No new rows to insert</span> — analytics.dim_date is already up to date
-2026-05-17 15:48:44 INFO ℹ️ <span class="self">No new rows to insert</span> — analytics.dim_customer is already up to date
-2026-05-17 15:49:50 INFO ℹ️ <span class="self">No new rows to insert</span> — analytics.dim_transaction is already up to date
-2026-05-17 15:50:26 INFO ℹ️ <span class="self">No new rows to insert</span> — analytics.dim_employee is already up to date
-2026-05-17 15:54:26 INFO ℹ️ <span class="self">No new rows to insert</span> — analytics.fact_transactions is already up to date
-2026-05-17 15:54:27 INFO 🎉 ALL TABLES LOADED SUCCESSFULLY — ONLY NEW DATA APPENDED</pre>
+2026-05-17 15:47:42 INFO 🔷 Loading dimension &amp; fact tables (INCREMENTAL MODE)
+2026-05-17 15:47:54 INFO ℹ️ <span class="self">No new rows to insert</span>: analytics.dim_date is already up to date
+2026-05-17 15:48:44 INFO ℹ️ <span class="self">No new rows to insert</span>: analytics.dim_customer is already up to date
+2026-05-17 15:49:50 INFO ℹ️ <span class="self">No new rows to insert</span>: analytics.dim_transaction is already up to date
+2026-05-17 15:50:26 INFO ℹ️ <span class="self">No new rows to insert</span>: analytics.dim_employee is already up to date
+2026-05-17 15:54:26 INFO ℹ️ <span class="self">No new rows to insert</span>: analytics.fact_transactions is already up to date
+2026-05-17 15:54:27 INFO 🎉 ALL TABLES LOADED SUCCESSFULLY (ONLY NEW DATA APPENDED)</pre>
       </div>
 
       <p class="sec-p" style="margin-top:1rem;">
@@ -2512,7 +2512,7 @@
       <div class="read-next-grid">
         <a href="payflow.html" class="read-next-card">
           <div class="read-next-label">Case study · End-to-end ETL</div>
-          <div class="read-next-title">PayFlow — ETL &amp; Warehouse</div>
+          <div class="read-next-title">PayFlow ETL &amp; Warehouse</div>
           <p class="read-next-desc">A production-style ETL pipeline that loads 9 raw Brazilian e-commerce CSVs into a
             full PostgreSQL star schema, with idempotent loads and structured logging.</p>
           <div class="read-next-tags">
