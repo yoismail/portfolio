@@ -33,7 +33,7 @@
     <meta property="og:type" content="article" />
     <meta property="og:title" content="CareSync | Quality-Gated ELT for Weekly Clinic Data" />
     <meta property="og:description"
-        content="A quality-gated ELT platform: Google Drive file sensing with SLA monitoring, pandas pre-validation with quarantine and cascade-skip, idempotent Snowflake loads, a dbt star schema, and a post-validation business-reconciliation gate. Real run: ~107K rows, 12 models, 51 passing checks, under 3 minutes. By Yomi Ismail, Data Engineer." />
+        content="A quality-gated ELT platform: Google Drive file sensing with SLA monitoring, pandas pre-validation with quarantine and cascade-skip, idempotent Snowflake loads, a dbt star schema, and a post-validation business-reconciliation gate. Real run: ~107K rows, 12 models, 53 passing checks, under 3 minutes. By Yomi Ismail, Data Engineer." />
     <meta property="og:image" content="svg/og-caresync.svg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -2210,8 +2210,8 @@
                 files into Snowflake with idempotent, content-hashed writes, transforms them with dbt into a
                 single-fact star schema, and runs a post-validation gate that verifies the reporting layer actually
                 reconciles. Files that fail validation are quarantined and their dependent datasets are skipped
-                automatically via the FK dependency graph, not failed outright — stakeholders get a Slack and email
-                alert either way. All data is synthetic, generated with Synthea.
+                automatically via the FK dependency graph, not failed outright, and stakeholders get a Slack and
+                email alert either way. All data is synthetic, generated with Synthea.
             </p>
 
             <div class="meta-row">
@@ -2233,8 +2233,8 @@
                     <div class="stat-label">dbt models · 6 staging, 4 dims, 2 facts</div>
                 </div>
                 <div class="stat-cell">
-                    <div class="stat-num">51</div>
-                    <div class="stat-label">passing checks · 36 dbt tests + 15 post-val</div>
+                    <div class="stat-num">53</div>
+                    <div class="stat-label">passing checks · 38 dbt tests + 15 post-val</div>
                 </div>
                 <div class="stat-cell">
                     <div class="stat-num">1h</div>
@@ -2272,7 +2272,7 @@
         <!-- ───── 01 · THE PROBLEM ───── -->
         <section id="problem" class="fade-up sec-alt">
             <div class="sec-kicker"><span class="sec-num">01</span> The Problem</div>
-            <h2 class="sec-h">A third-party agent drops six CSVs into Drive — on nobody's schedule but theirs</h2>
+            <h2 class="sec-h">A third-party agent drops six CSVs into Drive, on nobody's schedule but theirs</h2>
 
             <p class="sec-p">
                 Nexora's partner clinics don't deliver data directly. A third-party data aggregation agent
@@ -2287,8 +2287,8 @@
                 condition they arrive in. Delivery times drift, export formats change when clinic systems are
                 upgraded, and files can arrive truncated or malformed. The brief was to deliver trustworthy weekly
                 reporting by ensuring that only validated data enters the warehouse, only verified data reaches
-                stakeholders, and every quality event — a late file, a rejected file, a failed business check, or a
-                successful run — is communicated automatically. Because this project is intended for development and
+                stakeholders, and every quality event (a late file, a rejected file, a failed business check, or a
+                successful run) is communicated automatically. Because this project is intended for development and
                 testing, Nexora uses synthetic healthcare data generated with Synthea, an open-source synthetic
                 patient generator, giving realistic records with no exposure of real patient information.
             </p>
@@ -2304,7 +2304,7 @@
                     whether the warehouse the business actually queries is correct. The project is also deliberately
                     staged in two tooling phases: everything is first built and proven with pandas validation
                     orchestrated by GitHub Actions, then productionized by replacing every pandas check with Great
-                    Expectations suites and replacing GitHub Actions with Airflow — prove the logic is right cheaply,
+                    Expectations suites and replacing GitHub Actions with Airflow: prove the logic is right cheaply,
                     then move it onto industrial-grade tooling without redesigning the pipeline shape.
                 </p>
             </div>
@@ -2328,8 +2328,8 @@
             </p>
 
             <p class="sec-p">
-                The six source files have real foreign-key dependencies on each other — an encounter references a
-                patient, organization, provider, and payer; a condition references an encounter and a patient — so
+                The six source files have real foreign-key dependencies on each other: an encounter references a
+                patient, organization, provider, and payer, and a condition references an encounter and a patient, so
                 the loader processes them in strict dependency order and propagates failures downstream
                 automatically: if a file fails validation, everything that depends on it is skipped, not failed,
                 while everything unaffected still loads.
@@ -2365,7 +2365,7 @@
                 <div class="arch-layer">
                     <div class="arch-layer-label">TRANSFORM · NEXORA_STAGING → NEXORA_PROD</div>
                     <div class="arch-node acc"><strong>dbt_runner.py</strong><span>6 staging models → 4 dims + 2
-                            facts · 24 dbt tests</span></div>
+                            facts · 38 dbt tests</span></div>
                 </div>
                 <div class="arch-arrow">↓ safety net</div>
                 <div class="arch-layer">
@@ -2395,7 +2395,7 @@
                     <code>sensor.py</code>'s docstring says it plainly: "DESIGNED FOR SWAPABILITY: All file-source
                     logic is isolated. To swap → SFTP: replace ONLY the file-listing/timestamp section. SLA checks,
                     reporting, alerts, and pipeline flow → ZERO changes." The Drive-specific code lives entirely
-                    behind two functions, <code>fetch_source_files()</code> and <code>download_file()</code> — a
+                    behind two functions, <code>fetch_source_files()</code> and <code>download_file()</code>: a
                     genuine interface boundary, not just a comment promising one. If Nexora's third-party agent ever
                     moves from Google Drive to SFTP, only those two functions change.
                 </p>
@@ -2409,7 +2409,7 @@
 
             <p class="sec-p">
                 <code>NEXORA_RAW.HL7</code> holds six tables defined by explicit DDL, not inferred from the CSV
-                headers — the loader's <code>COPY INTO</code> maps file columns positionally into whatever columns
+                headers: the loader's <code>COPY INTO</code> maps file columns positionally into whatever columns
                 the DDL already declares, plus four tracking columns (<code>SOURCE_FILE</code>,
                 <code>BATCH_ID</code>, <code>FILE_HASH</code>, <code>LOADED_AT</code>) added automatically if they
                 don't already exist. dbt then builds a staging layer in <code>NEXORA_STAGING</code> that drops or
@@ -2447,7 +2447,7 @@ NEXORA_PROD.DBT_YISMAIL_HL7_HL7         (dbt marts · single-fact-grain star sch
             <p class="sec-p">
                 The RAW→staging boundary is where privacy enforcement actually happens: <code>SSN</code>,
                 <code>DRIVERS</code>, <code>PASSPORT</code>, <code>FIRST</code>, <code>LAST</code>,
-                <code>MAIDEN</code>, and full street address never reach <code>stg_hl7__patients</code> at all — the
+                <code>MAIDEN</code>, and full street address never reach <code>stg_hl7__patients</code> at all: the
                 staging model only selects the columns it needs, PHI columns are excluded by omission rather than
                 deleted downstream. What stands in for a name is an initials-only <code>patient_masked_name</code>
                 (e.g. <code>J.S.</code>), never a full surname.
@@ -2518,7 +2518,7 @@ NEXORA_PROD.DBT_YISMAIL_HL7_HL7         (dbt marts · single-fact-grain star sch
             <h2 class="sec-h">SLA classification, content-hash idempotency, and cascade-skip</h2>
 
             <p class="sec-p">
-                The sensor doesn't just check whether a file exists — it classifies arrival time against the SLA
+                The sensor doesn't just check whether a file exists: it classifies arrival time against the SLA
                 window on both ends. A file that shows up <em>before</em> the scheduled drop is just as suspect as
                 one that's late: both get quarantined from the current run rather than silently accepted, with a
                 dedicated Slack/email alert either way.
@@ -2543,7 +2543,7 @@ NEXORA_PROD.DBT_YISMAIL_HL7_HL7         (dbt marts · single-fact-grain star sch
             <p class="sec-p">
                 The loader never truncates. Every file gets a SHA-256 hash of its filename plus its full byte
                 content; before inserting, it checks whether that exact hash has already been loaded. Re-running the
-                same week's file — intentionally or by a retriggered job — is a no-op, not a duplicate.
+                same week's file, intentionally or by a retriggered job, is a no-op, not a duplicate.
             </p>
 
             <div class="code-block">
@@ -2560,12 +2560,12 @@ NEXORA_PROD.DBT_YISMAIL_HL7_HL7         (dbt marts · single-fact-grain star sch
 cur.<span class="fn">execute</span>(<span class="string">f"SELECT COUNT(*) FROM {full_table} WHERE FILE_HASH = %s"</span>, (file_hash,))
 <span class="keyword">if</span> cur.<span class="fn">fetchone</span>()[<span class="num">0</span>] &gt; <span class="num">0</span>:
     logging.<span class="fn">info</span>(<span class="string">f"SKIP - {filename} already loaded"</span>)
-    <span class="keyword">return</span> <span class="num">0</span>  <span class="comment"># FRESH, not LOADED — same content, no new rows</span></pre>
+    <span class="keyword">return</span> <span class="num">0</span>  <span class="comment"># FRESH, not LOADED: same content, no new rows</span></pre>
             </div>
 
             <p class="sec-p">
-                If one file in the dependency graph fails pre-validation, everything downstream of it is skipped —
-                not failed, not silently processed with bad data — and the reason is traceable back to exactly which
+                If one file in the dependency graph fails pre-validation, everything downstream of it is skipped,
+                not failed, not silently processed with bad data, and the reason is traceable back to exactly which
                 upstream file caused it.
             </p>
 
@@ -2586,7 +2586,7 @@ skipped_deps = [dep <span class="keyword">for</span> dep <span class="keyword">i
             <p class="sec-p">
                 Post-validation runs after dbt succeeds, and checks something dbt's own tests can't: not just "did
                 the models build" but "does the finished warehouse actually reconcile." Three business-level queries
-                run independently of dbt's generic tests — staging-to-fact row count parity, no future-dated
+                run independently of dbt's generic tests: staging-to-fact row count parity, no future-dated
                 encounters, and patient count consistency across staging and dim layers.
             </p>
 
@@ -2614,7 +2614,7 @@ skipped_deps = [dep <span class="keyword">for</span> dep <span class="keyword">i
                     <div class="dec-num">01</div>
                     <h3 class="dec-h">Quarantine + cascade-skip over fail-fast</h3>
                     <p>A naive pipeline would abort the whole run if any one file failed validation. Instead, a
-                        failing file is quarantined and only its dependents (via the real FK graph) are skipped —
+                        failing file is quarantined and only its dependents (via the real FK graph) are skipped;
                         everything unaffected still loads. Tradeoff: more orchestration logic to track what depends
                         on what. Gain: a bad <code>payers.csv</code> export doesn't block <code>organizations</code>
                         from loading, and stakeholders see exactly which downstream datasets were affected and why.
@@ -2626,8 +2626,8 @@ skipped_deps = [dep <span class="keyword">for</span> dep <span class="keyword">i
                     <h3 class="dec-h">Idempotent loads via content hash, not TRUNCATE</h3>
                     <p>The loader never truncates the RAW tables. Every file gets a SHA-256 hash of its filename plus
                         full byte content, checked against <code>FILE_HASH</code> before inserting. Tradeoff: extra
-                        hashing and a lookup query on every load. Gain: re-running the same week's file — by accident
-                        or by a retriggered CI job — is a safe no-op (<code>FRESH</code>, not <code>LOADED</code>),
+                        hashing and a lookup query on every load. Gain: re-running the same week's file, by accident
+                        or by a retriggered CI job, is a safe no-op (<code>FRESH</code>, not <code>LOADED</code>),
                         never a duplicate row.</p>
                 </div>
 
@@ -2644,8 +2644,8 @@ skipped_deps = [dep <span class="keyword">for</span> dep <span class="keyword">i
                     <div class="dec-num">04</div>
                     <h3 class="dec-h">A genuinely swappable source interface</h3>
                     <p>The Google Drive-specific code lives entirely behind <code>fetch_source_files()</code> and
-                        <code>download_file()</code> in <code>sensor.py</code>, with everything else — SLA logic,
-                        validation, loading, dbt, notifications — built against that interface, not against Drive
+                        <code>download_file()</code> in <code>sensor.py</code>, with everything else (SLA logic,
+                        validation, loading, dbt, notifications) built against that interface, not against Drive
                         directly. Tradeoff: a thin abstraction layer even though only one source exists today. Gain:
                         when the third-party agent moves to SFTP, only two functions change.</p>
                 </div>
@@ -2655,7 +2655,7 @@ skipped_deps = [dep <span class="keyword">for</span> dep <span class="keyword">i
                     <h3 class="dec-h">PHI minimized at the staging boundary, not downstream</h3>
                     <p><code>SSN</code>, <code>DRIVERS</code>, <code>PASSPORT</code>, <code>FIRST</code>,
                         <code>LAST</code>, and <code>MAIDEN</code> are excluded by omission in
-                        <code>stg_hl7__patients</code> — they simply aren't selected — rather than loaded and
+                        <code>stg_hl7__patients</code> (they simply aren't selected) rather than loaded and
                         filtered out later in the marts layer. Tradeoff: if a future report genuinely needs a PHI
                         field, it has to be deliberately re-added at the boundary, not quietly already present.
                         Gain: PHI has nowhere downstream to leak from, by construction.</p>
@@ -2692,7 +2692,7 @@ skipped_deps = [dep <span class="keyword">for</span> dep <span class="keyword">i
 
             <p class="sec-p">
                 The pipeline runs end-to-end in under 3 minutes against real Snowflake infrastructure. Every stage
-                logs structured timestamps, and the full run — sensor through final notification — is captured
+                logs structured timestamps, and the full run (sensor through final notification) is captured
                 below from an actual run on October 18, 2026.
             </p>
 
@@ -2709,12 +2709,12 @@ skipped_deps = [dep <span class="keyword">for</span> dep <span class="keyword">i
                     <div class="runtime-label">Pre-validate + load to NEXORA_RAW (6 files, strict order)</div>
                     <div class="runtime-val">~85s</div>
                     <div class="runtime-note">1,127 + 10 + 5,056 + 1,163 + 61,459 + 38,094 rows validated and loaded
-                        one file at a time, in FK dependency order — organizations/payers/providers first, patients
+                        one file at a time, in FK dependency order: organizations/payers/providers first, patients
                         next, encounters and conditions last.</div>
                 </div>
 
                 <div class="runtime-row">
-                    <div class="runtime-label">dbt build (12 models, 24 dbt tests)</div>
+                    <div class="runtime-label">dbt build (12 models, 36 dbt tests)</div>
                     <div class="runtime-val">~31s</div>
                     <div class="runtime-note">6 staging models build and test in parallel (6 threads), then 4
                         dimensions + 2 facts build on top. dbt's own reported model+test execution time was 12.29s;
@@ -2722,7 +2722,7 @@ skipped_deps = [dep <span class="keyword">for</span> dep <span class="keyword">i
                 </div>
 
                 <div class="runtime-row acc">
-                    <div class="runtime-label">Post-validation (11 table checks + 3 reconciliation queries)</div>
+                    <div class="runtime-label">Post-validation (12 table checks + 3 reconciliation queries)</div>
                     <div class="runtime-val">~43s</div>
                     <div class="runtime-note">Independent Snowflake connection per check, verifying every staging
                         and mart table is populated and that staging-to-fact counts, future-date, and patient-count
@@ -2744,20 +2744,21 @@ skipped_deps = [dep <span class="keyword">for</span> dep <span class="keyword">i
 
             <p class="sec-p">
                 All 6 files arrived on time and passed pre-validation. All 6 loaded to <code>NEXORA_RAW</code> with
-                their exact source row counts. dbt built all 12 models and ran all 24 generic tests — PK
+                their exact source row counts. dbt built all 12 models and ran all 36 generic tests: PK
                 uniqueness and not-null on every dimension and fact, relationship tests across every FK in the star
-                schema, an <code>accepted_values</code> test on <code>encounter_class</code> — without a single
+                schema, an <code>accepted_values</code> test on <code>encounter_class</code>, all without a single
                 failure. Post-validation then independently re-verified table population and all three business
                 reconciliation checks, and the unified run report went out over both Slack and email within seconds
-                of the pipeline finishing.
+                of the pipeline finishing. The marts layer has since picked up more PK/FK coverage and a singular
+                grain test for <code>fct_conditions</code>, bringing the current suite to 38 dbt tests.
             </p>
 
             <div class="callout">
                 <div class="callout-label">On the two-stage roadmap</div>
                 <p>
-                    This run is Stage 1: pandas validation, GitHub Actions scheduling. Stage 2 — the same validation
+                    This run is Stage 1: pandas validation, GitHub Actions scheduling. Stage 2, the same validation
                     rules re-expressed as Great Expectations suites, the same orchestration re-expressed as an
-                    Airflow DAG — is the deliberate next step, not a hypothetical. The pipeline shape (sense →
+                    Airflow DAG, is the deliberate next step, not a hypothetical. The pipeline shape (sense →
                     validate → load → transform → verify → notify) and the swappable-interface discipline behind it
                     are designed so that swap changes tooling, not architecture.
                 </p>
@@ -2800,7 +2801,7 @@ skipped_deps = [dep <span class="keyword">for</span> dep <span class="keyword">i
                 </div>
                 <div class="tech-item">
                     <span class="tech-name">dbt-snowflake</span>
-                    <span class="tech-role">12 models · staging + marts · 24 generic tests</span>
+                    <span class="tech-role">12 models · staging + marts · 38 generic tests</span>
                 </div>
                 <div class="tech-item">
                     <span class="tech-name">dbt generic tests</span>
@@ -2835,7 +2836,7 @@ skipped_deps = [dep <span class="keyword">for</span> dep <span class="keyword">i
                 The honest next step is Stage 2 of the roadmap already designed into this pipeline:
                 <strong>Great Expectations</strong> replacing the hand-written pandas checks in pre-validation, and
                 an <strong>Airflow DAG</strong> replacing the GitHub Actions cron trigger for real dependency-aware
-                scheduling and retries — both slot into the same six-stage shape without a redesign. Beyond that:
+                scheduling and retries; both slot into the same six-stage shape without a redesign. Beyond that:
                 <strong>SCD Type 2</strong> on <code>dim_patients</code> so address and provider changes retain
                 history instead of being overwritten; <strong>incremental dbt models</strong> rather than full-table
                 rebuilds as source volume grows past synthetic-data scale; <strong>column-level encryption and
@@ -2855,11 +2856,11 @@ skipped_deps = [dep <span class="keyword">for</span> dep <span class="keyword">i
                     <h3 class="limit-h">No HIPAA compliance</h3>
                     <p>PHI is minimized by omission at the staging boundary and names are masked to initials, but
                         there's no column-level encryption, no query audit logging, and no formal access control
-                        layer. That's PHI-conscious design, not HIPAA compliance — worth naming as scope, not
+                        layer. That's PHI-conscious design, not HIPAA compliance: worth naming as scope, not
                         oversight, especially since the data is synthetic Synthea output anyway.</p>
                 </div>
                 <div class="limit-card">
-                    <h3 class="limit-h">Stage 1 only — no Great Expectations or Airflow yet</h3>
+                    <h3 class="limit-h">Stage 1 only: no Great Expectations or Airflow yet</h3>
                     <p>Validation is hand-written pandas checks and orchestration is a GitHub Actions cron trigger.
                         Both are deliberately designed to be swapped for Great Expectations and Airflow without
                         reshaping the pipeline, but that swap hasn't happened yet.</p>
@@ -2879,16 +2880,9 @@ skipped_deps = [dep <span class="keyword">for</span> dep <span class="keyword">i
                         updated load logic.</p>
                 </div>
                 <div class="limit-card">
-                    <h3 class="limit-h">Utilization thresholds are placeholder constants</h3>
-                    <p><code>dim_providers</code> and <code>dim_organizations</code> bucket utilization into
-                        tiers against fixed cutoffs rather than cutoffs derived from the actual distribution of
-                        encounter counts. Correct for a quick first pass; needs real percentile-based thresholds
-                        once there's a representative volume of encounters to bucket against.</p>
-                </div>
-                <div class="limit-card">
                     <h3 class="limit-h">No backfill tooling</h3>
                     <p>The pipeline expects one file set per week and quarantines what fails pre-validation. If a
-                        file is missed or quarantined, there's no automated reprocessing job — re-running means
+                        file is missed or quarantined, there's no automated reprocessing job: re-running means
                         manually re-uploading to the source folder for the next scheduled run to pick up.</p>
                 </div>
             </div>
