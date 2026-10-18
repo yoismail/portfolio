@@ -682,7 +682,7 @@ footer:hover .footer-mark{opacity:1;transform:translateY(-1px);}
           Based in Suffolk, England · <span>Remote or hybrid · UK-based roles</span>
         </p>
         <div class="hero-actions fade-up">
-          <a href="national_hospital.html" class="btn-primary">
+          <a href="caresync.html" class="btn-primary">
             <svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
             View featured case study
           </a>
@@ -740,6 +740,18 @@ footer:hover .footer-mark{opacity:1;transform:translateY(-1px);}
     <div class="kicker">Featured</div>
     <h2>Featured case studies</h2>
     <div class="feature-card">
+      <h3>CareSync: Quality-Gated ELT Platform for Weekly Clinic Reporting</h3>
+      <div class="feature-sub">Python · dbt · Snowflake · GitHub Actions · SLA-monitored file sensing</div>
+      <p class="feature-desc">A quality-gated ELT platform that turns unreliable weekly clinic file deliveries into a trusted Snowflake reporting database. A Google Drive sensor classifies every file on-time/missing/too-early/late against a 1-hour SLA window, pandas pre-validation checks schema and types before anything loads, and a SHA-256 content hash makes every load idempotent without TRUNCATE. A dependency-aware orchestrator cascade-skips downstream files when an upstream one is quarantined, so one bad file doesn't take down the whole run. dbt builds a 12-model star schema (6 staging + 4 dimensions + 2 facts) with 24 generic tests, PHI minimized by omission at the staging boundary and names masked to initials. An independent post-validation layer re-verifies table population and 3 business reconciliation queries, then ships a unified Slack and email report. Real run: 107K source rows, 51 passing checks, 0 duplicate rows, 2m 59s end-to-end.</p>
+      <div class="arch">
+        <div class="arch-step"><div class="arch-num">01</div><div class="arch-name">Sense</div><div class="arch-desc">Drive API, SLA classify</div></div>
+        <div class="arch-step"><div class="arch-num">02</div><div class="arch-name">Validate + Load</div><div class="arch-desc">pandas checks, SHA-256 idempotent</div></div>
+        <div class="arch-step"><div class="arch-num">03</div><div class="arch-name">Transform</div><div class="arch-desc">dbt, 12-model star schema</div></div>
+        <div class="arch-step"><div class="arch-num">04</div><div class="arch-name">Verify + Notify</div><div class="arch-desc">15 checks, Slack + email report</div></div>
+      </div>
+      <a href="caresync.html" class="card-link">View full case study<span class="card-link-arrow">→</span></a>
+    </div>
+    <div class="feature-card" style="margin-top:1.5rem;">
       <h3>National Hospital: Azure ELT Data Warehouse for Healthcare Analytics</h3>
       <div class="feature-sub">Azure Data Factory · Databricks · Azure SQL Database · ADLS Gen2 · Two-layer DQ suite</div>
       <p class="feature-desc">A cloud-native ELT pipeline built for a healthcare analytics scenario on Microsoft Azure. Azure Data Factory orchestrates a 13-activity pipeline with parallel fan-out and a four-check quality gate. Databricks runs the PySpark transformations with a visibility-first cleaning layer that reports source-to-warehouse retention and quarantines suspicious rows. Raw CSVs land in ADLS Gen2, are cleaned through a transparent transformation layer, then loaded into Azure SQL Database in a two-schema (STG + EDW) warehouse. A two-layer data quality suite runs at both Databricks and SQL layers, catching 14 records with illogical dates and quarantining them for source-system review. Real deployment: 2m 20s end-to-end runtime, daily schedule, 4-check safety net, 99.3% source-to-warehouse retention.</p>
@@ -833,18 +845,6 @@ footer:hover .footer-mark{opacity:1;transform:translateY(-1px);}
         <div class="tag-row"><span class="tag">Python</span><span class="tag">Selenium</span><span class="tag">BeautifulSoup</span><span class="tag">pandas</span><span class="tag">PostgreSQL</span></div>
         <a href="aliexpress.html" class="card-link">View case study<span class="card-link-arrow">→</span></a>
       </article>
-    </div>
-    <div class="building-band">
-      <div class="building-pulse"></div>
-      <div class="building-content">
-        <div class="building-label">Currently building</div>
-        <div class="building-text"><strong>CareSync: quality-gated ELT platform</strong> turning unreliable weekly clinic file deliveries into a trusted Snowflake reporting database. Pre and post-validation gates, SLA-monitored file sensing, quarantine with cascading skip logic, and automatic Slack/email stakeholder notifications on every run. Modeled in dbt as a single-fact star schema; synthetic healthcare data via Synthea. First build runs on pandas validation and GitHub Actions, then gets productionized onto Great Expectations and Airflow.</div>
-      </div>
-      <div class="building-stack">
-        <span class="tag">dbt</span>
-        <span class="tag">Snowflake</span>
-        <span class="tag">GitHub Actions</span>
-      </div>
     </div>
   </section>
 
@@ -1207,6 +1207,7 @@ footer:hover .footer-mark{opacity:1;transform:translateY(-1px);}
     <div class="footer-col">
       <div class="footer-col-label">Work</div>
       <ul>
+        <li><a href="caresync.html" class="footer-link"><svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/></svg>CareSync</a></li>
         <li><a href="nova_retail.html" class="footer-link"><svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/></svg>Nova Retail</a></li>
         <li><a href="wfi.html" class="footer-link">
           <svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/></svg>
