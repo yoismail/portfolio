@@ -33,7 +33,7 @@
     <meta property="og:type" content="article" />
     <meta property="og:title" content="CareSync | Quality-Gated ELT for Weekly Clinic Data" />
     <meta property="og:description"
-        content="A quality-gated ELT platform: Google Drive file sensing with SLA monitoring, pandas pre-validation with quarantine and cascade-skip, idempotent Snowflake loads, a dbt star schema, and a post-validation business-reconciliation gate. Real run: ~107K rows, 12 models, 51 passing checks, under 3 minutes. By Yomi Ismail, Data Engineer." />
+        content="A quality-gated ELT platform: Google Drive file sensing with SLA monitoring, pandas pre-validation with quarantine and cascade-skip, idempotent Snowflake loads, a dbt star schema, and a post-validation business-reconciliation gate. Real run: ~107K rows, 12 models, 53 passing checks, under 3 minutes. By Yomi Ismail, Data Engineer." />
     <meta property="og:image" content="svg/og-caresync.svg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -2233,8 +2233,8 @@
                     <div class="stat-label">dbt models · 6 staging, 4 dims, 2 facts</div>
                 </div>
                 <div class="stat-cell">
-                    <div class="stat-num">51</div>
-                    <div class="stat-label">passing checks · 36 dbt tests + 15 post-val</div>
+                    <div class="stat-num">53</div>
+                    <div class="stat-label">passing checks · 38 dbt tests + 15 post-val</div>
                 </div>
                 <div class="stat-cell">
                     <div class="stat-num">1h</div>
@@ -2365,7 +2365,7 @@
                 <div class="arch-layer">
                     <div class="arch-layer-label">TRANSFORM · NEXORA_STAGING → NEXORA_PROD</div>
                     <div class="arch-node acc"><strong>dbt_runner.py</strong><span>6 staging models → 4 dims + 2
-                            facts · 24 dbt tests</span></div>
+                            facts · 38 dbt tests</span></div>
                 </div>
                 <div class="arch-arrow">↓ safety net</div>
                 <div class="arch-layer">
@@ -2714,7 +2714,7 @@ skipped_deps = [dep <span class="keyword">for</span> dep <span class="keyword">i
                 </div>
 
                 <div class="runtime-row">
-                    <div class="runtime-label">dbt build (12 models, 24 dbt tests)</div>
+                    <div class="runtime-label">dbt build (12 models, 36 dbt tests)</div>
                     <div class="runtime-val">~31s</div>
                     <div class="runtime-note">6 staging models build and test in parallel (6 threads), then 4
                         dimensions + 2 facts build on top. dbt's own reported model+test execution time was 12.29s;
@@ -2722,7 +2722,7 @@ skipped_deps = [dep <span class="keyword">for</span> dep <span class="keyword">i
                 </div>
 
                 <div class="runtime-row acc">
-                    <div class="runtime-label">Post-validation (11 table checks + 3 reconciliation queries)</div>
+                    <div class="runtime-label">Post-validation (12 table checks + 3 reconciliation queries)</div>
                     <div class="runtime-val">~43s</div>
                     <div class="runtime-note">Independent Snowflake connection per check, verifying every staging
                         and mart table is populated and that staging-to-fact counts, future-date, and patient-count
@@ -2744,12 +2744,13 @@ skipped_deps = [dep <span class="keyword">for</span> dep <span class="keyword">i
 
             <p class="sec-p">
                 All 6 files arrived on time and passed pre-validation. All 6 loaded to <code>NEXORA_RAW</code> with
-                their exact source row counts. dbt built all 12 models and ran all 24 generic tests: PK
+                their exact source row counts. dbt built all 12 models and ran all 36 generic tests: PK
                 uniqueness and not-null on every dimension and fact, relationship tests across every FK in the star
                 schema, an <code>accepted_values</code> test on <code>encounter_class</code>, all without a single
                 failure. Post-validation then independently re-verified table population and all three business
                 reconciliation checks, and the unified run report went out over both Slack and email within seconds
-                of the pipeline finishing.
+                of the pipeline finishing. The marts layer has since picked up more PK/FK coverage and a singular
+                grain test for <code>fct_conditions</code>, bringing the current suite to 38 dbt tests.
             </p>
 
             <div class="callout">
@@ -2800,7 +2801,7 @@ skipped_deps = [dep <span class="keyword">for</span> dep <span class="keyword">i
                 </div>
                 <div class="tech-item">
                     <span class="tech-name">dbt-snowflake</span>
-                    <span class="tech-role">12 models · staging + marts · 24 generic tests</span>
+                    <span class="tech-role">12 models · staging + marts · 38 generic tests</span>
                 </div>
                 <div class="tech-item">
                     <span class="tech-name">dbt generic tests</span>
