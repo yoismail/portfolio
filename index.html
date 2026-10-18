@@ -235,7 +235,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--nav);background
    this size actually benefits from: a running table of contents. */
 @media(min-width:1180px){
   .page{display:grid;grid-template-columns:200px minmax(0,1fr);column-gap:3.5rem;max-width:1520px;}
-  .page-rail{display:block !important;}
+  .page-rail{display:block !important;padding-left:clamp(1rem,4vw,2.5rem);}
 }
 /* Split in two deliberately: .page-rail is the full-height grid cell
    (it has to span the whole row for the sticky child below to have
