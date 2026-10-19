@@ -81,7 +81,7 @@
   </g>
 
   <!-- right-side label under the pipeline -->
-  <text x="980" y="505" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="11" fill="#606880" letter-spacing="2">6-STAGE PIPELINE · 51 CHECKS · 0 DUPES</text>
+  <text x="980" y="505" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="11" fill="#606880" letter-spacing="2">6-STAGE PIPELINE · 53 CHECKS · 0 DUPES</text>
 
   <!-- bottom border accent -->
   <rect x="0" y="625" width="1200" height="5" fill="url(#grad)"/>
