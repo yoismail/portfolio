@@ -2211,7 +2211,8 @@
                 single-fact star schema, and runs a post-validation gate that verifies the reporting layer actually
                 reconciles. Files that fail validation are quarantined and their dependent datasets are skipped
                 automatically via the FK dependency graph, not failed outright, and stakeholders get a Slack and
-                email alert either way. All data is synthetic, generated with Synthea.
+                email alert the moment it happens, not just a mention buried in the end-of-run summary. All data is
+                synthetic, generated with Synthea.
             </p>
 
             <div class="meta-row">
@@ -2320,11 +2321,12 @@
                 load, transform, verify, notify. A Google Drive sensor checks for six expected files under a
                 one-hour SLA and classifies each as found, missing, empty, too early, or late. A pandas
                 pre-validation gate runs seven checks per file (parseability, expected columns, mandatory
-                field format, UUID format, allowed values, chronology, row-count bounds) and quarantines anything
-                that fails. Healthy files load into Snowflake's RAW layer with idempotent, content-hashed writes.
-                dbt transforms RAW into a staging layer and then a single-fact-grain star schema. A post-validation
-                gate checks table population and three cross-layer reconciliation queries. Every stage reports to a
-                unified Slack and email notification layer.
+                field format, UUID format, allowed values, chronology, row-count bounds). Anything that fails gets
+                physically moved into a quarantine folder and fires its own Slack/email alert immediately, not
+                just a line in the end-of-run digest. Healthy files load into Snowflake's RAW layer with idempotent,
+                content-hashed writes. dbt transforms RAW into a staging layer and then a single-fact-grain star
+                schema. A post-validation gate checks table population and three cross-layer reconciliation
+                queries, then every stage's outcome rolls up into one unified Slack and email run report.
             </p>
 
             <p class="sec-p">
@@ -2332,7 +2334,8 @@
                 patient, organization, provider, and payer, and a condition references an encounter and a patient, so
                 the loader processes them in strict dependency order and propagates failures downstream
                 automatically: if a file fails validation, everything that depends on it is skipped, not failed,
-                while everything unaffected still loads.
+                while everything unaffected still loads, and the failure itself is quarantined and alerted on the
+                moment it's detected, not held back for the final report.
             </p>
 
             <div class="arch-topology">
@@ -2370,14 +2373,14 @@
                 <div class="arch-arrow">↓ safety net</div>
                 <div class="arch-layer">
                     <div class="arch-layer-label">VERIFY</div>
-                    <div class="arch-node acc"><strong>post_validation.py</strong><span>11 table checks + 3
+                    <div class="arch-node acc"><strong>post_validation.py</strong><span>12 table checks + 3
                             reconciliation queries</span></div>
                 </div>
                 <div class="arch-arrow">↓ every run, pass or fail</div>
                 <div class="arch-layer">
                     <div class="arch-layer-label">NOTIFY</div>
-                    <div class="arch-node acc"><strong>notifications.py</strong><span>Slack + Email · unified
-                            run report</span></div>
+                    <div class="arch-node acc"><strong>notifications.py</strong><span>Slack + Email · immediate
+                            quarantine alerts + unified run report</span></div>
                 </div>
             </div>
 
@@ -2564,6 +2567,22 @@ cur.<span class="fn">execute</span>(<span class="string">f"SELECT COUNT(*) FROM 
             </div>
 
             <p class="sec-p">
+                A file that fails pre-validation doesn't just get marked skipped in memory. It's physically moved
+                out of the landing folder into a timestamped quarantine path, and its own Slack/email alert fires
+                right there, independently of whatever else the run is still doing.
+            </p>
+
+            <div class="code-block">
+                <span class="code-block-label">python/orchestrator.py · quarantine wired into the validation loop</span>
+                <pre>passed, issues, row_count = <span class="fn">validate_file</span>(source_path)
+<span class="keyword">if</span> <span class="keyword">not</span> passed:
+    summary[<span class="string">"pre_validation"</span>][<span class="string">"quarantined"</span>] += <span class="num">1</span>
+    <span class="comment"># move the file out of landing/ and fire the alert now,</span>
+    <span class="comment"># not only as a line in the end-of-run summary</span>
+    <span class="fn">quarantine_file</span>(source_path, issues, row_count)</pre>
+            </div>
+
+            <p class="sec-p">
                 If one file in the dependency graph fails pre-validation, everything downstream of it is skipped,
                 not failed, not silently processed with bad data, and the reason is traceable back to exactly which
                 upstream file caused it.
@@ -2614,10 +2633,11 @@ skipped_deps = [dep <span class="keyword">for</span> dep <span class="keyword">i
                     <div class="dec-num">01</div>
                     <h3 class="dec-h">Quarantine + cascade-skip over fail-fast</h3>
                     <p>A naive pipeline would abort the whole run if any one file failed validation. Instead, a
-                        failing file is quarantined and only its dependents (via the real FK graph) are skipped;
-                        everything unaffected still loads. Tradeoff: more orchestration logic to track what depends
-                        on what. Gain: a bad <code>payers.csv</code> export doesn't block <code>organizations</code>
-                        from loading, and stakeholders see exactly which downstream datasets were affected and why.
+                        failing file is physically quarantined, its own alert fires immediately, and only its
+                        dependents (via the real FK graph) are skipped; everything unaffected still loads. Tradeoff:
+                        more orchestration logic to track what depends on what. Gain: a bad <code>payers.csv</code>
+                        export doesn't block <code>organizations</code> from loading, and stakeholders find out the
+                        moment it happens, not when they next try to run an analysis.
                     </p>
                 </div>
 
