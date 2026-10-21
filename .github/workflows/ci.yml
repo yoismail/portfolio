@@ -17,6 +17,8 @@ jobs:
           node-version: 22
       - name: Validate markup
         run: npx --yes html-validate@11 *.html
+      - name: Check CSS cache-busting version is up to date
+        run: node scripts/check-css-version.mjs
 
   mobile-overflow:
     name: Mobile horizontal scroll

@@ -190,7 +190,7 @@ nav.topbar{
 .rail-item.active .idx{color:var(--accent);}
 
 /* ── HERO ──────────────────────────────────────────────── */
-.hero{padding:calc(var(--nav) + 3.5rem) 0 4rem;}
+.hero{padding:0 0 4rem;}
 .hero-prompt{
   font-family:var(--mono-d);font-size:.8rem;color:var(--text-faint);margin-bottom:1.3rem;
 }
