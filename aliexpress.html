@@ -195,7 +195,8 @@
       </div>
       <p style="max-width:72ch;margin-bottom:1.3rem;">The transform stage does more than clean data. It engineers business-friendly features that turn raw scraped text into something a BI tool or SQL query can answer questions against.</p>
 
-      <table class="cert-table" style="margin-bottom:1.6rem;">
+      <div class="table-scroll">
+        <table class="cert-table" style="margin-bottom:1.6rem;">
         <thead><tr><th>source column</th><th>description</th></tr></thead>
         <tbody>
           <tr><td class="name">product_name</td><td>Full listing title</td></tr>
@@ -209,8 +210,10 @@
           <tr><td class="name">scraped_at</td><td>Timestamp of scrape</td></tr>
         </tbody>
       </table>
+      </div>
 
-      <table class="cert-table" style="margin-bottom:1.6rem;">
+      <div class="table-scroll">
+        <table class="cert-table" style="margin-bottom:1.6rem;">
         <thead><tr><th>engineered feature</th><th>logic</th></tr></thead>
         <tbody>
           <tr><td class="name">discount_amount</td><td>was_price − product_price, in £</td></tr>
@@ -221,6 +224,7 @@
           <tr><td class="name">price_band</td><td>Budget / Mid-Range / Upper-Mid / Premium / Luxury</td></tr>
         </tbody>
       </table>
+      </div>
 
       <div class="code-block">
         <span class="code-block-label">example queries the warehouse can answer</span>

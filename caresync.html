@@ -198,7 +198,8 @@ NEXORA_PROD.DBT_YISMAIL_HL7_HL7         (dbt marts · single-fact-grain star sch
 
       <p style="max-width:72ch;margin-bottom:1.3rem;">The RAW→staging boundary is where privacy enforcement actually happens: <code>SSN</code>, <code>DRIVERS</code>, <code>PASSPORT</code>, <code>FIRST</code>, <code>LAST</code>, <code>MAIDEN</code>, and full street address never reach <code>stg_hl7__patients</code> at all: the staging model only selects the columns it needs, PHI columns are excluded by omission rather than deleted downstream. What stands in for a name is an initials-only <code>patient_masked_name</code> (e.g. <code>J.S.</code>), never a full surname.</p>
 
-      <table class="cert-table">
+      <div class="table-scroll">
+        <table class="cert-table">
         <thead><tr><th>mart table</th><th>grain</th><th>notes</th></tr></thead>
         <tbody>
           <tr><td class="name">dim_patients</td><td class="date">1,163 rows</td><td>patient_id PK · masked initials, age / age_group (deceased patients aged as-of death), region, county</td></tr>
@@ -209,6 +210,7 @@ NEXORA_PROD.DBT_YISMAIL_HL7_HL7         (dbt marts · single-fact-grain star sch
           <tr><td class="name">fct_conditions</td><td class="date">38,094 rows</td><td>grain = diagnosis · FK → fct_appointments, dim_patients · condition_duration_days, is_active_condition</td></tr>
         </tbody>
       </table>
+      </div>
     </section>
 
     <!-- ENGINEERING -->

@@ -184,7 +184,8 @@
       </div>
       <p style="max-width:72ch;margin-bottom:1.3rem;">The warehouse isn't a single-table mart. It's three purpose-built analytical tables, each at its own grain, each with its own primary key, each with its own indexes. Different queries hit different tables: <code>fact_sales</code> for transaction-level questions, <code>sales_summary</code> for state-by-category analysis, <code>sales_by_month_state</code> for time-series.</p>
 
-      <table class="cert-table" style="margin-bottom:1.3rem;">
+      <div class="table-scroll">
+        <table class="cert-table" style="margin-bottom:1.3rem;">
         <thead><tr><th>table</th><th>grain / pk</th><th>columns</th></tr></thead>
         <tbody>
           <tr><td class="name">retail_gold.fact_sales</td><td class="date">order_id + product_id</td><td>customer_id · seller_id · customer_state · payment_value DECIMAL(10,2) · payment_type · product_category_name · freight_value · order_purchase_timestamp · order_year/month/day · order_weekday</td></tr>
@@ -192,6 +193,7 @@
           <tr><td class="name">retail_gold.sales_by_month_state</td><td class="date">year_month + state</td><td>total_orders · total_revenue DECIMAL(12,2) · avg_order_value DECIMAL(10,2)</td></tr>
         </tbody>
       </table>
+      </div>
 
       <div class="card-grid grid-2" style="margin-bottom:1.3rem;">
         <div class="panel"><div class="card-tag">decision · grain</div><div class="card-title" style="font-size:.9rem;">Each table answers a different question</div><p class="card-desc"><code>fact_sales</code> answers "what happened in this order?" <code>sales_summary</code> answers "how does category X perform across states?" <code>sales_by_month_state</code> answers "how did state Y trend over time?" Separate tables with their own PKs and indexes let each query hit the right grain.</p></div>

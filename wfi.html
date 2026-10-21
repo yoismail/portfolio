@@ -200,7 +200,8 @@
 
       <p style="max-width:72ch;margin-bottom:1.3rem;">BigQuery materializes six tables in the <code>worldcup_dataset</code> dataset: three Silver, three Gold. Every table is an external table pointing at its GCS Parquet folder, which means the warehouse never duplicates storage. When Dataproc writes a new Parquet file, the next BigQuery query sees the latest data automatically.</p>
 
-      <table class="cert-table">
+      <div class="table-scroll">
+        <table class="cert-table">
         <thead><tr><th>table</th><th>rows</th><th>notes</th></tr></thead>
         <tbody>
           <tr><td class="name">silver_teams</td><td class="date">32</td><td>gs://.../silver/teams/*.parquet · cleaned team profiles, schema faithful to TheSportsDB</td></tr>
@@ -211,6 +212,7 @@
           <tr><td class="name">gold_matches</td><td class="date">64</td><td>gs://.../gold/matches/*.parquet · result classification, total_goals, home/away goal differentials</td></tr>
         </tbody>
       </table>
+      </div>
 
       <p style="max-width:72ch;margin:1.3rem 0;">Every schema is declared explicitly in the DAG. No <code>autodetect=True</code>. Silver keeps most fields as STRING to stay faithful to TheSportsDB API's raw form. Gold introduces FLOAT-typed derived metrics (<code>points_per_game</code>, <code>win_percentage</code>, <code>total_goals</code>, <code>home_goal_diff</code>, <code>away_goal_diff</code>, <code>running_total_points</code>) that come from PySpark division and window aggregation. Every table has an <code>ingested_at</code> or <code>gold_loaded_at</code> TIMESTAMP for traceability.</p>
 

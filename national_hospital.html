@@ -192,7 +192,8 @@
 
       <p style="max-width:72ch;margin-bottom:1.3rem;">Azure SQL Database <code>nathospDB</code> holds two schemas: <code>STG</code> (staging, tables mirror the cleaned CSV structure) and <code>EDW</code> (Enterprise Data Warehouse, tables have primary keys, load audit timestamps, and analytics-ready structure). The pipeline's final Script activities do a <code>DELETE FROM EDW.table WHERE patient_id IN (SELECT patient_id FROM STG.table)</code> followed by an <code>INSERT INTO EDW SELECT * FROM STG</code>, which produces deterministic, idempotent loads.</p>
 
-      <table class="cert-table">
+      <div class="table-scroll">
+        <table class="cert-table">
         <thead><tr><th>EDW table</th><th>grain</th><th>notes</th></tr></thead>
         <tbody>
           <tr><td class="name">dim_patient</td><td class="date">1,000 rows</td><td>dim · patient_id PK · demographic fields (name, DOB, gender, address)</td></tr>
@@ -203,6 +204,7 @@
           <tr><td class="name">dim_date</td><td class="date">4,018 rows</td><td>calendar · 2020-01-01 through 2030-12-31 with year, quarter, month, week, day_of_week</td></tr>
         </tbody>
       </table>
+      </div>
     </section>
 
     <!-- ENGINEERING -->

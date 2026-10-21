@@ -181,7 +181,8 @@
 fact_orders + 4 conformed dimensions → 1 star, 1 query path per metric</pre></div>
       </div>
 
-      <table class="cert-table" style="margin-bottom:1.3rem;">
+      <div class="table-scroll">
+        <table class="cert-table" style="margin-bottom:1.3rem;">
         <thead><tr><th>layer</th><th>tables</th></tr></thead>
         <tbody>
           <tr><td class="name">staging (cleaned 1:1 from raw, validated)</td><td>staging_customers, staging_orders, staging_order_items, staging_payments</td></tr>
@@ -190,6 +191,7 @@ fact_orders + 4 conformed dimensions → 1 star, 1 query path per metric</pre></
           <tr><td class="name">ETL modules &amp; orchestration</td><td>extract.py, explore.py, clean.py, transform.py, run_all.py, wipe_all.py, logger.py, db_config.py</td></tr>
         </tbody>
       </table>
+      </div>
 
       <div class="code-block">
         <span class="code-block-label">sql · fact_orders (simplified DDL)</span>
@@ -230,7 +232,8 @@ fact_orders + 4 conformed dimensions → 1 star, 1 query path per metric</pre></
         <div class="sec-tag">05 · key decisions</div>
         <h2>Design choices &amp; tradeoffs</h2>
       </div>
-      <table class="cert-table">
+      <div class="table-scroll">
+        <table class="cert-table">
         <thead><tr><th>decision</th><th>reasoning</th></tr></thead>
         <tbody>
           <tr><td class="name">SQL-first modeling</td><td>Tables defined in <code>.sql</code> DDL files, not generated from Python types. Makes the schema auditable, reviewable, and portable. A recruiter or data analyst can read the schema without touching Python.</td></tr>
@@ -240,6 +243,7 @@ fact_orders + 4 conformed dimensions → 1 star, 1 query path per metric</pre></
           <tr><td class="name">Semantic naming</td><td>All warehouse tables and columns use business-readable names (<code>dim_customer</code>, <code>order_status</code>) rather than source system codes. Analytics teams can query without a data dictionary.</td></tr>
         </tbody>
       </table>
+      </div>
     </section>
 
     <!-- IMPACT -->
