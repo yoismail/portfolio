@@ -328,6 +328,37 @@ nav.topbar{
 .scrolltop.show{opacity:1;pointer-events:auto;}
 .scrolltop:hover{border-color:var(--accent-border);}
 
+/* ── CODE BLOCK (case studies) ─────────────────────────── */
+.code-block{background:var(--bg-panel);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin:1.2rem 0;}
+.code-block-label{font-family:var(--mono-d);font-size:.64rem;color:var(--text-faint);padding:.55rem .9rem;border-bottom:1px solid var(--border);background:var(--bg-panel-2);letter-spacing:.02em;}
+.code-block pre{padding:1rem 1.1rem;overflow-x:auto;font-family:var(--mono-d);font-size:.76rem;line-height:1.7;color:var(--text-dim);}
+.code-block .keyword{color:#c586c0;}
+.code-block .string{color:var(--accent);}
+.code-block .fn{color:#5b9fe8;}
+.code-block .num{color:var(--amber);}
+.code-block .comment{color:var(--text-faint);font-style:italic;}
+
+/* ── PIPELINE / ARCHITECTURE DIAGRAM ───────────────────── */
+.pipeline{display:flex;flex-direction:column;}
+.pipeline-stage-label{font-family:var(--mono-d);font-size:.6rem;color:var(--text-faint);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.5rem;}
+.pipeline-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:.6rem;}
+.pipeline-node{border:1px solid var(--border);border-radius:var(--r);padding:.8rem 1rem;background:var(--bg-panel);}
+.pipeline-node.acc{border-color:var(--accent-border);background:var(--accent-dim);}
+.pipeline-node strong{display:block;font-family:var(--mono-d);font-size:.82rem;color:var(--text);margin-bottom:.25rem;}
+.pipeline-node span{display:block;font-size:.72rem;color:var(--text-faint);line-height:1.5;}
+.pipeline-arrow{font-family:var(--mono-d);font-size:.68rem;color:var(--text-faint);padding:.6rem 0 .6rem .3rem;}
+
+/* ── RUNTIME / METRIC ROW ──────────────────────────────── */
+.rt-row{display:grid;grid-template-columns:1fr auto;gap:.3rem 1rem;padding:1rem 0;border-bottom:1px solid var(--border);align-items:baseline;}
+.rt-row:last-child{border-bottom:none;}
+.rt-row.acc .rt-val{color:var(--accent);}
+.rt-label{font-family:var(--mono-b);font-size:.84rem;color:var(--text);}
+.rt-val{font-family:var(--mono-d);font-weight:700;font-size:1rem;color:var(--text);white-space:nowrap;}
+.rt-note{grid-column:1/-1;font-size:.76rem;color:var(--text-faint);line-height:1.6;margin-top:-.1rem;}
+
+/* ── TREE / PRE BLOCK (schema) ─────────────────────────── */
+.tree-pre{font-family:var(--mono-d);font-size:.74rem;line-height:1.75;color:var(--text-dim);overflow-x:auto;white-space:pre;}
+
 /* ── RESPONSIVE ────────────────────────────────────────── */
 @media(max-width:1180px){
   .with-rail{display:block !important;}
