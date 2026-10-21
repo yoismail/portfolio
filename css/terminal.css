@@ -169,6 +169,7 @@ nav.topbar{
   transition:all .15s;flex-shrink:0;white-space:nowrap;
 }
 .theme-btn:hover{color:var(--accent);border-color:var(--accent-border);}
+.topbar-actions{display:flex;align-items:center;gap:.5rem;flex-shrink:0;}
 
 /* ── FILE-TREE RAIL (sticky section index) ─────────────── */
 .rail{position:sticky;top:calc(var(--nav)+2rem);align-self:start;}
