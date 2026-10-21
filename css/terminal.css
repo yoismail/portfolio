@@ -7,7 +7,7 @@
 
 /* ── RESET ─────────────────────────────────────────────── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav)+1rem);overflow-x:clip;}
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav) + 1rem);overflow-x:clip;}
 
 /* ── TOKENS ────────────────────────────────────────────── */
 :root{
@@ -172,7 +172,7 @@ nav.topbar{
 .topbar-actions{display:flex;align-items:center;gap:.5rem;flex-shrink:0;}
 
 /* ── FILE-TREE RAIL (sticky section index) ─────────────── */
-.rail{position:sticky;top:calc(var(--nav)+2rem);align-self:start;}
+.rail{position:sticky;top:calc(var(--nav) + 2rem);align-self:start;}
 .rail-head{
   font-family:var(--mono-d);font-size:.64rem;color:var(--text-faint);
   letter-spacing:.1em;text-transform:uppercase;margin-bottom:.6rem;
@@ -190,7 +190,7 @@ nav.topbar{
 .rail-item.active .idx{color:var(--accent);}
 
 /* ── HERO ──────────────────────────────────────────────── */
-.hero{padding:calc(var(--nav)+3.5rem) 0 4rem;}
+.hero{padding:calc(var(--nav) + 3.5rem) 0 4rem;}
 .hero-prompt{
   font-family:var(--mono-d);font-size:.8rem;color:var(--text-faint);margin-bottom:1.3rem;
 }
