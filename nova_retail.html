@@ -36,9 +36,19 @@
       <a href="#impact" class="nav-l">impact</a>
       <a href="#tech" class="nav-l">tech</a>
     </div>
+    <button type="button" class="menu-btn" id="menuBtn" aria-label="Open navigation menu">[ menu ]</button>
     <button type="button" class="theme-btn" id="themeBtn" aria-label="Toggle theme">[ theme ]</button>
   </div>
 </nav>
+
+<div class="nav-drawer" id="navDrawer">
+  <div class="nav-drawer-head">
+    <span>jump to</span>
+    <button type="button" class="nav-drawer-close" id="navDrawerClose" aria-label="Close menu">[ close ]</button>
+  </div>
+  <div class="nav-drawer-grid" id="navDrawerGrid"></div>
+</div>
+
 
 <div class="page page-wide with-rail" style="padding-top:calc(var(--nav) + 2rem);">
   <aside class="rail">
@@ -184,7 +194,8 @@
       </div>
       <p style="max-width:72ch;margin-bottom:1.3rem;">The warehouse isn't a single-table mart. It's three purpose-built analytical tables, each at its own grain, each with its own primary key, each with its own indexes. Different queries hit different tables: <code>fact_sales</code> for transaction-level questions, <code>sales_summary</code> for state-by-category analysis, <code>sales_by_month_state</code> for time-series.</p>
 
-      <table class="cert-table" style="margin-bottom:1.3rem;">
+      <div class="table-scroll">
+        <table class="cert-table" style="margin-bottom:1.3rem;">
         <thead><tr><th>table</th><th>grain / pk</th><th>columns</th></tr></thead>
         <tbody>
           <tr><td class="name">retail_gold.fact_sales</td><td class="date">order_id + product_id</td><td>customer_id · seller_id · customer_state · payment_value DECIMAL(10,2) · payment_type · product_category_name · freight_value · order_purchase_timestamp · order_year/month/day · order_weekday</td></tr>
@@ -192,6 +203,7 @@
           <tr><td class="name">retail_gold.sales_by_month_state</td><td class="date">year_month + state</td><td>total_orders · total_revenue DECIMAL(12,2) · avg_order_value DECIMAL(10,2)</td></tr>
         </tbody>
       </table>
+      </div>
 
       <div class="card-grid grid-2" style="margin-bottom:1.3rem;">
         <div class="panel"><div class="card-tag">decision · grain</div><div class="card-title" style="font-size:.9rem;">Each table answers a different question</div><p class="card-desc"><code>fact_sales</code> answers "what happened in this order?" <code>sales_summary</code> answers "how does category X perform across states?" <code>sales_by_month_state</code> answers "how did state Y trend over time?" Separate tables with their own PKs and indexes let each query hit the right grain.</p></div>
@@ -532,13 +544,46 @@ silver_df = silver_df.cache()</pre>
       if (target) target.scrollIntoView({behavior:'smooth', block:'start'});
     });
   });
+    // mobile nav drawer (icon tiles built from the rail's own data)
+  var menuBtn = document.getElementById('menuBtn');
+  var navDrawer = document.getElementById('navDrawer');
+  var drawerClose = document.getElementById('navDrawerClose');
+  var drawerGrid = document.getElementById('navDrawerGrid');
+  var EXT_ICONS = {md:'\u25A4', sql:'\u25A6', py:'\u03BB', json:'{}', log:'\u2261', yml:'\u2699', txt:'\u2709', pdf:'\u2B07'};
+  var drawerTiles = [];
+  if (drawerGrid) {
+    railItems.forEach(function(item){
+      var idxEl = item.querySelector('.idx');
+      var idx = idxEl ? idxEl.textContent : '';
+      var label = item.textContent.replace(idx, '').trim();
+      var ext = (label.split('.').pop() || '').toLowerCase();
+      var icon = EXT_ICONS[ext] || '\u25B8';
+      var tile = document.createElement('button');
+      tile.type = 'button';
+      tile.className = 'nav-tile';
+      tile.innerHTML = '<div class="nav-tile-top"><span class="nav-tile-idx">' + idx + '</span><span class="nav-tile-icon">' + icon + '</span></div><span class="nav-tile-label">' + label + '</span>';
+      tile.addEventListener('click', function(){
+        var target = document.getElementById(item.getAttribute('data-target'));
+        if (target) target.scrollIntoView({behavior:'smooth', block:'start'});
+        closeDrawer();
+      });
+      drawerGrid.appendChild(tile);
+      drawerTiles.push(tile);
+    });
+  }
+  function openDrawer(){ if (navDrawer) { navDrawer.classList.add('open'); document.documentElement.classList.add('no-scroll'); } }
+  function closeDrawer(){ if (navDrawer) { navDrawer.classList.remove('open'); document.documentElement.classList.remove('no-scroll'); } }
+  if (menuBtn) menuBtn.addEventListener('click', openDrawer);
+  if (drawerClose) drawerClose.addEventListener('click', closeDrawer);
+  if (navDrawer) navDrawer.addEventListener('click', function(e){ if (e.target === navDrawer) closeDrawer(); });
+
   function updateRail(){
     var pos = window.scrollY + window.innerHeight * 0.3;
     var activeIdx = 0;
     sections.forEach(function(sec, i){
       if (sec && sec.offsetTop <= pos) activeIdx = i;
     });
-    railItems.forEach(function(item, i){ item.classList.toggle('active', i === activeIdx); });
+    railItems.forEach(function(item, i){ item.classList.toggle('active', i === activeIdx); if (drawerTiles[i]) drawerTiles[i].classList.toggle('active', i === activeIdx); });
   }
   window.addEventListener('scroll', updateRail, {passive:true});
   updateRail();
