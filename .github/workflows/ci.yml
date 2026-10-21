@@ -18,6 +18,26 @@ jobs:
       - name: Validate markup
         run: npx --yes html-validate@11 *.html
 
+  mobile-overflow:
+    name: Mobile horizontal scroll
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Serve site
+        run: npx --yes http-server . -p 8080 -s &
+      - name: Wait for server
+        run: npx --yes wait-on http://127.0.0.1:8080/index.html
+      - name: Check for horizontal overflow at mobile widths
+        run: node scripts/check-mobile-overflow.mjs
+
   link-check:
     name: Broken links
     runs-on: ubuntu-latest
